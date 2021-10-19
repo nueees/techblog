@@ -4,17 +4,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>About Me | Seeeun’s Tech blog</title>
+<title>gitInfo | Seeeun’s Tech blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="About Me" />
+<meta property="og:title" content="gitInfo" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A challenge-loving junior data engineer." />
 <meta property="og:description" content="A challenge-loving junior data engineer." />
-<link rel="canonical" href="https://nueees.github.io/techblog/about/" />
-<meta property="og:url" content="https://nueees.github.io/techblog/about/" />
+<link rel="canonical" href="https://nueees.github.io/techblog/gitInfo/" />
+<meta property="og:url" content="https://nueees.github.io/techblog/gitInfo/" />
 <meta property="og:site_name" content="Seeeun’s Tech blog" />
 <script type="application/ld+json">
-{"url":"https://nueees.github.io/techblog/about/","@type":"WebSite","headline":"About Me","name":"Seeeun’s Tech blog","description":"A challenge-loving junior data engineer.","@context":"https://schema.org"}</script>
+{"url":"https://nueees.github.io/techblog/gitInfo/","@type":"WebPage","headline":"gitInfo","description":"A challenge-loving junior data engineer.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Seeeun's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -66,58 +66,70 @@ window.onload = wrap_img;
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post">
-
-  <header class="post-header">
-    <h1 class="post-title">About Me</h1>
-  </header>
-
-  <div class="post-content">
-    <p><img src="/techblog/images/ski.jpg" alt="" /></p>
-
-<h1 id="seeeun-cho">Seeeun Cho</h1>
-<h2 id="nueees">@nueees</h2>
-
-<blockquote>
-  <p>CONTACT</p>
-  <ul>
-    <li>Phone:</li>
-    <li>Email: nueees@gmail.com</li>
-    <li>Linkedin: https://www.linkedin.com/in/nueees/</li>
-  </ul>
-</blockquote>
-
-<blockquote>
-  <p>EXPERTISE</p>
-  <ul>
-    <li>Program languages: SQL, Java, Javascript, Python, R</li>
-    <li>Frameworks: Spring, MDD (Model-Driven Development)</li>
-    <li>Version control systems: SVN, Git, frism</li>
-    <li>Workflow Control: Job-PaSS</li>
-    <li>DBMSs: Oracle, Mysql</li>
-    <li>OSs: Linux, Windows</li>
-    <li>ETL Tools: TDS, TeraStream, BXI, Oracle GoldenGate, DataPump</li>
-  </ul>
-</blockquote>
-
-<blockquote>
-  <p>EXPERIENCE</p>
-  <ul>
-    <li>Junior data engineer &amp; developer,
-JT savings bank | Mar 2020 - Sep 2021</li>
-    <li>Junior database engineer,
-Serends IT service | Feb 2019 - Feb 2020</li>
-    <li>Java full stack developer,
-Kyobo information and communication | Sep 2017 - Nov 2018</li>
-  </ul>
-</blockquote>
-
-<p><img src="/techblog/images/dive.jpg" alt="" /></p>
+        <img src="https://ghchart.rshah.org/nueees" alt="" style="width: 660px; height: 100px;">
+<div id="repos">
+<script>
+// 사용한 언어를 return해주는 함수
+const repoLanguage = async (repo) =>{
+    let response = await fetch(`https://api.github.com/repos/nueees/${repo}/languages`,
+        {headers:{
+            'Accept' : 'application/vnd.github.v3+json',
+        }});
+    let resJson = await response.json()
+    let sumcodeline = Object.values(resJson).reduce((a, b) => a + b, 0)
+    s = ''
+    for (const [key, value] of Object.entries(resJson)) {
+        s += `${key} : ${(value/sumcodeline*100).toFixed(3)}%  `;
+    }
+    return s
+}
 
 
-  </div>
+// 비동기 작업을 위해 async function 선언
+const initRepo = async () =>{
+        // 추가할 dom선택
+        const repoUl = document.getElementById("repos")
+        //갯수설정
+        const count = 5;
+        // headers 설명 : 깃허브에 요청할 형식 지정
+        let response = await fetch('https://api.github.com/users/nueees/repos?'+
+                       'per_page='+count,
+        {headers:{
+            'Accept' : 'application/vnd.github.v3+json',
+        }});
+        const repoJson = await response.json()
+        // repo받아온 내용 확인
+        // console.log(repoJson);
 
-</article>
+        // json내용을 map을 이용해 각 dom을 만들고 추가
+        // repoLanguage 함수의 비동기 작업을 위한 async function선언
+        repoJson.map(async (repos)=>{
+            let h2Element = document.createElement("h2")
+            h2Element.textContent = repos.name
+
+            let pElementDesc = document.createElement("p")
+            pElementDesc.textContent = "레포설명 : " + repos.description
+
+            let aElementURL = document.createElement("a")
+            aElementURL.href = repos.svn_url
+            aElementURL.textContent = repos.svn_url
+
+            //사용한 언어 불러오기
+            let language = await repoLanguage(repos.name)
+            let strongElementLang = document.createElement("strong")
+            strongElementLang.textContent = "사용언어 : " + language.toString()
+            
+            //각 요소를 <div id="repos">에 추가
+            repoUl.append(h2Element)
+            //사용언어부분 추가
+            repoUl.append(strongElementLang)
+            repoUl.append(pElementDesc)
+            repoUl.append(aElementURL)
+            repoUl.append(document.createElement("br"))
+        })
+    }
+    initRepo()
+</script>
 
       </div>
     </main><footer class="site-footer h-card">

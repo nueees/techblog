@@ -29,7 +29,9 @@
   
 
   
-      ,"page3": {
+
+  
+      ,"page4": {
           "title": "sample",
           "content": "hello world . hell | hell | hell | .",
           "url": "https://nueees.github.io/techblog/sample/",
@@ -59,7 +61,7 @@
   
 
   
-      ,"page11": {
+      ,"page12": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://nueees.github.io/techblog/robots.txt",
