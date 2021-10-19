@@ -33,8 +33,8 @@ Kyobo information and communication | Sep 2017 - Nov 2018
 
 
 
-
-
+  
+  
 ![]({{site.baseurl}}/images/dive.jpg)
 
 
