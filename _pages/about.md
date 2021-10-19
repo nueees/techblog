@@ -10,7 +10,7 @@ permalink: /about/
 > CONTACT
 * Phone: 
 * Email: nueees@gmail.com
-* Address: Berlin, Germany
+* Linkedin: https://www.linkedin.com/in/nueees/
 
 > EXPERTISE
 * Program languages: SQL, Java, Javascript, Python, R
