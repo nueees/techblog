@@ -32,6 +32,9 @@ Serends IT service | Feb 2019 - Feb 2020
 Kyobo information and communication | Sep 2017 - Nov 2018
 
 
+
+
+
 ![]({{site.baseurl}}/images/dive.jpg)
 
 
