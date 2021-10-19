@@ -463,15 +463,15 @@ $ kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool --generator=run-
 2.  `$ kubectl create -f testapp-rs.yml $ kubectl get replicasets.apps $ kubectl get pods`
 3.  NodePort 서비스 생성  
     cat testapp-svc-ext-nodeport.yml  
-    ![](https://blog.kakaocdn.net/dn/bn41bp/btrh4NXZd2G/LbF8p9nbm0j0W48OzK4WV0/img.jpg)
+![]({{site.baseurl}}/images/post/docker_7_3_1.jpg)  
 4.  `$ kubectl create -f testapp-svc-ext-nodeport.yml # 해당 노드에서 사용할 포트 31111로 지정 $ kubectl get endpoints testapp-svc-ext-np # 서비스의 엔드포인트 확인 (Pod의 8080 포트로 Redirection 됨) $ kubectl get nodes -o wide # 각 노드의 IP 확인`
 5.  LoadBalancer 서비스 생성  
     cat testapp-svc-ext-loadbalancer.yml  
-    ![](https://blog.kakaocdn.net/dn/cjoybt/btrh0DPmKMO/EoJMd3ogJKKwX75wByUct1/img.png)
+![]({{site.baseurl}}/images/post/docker_7_3_2.jpg)  
 6.  `$ kubectl create -f testapp-svc-ext-loadbalancer.yml # 해당 노드에서 사용할 포트는 정의하지 않음 $ kubectl get services # LoadBalancer 서비스 확인`
 7.  ExternalName 서비스 생성  
     cat testapp-svc-ext-externalname.yml  
-    ![](https://blog.kakaocdn.net/dn/bwyBGI/btrh0Du34XG/DRGcgJfwFFsB63eMQWqlUk/img.jpg)
+![]({{site.baseurl}}/images/post/docker_7_3_3.jpg)  
 8.  `$ kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool --generator=run-pod/v1 --rm=true bash # 서비스 접근 테스트 $ nllookup testapp-svc-extname-gl`
 9.  `$ kubectl create -f testapp-svc-ext-externalname.yml # FQDN은 google이며 이에 대한 CNAME은 testapp-svc-extname-gl $ kubectl get services # ExternalName 서비스 확인`
 
