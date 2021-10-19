@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Docker Container Configuration &amp; management | Seeeun’s Tech blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Docker Container Configuration &amp; management" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="1장" />
+<meta property="og:description" content="1장" />
+<link rel="canonical" href="https://nueees.github.io/techblog/statistics/2021/10/19/Docker-Container-Configuration-management.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/statistics/2021/10/19/Docker-Container-Configuration-management.html" />
+<meta property="og:site_name" content="Seeeun’s Tech blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-10-19T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"1장","url":"https://nueees.github.io/techblog/statistics/2021/10/19/Docker-Container-Configuration-management.html","@type":"BlogPosting","headline":"Docker Container Configuration &amp; management","dateModified":"2021-10-19T00:00:00-05:00","datePublished":"2021-10-19T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/statistics/2021/10/19/Docker-Container-Configuration-management.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Seeeun's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/techblog/">Seeeun&#39;s Tech blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/techblog/category/">Category</a><a class="page-link" href="/techblog/about/">About Me</a><a class="page-link" href="/techblog/gitInfo/">gitInfo</a><a class="page-link" href="/techblog/search/">Search</a><a class="page-link" href="/techblog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Docker Container Configuration &amp; management</h1><p class="page-description">1장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-10-19T00:00:00-05:00" itemprop="datePublished">
+        Oct 19, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      9 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/techblog/categories/#statistics">statistics</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1docker-container">1.Docker Container</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#container--virtualization">Container &amp; Virtualization</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#가상화-종류">가상화 종류</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#docker-architecture">Docker Architecture</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#dockers-strengths">Docker’s strengths</a></li>
+<li class="toc-entry toc-h3"><a href="#dockers-main-function">Docker’s main function</a></li>
+<li class="toc-entry toc-h3"><a href="#technique-for-docker--리눅스-커널">technique for Docker : 리눅스 커널</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#2managing-docker-container">2.Managing Docker Container</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#installing-docker-engine">Installing Docker Engine</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#도커-패키지-리포지토리-연결-및-설치">도커 패키지 리포지토리 연결 및 설치</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#docker-container-image">Docker container image</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#도커-이미지-관리">도커 이미지 관리</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#docker-container-management">Docker container management</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#도커-컨데이너-관리">도커 컨데이너 관리</a></li>
+<li class="toc-entry toc-h3"><a href="#컨테이너-네트워크-구성">컨테이너 네트워크 구성</a></li>
+<li class="toc-entry toc-h3"><a href="#컨테이너-통신">컨테이너 통신</a></li>
+<li class="toc-entry toc-h3"><a href="#컨테이너-볼륨">컨테이너 볼륨</a></li>
+<li class="toc-entry toc-h3"><a href="#컨테이너-환경변수-설정">컨테이너 환경변수 설정</a></li>
+<li class="toc-entry toc-h3"><a href="#컨데이너-로그-확인">컨데이너 로그 확인</a></li>
+<li class="toc-entry toc-h3"><a href="#컨테이너-자원-할당">컨테이너 자원 할당</a></li>
+<li class="toc-entry toc-h3"><a href="#워드프레스-컨테이너-실행-example">워드프레스 컨테이너 실행 example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><!-- ![](/techblog/images/post/1_1.jpg) -->
+
+<p>출처_Building Cloud private native 전문가 양성과정 교재</p>
+
+<h1 id="1docker-container">
+<a class="anchor" href="#1docker-container" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.Docker Container</h1>
+
+<h2 id="container--virtualization">
+<a class="anchor" href="#container--virtualization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Container &amp; Virtualization</h2>
+
+<p>하드웨어 성능이 올라가면서, 유휴자원을 활용하는 가상화(자원을 나눠서 사용) 기술이 대두됨.</p>
+
+<h3 id="가상화-종류">
+<a class="anchor" href="#%EA%B0%80%EC%83%81%ED%99%94-%EC%A2%85%EB%A5%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>가상화 종류</h3>
+
+<ul>
+  <li>Hypervisor Virtualization(Native/Bare Metal): 하드웨어 위에 OS 대신 하이퍼바이저를 설치하고 <em>가상(개별OS)머신</em> 생성 (Hyper-V,XenServer)</li>
+  <li>Host Virtualization: 하드웨어 위에 OS 설치하고, 하이퍼바이저 설치 후, <em>가상(개별OS)머신</em> 생성 (VMware, VirtualBox)</li>
+  <li>Container Virtualization: 하드웨어 위에 OS설치하고, 컨테이너 runtime 관리 S/W 설치 후 <em>가상(App)머신</em> 생성 (Docker)<br>
+개별운영체제X, 호스트 OS의 일부를 공유하는 방식 사용, overhead 적음</li>
+  <li>그밖에 Application/Network/Storage Virtualization 있음.</li>
+</ul>
+
+<h2 id="docker-architecture">
+<a class="anchor" href="#docker-architecture" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker Architecture</h2>
+
+<h3 id="dockers-strengths">
+<a class="anchor" href="#dockers-strengths" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker’s strengths</h3>
+
+<ul>
+  <li>don’t need a guest OS</li>
+  <li>Transplant : easily ported across different platforms</li>
+  <li>support On-Premise, Cloud, and DevOps open source</li>
+</ul>
+
+<h3 id="dockers-main-function">
+<a class="anchor" href="#dockers-main-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker’s main function</h3>
+
+<ul>
+  <li>Image 생성/관리<br>
+image는 컨테이너 구동을 위한 데이터<br>
+생성시 코드로 기술 가능(Infrastructure as Code, IaC)</li>
+  <li>Image 공유<br>
+Registry는 Image의 저장소 (Ubuntu, Debian, CentOS, Fedora의 기본 이미지, 다양한 소프트웨어 탑재 된 이미지 제공)<br>
+다운로드, 업로드, 버전 관리 가능</li>
+  <li>Container 운영<br>
+이미지 상태의 파일 -&gt; 프로세스로 띄움<br>
+시작, 중지, 삭제 작업</li>
+</ul>
+
+<p><strong><em>컨테이너 간 간섭을 방지하기 위해 Isolation 기술 (리눅스 namespace와 cgroup 기능) 사용</em></strong></p>
+
+<h3 id="technique-for-docker--리눅스-커널">
+<a class="anchor" href="#technique-for-docker--%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%BB%A4%EB%84%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>technique for Docker : 리눅스 커널</h3>
+
+<ul>
+  <li>독립된 환경 네임스페이스(namespace)<br>
+네임스페이스 별로 독립된 PID, Network, UID, MOUNT, UTS, IPC 사용</li>
+  <li>제어그룹 (cgroup)<br>
+Process 또는 Thread를 그룹화 하여 관리 - CPU나 Memory를 그룹별로 제한 가능</li>
+  <li>가상 Bridge와 가상 NIC(Network Interface Card)<br>
+<img src="/techblog/images/post/docker_1_1.jpg" alt=""><br>
+컨테이너 별 각각의 가상 NIC가 할당(ContainerA - eth0, ContainerB - eth0)<br>
+가상 NIC는 docker0(172.17.0.0/16)라는 가상 bridge로 연결되어 컨테이너끼리 또는 호스트(물리NIC)를 통해 외부 네트워크로 연결 (Host - eth0)</li>
+  <li>계층 파일 시스템<br>
+기본 컨테이너 이미지에 추가 작업 시 COW(Copy on Write)* 방식으로 생성<br>
+COW 방식은 부모 프로세스가 자식 프로세스를 생성할 때 전부 복제하지 않고, 쓰기가 발생했을 때 변경된 부분만 복제하는 방법과 유사<br>
+<strong><em>도커 이미지관리에 사용되는 FS or Library : Btrfs, AUFS, Device Mapper, OverlayFS</em></strong>
+</li>
+</ul>
+
+<hr>
+
+<h1 id="2managing-docker-container">
+<a class="anchor" href="#2managing-docker-container" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.Managing Docker Container</h1>
+
+<h2 id="installing-docker-engine">
+<a class="anchor" href="#installing-docker-engine" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing Docker Engine</h2>
+
+<h3 id="도커-패키지-리포지토리-연결-및-설치">
+<a class="anchor" href="#%EB%8F%84%EC%BB%A4-%ED%8C%A8%ED%82%A4%EC%A7%80-%EB%A6%AC%ED%8F%AC%EC%A7%80%ED%86%A0%EB%A6%AC-%EC%97%B0%EA%B2%B0-%EB%B0%8F-%EC%84%A4%EC%B9%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>도커 패키지 리포지토리 연결 및 설치</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># yum install -y yum-utils # 필요 util 설치
+# yum-config-manager --add-rep https://download.docker.com/linux/centos/docker-ce.repo # 도커 구성 매니저 설치
+# yum repolist
+# yum -y install docker-ce docker-ce-cli containerd.io # 도커 설치
+# yum list docker-ce
+# systemctl start docker.service # 서비스 시작
+# systemctl enable docker.service 
+# systemctl is-active docker.service
+# docker --help
+</code></pre></div></div>
+
+<h2 id="docker-container-image">
+<a class="anchor" href="#docker-container-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker container image</h2>
+
+<h3 id="도커-이미지-관리">
+<a class="anchor" href="#%EB%8F%84%EC%BB%A4-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EA%B4%80%EB%A6%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>도커 이미지 관리</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker search --help 
+# docker search centos -s 1000  # repository에서 centos 검색
+# docker pull --help
+# docker pull centos  # repository에서 centos 가져오기
+# docker images
+# docker tag --help
+# docker tag centos:latest centos:ver7  # centos 태그 latest-&gt;ver7로 변경
+# docker rmi --help
+# docker rmi centos # centos image 제거
+# docker image prune # 이름없는 dangling 이미지 제거
+# docker login
+# docker tag centos:latest nueees/repo-web:centos
+# docker push --help
+# docker push nueees/repo-web:centos
+</code></pre></div></div>
+
+<p><img src="/techblog/images/post/docker_1_2.jpg" alt=""></p>
+
+<h2 id="docker-container-management">
+<a class="anchor" href="#docker-container-management" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker container management</h2>
+
+<h3 id="도커-컨데이너-관리">
+<a class="anchor" href="#%EB%8F%84%EC%BB%A4-%EC%BB%A8%EB%8D%B0%EC%9D%B4%EB%84%88-%EA%B4%80%EB%A6%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>도커 컨데이너 관리</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker create --help
+# docker create -it --name c1 centos # centos 이미지로 c1라는 컨테이너 생성
+# docker ps --help
+# docker ps -a
+# docker inspect --help
+# docker inspect c1 # 
+# docker start --help
+# docker start c1
+# docker stop --help
+# docker stop c1
+# docker run --help
+# docker run -it --name c2 centos
+# docker run -d --name web1 httpd
+# docker rm -f web1
+</code></pre></div></div>
+
+<p>run (create+start)<br>
+exit -&gt; 컨테이너 종료<br>
+Ctrl+P+Q -&gt; 컨테이너 종료하지 않고 빠져나옴</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker attach --help
+# docker run -itd --name c1 centos 
+# docker attach c1  # background에 실행중인 c1 컨데이너 접근
+# docker exec --help
+# docker run -d --name web1 httpd
+# docker exec -it web1 bash  # web1 컨테이너 접근해서 bash 실행
+# docker top --help
+# docker top web1  # web1 컨테이너에서 실행중인 process 확인
+# docker top web1 aux 
+# docker rename --help
+# docker rename c1 newc1
+# docker pause --help
+# docker pause web1
+# docker unpaues web1
+# docker cp --help
+
+# docker run -itd --name c1 centos
+# docker cp dockercp.txt c1:/ # host file -&gt; container c1의 /경로로 copy
+# docker exec -it c1 cat /dockercp.txt
+
+# docker diff --help
+# docker attach c1
+## rm -f anaconda-post.log # 기존 컨테이너 내 log 삭제 후
+# docker diff c1
+
+# docker commit --help
+# docker commit c1 centos:hello # 기존 c1 container로 new image 생성
+# docker images
+
+# docker save --help # 여러개 이미지를 archive file로 저장 시
+# docker save -o imgarc.tar centos:hello httpd:latest # centos:hello, httpd 두개 image를 archive file로 저장
+
+# docker load --help
+# docker load -i imgarc.tar # archive file에 저장된 이미지 불러오기
+# docker images # 불러온 이미지 확인
+
+# docker export --help # 컨테이너 파일시스템을 archive file로 추출
+# docker attach c1
+## echo "This is export test" &gt; export.txt
+# docker export -o testexport.tar c1
+# tar tf testexport.tar | grep export.txt
+
+# docker import --help # export로 컨테이너로 추출한 archive file로 이미지로 생성
+# docker import testexport.tar export:test
+</code></pre></div></div>
+
+<h3 id="컨테이너-네트워크-구성">
+<a class="anchor" href="#%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EA%B5%AC%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>컨테이너 네트워크 구성</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ip a s
+# brctl show
+# docker run -itd --name c1 centos
+# brctl show
+# docker attach c1
+## yum -y install net-tools
+## ifconfig
+## rount -n # docker0는 172.17.0.0/16 네트워크 사용하고 외부 통신 가능
+## ping -c2 google.co.kr
+# iptables -L -t nat # 게이트웨이 172.17.0.1이며 마스커레이딩 설정 됨
+
+# docker network --help
+# docker network ls # 도커 네트워크는 bridge, host, none 세가지
+
+# docker inspect bridge
+# docker network create --help
+# docker network create d-net # bridge 유형으로 도커 네트워크 생성
+# docker inspect d-net # 네트워크 범위(subnet) 자동으로 172.18.0.0/16으로 설정
+# docker network create --subnet 192.168.0.0/24 --gateway 192.168.0.254 custom-net
+# docker run -it --net custom-net --name a1 alpine # 사용자 정의 custom-net 네트워크 사용하여 컨테이너 생성
+
+# docker run -it --net host --name a2 alpine # host 유형으로 생성시 host 네트워크를 공유
+## ifconfig
+
+# docker run -it --net none --name a3 none alpine # none 유형은 네트워크 할당 안함
+## ifconfig
+</code></pre></div></div>
+
+<h3 id="컨테이너-통신">
+<a class="anchor" href="#%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%ED%86%B5%EC%8B%A0" aria-hidden="true"><span class="octicon octicon-link"></span></a>컨테이너 통신</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker run -itd --name a1 alpine
+# docker run -itd --name a2 --link a1 alpine
+# docker attach a2
+## ping a1 # ping 감
+# docker attach a1
+## ping a2 # ping 가지 않음
+# docker exec a1 cat /etc/hosts
+# docker exec a2 cat /etc/hosts # a1이 등록된 걸 확인
+
+# docker run -itd --name a3 --link a1:alpine1 alpine # 별칭으로 링크 등록
+# docker exec a1 ping alpine1 # ping 감
+# docker exec a3 cat /etc/hosts # a1과 alpine1으로 등록된 걸 확인
+
+# docker run -d --name web1 httpd
+# curl localhost # container에서는 80포트가 열려있으나 실제 host의 주소로 접근 불가
+# docker run -d -p 80:80 --name web2 httpd # host의 port 80으로 요청오면 container 80으로 전달 (호스트:컨테이너)
+</code></pre></div></div>
+
+<p>호스트의 특정 포트가 컨테이너 포트와 연결되어 있으면 해당 포트는 다른 컨테이너와 연결될 수 없음.</p>
+
+<h3 id="컨테이너-볼륨">
+<a class="anchor" href="#%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EB%B3%BC%EB%A5%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>컨테이너 볼륨</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkdir volume
+# echo hello &gt; volume/hello.txt
+# docker run -it -v /boot/volume:/mnt --name v1 centos # host 디렉토리를 container와 공유 (호스트:컨테이너)
+## ls /mnt
+## cat /mnt/hello.txt
+## df -h # /mnt 디렉토리가 host의 /dev/sda1에 연결되어 있음
+
+# mkdir vol1 vol2 vol3
+# docker run -it -v /boot/vol1:/vol1 \
+ -v /boot/vol1:/vol1  -v /boot/vol1:/vol1 --name v2 centos # 동시에 다수 볼륨도 연결가능
+
+# docker run -it -v /boot/vol1:/vol1 --name c2 centos # 하나 볼륨을 동시에 Read-Write시 crash 발생
+# docker run -it -v /boot/vol1:/vol1:ro --name c3 centos # 볼륨 공유시엔 하나 외 나머지는 Read-Only로
+## touch /vol1/xxx
+
+# docker run -it -v vol-1:/vol1 --name c1 centos # host에서 디렉토리 생성없이 docker volume 생성 후 연결 (도커볼륨:컨테이너)
+## touch /vol1/x
+# docker run -it -v vol-1:/vol1 --name c2 centos 
+## ls /vol1 # 파일 x 확인 가능
+# docker volume ls # docker 볼륨 확인
+# docker inspect vol-1 # 실제로는 host 디렉토리 사용
+
+# docker volume create --help
+# docker volume create vol2 # 수동으로도 생성 가능
+
+# docker run -it --name m1 mysql
+# docker inspect m1 # 도커 볼륨을 자동으로 생성하는 이미지가 있음 ("Volumes":{...)
+# docker volume ls # 생성된 볼륨 확인
+</code></pre></div></div>
+
+<h3 id="컨테이너-환경변수-설정">
+<a class="anchor" href="#%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>컨테이너 환경변수 설정</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker run -it -e a=100 --name c1 centos
+## echo $a
+
+# docker run -it --name db1 mysql # error 출력되며 env 설정 필요
+# docker ps -a
+# docker inspect db1 # ("Entrypoint":[...)
+# docker run -d -e MYSQL_ROOT_PASSWORD=1234 --name db2 mysql # 환경변수 주고 실행
+</code></pre></div></div>
+
+<p>보통 inpsect 내 “Cmd”:[“mysql”]가 실행되나,<br>
+Entrypoint가 지정되어 있으면 “Entrypoint”:[“docker-entrypoint.sh”]이 우선 실행됨</p>
+
+<h3 id="컨데이너-로그-확인">
+<a class="anchor" href="#%EC%BB%A8%EB%8D%B0%EC%9D%B4%EB%84%88-%EB%A1%9C%EA%B7%B8-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>컨데이너 로그 확인</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker logs --help
+# docker logs db1 # 위 환경변수 오류 error log 확인 가능
+# docker logs --tail 2 db2 
+# docker logs --since "2021-10-12T01:00" db2
+</code></pre></div></div>
+
+<h3 id="컨테이너-자원-할당">
+<a class="anchor" href="#%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EC%9E%90%EC%9B%90-%ED%95%A0%EB%8B%B9" aria-hidden="true"><span class="octicon octicon-link"></span></a>컨테이너 자원 할당</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker run -d --name web1 httpd # options 없이 자원 할당
+# docker stats web1 # 최대치 할당
+# docker run -d --name web2 --memory="200m" httpd 
+# docker stats --no-stream web1 # 메모리 limit 200MB
+# 
+
+# docker update --help
+# docker update --memory=500m web2 # up가능하나 down은 불가
+
+# docker run -itd -c 10 --name a1 alpine # 가중치 1로 할당
+# docker run -itd -c 20 --name a2 alpine # 가중치 2로 할당
+# docker attach a1
+## dd if=/dev/zero of=/dev/null &amp;
+# docker attach a2
+## dd if=/dev/zero of=/dev/null &amp;
+# docker stats # cpu 사용률 a2가 a1의 두배 확인
+
+# docker run -itd --name a3 -cpus="0,2" alpine
+## dd if=/dev/zero of=/dev/null &amp;
+# docker stats # a3의 cpu 사용률 20% 확인
+
+# docker run -itd --name c1 --devie-write-bps /dev/sda:1mb centos # sda 디스크에 write작업시 속도 limit을 1MB/s
+# docker attach c1
+## dd if=/dev/zero of=/perftest bs=1M count=10 oflag=direct
+# docker run -itd --name c2 centos # 제한없이 
+# docker attach c2
+## dd if=/dev/zero of=/perftest bs=1M count=10 oflag=direct
+</code></pre></div></div>
+
+<p>CPU, Memory, Block 제한은 가능하나 NET I/O는 제한 불가</p>
+
+<h3 id="워드프레스-컨테이너-실행-example">
+<a class="anchor" href="#%EC%9B%8C%EB%93%9C%ED%94%84%EB%A0%88%EC%8A%A4-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88-%EC%8B%A4%ED%96%89-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>워드프레스 컨테이너 실행 example</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker network create wp-web # 네트워크 생성
+# docker run -d --name wp-db \ 
+    --net wp-net \
+    -v wp-db-vol:/var/lib/mysql \
+    -e MYSQL_ROOT_PASSWORD=1234 \
+    -e MYSQL_DATABASE=wordpress \
+    -e MYSQL_USER=wordpress \
+    -e MYSQL_PASSWORD=1234 \
+    mysql:5.7    
+# docker run -d --name wp-web \
+    --net wp-net \
+    -v wp-web-vol:/var/www/html \
+    --link wp-db:mysql \
+    -e WORDPRESS_DB_HOST=wp-db:3306 \
+    -e WORDPRESS_DB_PASSWORD=1234 \
+    -p 80:80 \
+    wordpress
+</code></pre></div></div>
+
+<p><a href="http://localhost:8080">http://localhost:8080</a> 또는<br>
+<a href="http://localhost:8080/wp-admin/install.php%EB%A1%9C">http://localhost:8080/wp-admin/install.php로</a> 확인</p>
+
+<hr>
+
+  </div><a class="u-url" href="/techblog/statistics/2021/10/19/Docker-Container-Configuration-management.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/techblog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/techblog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/techblog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A challenge-loving junior data engineer.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
