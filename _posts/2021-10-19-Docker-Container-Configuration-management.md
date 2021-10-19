@@ -2,7 +2,7 @@
 toc: true
 layout: post
 description: 1장
-categories: [statistics]
+categories: [kubernetes]
 title: Docker Container Configuration & management
 ---
 <!-- ![]({{site.baseurl}}/images/post/1_1.jpg) -->
