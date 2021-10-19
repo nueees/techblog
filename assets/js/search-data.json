@@ -51,6 +51,22 @@
   
 
   
+      ,"page3": {
+          "title": "sample",
+          "content": "hello world . hell | hell | hell | .",
+          "url": "https://nueees.github.io/techblog/sample/",
+          "relUrl": "/sample/",
+          "date": ""
+      }
+      
+  
+
+  
+  
+
+  
+
+  
   
 
   
@@ -59,18 +75,13 @@
   
 
   
-
-  
   
 
   
   
 
   
-  
-
-  
-      ,"page10": {
+      ,"page11": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://nueees.github.io/techblog/robots.txt",
