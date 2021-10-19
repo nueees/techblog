@@ -48,9 +48,9 @@
         ,"post4": {
             "title": "표집분포와 중심극한정리",
             "content": "R과 함께하는 통계학의 이해 - 최용석 . . 5.1 표집분포 . 모수(parameter): 모집단에 대한 수치적 특성값 (모평균, 모비율, 모분산…) . 통계량(statistic): 표본으로부터 획득한 수치적 정보 . 통계량은 그 자체가 하나의 확률변수로서 확률분포를 가지게 된다. . 표집분포(sampling distribution): 통계량이 가지는 확률분포 . 표본 추출과정에서 발생하는 통계량의 값이 가지는 변동은 이 표집분포에 의해 설명될 수 있다. 표집분포는 모집단의 분포에 영향을 받기도 하고 표본의 크기 $n$에도 영향을 받는다. . 확률표본(random sample): 크기가 큰 모집단으로부터 임의 추출된 크기 $n$의 표본 $X_1,X_2,…,X_n$ . $X_1,X_2,…,X_n$은 서로 독립이고 모집단의 분포와 같은 분포를 가진다. . . 5.2 표본평균의 분포와 중심극한정리 . 크기가 $n$인 확률표본 $X_1,X_2,…,X_n$에 대해 $ E(X) = mu $, $ Var(X) = sigma^2 $, $i=1,2,…,n$이고, . $ bar{X} = frac{1}{n} sum{X_i} $일 때, . 표본평균 $ bar{X}$의 기대값과 분산 . $ E( bar{X}) = mu $ $ Var( bar{X}) = frac{ sigma^2}{n} $ . 정규모집단으로부터의 표본평균에 대한 확률분포 . 크기가 $n$인 확률표본 $X_1,X_2,…,X_n$에 대해 $ X_i sim N( mu, sigma^2) $, $i=1,2,…,n$일때, . 표본평균 $ bar{X}$의 확률분포는 $ bar{X} sim N( mu, frac{ sigma^2}{n}) $를 따르게 된다. . 중심극한정리 : 평균이 $ mu$이고 분산이 $ sigma^2$인 모집단으로부터 추출한 크기 $n$의 확률표본의 표본평균 $ bar{X}$는 표본의 크기가 큰 경우(보통 30 이상), 근사적으로 $ mu$이고 분산이 $ frac{ sigma^2}{n}$인 정규분포를 따르게 된다. . .",
-            "url": "https://nueees.github.io/techblog/statistics/2021/09/02/%ED%91%9C%EC%A7%91%EB%B6%84%ED%8F%AC%EC%99%80-%EC%A4%91%EC%8B%AC%EA%B7%B9%ED%95%9C%EC%A0%95%EB%A6%AC.html",
-            "relUrl": "/statistics/2021/09/02/%ED%91%9C%EC%A7%91%EB%B6%84%ED%8F%AC%EC%99%80-%EC%A4%91%EC%8B%AC%EA%B7%B9%ED%95%9C%EC%A0%95%EB%A6%AC.html",
-            "date": " • Sep 2, 2021"
+            "url": "https://nueees.github.io/techblog/statistics/2021/09/03/%ED%91%9C%EC%A7%91%EB%B6%84%ED%8F%AC%EC%99%80-%EC%A4%91%EC%8B%AC%EA%B7%B9%ED%95%9C%EC%A0%95%EB%A6%AC.html",
+            "relUrl": "/statistics/2021/09/03/%ED%91%9C%EC%A7%91%EB%B6%84%ED%8F%AC%EC%99%80-%EC%A4%91%EC%8B%AC%EA%B7%B9%ED%95%9C%EC%A0%95%EB%A6%AC.html",
+            "date": " • Sep 3, 2021"
         }
         
     
