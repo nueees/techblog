@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Apache Kafka | Cho’s Tech blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Apache Kafka" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="section1" />
+<meta property="og:description" content="section1" />
+<link rel="canonical" href="https://nueees.github.io/techblog/kafka/message_broker/queue/2021/02/01/Apache-Kafka.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/kafka/message_broker/queue/2021/02/01/Apache-Kafka.html" />
+<meta property="og:site_name" content="Cho’s Tech blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-01T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"section1","url":"https://nueees.github.io/techblog/kafka/message_broker/queue/2021/02/01/Apache-Kafka.html","@type":"BlogPosting","headline":"Apache Kafka","dateModified":"2021-02-01T00:00:00-06:00","datePublished":"2021-02-01T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/kafka/message_broker/queue/2021/02/01/Apache-Kafka.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/techblog/">Cho&#39;s Tech blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/techblog/about/">About Me</a><a class="page-link" href="/techblog/gitInfo/">gitInfo</a><a class="page-link" href="/techblog/search/">Search</a><a class="page-link" href="/techblog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Apache Kafka</h1><p class="page-description">section1</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-02-01T00:00:00-06:00" itemprop="datePublished">
+        Feb 1, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/techblog/categories/#kafka">kafka</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/techblog/categories/#message_broker">message_broker</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/techblog/categories/#queue">queue</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#11-kafka">1.1. Kafka</a></li>
+<li class="toc-entry toc-h1"><a href="#12-brocker--cluster">1.2. Brocker &amp; Cluster</a></li>
+<li class="toc-entry toc-h1"><a href="#13-topic">1.3. Topic</a></li>
+<li class="toc-entry toc-h1"><a href="#14-producer">1.4. Producer</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#role">Role</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#15-consumer">1.5. Consumer</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#role-1">Role</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#offset-number">Offset number:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#16-kafka-streams">1.6. Kafka Streams</a></li>
+<li class="toc-entry toc-h1"><a href="#17-kafka-connect">1.7. Kafka Connect</a></li>
+</ul><p>📎 Tacademy</p>
+
+<hr>
+
+<h1 id="11-kafka">
+<a class="anchor" href="#11-kafka" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. Kafka</h1>
+
+<p>소스 애플리케이션(mysql, oracle, nosql,…/app/was/…)과 타겟 애플리케이션(hadoop, search engine, monitoring, email…)개수가 많아지고,프로토콜 포맷 파편화가 심해져 유지보수가 어려워짐</p>
+
+<p>이러한 복잡함을 해결하기 위해 중간에서 소스 애플리케이션과 타겟 애플리케이션 연결을 느슨하게 함 (scale out)</p>
+
+<p>프로듀서가 큐에 적재하고 컨슈머가 가져가는 구조
+<!-- 클릭로그, 결제로그 -> 로그적재, 로그처리 --></p>
+
+<ul>
+  <li>Kafka Client: kafka와 데이터를 주고 받기 위해 사용하는 (producer, consumer, admin, stream 등) API</li>
+</ul>
+
+<hr>
+<h1 id="12-brocker--cluster">
+<a class="anchor" href="#12-brocker--cluster" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Brocker &amp; Cluster</h1>
+
+<ul>
+  <li>brocker: Kafka application 서버 단위</li>
+  <li>
+    <p>cluster: 3대 이상의 brocker로 구성</p>
+  </li>
+  <li>zookeeper: metadata 저장하여 brockers 관리</li>
+  <li>controller: n대 brocker 중 마스터 brocker (allocate partition, health check)</li>
+</ul>
+
+<hr>
+<h1 id="13-topic">
+<a class="anchor" href="#13-topic" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Topic</h1>
+
+<p><img src="/techblog/images/post/kafka-basic-concepts.png" alt="">
+메시지(데이터) 분류 단위
+n개의 파티션 할당 가능
+각 파티션 마다 고유 offset 가짐
+메시지 처리순서는 파티션 별로 관리</p>
+<ul>
+  <li>partition: 레코드를 담고 있고 replication 가능</li>
+  <li>ISR(In-Sync Replica): replication(leader+follower)의 sync로 된 묶음</li>
+  <li>segment: 실제로 메시지가 저장되는 파일 시스템 단위
+<img src="/techblog/images/post/topic.JPG" alt="">
+<img src="/techblog/images/post/topic2.JPG" alt="">
+</li>
+</ul>
+
+<hr>
+<h1 id="14-producer">
+<a class="anchor" href="#14-producer" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.4. Producer</h1>
+<p>메시지(레코드)를 brocker로 송신 API</p>
+
+<h2 id="role">
+<a class="anchor" href="#role" aria-hidden="true"><span class="octicon octicon-link"></span></a>Role</h2>
+<p>Topic에 해당하는 메시지를 해당 파티션에 offset과 함께 기록</p>
+<ul>
+  <li>Publishing: 특정 topic으로 데이터 송신</li>
+  <li>처리 실패 시 재시도</li>
+  <li>key 사용시, 해당 partition으로 데이터 매핑</li>
+</ul>
+
+<hr>
+<h1 id="15-consumer">
+<a class="anchor" href="#15-consumer" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.5. Consumer</h1>
+<p>메시지(레코드) brocker에서 수신 API
+다수의 consumer를 group화 할 수 있음</p>
+
+<h2 id="role-1">
+<a class="anchor" href="#role-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Role</h2>
+<ul>
+  <li>Polling: Topic의 partition으로 부터 메시지(레코드)를 가져감</li>
+  <li>Commit: Partition offset 위치를 기록</li>
+  <li>Parallel Processing: Consumer 여러개일 경우, Consumer group을 통해 병렬 처리</li>
+</ul>
+
+<h3 id="offset-number">
+<a class="anchor" href="#offset-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>Offset number:</h3>
+<p>파티션 내 갖게되는 고유 키
+토픽 별, 파티션 별로 고유하게 지정됨
+컨슈머가 데이터를 어디까지 읽었는지 확인하는 용도
+데이터를 읽은 곳까지 commit</p>
+
+<p>컨슈머 이슈가 발생해도 __consumer_offset 토픽에 저장된 지점 확인(High availablility)</p>
+
+<p><img src="/techblog/images/post/multi_consumer.JPG" alt="">
+<img src="/techblog/images/post/different_consumer_group.JPG" alt=""></p>
+
+<p><strong>병렬처리를 위해서는 consumer 개수는 partition 개수보다 적거나 같아야 함</strong></p>
+
+<hr>
+<h1 id="16-kafka-streams">
+<a class="anchor" href="#16-kafka-streams" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.6. Kafka Streams</h1>
+<p>데이터 변환(transformation) API</p>
+
+<ul>
+  <li>stateful, stateless와 같은 상태 기반 stream 처리 가능</li>
+  <li>stream api와 DSL(Domain Specific Language) 동시 지원</li>
+  <li>Exactly-once 처리, HA 특징</li>
+  <li>Kafka security(acl, sasl 등) 지원</li>
+  <li>stream 처리를 위한 별도 cluster(yarn 등) 불필요</li>
+</ul>
+
+<hr>
+<h1 id="17-kafka-connect">
+<a class="anchor" href="#17-kafka-connect" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.7. Kafka Connect</h1>
+<p>Kafka client가 아닌 connect를 통해 데이터를 import/export 가능
+code 없이 configuration으로 데이터 migration 시 사용</p>
+
+
+  </div><a class="u-url" href="/techblog/kafka/message_broker/queue/2021/02/01/Apache-Kafka.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/techblog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/techblog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/techblog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A challenge-loving junior data engineer.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
