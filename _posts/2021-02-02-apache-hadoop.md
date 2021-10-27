@@ -101,6 +101,7 @@ client 요청 시 data 전달, task 수행
 
 ## Mapping: 파일은 한 줄씩 읽어서 데이터 변경
 데이터를 key와 value 형태로 pairing하고 list화  
+
 |   |   |
 |:--|:--|
 |map1|Deer, 1|
@@ -116,6 +117,7 @@ client 요청 시 data 전달, task 수행
 
 ## shuffling
 grouping, sorting  
+
 |   |
 |:--|
 |Bear, 1|
@@ -131,6 +133,7 @@ grouping, sorting
 
 ## Reducing: map의 결과 데이터를 집계
 aggregating,  후 extract  
+
 |   |   |
 |:--|:--|
 |red1|Bear, 2|
