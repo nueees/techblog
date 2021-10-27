@@ -10,14 +10,14 @@ title: Apache Hadoop
 
 ---
 
-# 2.1. Hadoop
+## 2.1. Hadoop
 
 - 대용량 데이터를 처리하기 위한 컴퓨터 클러스터에서 동작하는 분산 프로그램 (단일 서버 < 클러스터로 묶은 서버)  
 - 기존 RDBMS는 확장을 하려면 서버를 추가 구매해야하나 (scale-up)
 - Hadoop은 node(컴퓨터)를 추가함으로써 선형적으로 확장 가능 (scale-out)
 
- ## 저장 storage: HDFS(Hadoop Distributed File System)  
- ## 연산: MapReduce
+ ### 저장 storage: HDFS(Hadoop Distributed File System)  
+ ### 연산: MapReduce
 
 
 - 파일을 block(64M,128M) 단위로 분할  
@@ -27,7 +27,7 @@ title: Apache Hadoop
 
 
 ---
-# 2.2. HDFS Access
+## 2.2. HDFS Access
 
 1) shell  
 2) java api  
@@ -36,9 +36,9 @@ title: Apache Hadoop
     - Sqoop(HDFS와 RDBMS 사이 데이터 전송)
     - Hue(Web 기반으로 browse, upload, download, file view)
  
-## file write & read
+### file write & read
 
-### name node의 mete data를 통해 접근
+#### name node의 mete data를 통해 접근
 따라서 name node 데몬 중단되면 cluster 접근 불가  
 HA로 2개의 name node를 구성하기도 함 (Active/Standby)  
 1개 name node 구성시 helper node(Secondary name node)가 추가됨  
@@ -61,7 +61,7 @@ HA로 2개의 name node를 구성하기도 함 (Active/Standby)
 
 
 ---
-# 2.3. 구성요소
+## 2.3. 구성요소
 
 1) client
 node node를 통해 정보를 받고 이후 data node와 직접 통신  
@@ -77,12 +77,12 @@ client 요청 시 data 전달, task 수행
 ![]({{site.baseurl}}/images/mapreduce.png)
 
 
-## Data Analytics 관점
+### Data Analytics 관점
 
 - Job tracker: task tracker가 수행할 task 스케줄링, 모니터링
 - Task tracker: task를 수행하고 job tracker에게 상황 
 
-## Data Storage 관점
+### Data Storage 관점
 
 - Name node: Meta data 유지, client로 부터 데이터 요청오면 위치 전달
 - Data node: 데이터를 HDFS block 단위로 구성, HA를 위한 replication 3 유지, heartbeat를 통한 파일 위치 전달
@@ -91,7 +91,7 @@ client 요청 시 data 전달, task 수행
 
 
 ---
-# 2.4. MapReduce
+## 2.4. MapReduce
 
 |File| 
 |:--|
@@ -99,7 +99,7 @@ client 요청 시 data 전달, task 수행
 |Car, Car, River|
 |Deer, Car, Bear|
 
-## Mapping: 파일은 한 줄씩 읽어서 데이터 변경
+### Mapping: 파일은 한 줄씩 읽어서 데이터 변경
 데이터를 key와 value 형태로 pairing하고 list화  
 
 |   |   |
@@ -115,7 +115,7 @@ client 요청 시 data 전달, task 수행
 |    |Bear, 1|
 
 
-## shuffling
+### shuffling
 grouping, sorting  
 
 |   |
@@ -131,7 +131,7 @@ grouping, sorting
 |River, 1|
 
 
-## Reducing: map의 결과 데이터를 집계
+### Reducing: map의 결과 데이터를 집계
 aggregating,  후 extract  
 
 |   |   |
