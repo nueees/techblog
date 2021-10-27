@@ -113,35 +113,35 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#21-hadoop">2.1. Hadoop</a></li>
-<li class="toc-entry toc-h1"><a href="#22-hdfs-access">2.2. HDFS Access</a>
+<li class="toc-entry toc-h2"><a href="#21-hadoop">2.1. Hadoop</a></li>
+<li class="toc-entry toc-h2"><a href="#22-hdfs-access">2.2. HDFS Access</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#file-write--read">file write &amp; read</a>
+<li class="toc-entry toc-h3"><a href="#file-write--read">file write &amp; read</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#name-node의-mete-data를-통해-접근">name node의 mete data를 통해 접근</a></li>
+<li class="toc-entry toc-h4"><a href="#name-node의-mete-data를-통해-접근">name node의 mete data를 통해 접근</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#23-구성요소">2.3. 구성요소</a>
+<li class="toc-entry toc-h2"><a href="#23-구성요소">2.3. 구성요소</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#data-analytics-관점">Data Analytics 관점</a></li>
-<li class="toc-entry toc-h2"><a href="#data-storage-관점">Data Storage 관점</a></li>
+<li class="toc-entry toc-h3"><a href="#data-analytics-관점">Data Analytics 관점</a></li>
+<li class="toc-entry toc-h3"><a href="#data-storage-관점">Data Storage 관점</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#24-mapreduce">2.4. MapReduce</a>
+<li class="toc-entry toc-h2"><a href="#24-mapreduce">2.4. MapReduce</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#mapping-파일은-한-줄씩-읽어서-데이터-변경">Mapping: 파일은 한 줄씩 읽어서 데이터 변경</a></li>
-<li class="toc-entry toc-h2"><a href="#shuffling">shuffling</a></li>
-<li class="toc-entry toc-h2"><a href="#reducing-map의-결과-데이터를-집계">Reducing: map의 결과 데이터를 집계</a></li>
+<li class="toc-entry toc-h3"><a href="#mapping-파일은-한-줄씩-읽어서-데이터-변경">Mapping: 파일은 한 줄씩 읽어서 데이터 변경</a></li>
+<li class="toc-entry toc-h3"><a href="#shuffling">shuffling</a></li>
+<li class="toc-entry toc-h3"><a href="#reducing-map의-결과-데이터를-집계">Reducing: map의 결과 데이터를 집계</a></li>
 </ul>
 </li>
 </ul><p>📎 Tacademy</p>
 
 <hr>
 
-<h1 id="21-hadoop">
-<a class="anchor" href="#21-hadoop" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. Hadoop</h1>
+<h2 id="21-hadoop">
+<a class="anchor" href="#21-hadoop" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. Hadoop</h2>
 
 <ul>
   <li>대용량 데이터를 처리하기 위한 컴퓨터 클러스터에서 동작하는 분산 프로그램 (단일 서버 &lt; 클러스터로 묶은 서버)</li>
@@ -149,8 +149,8 @@ window.onload = wrap_img;
   <li>Hadoop은 node(컴퓨터)를 추가함으로써 선형적으로 확장 가능 (scale-out)</li>
 </ul>
 
-<p>## 저장 storage: HDFS(Hadoop Distributed File System)<br>
- ## 연산: MapReduce</p>
+<p>### 저장 storage: HDFS(Hadoop Distributed File System)<br>
+ ### 연산: MapReduce</p>
 
 <ul>
   <li>파일을 block(64M,128M) 단위로 분할</li>
@@ -160,8 +160,8 @@ window.onload = wrap_img;
 </ul>
 
 <hr>
-<h1 id="22-hdfs-access">
-<a class="anchor" href="#22-hdfs-access" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.2. HDFS Access</h1>
+<h2 id="22-hdfs-access">
+<a class="anchor" href="#22-hdfs-access" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.2. HDFS Access</h2>
 
 <p>1) shell<br>
 2) java api<br>
@@ -170,11 +170,11 @@ window.onload = wrap_img;
     - Sqoop(HDFS와 RDBMS 사이 데이터 전송)
     - Hue(Web 기반으로 browse, upload, download, file view)</p>
 
-<h2 id="file-write--read">
-<a class="anchor" href="#file-write--read" aria-hidden="true"><span class="octicon octicon-link"></span></a>file write &amp; read</h2>
+<h3 id="file-write--read">
+<a class="anchor" href="#file-write--read" aria-hidden="true"><span class="octicon octicon-link"></span></a>file write &amp; read</h3>
 
-<h3 id="name-node의-mete-data를-통해-접근">
-<a class="anchor" href="#name-node%EC%9D%98-mete-data%EB%A5%BC-%ED%86%B5%ED%95%B4-%EC%A0%91%EA%B7%BC" aria-hidden="true"><span class="octicon octicon-link"></span></a>name node의 mete data를 통해 접근</h3>
+<h4 id="name-node의-mete-data를-통해-접근">
+<a class="anchor" href="#name-node%EC%9D%98-mete-data%EB%A5%BC-%ED%86%B5%ED%95%B4-%EC%A0%91%EA%B7%BC" aria-hidden="true"><span class="octicon octicon-link"></span></a>name node의 mete data를 통해 접근</h4>
 <p>따라서 name node 데몬 중단되면 cluster 접근 불가<br>
 HA로 2개의 name node를 구성하기도 함 (Active/Standby)<br>
 1개 name node 구성시 helper node(Secondary name node)가 추가됨</p>
@@ -232,8 +232,8 @@ HA로 2개의 name node를 구성하기도 함 (Active/Standby)<br>
 <p><em>node 중 idle이 높은 node부터 접근</em></p>
 
 <hr>
-<h1 id="23-구성요소">
-<a class="anchor" href="#23-%EA%B5%AC%EC%84%B1%EC%9A%94%EC%86%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. 구성요소</h1>
+<h2 id="23-구성요소">
+<a class="anchor" href="#23-%EA%B5%AC%EC%84%B1%EC%9A%94%EC%86%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. 구성요소</h2>
 
 <p>1) client
 node node를 통해 정보를 받고 이후 data node와 직접 통신</p>
@@ -246,16 +246,16 @@ client 요청 시 data 전달, task 수행</p>
 
 <p><img src="/techblog/images/mapreduce.png" alt=""></p>
 
-<h2 id="data-analytics-관점">
-<a class="anchor" href="#data-analytics-%EA%B4%80%EC%A0%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Analytics 관점</h2>
+<h3 id="data-analytics-관점">
+<a class="anchor" href="#data-analytics-%EA%B4%80%EC%A0%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Analytics 관점</h3>
 
 <ul>
   <li>Job tracker: task tracker가 수행할 task 스케줄링, 모니터링</li>
   <li>Task tracker: task를 수행하고 job tracker에게 상황</li>
 </ul>
 
-<h2 id="data-storage-관점">
-<a class="anchor" href="#data-storage-%EA%B4%80%EC%A0%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Storage 관점</h2>
+<h3 id="data-storage-관점">
+<a class="anchor" href="#data-storage-%EA%B4%80%EC%A0%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Storage 관점</h3>
 
 <ul>
   <li>Name node: Meta data 유지, client로 부터 데이터 요청오면 위치 전달</li>
@@ -263,8 +263,8 @@ client 요청 시 data 전달, task 수행</p>
 </ul>
 
 <hr>
-<h1 id="24-mapreduce">
-<a class="anchor" href="#24-mapreduce" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. MapReduce</h1>
+<h2 id="24-mapreduce">
+<a class="anchor" href="#24-mapreduce" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. MapReduce</h2>
 
 <table>
   <thead>
@@ -285,8 +285,8 @@ client 요청 시 data 전달, task 수행</p>
   </tbody>
 </table>
 
-<h2 id="mapping-파일은-한-줄씩-읽어서-데이터-변경">
-<a class="anchor" href="#mapping-%ED%8C%8C%EC%9D%BC%EC%9D%80-%ED%95%9C-%EC%A4%84%EC%94%A9-%EC%9D%BD%EC%96%B4%EC%84%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B3%80%EA%B2%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mapping: 파일은 한 줄씩 읽어서 데이터 변경</h2>
+<h3 id="mapping-파일은-한-줄씩-읽어서-데이터-변경">
+<a class="anchor" href="#mapping-%ED%8C%8C%EC%9D%BC%EC%9D%80-%ED%95%9C-%EC%A4%84%EC%94%A9-%EC%9D%BD%EC%96%B4%EC%84%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B3%80%EA%B2%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mapping: 파일은 한 줄씩 읽어서 데이터 변경</h3>
 <p>데이터를 key와 value 형태로 pairing하고 list화</p>
 
 <table>
@@ -336,8 +336,8 @@ client 요청 시 data 전달, task 수행</p>
   </tbody>
 </table>
 
-<h2 id="shuffling">
-<a class="anchor" href="#shuffling" aria-hidden="true"><span class="octicon octicon-link"></span></a>shuffling</h2>
+<h3 id="shuffling">
+<a class="anchor" href="#shuffling" aria-hidden="true"><span class="octicon octicon-link"></span></a>shuffling</h3>
 <p>grouping, sorting</p>
 
 <table>
@@ -377,8 +377,8 @@ client 요청 시 data 전달, task 수행</p>
   </tbody>
 </table>
 
-<h2 id="reducing-map의-결과-데이터를-집계">
-<a class="anchor" href="#reducing-map%EC%9D%98-%EA%B2%B0%EA%B3%BC-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC-%EC%A7%91%EA%B3%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reducing: map의 결과 데이터를 집계</h2>
+<h3 id="reducing-map의-결과-데이터를-집계">
+<a class="anchor" href="#reducing-map%EC%9D%98-%EA%B2%B0%EA%B3%BC-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC-%EC%A7%91%EA%B3%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reducing: map의 결과 데이터를 집계</h3>
 <p>aggregating,  후 extract</p>
 
 <table>
