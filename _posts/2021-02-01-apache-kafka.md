@@ -10,7 +10,7 @@ title: Apache Kafka
 
 ---
 
-# 1.1. Kafka
+## 1.1. Kafka
 
 소스 애플리케이션(mysql, oracle, nosql,.../app/was/...)과 타겟 애플리케이션(hadoop, search engine, monitoring, email...)개수가 많아지고,프로토콜 포맷 파편화가 심해져 유지보수가 어려워짐
 
@@ -23,7 +23,7 @@ title: Apache Kafka
 
 
 ---
-# 1.2. Brocker & Cluster
+## 1.2. Brocker & Cluster
 
 - brocker: Kafka application 서버 단위
 - cluster: 3대 이상의 brocker로 구성
@@ -33,7 +33,7 @@ title: Apache Kafka
 
 
 ---
-# 1.3. Topic
+## 1.3. Topic
 
 ![]({{site.baseurl}}/images/post/kafka-basic-concepts.png)
 메시지(데이터) 분류 단위
@@ -47,10 +47,10 @@ n개의 파티션 할당 가능
 ![]({{site.baseurl}}/images/post/topic2.JPG)
 
 ---
-# 1.4. Producer
+## 1.4. Producer
 메시지(레코드)를 brocker로 송신 API
 
-## Role
+### Role
 Topic에 해당하는 메시지를 해당 파티션에 offset과 함께 기록
 - Publishing: 특정 topic으로 데이터 송신
 - 처리 실패 시 재시도
@@ -58,16 +58,16 @@ Topic에 해당하는 메시지를 해당 파티션에 offset과 함께 기록
 
 
 ---
-# 1.5. Consumer
+## 1.5. Consumer
 메시지(레코드) brocker에서 수신 API
 다수의 consumer를 group화 할 수 있음
 
-## Role
+### Role
 - Polling: Topic의 partition으로 부터 메시지(레코드)를 가져감
 - Commit: Partition offset 위치를 기록
 - Parallel Processing: Consumer 여러개일 경우, Consumer group을 통해 병렬 처리
 
-### Offset number:
+#### Offset number:
 파티션 내 갖게되는 고유 키
 토픽 별, 파티션 별로 고유하게 지정됨
 컨슈머가 데이터를 어디까지 읽었는지 확인하는 용도
@@ -83,7 +83,7 @@ Topic에 해당하는 메시지를 해당 파티션에 offset과 함께 기록
 
 
 ---
-# 1.6. Kafka Streams
+## 1.6. Kafka Streams
 데이터 변환(transformation) API
 
 - stateful, stateless와 같은 상태 기반 stream 처리 가능
@@ -95,7 +95,7 @@ Topic에 해당하는 메시지를 해당 파티션에 offset과 함께 기록
 
 
 ---
-# 1.7. Kafka Connect
+## 1.7. Kafka Connect
 Kafka client가 아닌 connect를 통해 데이터를 import/export 가능
 code 없이 configuration으로 데이터 migration 시 사용
 
