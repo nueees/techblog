@@ -113,22 +113,22 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#21-nth-prime-number">2.1. Nth Prime Number</a></li>
-<li class="toc-entry toc-h1"><a href="#22-nth-number">2.2. Nth Number</a></li>
-<li class="toc-entry toc-h1"><a href="#23-nth-biggest-number">2.3. Nth Biggest Number</a></li>
-<li class="toc-entry toc-h1"><a href="#24-closest-representative-value">2.4. Closest Representative value</a></li>
-<li class="toc-entry toc-h1"><a href="#25-regular-polyhedron">2.5. Regular Polyhedron</a></li>
-<li class="toc-entry toc-h1"><a href="#26-sum-the-digits-of-a-number">2.6. Sum the Digits of a Number</a></li>
-<li class="toc-entry toc-h1"><a href="#27-prime-number">2.7. Prime Number</a></li>
-<li class="toc-entry toc-h1"><a href="#28-prime-with-digits-reversed">2.8. Prime with digits reversed</a></li>
-<li class="toc-entry toc-h1"><a href="#29-dice-game">2.9. Dice game</a></li>
-<li class="toc-entry toc-h1"><a href="#210-calculate-a-score">2.10. Calculate a score</a></li>
+<li class="toc-entry toc-h2"><a href="#21-nth-prime-number">2.1. Nth Prime Number</a></li>
+<li class="toc-entry toc-h2"><a href="#22-nth-number">2.2. Nth Number</a></li>
+<li class="toc-entry toc-h2"><a href="#23-nth-biggest-number">2.3. Nth Biggest Number</a></li>
+<li class="toc-entry toc-h2"><a href="#24-closest-representative-value">2.4. Closest Representative value</a></li>
+<li class="toc-entry toc-h2"><a href="#25-regular-polyhedron">2.5. Regular Polyhedron</a></li>
+<li class="toc-entry toc-h2"><a href="#26-sum-the-digits-of-a-number">2.6. Sum the Digits of a Number</a></li>
+<li class="toc-entry toc-h2"><a href="#27-prime-number">2.7. Prime Number</a></li>
+<li class="toc-entry toc-h2"><a href="#28-prime-with-digits-reversed">2.8. Prime with digits reversed</a></li>
+<li class="toc-entry toc-h2"><a href="#29-dice-game">2.9. Dice game</a></li>
+<li class="toc-entry toc-h2"><a href="#210-calculate-a-score">2.10. Calculate a score</a></li>
 </ul><p>Python Algorithm Practice</p>
 
 <hr>
 
-<h1 id="21-nth-prime-number">
-<a class="anchor" href="#21-nth-prime-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. Nth Prime Number</h1>
+<h2 id="21-nth-prime-number">
+<a class="anchor" href="#21-nth-prime-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. Nth Prime Number</h2>
 <p>두 개의 자연수 N과 K가 주어졌을 때, N의 약수들 중 K번째로 작은 수를 출력하는 프로그램을 작성하세요.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n, k = map(int, input().split())
 print(n,k)
@@ -147,8 +147,8 @@ else:
 
 <hr>
 
-<h1 id="22-nth-number">
-<a class="anchor" href="#22-nth-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.2. Nth Number</h1>
+<h2 id="22-nth-number">
+<a class="anchor" href="#22-nth-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.2. Nth Number</h2>
 <p>N개의 숫자로 이루어진 숫자열이 주어지면 해당 숫자열중에서 s번째부터 e번째까지의 수를 오름차순 정렬했을 때 k번째로 나타나는 숫자를 출력하는 프로그램을 작성하세요.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>T = int(input())
@@ -164,8 +164,8 @@ for i in range(T):
 </code></pre></div></div>
 <hr>
 
-<h1 id="23-nth-biggest-number">
-<a class="anchor" href="#23-nth-biggest-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. Nth Biggest Number</h1>
+<h2 id="23-nth-biggest-number">
+<a class="anchor" href="#23-nth-biggest-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. Nth Biggest Number</h2>
 <p>1부터 100사이의 자연수가 적힌 N장의 카드를 가지고 있습니다. 같은 숫자의 카드가 여러장 있을 수 있습니다. 
 이 중 3장을 뽑아 각 카드에 적힌 수를 합한 값을 기록하려고 합니다. 
 3장을 뽑을 수 있는 모든 경우를 기록합니다. 
@@ -186,8 +186,8 @@ print(res[k-1])
 </code></pre></div></div>
 <hr>
 
-<h1 id="24-closest-representative-value">
-<a class="anchor" href="#24-closest-representative-value" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. Closest Representative value</h1>
+<h2 id="24-closest-representative-value">
+<a class="anchor" href="#24-closest-representative-value" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. Closest Representative value</h2>
 <p>N명의 학생의 수학점수가 주어집니다. N명의 학생들의 평균(소수 첫째자리 반올림)을 구하고, N명의 학생 중 평균에 가장 가까운 학생은 몇 번째 학생인지 출력하는 프로그램을 작성하세요. 
 평균과 가장 가까운 점수가 여러 개일 경우 먼저 점수가 높은 학생의 번호를 답으로 하고, 높은 점수를 가진 학생이 여러 명일 경우 그 중 학생번호가 빠른 학생의 번호를 답으로 합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n = int(input())
@@ -208,8 +208,8 @@ print(avg, res)
 </code></pre></div></div>
 <hr>
 
-<h1 id="25-regular-polyhedron">
-<a class="anchor" href="#25-regular-polyhedron" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.5. Regular Polyhedron</h1>
+<h2 id="25-regular-polyhedron">
+<a class="anchor" href="#25-regular-polyhedron" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.5. Regular Polyhedron</h2>
 <p>두 개의 정 N면체와 정 M면체의 두 개의 주사위를 던져서 나올 수 있는 눈의 합 중 가장 확률이 높은 숫자를 출력하는 프로그램을 작성하세요.
 정답이 여러 개일 경우 오름차순으로 출력합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n, m = map(int, input().split())
@@ -233,8 +233,8 @@ for i in range(1,len(cnt)):
 </code></pre></div></div>
 <hr>
 
-<h1 id="26-sum-the-digits-of-a-number">
-<a class="anchor" href="#26-sum-the-digits-of-a-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.6. Sum the Digits of a Number</h1>
+<h2 id="26-sum-the-digits-of-a-number">
+<a class="anchor" href="#26-sum-the-digits-of-a-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.6. Sum the Digits of a Number</h2>
 <p>N개의 자연수가 입력되면 각 자연수의 자릿수의 합을 구하고, 그 합이 최대인 자연수를 출력하는 프로그램을 작성하세요.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n = int(input())
 a = list(map(int, input().split()))
@@ -257,8 +257,8 @@ print(res)
 </code></pre></div></div>
 <hr>
 
-<h1 id="27-prime-number">
-<a class="anchor" href="#27-prime-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.7. Prime Number</h1>
+<h2 id="27-prime-number">
+<a class="anchor" href="#27-prime-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.7. Prime Number</h2>
 <p>자연수 N이 입력되면 1부터 N까지의 소수의 개수를 출력하는 프로그램을 작성하세요. 
 예를 들어 20이 입력되면 1부터 20까지의 소수는 2, 3, 5, 7, 11, 13, 17, 19로 총 8개입니다.
 (제한시간은 1초)</p>
@@ -276,8 +276,8 @@ print(cnt)
 </code></pre></div></div>
 <hr>
 
-<h1 id="28-prime-with-digits-reversed">
-<a class="anchor" href="#28-prime-with-digits-reversed" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.8. Prime with digits reversed</h1>
+<h2 id="28-prime-with-digits-reversed">
+<a class="anchor" href="#28-prime-with-digits-reversed" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.8. Prime with digits reversed</h2>
 <p>N개의 자연수가 입력되면 각 자연수를 뒤집은 후 그 뒤집은 수가 소수이면 그 수를 출력하는 프로그램을 작성하세요. 
 예를 들어 32를 뒤집으면 23이고, 23은 소수이다. 그러면 23을 출력한다. 
 단 910를 뒤집으면 19로 숫자화 해야 한다. 첫 자리부터의 연속된 0은 무시한다.</p>
@@ -308,8 +308,8 @@ for x in a:
 </code></pre></div></div>
 <hr>
 
-<h1 id="29-dice-game">
-<a class="anchor" href="#29-dice-game" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.9. Dice game</h1>
+<h2 id="29-dice-game">
+<a class="anchor" href="#29-dice-game" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.9. Dice game</h2>
 <p>1에서부터 6까지의 눈을 가진 3개의 주사위를 던져서 다음과 같은 규칙에 따라 상금을 받는 게임이 있다.
 규칙(1) 같은 눈이 3개가 나오면 10,000원+(같은 눈)*1,000원의 상금을 받게 된다. 
 규칙(2) 같은 눈이 2개만 나오는 경우에는 1,000원+(같은 눈)*100원의 상금을 받게 된다. 
@@ -337,8 +337,8 @@ for i in range(n):
 </code></pre></div></div>
 <hr>
 
-<h1 id="210-calculate-a-score">
-<a class="anchor" href="#210-calculate-a-score" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.10. Calculate a score</h1>
+<h2 id="210-calculate-a-score">
+<a class="anchor" href="#210-calculate-a-score" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.10. Calculate a score</h2>
 <p>OX 문제는 맞거나 틀린 두 경우의 답을 가지는 문제를 말한다. 
 여러 개의 OX 문제로 만들어진 시험에서 연속적으로 답을 맞히는 경우에는 가산점을 주기 위해서 다음과 같이 점수 계산을 하기로 하였다.
 1번 문제가 맞는 경우에는 1점으로 계산한다. 앞의 문제에 대해서는 답을 틀리다가 답이 맞는 처음 문제는 1점으로 계산한다.
