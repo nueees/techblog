@@ -198,7 +198,7 @@ Spark Context는 작업 내용을 task 단위로 분할하여 Executor로 보냄
 <a class="anchor" href="#executors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Executors</h3>
 <p>주어진 작업의 개별 task들을 실행하는 작업 실행하고 결과 return</p>
 
-<p>1) 애플리케이션을 구성하는 작업들을 실행하여 driver에 그 결과를 return
+<p>1) 애플리케이션을 구성하는 작업들을 실행하여 driver에 그 결과를 return<br>
 2) 각 executor 안에 존재하는 <strong>block manager</strong>라는 서비스를 통해 사용자 프로그램에서 캐시하는 RDD를 저장하기 위한 메모리 저장소를 제공</p>
 
 <p>Python,R Process &lt;-&gt; JVM(Spark session) -&gt; Executors</p>
