@@ -10,13 +10,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="section2" />
 <meta property="og:description" content="section2" />
-<link rel="canonical" href="https://nueees.github.io/techblog/hadoop/filesystem/2021/02/02/Apache-hadoop.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/hadoop/filesystem/2021/02/02/Apache-hadoop.html" />
+<link rel="canonical" href="https://nueees.github.io/techblog/hadoop/filesystem/2021/02/02/apache-hadoop.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/hadoop/filesystem/2021/02/02/apache-hadoop.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-02-02T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"section2","url":"https://nueees.github.io/techblog/hadoop/filesystem/2021/02/02/Apache-hadoop.html","@type":"BlogPosting","headline":"Apache Hadoop","dateModified":"2021-02-02T00:00:00-06:00","datePublished":"2021-02-02T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/hadoop/filesystem/2021/02/02/Apache-hadoop.html"},"@context":"https://schema.org"}</script>
+{"description":"section2","url":"https://nueees.github.io/techblog/hadoop/filesystem/2021/02/02/apache-hadoop.html","@type":"BlogPosting","headline":"Apache Hadoop","dateModified":"2021-02-02T00:00:00-06:00","datePublished":"2021-02-02T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/hadoop/filesystem/2021/02/02/apache-hadoop.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -287,46 +287,129 @@ client 요청 시 data 전달, task 수행</p>
 
 <h2 id="mapping-파일은-한-줄씩-읽어서-데이터-변경">
 <a class="anchor" href="#mapping-%ED%8C%8C%EC%9D%BC%EC%9D%80-%ED%95%9C-%EC%A4%84%EC%94%A9-%EC%9D%BD%EC%96%B4%EC%84%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B3%80%EA%B2%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mapping: 파일은 한 줄씩 읽어서 데이터 변경</h2>
-<p>데이터를 key와 value 형태로 pairing하고 list화<br>
-|   |   |
-|:–|:–|
-|map1|Deer, 1|
-|    |Bear, 1|
-|    |River, 1|
-|map2|Car, 1|
-|    |Car, 1|
-|    |River, 1|
-|map3|Deer, 1|
-|    |Car, 1|
-|    |Bear, 1|</p>
+<p>데이터를 key와 value 형태로 pairing하고 list화</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: left"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">map1</td>
+      <td style="text-align: left">Deer, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Bear, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">River, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">map2</td>
+      <td style="text-align: left">Car, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Car, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">River, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">map3</td>
+      <td style="text-align: left">Deer, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Car, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Bear, 1</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="shuffling">
 <a class="anchor" href="#shuffling" aria-hidden="true"><span class="octicon octicon-link"></span></a>shuffling</h2>
-<p>grouping, sorting<br>
-|   |
-|:–|
-|Bear, 1|
-|Bear, 1|
-|Car, 1|
-|Car, 1|
-|Car, 1|
-|Deer, 1|
-|Deer, 1|
-|River, 1|
-|River, 1|</p>
+<p>grouping, sorting</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Bear, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Bear, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Car, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Car, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Car, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Deer, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Deer, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">River, 1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">River, 1</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="reducing-map의-결과-데이터를-집계">
 <a class="anchor" href="#reducing-map%EC%9D%98-%EA%B2%B0%EA%B3%BC-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC-%EC%A7%91%EA%B3%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reducing: map의 결과 데이터를 집계</h2>
-<p>aggregating,  후 extract<br>
-|   |   |
-|:–|:–|
-|red1|Bear, 2|
-|red2|Car, 3|
-|red3|Deer, 2|
-|red4|River, 2|</p>
+<p>aggregating,  후 extract</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: left"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">red1</td>
+      <td style="text-align: left">Bear, 2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">red2</td>
+      <td style="text-align: left">Car, 3</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">red3</td>
+      <td style="text-align: left">Deer, 2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">red4</td>
+      <td style="text-align: left">River, 2</td>
+    </tr>
+  </tbody>
+</table>
 
 
-  </div><a class="u-url" href="/techblog/hadoop/filesystem/2021/02/02/Apache-hadoop.html" hidden></a>
+  </div><a class="u-url" href="/techblog/hadoop/filesystem/2021/02/02/apache-hadoop.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
