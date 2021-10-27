@@ -116,31 +116,31 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#11-kafka">1.1. Kafka</a></li>
-<li class="toc-entry toc-h1"><a href="#12-brocker--cluster">1.2. Brocker &amp; Cluster</a></li>
-<li class="toc-entry toc-h1"><a href="#13-topic">1.3. Topic</a></li>
-<li class="toc-entry toc-h1"><a href="#14-producer">1.4. Producer</a>
+<li class="toc-entry toc-h2"><a href="#11-kafka">1.1. Kafka</a></li>
+<li class="toc-entry toc-h2"><a href="#12-brocker--cluster">1.2. Brocker &amp; Cluster</a></li>
+<li class="toc-entry toc-h2"><a href="#13-topic">1.3. Topic</a></li>
+<li class="toc-entry toc-h2"><a href="#14-producer">1.4. Producer</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#role">Role</a></li>
+<li class="toc-entry toc-h3"><a href="#role">Role</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#15-consumer">1.5. Consumer</a>
+<li class="toc-entry toc-h2"><a href="#15-consumer">1.5. Consumer</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#role-1">Role</a>
+<li class="toc-entry toc-h3"><a href="#role-1">Role</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#offset-number">Offset number:</a></li>
+<li class="toc-entry toc-h4"><a href="#offset-number">Offset number:</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#16-kafka-streams">1.6. Kafka Streams</a></li>
-<li class="toc-entry toc-h1"><a href="#17-kafka-connect">1.7. Kafka Connect</a></li>
+<li class="toc-entry toc-h2"><a href="#16-kafka-streams">1.6. Kafka Streams</a></li>
+<li class="toc-entry toc-h2"><a href="#17-kafka-connect">1.7. Kafka Connect</a></li>
 </ul><p>📎 Tacademy</p>
 
 <hr>
 
-<h1 id="11-kafka">
-<a class="anchor" href="#11-kafka" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. Kafka</h1>
+<h2 id="11-kafka">
+<a class="anchor" href="#11-kafka" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. Kafka</h2>
 
 <p>소스 애플리케이션(mysql, oracle, nosql,…/app/was/…)과 타겟 애플리케이션(hadoop, search engine, monitoring, email…)개수가 많아지고,프로토콜 포맷 파편화가 심해져 유지보수가 어려워짐</p>
 
@@ -154,8 +154,8 @@ window.onload = wrap_img;
 </ul>
 
 <hr>
-<h1 id="12-brocker--cluster">
-<a class="anchor" href="#12-brocker--cluster" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Brocker &amp; Cluster</h1>
+<h2 id="12-brocker--cluster">
+<a class="anchor" href="#12-brocker--cluster" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Brocker &amp; Cluster</h2>
 
 <ul>
   <li>brocker: Kafka application 서버 단위</li>
@@ -167,8 +167,8 @@ window.onload = wrap_img;
 </ul>
 
 <hr>
-<h1 id="13-topic">
-<a class="anchor" href="#13-topic" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Topic</h1>
+<h2 id="13-topic">
+<a class="anchor" href="#13-topic" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Topic</h2>
 
 <p><img src="/techblog/images/post/kafka-basic-concepts.png" alt="">
 메시지(데이터) 분류 단위
@@ -185,12 +185,12 @@ n개의 파티션 할당 가능
 </ul>
 
 <hr>
-<h1 id="14-producer">
-<a class="anchor" href="#14-producer" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.4. Producer</h1>
+<h2 id="14-producer">
+<a class="anchor" href="#14-producer" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.4. Producer</h2>
 <p>메시지(레코드)를 brocker로 송신 API</p>
 
-<h2 id="role">
-<a class="anchor" href="#role" aria-hidden="true"><span class="octicon octicon-link"></span></a>Role</h2>
+<h3 id="role">
+<a class="anchor" href="#role" aria-hidden="true"><span class="octicon octicon-link"></span></a>Role</h3>
 <p>Topic에 해당하는 메시지를 해당 파티션에 offset과 함께 기록</p>
 <ul>
   <li>Publishing: 특정 topic으로 데이터 송신</li>
@@ -199,21 +199,21 @@ n개의 파티션 할당 가능
 </ul>
 
 <hr>
-<h1 id="15-consumer">
-<a class="anchor" href="#15-consumer" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.5. Consumer</h1>
+<h2 id="15-consumer">
+<a class="anchor" href="#15-consumer" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.5. Consumer</h2>
 <p>메시지(레코드) brocker에서 수신 API
 다수의 consumer를 group화 할 수 있음</p>
 
-<h2 id="role-1">
-<a class="anchor" href="#role-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Role</h2>
+<h3 id="role-1">
+<a class="anchor" href="#role-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Role</h3>
 <ul>
   <li>Polling: Topic의 partition으로 부터 메시지(레코드)를 가져감</li>
   <li>Commit: Partition offset 위치를 기록</li>
   <li>Parallel Processing: Consumer 여러개일 경우, Consumer group을 통해 병렬 처리</li>
 </ul>
 
-<h3 id="offset-number">
-<a class="anchor" href="#offset-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>Offset number:</h3>
+<h4 id="offset-number">
+<a class="anchor" href="#offset-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>Offset number:</h4>
 <p>파티션 내 갖게되는 고유 키
 토픽 별, 파티션 별로 고유하게 지정됨
 컨슈머가 데이터를 어디까지 읽었는지 확인하는 용도
@@ -227,8 +227,8 @@ n개의 파티션 할당 가능
 <p><strong>병렬처리를 위해서는 consumer 개수는 partition 개수보다 적거나 같아야 함</strong></p>
 
 <hr>
-<h1 id="16-kafka-streams">
-<a class="anchor" href="#16-kafka-streams" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.6. Kafka Streams</h1>
+<h2 id="16-kafka-streams">
+<a class="anchor" href="#16-kafka-streams" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.6. Kafka Streams</h2>
 <p>데이터 변환(transformation) API</p>
 
 <ul>
@@ -240,8 +240,8 @@ n개의 파티션 할당 가능
 </ul>
 
 <hr>
-<h1 id="17-kafka-connect">
-<a class="anchor" href="#17-kafka-connect" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.7. Kafka Connect</h1>
+<h2 id="17-kafka-connect">
+<a class="anchor" href="#17-kafka-connect" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.7. Kafka Connect</h2>
 <p>Kafka client가 아닌 connect를 통해 데이터를 import/export 가능
 code 없이 configuration으로 데이터 migration 시 사용</p>
 
