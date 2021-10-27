@@ -11,6 +11,7 @@ title: Apache Kafka
 ---
 
 ## 1.1. Kafka
+a distributed, partitioned, and replicated commit log service  
 
 소스 애플리케이션(mysql, oracle, nosql,.../app/was/...)과 타겟 애플리케이션(hadoop, search engine, monitoring, email...)개수가 많아지고,프로토콜 포맷 파편화가 심해져 유지보수가 어려워짐
 
