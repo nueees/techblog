@@ -33,6 +33,30 @@ use case: MapReduce 안쓰는 parallel processing, User analytics, Data science,
 UI-Driven Data Preparation (No-Ops, 필요시 scaling 가능)
 use case: Machine learning, Analytics  
 
+#### connect Dataprep to BigQuery  
+
+1) Create Flow
+2) Add dataset (import)
+3) Select BigQuery (left pane) & Create dataset
+4) Import & Add to Flow
+
+#### inspect, process data
+
+1) Edit Recipe
+dataset의 sample을 Transformer view에서 확인 가능 (visualization)  
+
+
+#### execute job to load BigQuery
+
+1) click Run in Transformer page  
+2) click Edit on Create-CSV  
+3) select BigQuery then create table  
+4) name output table  
+5) click Update  
+6) click Run  
+
+
+job history에서 monitoring 가능
 
 
 
