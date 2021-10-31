@@ -4,19 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Data Lifecycle - Process and analyze &amp; Explore and visualize | Cho’s Tech blog</title>
+<title>Data Lifecycle - Analyze &amp; Visualize | Cho’s Tech blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Data Lifecycle - Process and analyze &amp; Explore and visualize" />
+<meta property="og:title" content="Data Lifecycle - Analyze &amp; Visualize" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="section3" />
-<meta property="og:description" content="section3" />
-<link rel="canonical" href="https://nueees.github.io/techblog/gcp/bigquery/2021/10/03/data-lifecycle-analyze-visualize.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/gcp/bigquery/2021/10/03/data-lifecycle-analyze-visualize.html" />
+<meta name="description" content="section3,4" />
+<meta property="og:description" content="section3,4" />
+<link rel="canonical" href="https://nueees.github.io/techblog/gcp/datastudio/2021/10/03/data-lifecycle-analyze-visualize.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/gcp/datastudio/2021/10/03/data-lifecycle-analyze-visualize.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-10-03T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"section3","url":"https://nueees.github.io/techblog/gcp/bigquery/2021/10/03/data-lifecycle-analyze-visualize.html","@type":"BlogPosting","headline":"Data Lifecycle - Process and analyze &amp; Explore and visualize","dateModified":"2021-10-03T00:00:00-05:00","datePublished":"2021-10-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/gcp/bigquery/2021/10/03/data-lifecycle-analyze-visualize.html"},"@context":"https://schema.org"}</script>
+{"description":"section3,4","url":"https://nueees.github.io/techblog/gcp/datastudio/2021/10/03/data-lifecycle-analyze-visualize.html","@type":"BlogPosting","headline":"Data Lifecycle - Analyze &amp; Visualize","dateModified":"2021-10-03T00:00:00-05:00","datePublished":"2021-10-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/gcp/datastudio/2021/10/03/data-lifecycle-analyze-visualize.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,7 +87,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Data Lifecycle - Process and analyze &amp; Explore and visualize</h1><p class="page-description">section3</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-10-03T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Data Lifecycle - Analyze &amp; Visualize</h1><p class="page-description">section3,4</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-10-03T00:00:00-05:00" itemprop="datePublished">
         Oct 3, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -103,7 +103,7 @@ window.onload = wrap_img;
         <a class="category-tags-link" href="/techblog/categories/#gcp">gcp</a>
         &nbsp;
       
-        <a class="category-tags-link" href="/techblog/categories/#bigquery">bigquery</a>
+        <a class="category-tags-link" href="/techblog/categories/#datastudio">datastudio</a>
         
       
       </p>
@@ -114,6 +114,8 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#cloud-architecture-center">Cloud Architecture Center</a></li>
+<li class="toc-entry toc-h1"><a href="#process-and-analyze">Process and analyze</a>
+<ul>
 <li class="toc-entry toc-h2"><a href="#31-processing-large-scale-data">3.1. Processing large-scale data</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#dataproc">Dataproc</a></li>
@@ -124,12 +126,28 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#32-analyzing-and-querying-data">3.2. Analyzing and querying data</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#bigquery">BigQuery</a></li>
+<li class="toc-entry toc-h3"><a href="#machine-learning">Machine learning</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#33-understanding-data-with-machine-learning">3.3. Understanding data with machine learning</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h1"><a href="#explore-and-visualize">Explore and visualize</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#41-explore-and-visualize">4.1. Explore and visualize</a></li>
+<li class="toc-entry toc-h2"><a href="#41-explore-and-visualize">4.1. Explore and visualize</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#datalab">Datalab</a></li>
+<li class="toc-entry toc-h3"><a href="#data-science-ecosystem">Data science ecosystem</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#42-visualizing-business-intelligence-results">4.2. Visualizing business intelligence results</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#looker">Looker</a></li>
+<li class="toc-entry toc-h3"><a href="#bi-engine">BI Engine</a></li>
+<li class="toc-entry toc-h3"><a href="#sheets">Sheets</a></li>
+<li class="toc-entry toc-h3"><a href="#data-catalog">Data Catalog</a></li>
+<li class="toc-entry toc-h3"><a href="#data-studio">Data Studio</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul><h2 id="cloud-architecture-center">
@@ -138,8 +156,14 @@ window.onload = wrap_img;
 
 <p><img src="/techblog/images/post/data-lifecycle-4.svg" alt=""></p>
 
+<h1 id="process-and-analyze">
+<a class="anchor" href="#process-and-analyze" aria-hidden="true"><span class="octicon octicon-link"></span></a>Process and analyze</h1>
+
 <h2 id="31-processing-large-scale-data">
 <a class="anchor" href="#31-processing-large-scale-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. Processing large-scale data</h2>
+<p>source systems (Google Cloud Storage, Bigtable, Google Cloud SQL) 읽어온 큰 데이터를 처리하고
+정규화하고 집계함.
+데이터 양이 커서 클러스터로 분산 처리하거나 소프트웨어 툴들의 도움을 받음</p>
 
 <h3 id="dataproc">
 <a class="anchor" href="#dataproc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataproc</h3>
@@ -158,14 +182,26 @@ use case: MapReduce 안쓰는 parallel processing, User analytics, Data science,
 <p>UI-Driven Data Preparation (No-Ops, 필요시 scaling 가능)
 use case: Machine learning, Analytics</p>
 
+<hr>
 <h2 id="32-analyzing-and-querying-data">
 <a class="anchor" href="#32-analyzing-and-querying-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. Analyzing and querying data</h2>
 
 <h3 id="bigquery">
 <a class="anchor" href="#bigquery" aria-hidden="true"><span class="octicon octicon-link"></span></a>BigQuery</h3>
+<p>앞서 store 할 때 뿐만 아니라 분석할 때도 사용
+use case: User analysis(adtech, clickstream, game telemetry), Device and operational metrics(IoT), BI</p>
 
-<h2 id="33-understanding-data-with-machine-learning">
-<a class="anchor" href="#33-understanding-data-with-machine-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.3. Understanding data with machine learning</h2>
+<h3 id="machine-learning">
+<a class="anchor" href="#machine-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Machine learning</h3>
+<p>처리된 결과를 확대시키거나 data-collection 최적화를 제공하기도 하고 결과 예측도 함</p>
+
+<ul>
+  <li>음성 인식</li>
+  <li>자연어 처리</li>
+  <li>번역</li>
+  <li>동영상 자동 분석</li>
+  <li>AI 플랫폼 (TensorFlow)</li>
+</ul>
 
 <hr>
 <h1 id="explore-and-visualize">
@@ -178,8 +214,44 @@ use case: Machine learning, Analytics</p>
 <h2 id="41-explore-and-visualize">
 <a class="anchor" href="#41-explore-and-visualize" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.1. Explore and visualize</h2>
 
+<h3 id="datalab">
+<a class="anchor" href="#datalab" aria-hidden="true"><span class="octicon octicon-link"></span></a>Datalab</h3>
+<p>interactive한 web 기반 툴<br>
+pandas, numpy, scikit-learn 등의 다양한 toolkit 지원</p>
 
-  </div><a class="u-url" href="/techblog/gcp/bigquery/2021/10/03/data-lifecycle-analyze-visualize.html" hidden></a>
+<h3 id="data-science-ecosystem">
+<a class="anchor" href="#data-science-ecosystem" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data science ecosystem</h3>
+<p>Datalab 말고도, web 기반 툴인 Apache Zeppelin 지원
+R 사용하면 Rstudio Server나 Microsoft ML Server 지원
+Scala나 Java 사용하면 Jupyter 지원</p>
+
+<h2 id="42-visualizing-business-intelligence-results">
+<a class="anchor" href="#42-visualizing-business-intelligence-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.2. Visualizing business intelligence results</h2>
+
+<h3 id="looker">
+<a class="anchor" href="#looker" aria-hidden="true"><span class="octicon octicon-link"></span></a>Looker</h3>
+<p>BI platform</p>
+
+<h3 id="bi-engine">
+<a class="anchor" href="#bi-engine" aria-hidden="true"><span class="octicon octicon-link"></span></a>BI Engine</h3>
+<p>analysis service 관리</p>
+
+<h3 id="sheets">
+<a class="anchor" href="#sheets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sheets</h3>
+<p>Spreadsheet visualization</p>
+
+<h3 id="data-catalog">
+<a class="anchor" href="#data-catalog" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Catalog</h3>
+<p>Data discovery and metadata management</p>
+
+<h3 id="data-studio">
+<a class="anchor" href="#data-studio" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Studio</h3>
+<p>Dashboarding and visualization</p>
+
+<hr>
+
+
+  </div><a class="u-url" href="/techblog/gcp/datastudio/2021/10/03/data-lifecycle-analyze-visualize.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
