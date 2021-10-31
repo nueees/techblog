@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: section3,4
 categories: [gcp,datastudio]
@@ -7,6 +7,7 @@ title: Data Lifecycle - Analyze & Visualize
 ---
 
 [Cloud Architecture Center](https://cloud.google.com/architecture/data-lifecycle-cloud-platform#process_and_analyze)
+
 ---
 
 ![]({{site.baseurl}}/images/post/data-lifecycle-4.svg)
@@ -58,7 +59,9 @@ use case: User analysis(adtech, clickstream, game telemetry), Device and operati
 # Explore and visualize
 
 ---
+
 [Cloud Architecture Center](https://cloud.google.com/architecture/data-lifecycle-cloud-platform#explore_and_visualize)
+
 ---
 
 ## 4.1. Explore and visualize
