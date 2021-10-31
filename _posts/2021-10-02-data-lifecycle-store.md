@@ -1,11 +1,13 @@
 ---
-toc: true
+toc: false
 layout: post
 description: section2
 categories: [gcp,bigquery]
 title: Data Lifecycle - Store
 ---
+
 [Cloud Architecture Center](https://cloud.google.com/architecture/data-lifecycle-cloud-platform#store)
+
 ---
 
 
