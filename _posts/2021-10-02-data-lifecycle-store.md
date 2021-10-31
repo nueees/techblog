@@ -122,7 +122,7 @@ Query를 WEB UI 상으로 실행해서 지도에서 표시
 ### Cloud Data Fusion
 Data pipeline 구축 및 관리 (fully-managed)
  
-![Google Cloud Next 19 Recap Seoul]({{site.baseurl}}/images/post/datafusion.JP)
+![Google Cloud Next 19 Recap Seoul]({{site.baseurl}}/images/post/datafusion.JPG)
 
 1) Pipelines
 create complex data processing workflows (both batch and realtime) using an intuitive UI (Directed Acylic Graph, DAG)   
@@ -190,7 +190,7 @@ Transformation steps 탭에 있는 다운로드 아이콘 누르면 preprocessin
 
 4) insight 탭으로 가서 columns별 데이터 distribution 시각화 된 것 확인  
 
-![Google Cloud Next 19 Recap Seoul]({{site.baseurl}}/images/post/datafusion-insight.JPG)  
+![]({{site.baseurl}}/images/post/datafusion-insight.JPG)  
 
 Pipelines Studio 내 Wrangler로 작업한 노드의 Properties에 들어가면, 
 Wrangler로 한 작업들의 명세를 확인할 수 있음
