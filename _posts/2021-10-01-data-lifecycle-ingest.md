@@ -5,7 +5,7 @@ description: section1
 categories: [gcp,bigquery]
 title: Data Lifecycle - Ingest
 ---
-> [https://cloud.google.com/architecture/data-lifecycle-cloud-platform](https://cloud.google.com/architecture/data-lifecycle-cloud-platform#ingest)
+[Cloud Architecture Center](https://cloud.google.com/architecture/data-lifecycle-cloud-platform#ingest)
 ---
 
 ![]({{site.baseurl}}/images/post/data-lifecycle-1.svg)
