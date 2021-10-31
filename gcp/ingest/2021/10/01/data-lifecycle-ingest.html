@@ -114,21 +114,25 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#httpscloudgooglecomarchitecturedata-lifecycle-cloud-platform">https://cloud.google.com/architecture/data-lifecycle-cloud-platform</a></li>
-<li class="toc-entry toc-h2"><a href="#11-app">1.1. App</a></li>
-<li class="toc-entry toc-h2"><a href="#logging">Logging</a></li>
-<li class="toc-entry toc-h2"><a href="#pubsub">Pub/Sub</a></li>
-<li class="toc-entry toc-h2"><a href="#cloud-sql">Cloud SQL</a></li>
-<li class="toc-entry toc-h2"><a href="#datastore">Datastore</a></li>
-<li class="toc-entry toc-h2"><a href="#cloud-bigtable">Cloud Bigtable</a></li>
-<li class="toc-entry toc-h2"><a href="#cloud-firestore">Cloud Firestore</a></li>
-<li class="toc-entry toc-h2"><a href="#cloud-spanner">Cloud Spanner</a></li>
-<li class="toc-entry toc-h2"><a href="#12-streaming">1.2. Streaming</a></li>
-<li class="toc-entry toc-h2"><a href="#pubsub-1">Pub/Sub</a></li>
-<li class="toc-entry toc-h2"><a href="#13-batch">1.3. Batch</a></li>
-<li class="toc-entry toc-h2"><a href="#cloud-run">Cloud Run</a></li>
-<li class="toc-entry toc-h2"><a href="#storage-transfer-service">Storage Transfer Service</a></li>
-<li class="toc-entry toc-h2"><a href="#bigquery-data-transfer-service">BigQuery Data Transfer Service</a></li>
-<li class="toc-entry toc-h2"><a href="#transfer-appliance">Transfer Appliance</a></li>
+<li class="toc-entry toc-h2"><a href="#11-ingesting-app-data">1.1. Ingesting app data</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#cloud-sql">Cloud SQL</a></li>
+<li class="toc-entry toc-h3"><a href="#datastore">Datastore</a></li>
+<li class="toc-entry toc-h3"><a href="#cloud-bigtable">Cloud Bigtable</a></li>
+<li class="toc-entry toc-h3"><a href="#cloud-firestore">Cloud Firestore</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#12-ingesting-streaming-data">1.2. Ingesting streaming data</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#pubsub">Pub/Sub</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#13-ingesting-bulk-data">1.3. Ingesting bulk data</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#cloud-storage">Cloud Storage</a></li>
+<li class="toc-entry toc-h3"><a href="#bigquery">BigQuery</a></li>
+</ul>
+</li>
 </ul><blockquote>
   <h2 id="httpscloudgooglecomarchitecturedata-lifecycle-cloud-platform">
 <a class="anchor" href="#httpscloudgooglecomarchitecturedata-lifecycle-cloud-platform" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://cloud.google.com/architecture/data-lifecycle-cloud-platform#ingest">https://cloud.google.com/architecture/data-lifecycle-cloud-platform</a>
@@ -139,53 +143,69 @@ window.onload = wrap_img;
 
 <p><img src="/techblog/images/post/data-lifecycle-2.svg" alt=""></p>
 
-<h2 id="11-app">
-<a class="anchor" href="#11-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. App</h2>
+<h2 id="11-ingesting-app-data">
+<a class="anchor" href="#11-ingesting-app-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. Ingesting app data</h2>
 <p>Data from app events, such as log files or user events, is typically collected in a push model, where the app calls an API to send the data to storage.</p>
 
-<h2 id="logging">
-<a class="anchor" href="#logging" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging</h2>
+<p>1) Writing data to a file<br>
+Cloud Storage에서 CSV file로 빼내거나
+BigQuery로 DW에서 데이터를 뽑거나</p>
 
-<h2 id="pubsub">
-<a class="anchor" href="#pubsub" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pub/Sub</h2>
+<p>2) Writing data to a database<br>
+Cloud SQL 혹은 NoSQL인 Datastore 혹은 Bigtable로 데이터를 씀</p>
 
-<h2 id="cloud-sql">
-<a class="anchor" href="#cloud-sql" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud SQL</h2>
+<h3 id="cloud-sql">
+<a class="anchor" href="#cloud-sql" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud SQL</h3>
+<p>Fully managed <strong>relational database</strong> service for MySQL, PostgreSQL, and SQL Server</p>
 
-<h2 id="datastore">
-<a class="anchor" href="#datastore" aria-hidden="true"><span class="octicon octicon-link"></span></a>Datastore</h2>
+<h3 id="datastore">
+<a class="anchor" href="#datastore" aria-hidden="true"><span class="octicon octicon-link"></span></a>Datastore</h3>
+<p>a highly scalable <strong>NoSQL database</strong> for your <em>web and mobile applications</em></p>
 
-<h2 id="cloud-bigtable">
-<a class="anchor" href="#cloud-bigtable" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Bigtable</h2>
+<h3 id="cloud-bigtable">
+<a class="anchor" href="#cloud-bigtable" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Bigtable</h3>
+<p>A fully managed, scalable <strong>NoSQL database</strong> service for <em>large analytical and operational workloads</em></p>
 
-<h2 id="cloud-firestore">
-<a class="anchor" href="#cloud-firestore" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Firestore</h2>
+<h3 id="cloud-firestore">
+<a class="anchor" href="#cloud-firestore" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Firestore</h3>
+<p>Easily develop rich applications using a fully managed, scalable, and serverless <strong>NoSQL document database</strong></p>
 
-<h2 id="cloud-spanner">
-<a class="anchor" href="#cloud-spanner" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Spanner</h2>
-
-<h2 id="12-streaming">
-<a class="anchor" href="#12-streaming" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Streaming</h2>
+<hr>
+<h2 id="12-ingesting-streaming-data">
+<a class="anchor" href="#12-ingesting-streaming-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Ingesting streaming data</h2>
 <p>The data consists of a continuous stream of small, asynchronous messages.</p>
 
-<h2 id="pubsub-1">
-<a class="anchor" href="#pubsub-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pub/Sub</h2>
+<p>1) Streaming data as messages<br>
+streaming 데이터를 Pub/Sub으로 보내서 받은 message를 processing 혹은 storing</p>
 
-<h2 id="13-batch">
-<a class="anchor" href="#13-batch" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Batch</h2>
+<h3 id="pubsub">
+<a class="anchor" href="#pubsub" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pub/Sub</h3>
+<p>Real-time <strong>messaging</strong> and ingestion for event-driven systems and streaming analytics</p>
+
+<hr>
+<h2 id="13-ingesting-bulk-data">
+<a class="anchor" href="#13-ingesting-bulk-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Ingesting bulk data</h2>
 <p>Large amounts of data are stored in a set of files that are transferred to storage in bulk.</p>
 
-<h2 id="cloud-run">
-<a class="anchor" href="#cloud-run" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Run</h2>
+<p>1) Scientific workloads<br>
+Genetics data가 있는 VCF text file을 Cloud Storage에 upload (추후 Cloud Life Sciences로 처리)</p>
 
-<h2 id="storage-transfer-service">
-<a class="anchor" href="#storage-transfer-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>Storage Transfer Service</h2>
+<p>2) Migrating to the cloud<br>
+on-premise Oracle DB에서 Google Cloud SQL DB로 migration 할 때</p>
 
-<h2 id="bigquery-data-transfer-service">
-<a class="anchor" href="#bigquery-data-transfer-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>BigQuery Data Transfer Service</h2>
+<p>3) Backing up data<br>
+Cloud Storage Transfer Service를 통해 replicating해서 백업 할 때</p>
 
-<h2 id="transfer-appliance">
-<a class="anchor" href="#transfer-appliance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transfer Appliance</h2>
+<p>4) Importing legacy data<br>
+기존 legacy big data를 Bigquery (DW)로 import 할 때</p>
+
+<h3 id="cloud-storage">
+<a class="anchor" href="#cloud-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Storage</h3>
+<p>Object Storage</p>
+
+<h3 id="bigquery">
+<a class="anchor" href="#bigquery" aria-hidden="true"><span class="octicon octicon-link"></span></a>BigQuery</h3>
+<p>Serverless, highly scalable, and cost-effective multicloud data warehouse designed for business agility</p>
 
 
   </div><a class="u-url" href="/techblog/gcp/ingest/2021/10/01/data-lifecycle-ingest.html" hidden></a>
