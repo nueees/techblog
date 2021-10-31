@@ -64,12 +64,12 @@ job history에서 monitoring 가능
 ## 3.2. Analyzing and querying data
 
 ### BigQuery
-앞서 store 할 때 뿐만 아니라 분석할 때도 사용
+앞서 store 할 때 뿐만 아니라 분석할 때도 사용  
 use case: User analysis(adtech, clickstream, game telemetry), Device and operational metrics(IoT), BI
 
 
 ### Machine learning
-처리된 결과를 확대시키거나 data-collection 최적화를 제공하기도 하고 결과 예측도 함
+처리된 결과를 확대시키거나 data-collection 최적화를 제공하기도 하고 결과 예측도 함  
 
 - 음성 인식  
 - 자연어 처리  
@@ -97,7 +97,7 @@ interactive한 web 기반 툴
 pandas, numpy, scikit-learn 등의 다양한 toolkit 지원  
 
 
-### Data science ecosystem
+### Data science ecosystem  
 Datalab 말고도, web 기반 툴인 Apache Zeppelin 지원
 R 사용하면 Rstudio Server나 Microsoft ML Server 지원
 Scala나 Java 사용하면 Jupyter 지원
