@@ -112,91 +112,51 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#cloud-architecture-center">Cloud Architecture Center</a></li>
-<li class="toc-entry toc-h2"><a href="#21-storing-object-data">2.1. Storing object data</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#google-cloud-storage">Google Cloud Storage</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#22-storing-database-data">2.2. Storing database data</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#relational-rdbms">Relational (RDBMS)</a></li>
-<li class="toc-entry toc-h3"><a href="#non-relational-nosql">Non-relational (NoSQL)</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#23-storing-data-warehouse-data">2.3. Storing data warehouse data</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#bigquery">BigQuery</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#feature">Feature</a></li>
-<li class="toc-entry toc-h4"><a href="#interface">Interface</a></li>
-<li class="toc-entry toc-h4"><a href="#for-reducing-the-price">for reducing the price</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h3"><a href="#working-with-arrays">Working with arrays</a></li>
-<li class="toc-entry toc-h3"><a href="#cloud-data-fusion">Cloud Data Fusion</a></li>
-<li class="toc-entry toc-h3"><a href="#building-a-pipeline">Building a Pipeline</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#directed-acyclic-graph-dag">Directed Acyclic Graph (DAG)</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h3"><a href="#exploring-data-using-wrangler">Exploring Data using Wrangler</a></li>
-</ul>
-</li>
-</ul><h2 id="cloud-architecture-center">
-<a class="anchor" href="#cloud-architecture-center" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://cloud.google.com/architecture/data-lifecycle-cloud-platform#store">Cloud Architecture Center</a>
-</h2>
+    <p><a href="https://cloud.google.com/architecture/data-lifecycle-cloud-platform#store">Cloud Architecture Center</a></p>
 
-<p><img src="/techblog/images/post/data-lifecycle-3.svg" alt=""></p>
+<hr />
 
-<h2 id="21-storing-object-data">
-<a class="anchor" href="#21-storing-object-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. Storing object data</h2>
+<p><img src="/techblog/images/post/data-lifecycle-3.svg" alt="" /></p>
+
+<h2 id="21-storing-object-data">2.1. Storing object data</h2>
 <p>bulk로 넣는 File 형식일 때</p>
 
-<h3 id="google-cloud-storage">
-<a class="anchor" href="#google-cloud-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Google Cloud Storage</h3>
+<h3 id="google-cloud-storage">Google Cloud Storage</h3>
 
 <p>타 cloud storages이 제공하는 대부분의 특성을 가짐</p>
 
-<p>1) Off-site management<br>
-2) Quick implementation<br>
-3) Cost-effective<br>
-4) Scalability<br>
+<p>1) Off-site management<br />
+2) Quick implementation<br />
+3) Cost-effective<br />
+4) Scalability<br />
 5) Business continuity</p>
 
-<hr>
-<h2 id="22-storing-database-data">
-<a class="anchor" href="#22-storing-database-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.2. Storing database data</h2>
+<hr />
+<h2 id="22-storing-database-data">2.2. Storing database data</h2>
 <p>RDBMS와 NoSQL같은 DB 저장 시</p>
 
-<h3 id="relational-rdbms">
-<a class="anchor" href="#relational-rdbms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Relational (RDBMS)</h3>
+<h3 id="relational-rdbms">Relational (RDBMS)</h3>
 <ul>
   <li>Google Cloud SQL (MySQL, PostgreSQL)</li>
   <li>Spanner (Horizontally scalable)</li>
   <li>기존 ecosystem (Microsoft SQL Server)</li>
 </ul>
 
-<h3 id="non-relational-nosql">
-<a class="anchor" href="#non-relational-nosql" aria-hidden="true"><span class="octicon octicon-link"></span></a>Non-relational (NoSQL)</h3>
+<h3 id="non-relational-nosql">Non-relational (NoSQL)</h3>
 <ul>
   <li>Google Bigtable(wide-column)</li>
   <li>Firestore (Flexible, scalable)</li>
   <li>기존 ecosystem (MongoDB, Cassandra)</li>
 </ul>
 
-<hr>
-<h2 id="23-storing-data-warehouse-data">
-<a class="anchor" href="#23-storing-data-warehouse-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. Storing data warehouse data</h2>
+<hr />
+<h2 id="23-storing-data-warehouse-data">2.3. Storing data warehouse data</h2>
 <p>분석용도로 DW에 큰 data 저장 시</p>
 
-<h3 id="bigquery">
-<a class="anchor" href="#bigquery" aria-hidden="true"><span class="octicon octicon-link"></span></a>BigQuery</h3>
+<h3 id="bigquery">BigQuery</h3>
 <p>managed DW</p>
 
-<h4 id="feature">
-<a class="anchor" href="#feature" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature</h4>
+<h4 id="feature">Feature</h4>
 <p>a fully-managed, serverless data warehouse that enables scalable analysis over petabytes of data.</p>
 
 <ul>
@@ -211,15 +171,14 @@ window.onload = wrap_img;
   <li>easier than Hadoop, Spark: install, configure env, develop MapReduce logic…</li>
 </ul>
 
-<p>prerequisite:<br>
-create Google Cloud project<br>
-enable the BigQuery API<br>
-create a service account (key)  <br>
-permissions to open the BigQuery Geo Viz<br>
+<p>prerequisite:<br />
+create Google Cloud project<br />
+enable the BigQuery API<br />
+create a service account (key)  <br />
+permissions to open the BigQuery Geo Viz<br />
 permissions to open the Bucket<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
 
-<h4 id="interface">
-<a class="anchor" href="#interface" aria-hidden="true"><span class="octicon octicon-link"></span></a>Interface</h4>
+<h4 id="interface">Interface</h4>
 
 <p>1) Web UI</p>
 
@@ -242,8 +201,7 @@ client = bigquery.Client()
 
 <p>Query를 WEB UI 상으로 실행해서 지도에서 표시</p>
 
-<h4 id="for-reducing-the-price">
-<a class="anchor" href="#for-reducing-the-price" aria-hidden="true"><span class="octicon octicon-link"></span></a>for reducing the price</h4>
+<h4 id="for-reducing-the-price">for reducing the price</h4>
 
 <p>1) query 하기 전에 preview 사용 (비용 X)
 2) 사전에 query result size 체크 (오른쪽 display)
@@ -255,16 +213,14 @@ client = bigquery.Client()
 
 <!-- each query ran against your datasets의 audit logs 저장함  -->
 
-<hr>
+<hr />
 
-<h3 id="working-with-arrays">
-<a class="anchor" href="#working-with-arrays" aria-hidden="true"><span class="octicon octicon-link"></span></a>Working with arrays</h3>
+<h3 id="working-with-arrays">Working with arrays</h3>
 
 <p><a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/arrays">참고</a></p>
 
-<hr>
-<h3 id="cloud-data-fusion">
-<a class="anchor" href="#cloud-data-fusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Data Fusion</h3>
+<hr />
+<h3 id="cloud-data-fusion">Cloud Data Fusion</h3>
 <p>pipeline building tool</p>
 
 <p>1) Control Center</p>
@@ -281,22 +237,19 @@ client = bigquery.Client()
 
 <p>7) Administration</p>
 
-<h3 id="building-a-pipeline">
-<a class="anchor" href="#building-a-pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building a Pipeline</h3>
+<h3 id="building-a-pipeline">Building a Pipeline</h3>
 
-<h4 id="directed-acyclic-graph-dag">
-<a class="anchor" href="#directed-acyclic-graph-dag" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directed Acyclic Graph (DAG)</h4>
+<h4 id="directed-acyclic-graph-dag">Directed Acyclic Graph (DAG)</h4>
 
-<h3 id="exploring-data-using-wrangler">
-<a class="anchor" href="#exploring-data-using-wrangler" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exploring Data using Wrangler</h3>
+<h3 id="exploring-data-using-wrangler">Exploring Data using Wrangler</h3>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>elastic storage bins in Google Cloud Storage <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p>elastic storage bins in Google Cloud Storage <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p>parallel processing에 사용되는 virtual CPU 수 <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p>parallel processing에 사용되는 virtual CPU 수 <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
