@@ -112,97 +112,66 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#cloud-architecture-center">Cloud Architecture Center</a></li>
-<li class="toc-entry toc-h2"><a href="#11-ingesting-app-data">1.1. Ingesting app data</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#cloud-sql">Cloud SQL</a></li>
-<li class="toc-entry toc-h3"><a href="#datastore">Datastore</a></li>
-<li class="toc-entry toc-h3"><a href="#cloud-bigtable">Cloud Bigtable</a></li>
-<li class="toc-entry toc-h3"><a href="#cloud-firestore">Cloud Firestore</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#12-ingesting-streaming-data">1.2. Ingesting streaming data</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#pubsub">Pub/Sub</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#13-ingesting-bulk-data">1.3. Ingesting bulk data</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#cloud-storage">Cloud Storage</a></li>
-<li class="toc-entry toc-h3"><a href="#bigquery">BigQuery</a></li>
-</ul>
-</li>
-</ul><h2 id="cloud-architecture-center">
-<a class="anchor" href="#cloud-architecture-center" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://cloud.google.com/architecture/data-lifecycle-cloud-platform#ingest">Cloud Architecture Center</a>
-</h2>
+    <p><a href="https://cloud.google.com/architecture/data-lifecycle-cloud-platform#ingest">Cloud Architecture Center</a></p>
 
-<p><img src="/techblog/images/post/data-lifecycle-1.svg" alt=""></p>
+<hr />
 
-<p><img src="/techblog/images/post/data-lifecycle-2.svg" alt=""></p>
+<p><img src="/techblog/images/post/data-lifecycle-1.svg" alt="" /></p>
 
-<h2 id="11-ingesting-app-data">
-<a class="anchor" href="#11-ingesting-app-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. Ingesting app data</h2>
+<p><img src="/techblog/images/post/data-lifecycle-2.svg" alt="" /></p>
+
+<h2 id="11-ingesting-app-data">1.1. Ingesting app data</h2>
 <p>Data from app events, such as log files or user events, is typically collected in a push model, where the app calls an API to send the data to storage.</p>
 
-<p>1) Writing data to a file<br>
+<p>1) Writing data to a file<br />
 Cloud Storage에서 CSV file로 빼내거나
 BigQuery로 DW에서 데이터를 뽑거나</p>
 
-<p>2) Writing data to a database<br>
+<p>2) Writing data to a database<br />
 Cloud SQL 혹은 NoSQL인 Datastore 혹은 Bigtable로 데이터를 씀</p>
 
-<h3 id="cloud-sql">
-<a class="anchor" href="#cloud-sql" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud SQL</h3>
+<h3 id="cloud-sql">Cloud SQL</h3>
 <p>Fully managed <strong>relational database</strong> service for MySQL, PostgreSQL, and SQL Server</p>
 
-<h3 id="datastore">
-<a class="anchor" href="#datastore" aria-hidden="true"><span class="octicon octicon-link"></span></a>Datastore</h3>
+<h3 id="datastore">Datastore</h3>
 <p>a highly scalable <strong>NoSQL database</strong> for your <em>web and mobile applications</em></p>
 
-<h3 id="cloud-bigtable">
-<a class="anchor" href="#cloud-bigtable" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Bigtable</h3>
+<h3 id="cloud-bigtable">Cloud Bigtable</h3>
 <p>A fully managed, scalable <strong>NoSQL database</strong> service for <em>large analytical and operational workloads</em></p>
 
-<h3 id="cloud-firestore">
-<a class="anchor" href="#cloud-firestore" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Firestore</h3>
+<h3 id="cloud-firestore">Cloud Firestore</h3>
 <p>Easily develop rich applications using a fully managed, scalable, and serverless <strong>NoSQL document database</strong></p>
 
-<hr>
-<h2 id="12-ingesting-streaming-data">
-<a class="anchor" href="#12-ingesting-streaming-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Ingesting streaming data</h2>
+<hr />
+<h2 id="12-ingesting-streaming-data">1.2. Ingesting streaming data</h2>
 <p>The data consists of a continuous stream of small, asynchronous messages.</p>
 
-<p>1) Streaming data as messages<br>
+<p>1) Streaming data as messages<br />
 streaming 데이터를 Pub/Sub으로 보내서 받은 message를 processing 혹은 storing</p>
 
-<h3 id="pubsub">
-<a class="anchor" href="#pubsub" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pub/Sub</h3>
+<h3 id="pubsub">Pub/Sub</h3>
 <p>Real-time <strong>messaging</strong> and ingestion for event-driven systems and streaming analytics</p>
 
-<hr>
-<h2 id="13-ingesting-bulk-data">
-<a class="anchor" href="#13-ingesting-bulk-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Ingesting bulk data</h2>
+<hr />
+<h2 id="13-ingesting-bulk-data">1.3. Ingesting bulk data</h2>
 <p>Large amounts of data are stored in a set of files that are transferred to storage in bulk.</p>
 
-<p>1) Scientific workloads<br>
+<p>1) Scientific workloads<br />
 Genetics data가 있는 VCF text file을 Cloud Storage에 upload (추후 Cloud Life Sciences로 처리)</p>
 
-<p>2) Migrating to the cloud<br>
+<p>2) Migrating to the cloud<br />
 on-premise Oracle DB에서 Google Cloud SQL DB로 migration 할 때</p>
 
-<p>3) Backing up data<br>
+<p>3) Backing up data<br />
 Cloud Storage Transfer Service를 통해 replicating해서 백업 할 때</p>
 
-<p>4) Importing legacy data<br>
+<p>4) Importing legacy data<br />
 기존 legacy big data를 Bigquery (DW)로 import 할 때</p>
 
-<h3 id="cloud-storage">
-<a class="anchor" href="#cloud-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Storage</h3>
+<h3 id="cloud-storage">Cloud Storage</h3>
 <p>Object Storage</p>
 
-<h3 id="bigquery">
-<a class="anchor" href="#bigquery" aria-hidden="true"><span class="octicon octicon-link"></span></a>BigQuery</h3>
+<h3 id="bigquery">BigQuery</h3>
 <p>Serverless, highly scalable, and cost-effective multicloud data warehouse designed for business agility</p>
 
 
