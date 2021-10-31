@@ -2,7 +2,7 @@
 toc: false
 layout: post
 description: section1
-categories: [gcp,bigquery]
+categories: [gcp]
 title: Data Lifecycle - Ingest
 ---
 
@@ -12,6 +12,11 @@ title: Data Lifecycle - Ingest
 
 ![]({{site.baseurl}}/images/post/data-lifecycle-1.svg)
 
+
+## 0.1. Orchestration 
+
+### Cloud Composer
+Apache Airflow에 내장된 workflow orchestration service (위 그림 서비스들을 관리)
 
 ![]({{site.baseurl}}/images/post/data-lifecycle-2.svg)
 
