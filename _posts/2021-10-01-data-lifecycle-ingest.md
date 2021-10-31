@@ -1,11 +1,13 @@
 ---
-toc: true
+toc: false
 layout: post
 description: section1
 categories: [gcp,bigquery]
 title: Data Lifecycle - Ingest
 ---
+
 [Cloud Architecture Center](https://cloud.google.com/architecture/data-lifecycle-cloud-platform#ingest)
+
 ---
 
 ![]({{site.baseurl}}/images/post/data-lifecycle-1.svg)
