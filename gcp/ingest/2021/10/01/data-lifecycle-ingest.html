@@ -4,19 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Exploring and Preparing your Data with BigQuery | Cho’s Tech blog</title>
+<title>Data Lifecycle - Ingest | Cho’s Tech blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Exploring and Preparing your Data with BigQuery" />
+<meta property="og:title" content="Data Lifecycle - Ingest" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="section1" />
 <meta property="og:description" content="section1" />
-<link rel="canonical" href="https://nueees.github.io/techblog/bigquery/2021/10/01/bigquery.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/bigquery/2021/10/01/bigquery.html" />
+<link rel="canonical" href="https://nueees.github.io/techblog/gcp/ingest/2021/10/01/data-lifecycle-ingest.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/gcp/ingest/2021/10/01/data-lifecycle-ingest.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-10-01T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"section1","url":"https://nueees.github.io/techblog/bigquery/2021/10/01/bigquery.html","@type":"BlogPosting","headline":"Exploring and Preparing your Data with BigQuery","dateModified":"2021-10-01T00:00:00-05:00","datePublished":"2021-10-01T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/bigquery/2021/10/01/bigquery.html"},"@context":"https://schema.org"}</script>
+{"description":"section1","url":"https://nueees.github.io/techblog/gcp/ingest/2021/10/01/data-lifecycle-ingest.html","@type":"BlogPosting","headline":"Data Lifecycle - Ingest","dateModified":"2021-10-01T00:00:00-05:00","datePublished":"2021-10-01T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/gcp/ingest/2021/10/01/data-lifecycle-ingest.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,7 +87,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Exploring and Preparing your Data with BigQuery</h1><p class="page-description">section1</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-10-01T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Data Lifecycle - Ingest</h1><p class="page-description">section1</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-10-01T00:00:00-05:00" itemprop="datePublished">
         Oct 1, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -100,7 +100,10 @@ window.onload = wrap_img;
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
-        <a class="category-tags-link" href="/techblog/categories/#bigquery">bigquery</a>
+        <a class="category-tags-link" href="/techblog/categories/#gcp">gcp</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/techblog/categories/#ingest">ingest</a>
         
       
       </p>
@@ -110,146 +113,82 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#11-bigquery">1.1. BigQuery</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#feature">Feature</a></li>
-<li class="toc-entry toc-h3"><a href="#interface">Interface</a></li>
-<li class="toc-entry toc-h3"><a href="#for-reducing-the-price">for reducing the price</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#12-sql-reference">1.2. SQL reference</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#working-with-arrays">Working with arrays</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#13-cloud-data-fusion">1.3. Cloud Data Fusion</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#building-a-pipeline">Building a Pipeline</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#directed-acyclic-graph-dag">Directed Acyclic Graph (DAG)</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h3"><a href="#exploring-data-using-wrangler">Exploring Data using Wrangler</a></li>
-</ul>
-</li>
-</ul><p>From Data to Insights with Google Cloud Specialization</p>
-
-<hr>
-
-<h2 id="11-bigquery">
-<a class="anchor" href="#11-bigquery" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. BigQuery</h2>
-<p>peta byte급(DW)의 data 저장 및 분석용 클라우드 서비스 (PaaS)</p>
-
-<h3 id="feature">
-<a class="anchor" href="#feature" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature</h3>
-<p>a fully-managed, serverless data warehouse that enables scalable analysis over petabytes of data.</p>
-
-<ul>
-  <li>serverless cloud 서비스로 설치/운영이 필요없음 (NoOps)</li>
-  <li>RDBMS의 SQL 사용 (ANSI)</li>
-  <li>speed (in-memory BI Engine and machine learning built in)</li>
-  <li>handling big data supported by cloud scale infra</li>
-  <li>save 3 replication (data loss risk X)</li>
-  <li>
-    <p>batch / streaming</p>
-  </li>
-  <li>easier than Hadoop, Spark: install, configure env, develop MapReduce logic…</li>
-</ul>
-
-<blockquote>
-  <p>prerequisite: 
-create Google Cloud project<br>
-enable the BigQuery API
-create a service account (key)<br>
-permissions to open the BigQuery Geo Viz
-permissions to open the Bucket<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+<li class="toc-entry toc-h2"><a href="#httpscloudgooglecomarchitecturedata-lifecycle-cloud-platform">https://cloud.google.com/architecture/data-lifecycle-cloud-platform</a></li>
+<li class="toc-entry toc-h2"><a href="#11-app">1.1. App</a></li>
+<li class="toc-entry toc-h2"><a href="#logging">Logging</a></li>
+<li class="toc-entry toc-h2"><a href="#pubsub">Pub/Sub</a></li>
+<li class="toc-entry toc-h2"><a href="#cloud-sql">Cloud SQL</a></li>
+<li class="toc-entry toc-h2"><a href="#datastore">Datastore</a></li>
+<li class="toc-entry toc-h2"><a href="#cloud-bigtable">Cloud Bigtable</a></li>
+<li class="toc-entry toc-h2"><a href="#cloud-firestore">Cloud Firestore</a></li>
+<li class="toc-entry toc-h2"><a href="#cloud-spanner">Cloud Spanner</a></li>
+<li class="toc-entry toc-h2"><a href="#12-streaming">1.2. Streaming</a></li>
+<li class="toc-entry toc-h2"><a href="#pubsub-1">Pub/Sub</a></li>
+<li class="toc-entry toc-h2"><a href="#13-batch">1.3. Batch</a></li>
+<li class="toc-entry toc-h2"><a href="#cloud-run">Cloud Run</a></li>
+<li class="toc-entry toc-h2"><a href="#storage-transfer-service">Storage Transfer Service</a></li>
+<li class="toc-entry toc-h2"><a href="#bigquery-data-transfer-service">BigQuery Data Transfer Service</a></li>
+<li class="toc-entry toc-h2"><a href="#transfer-appliance">Transfer Appliance</a></li>
+</ul><blockquote>
+  <h2 id="httpscloudgooglecomarchitecturedata-lifecycle-cloud-platform">
+<a class="anchor" href="#httpscloudgooglecomarchitecturedata-lifecycle-cloud-platform" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://cloud.google.com/architecture/data-lifecycle-cloud-platform#ingest">https://cloud.google.com/architecture/data-lifecycle-cloud-platform</a>
+</h2>
 </blockquote>
 
-<h3 id="interface">
-<a class="anchor" href="#interface" aria-hidden="true"><span class="octicon octicon-link"></span></a>Interface</h3>
+<p><img src="/techblog/images/post/data-lifecycle-1.svg" alt=""></p>
 
-<p>1) Web UI</p>
+<p><img src="/techblog/images/post/data-lifecycle-2.svg" alt=""></p>
 
-<p>Query를 WEB UI 상으로 실행</p>
+<h2 id="11-app">
+<a class="anchor" href="#11-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. App</h2>
+<p>Data from app events, such as log files or user events, is typically collected in a push model, where the app calls an API to send the data to storage.</p>
 
-<p>3) Command-Line</p>
+<h2 id="logging">
+<a class="anchor" href="#logging" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging</h2>
 
-<p>Shell 사용해서 실행</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bq mk dataset
-</code></pre></div></div>
+<h2 id="pubsub">
+<a class="anchor" href="#pubsub" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pub/Sub</h2>
 
-<p>3) REST API</p>
+<h2 id="cloud-sql">
+<a class="anchor" href="#cloud-sql" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud SQL</h2>
 
-<p>Java나 Python 프로그래밍으로 구현 HTTP 실행</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from google.cloud import bigquery
-client = bigquery.Client()
-</code></pre></div></div>
+<h2 id="datastore">
+<a class="anchor" href="#datastore" aria-hidden="true"><span class="octicon octicon-link"></span></a>Datastore</h2>
 
-<p>4) Geospatial analytics</p>
+<h2 id="cloud-bigtable">
+<a class="anchor" href="#cloud-bigtable" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Bigtable</h2>
 
-<p>Query를 WEB UI 상으로 실행해서 지도에서 표시</p>
+<h2 id="cloud-firestore">
+<a class="anchor" href="#cloud-firestore" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Firestore</h2>
 
-<h3 id="for-reducing-the-price">
-<a class="anchor" href="#for-reducing-the-price" aria-hidden="true"><span class="octicon octicon-link"></span></a>for reducing the price</h3>
+<h2 id="cloud-spanner">
+<a class="anchor" href="#cloud-spanner" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Spanner</h2>
 
-<p>1) query 하기 전에 preview 사용 (비용 X)
-2) 사전에 query result size 체크 (오른쪽 display)
-3) maximum billing limit 설정
-4) prevent asterisk(*): column oriented storage로 wild card 사용시 column마다 압축 풀어서 가져와야 함
-5) partition table 및 clustered index table 사용: random access 줄어듦
-6) array 형 사용
-7) 적절한 슬롯<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> 수 사용 ( on-demand / flat-rate pricing )</p>
+<h2 id="12-streaming">
+<a class="anchor" href="#12-streaming" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Streaming</h2>
+<p>The data consists of a continuous stream of small, asynchronous messages.</p>
 
-<!-- each query ran against your datasets의 audit logs 저장함 
- -->
+<h2 id="pubsub-1">
+<a class="anchor" href="#pubsub-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pub/Sub</h2>
 
-<hr>
-<h2 id="12-sql-reference">
-<a class="anchor" href="#12-sql-reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. SQL reference</h2>
+<h2 id="13-batch">
+<a class="anchor" href="#13-batch" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Batch</h2>
+<p>Large amounts of data are stored in a set of files that are transferred to storage in bulk.</p>
 
-<h3 id="working-with-arrays">
-<a class="anchor" href="#working-with-arrays" aria-hidden="true"><span class="octicon octicon-link"></span></a>Working with arrays</h3>
+<h2 id="cloud-run">
+<a class="anchor" href="#cloud-run" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cloud Run</h2>
 
-<hr>
-<h2 id="13-cloud-data-fusion">
-<a class="anchor" href="#13-cloud-data-fusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Cloud Data Fusion</h2>
-<p>pipeline building tool</p>
+<h2 id="storage-transfer-service">
+<a class="anchor" href="#storage-transfer-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>Storage Transfer Service</h2>
 
-<p>1) Control Center</p>
+<h2 id="bigquery-data-transfer-service">
+<a class="anchor" href="#bigquery-data-transfer-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>BigQuery Data Transfer Service</h2>
 
-<p>2) Pipelines</p>
+<h2 id="transfer-appliance">
+<a class="anchor" href="#transfer-appliance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transfer Appliance</h2>
 
-<p>3) Wrangler</p>
 
-<p>4) Metadata</p>
-
-<p>5) Hub</p>
-
-<p>6) Entities</p>
-
-<p>7) Administration</p>
-
-<h3 id="building-a-pipeline">
-<a class="anchor" href="#building-a-pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building a Pipeline</h3>
-
-<h4 id="directed-acyclic-graph-dag">
-<a class="anchor" href="#directed-acyclic-graph-dag" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directed Acyclic Graph (DAG)</h4>
-
-<h3 id="exploring-data-using-wrangler">
-<a class="anchor" href="#exploring-data-using-wrangler" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exploring Data using Wrangler</h3>
-
-<div class="footnotes" role="doc-endnotes">
-  <ol>
-    <li id="fn:1" role="doc-endnote">
-      <p>elastic storage bins in Google Cloud Storage <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
-    </li>
-    <li id="fn:2" role="doc-endnote">
-      <p>parallel processing에 사용되는 virtual CPU 수 <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
-    </li>
-  </ol>
-</div>
-
-  </div><a class="u-url" href="/techblog/bigquery/2021/10/01/bigquery.html" hidden></a>
+  </div><a class="u-url" href="/techblog/gcp/ingest/2021/10/01/data-lifecycle-ingest.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
