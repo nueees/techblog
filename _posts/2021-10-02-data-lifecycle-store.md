@@ -120,40 +120,91 @@ Query를 WEB UI 상으로 실행해서 지도에서 표시
 
 ---
 ### Cloud Data Fusion
- pipeline building tool  
+Data pipeline 구축 및 관리 (fully-managed)
  
-1) Control Center
+![Google Cloud Next 19 Recap Seoul]({{site.baseurl}}/images/post/datafusion.JP)
 
-2) Pipelines
+1) Pipelines
+create complex data processing workflows (both batch and realtime) using an intuitive UI (Directed Acylic Graph, DAG)   
 
-3) Wrangler
+2) Wrangler
+connect to data, and transform it using point-and-click transformation steps  
+view, explore, and transform a small sample (10 MB) of your data in one place before running the logic on the entire dataset in the Pipeline Studio   
 
-4) Metadata
+3) Metadata
+how datasets and programs are related to each other,  
+full visibility into the impact of changes   
 
-5) Hub
-
-6) Entities
-
-7) Administration
-
-### Building a Pipeline
-
-#### Directed Acyclic Graph (DAG)
+4) Hub
+distribute reusable applications, data, and code to all users in their organization  
 
 
+#### Wrangler  
 
-### Exploring Data using Wrangler
+1) create bucket
+```
+export BUCKET=$GOOGLE_CLOUD_PROJECT
+gsutil mb gs://$BUCKET
+```
+
+2) data copy to bucker
+```
+gsutil cp gs://cloud-training/OCBL163/titanic.csv gs://$BUCKET
+```
+
+3) Wangler로 preprocessing 작업
+Google Cloud Storage에 있는 titanic raw가 있는 data 탭으로 가서 먼저 csv parsing을 함  
+
+Preprocessing (CLI)  
+```
+drop :body # 기존 body(:은 컬럼임) 날리기
+fill-null-or-empty :Cabin 'none' # Cabin 결측치 처리
+send-to-error empty(Age) # Age empty면 에러 처리
+parse-as-csv :Name ',' false # Name 컬럼 콤마 기준으로 컬럼을 두개로 나눔
+drop Name
+fill-null-or-empty :Name_2 'none'
+rename Name_1 Last_Name
+rename Name_2 First_Name
+set-type :PassengerId integer
+parse-as-csv :First_Name '.' false
+drop First_Name
+drop First_Name_3
+rename First_Name_1 Salutation
+fill-null-or-empty :First_Name_2 'none'
+rename First_Name_2 First_Name
+send-to-error !dq:isNumber(Age) || !dq:isInteger(Age) || (Age == 0  || Age > 125)
+set-type :Age integer
+set-type :Fare double
+set-column Today_Fare (Fare * 23.4058)+1
+generate-uuid id
+mask-shuffle First_Name
+```
+
+[wrangler-docs 참고](https://github.com/data-integrations/wrangler/tree/develop/wrangler-docs)
+
+more에 가서 view schema 하면 해당 데이터 meta 정보 json으로 추출 가능  
+
+Transformation steps 탭에 있는 다운로드 아이콘 누르면 preprocessing 내역 추출 가능
 
 
 
+4) insight 탭으로 가서 columns별 데이터 distribution 시각화 된 것 확인  
+
+![Google Cloud Next 19 Recap Seoul]({{site.baseurl}}/images/post/datafusion-insight.JPG)  
+
+Pipelines Studio 내 Wrangler로 작업한 노드의 Properties에 들어가면, 
+Wrangler로 한 작업들의 명세를 확인할 수 있음
 
 
 
+#### Pipelines  
 
-
-
-
-
+1) target인 BigQuery에 dataset 미리 생성 (demo_cdf)
+2) Data Fusion에서 create pipeline (Batch) 눌러서 Studio 이동  
+3) Sink 섹션에 있는 BigQuery를 배치해서 pipeline 연결하고 Properties 구성 (dataset: demo_cdf)  
+4) save 후 deploy 하고, run 
+![]({{site.baseurl}}/images/post/datafusion-pipelines.png)
+5) summary에서 해당 job의 dash board 확인 가능
 
 
 
