@@ -112,87 +112,41 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#cloud-architecture-center">Cloud Architecture Center</a></li>
-<li class="toc-entry toc-h1"><a href="#process-and-analyze">Process and analyze</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#31-processing-large-scale-data">3.1. Processing large-scale data</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#dataproc">Dataproc</a></li>
-<li class="toc-entry toc-h3"><a href="#dataflow">Dataflow</a></li>
-<li class="toc-entry toc-h3"><a href="#dataprep">Dataprep</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#32-analyzing-and-querying-data">3.2. Analyzing and querying data</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#bigquery">BigQuery</a></li>
-<li class="toc-entry toc-h3"><a href="#machine-learning">Machine learning</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#explore-and-visualize">Explore and visualize</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#41-explore-and-visualize">4.1. Explore and visualize</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#datalab">Datalab</a></li>
-<li class="toc-entry toc-h3"><a href="#data-science-ecosystem">Data science ecosystem</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#42-visualizing-business-intelligence-results">4.2. Visualizing business intelligence results</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#looker">Looker</a></li>
-<li class="toc-entry toc-h3"><a href="#bi-engine">BI Engine</a></li>
-<li class="toc-entry toc-h3"><a href="#sheets">Sheets</a></li>
-<li class="toc-entry toc-h3"><a href="#data-catalog">Data Catalog</a></li>
-<li class="toc-entry toc-h3"><a href="#data-studio">Data Studio</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul><h2 id="cloud-architecture-center">
-<a class="anchor" href="#cloud-architecture-center" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://cloud.google.com/architecture/data-lifecycle-cloud-platform#process_and_analyze">Cloud Architecture Center</a>
-</h2>
+    <p><a href="https://cloud.google.com/architecture/data-lifecycle-cloud-platform#process_and_analyze">Cloud Architecture Center</a></p>
 
-<p><img src="/techblog/images/post/data-lifecycle-4.svg" alt=""></p>
+<hr />
 
-<h1 id="process-and-analyze">
-<a class="anchor" href="#process-and-analyze" aria-hidden="true"><span class="octicon octicon-link"></span></a>Process and analyze</h1>
+<p><img src="/techblog/images/post/data-lifecycle-4.svg" alt="" /></p>
 
-<h2 id="31-processing-large-scale-data">
-<a class="anchor" href="#31-processing-large-scale-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. Processing large-scale data</h2>
+<h1 id="process-and-analyze">Process and analyze</h1>
+
+<h2 id="31-processing-large-scale-data">3.1. Processing large-scale data</h2>
 <p>source systems (Google Cloud Storage, Bigtable, Google Cloud SQL) 읽어온 큰 데이터를 처리하고
 정규화하고 집계함.
 데이터 양이 커서 클러스터로 분산 처리하거나 소프트웨어 툴들의 도움을 받음</p>
 
-<h3 id="dataproc">
-<a class="anchor" href="#dataproc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataproc</h3>
-<p>cluster에서 실행 (auto scaling)<br>
-기존 Hadoop, Hive, Spark 에플리캐이션과 연동<br>
+<h3 id="dataproc">Dataproc</h3>
+<p>cluster에서 실행 (auto scaling)<br />
+기존 Hadoop, Hive, Spark 에플리캐이션과 연동<br />
 use case: Log processing, Reporting, On-demand Spark clusters, Machine learning</p>
 
-<h3 id="dataflow">
-<a class="anchor" href="#dataflow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataflow</h3>
-<p>Serverless(cluster X), parallel 처리 (No-Ops)<br>
-Spark나 Hadoop과 연동이 아닌 새로운 데이터 pipeline 처리<br>
+<h3 id="dataflow">Dataflow</h3>
+<p>Serverless(cluster X), parallel 처리 (No-Ops)<br />
+Spark나 Hadoop과 연동이 아닌 새로운 데이터 pipeline 처리<br />
 use case: MapReduce 안쓰는 parallel processing, User analytics, Data science, ETL, Log processing</p>
 
-<h3 id="dataprep">
-<a class="anchor" href="#dataprep" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataprep</h3>
+<h3 id="dataprep">Dataprep</h3>
 <p>UI-Driven Data Preparation (No-Ops, 필요시 scaling 가능)
 use case: Machine learning, Analytics</p>
 
-<hr>
-<h2 id="32-analyzing-and-querying-data">
-<a class="anchor" href="#32-analyzing-and-querying-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. Analyzing and querying data</h2>
+<hr />
+<h2 id="32-analyzing-and-querying-data">3.2. Analyzing and querying data</h2>
 
-<h3 id="bigquery">
-<a class="anchor" href="#bigquery" aria-hidden="true"><span class="octicon octicon-link"></span></a>BigQuery</h3>
+<h3 id="bigquery">BigQuery</h3>
 <p>앞서 store 할 때 뿐만 아니라 분석할 때도 사용
 use case: User analysis(adtech, clickstream, game telemetry), Device and operational metrics(IoT), BI</p>
 
-<h3 id="machine-learning">
-<a class="anchor" href="#machine-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Machine learning</h3>
+<h3 id="machine-learning">Machine learning</h3>
 <p>처리된 결과를 확대시키거나 data-collection 최적화를 제공하기도 하고 결과 예측도 함</p>
 
 <ul>
@@ -203,52 +157,44 @@ use case: User analysis(adtech, clickstream, game telemetry), Device and operati
   <li>AI 플랫폼 (TensorFlow)</li>
 </ul>
 
-<hr>
-<h1 id="explore-and-visualize">
-<a class="anchor" href="#explore-and-visualize" aria-hidden="true"><span class="octicon octicon-link"></span></a>Explore and visualize</h1>
+<hr />
+<h1 id="explore-and-visualize">Explore and visualize</h1>
 
-<hr>
-<p><a href="https://cloud.google.com/architecture/data-lifecycle-cloud-platform#explore_and_visualize">Cloud Architecture Center</a>
-—</p>
+<hr />
 
-<h2 id="41-explore-and-visualize">
-<a class="anchor" href="#41-explore-and-visualize" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.1. Explore and visualize</h2>
+<p><a href="https://cloud.google.com/architecture/data-lifecycle-cloud-platform#explore_and_visualize">Cloud Architecture Center</a></p>
 
-<h3 id="datalab">
-<a class="anchor" href="#datalab" aria-hidden="true"><span class="octicon octicon-link"></span></a>Datalab</h3>
-<p>interactive한 web 기반 툴<br>
+<hr />
+
+<h2 id="41-explore-and-visualize">4.1. Explore and visualize</h2>
+
+<h3 id="datalab">Datalab</h3>
+<p>interactive한 web 기반 툴<br />
 pandas, numpy, scikit-learn 등의 다양한 toolkit 지원</p>
 
-<h3 id="data-science-ecosystem">
-<a class="anchor" href="#data-science-ecosystem" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data science ecosystem</h3>
+<h3 id="data-science-ecosystem">Data science ecosystem</h3>
 <p>Datalab 말고도, web 기반 툴인 Apache Zeppelin 지원
 R 사용하면 Rstudio Server나 Microsoft ML Server 지원
 Scala나 Java 사용하면 Jupyter 지원</p>
 
-<h2 id="42-visualizing-business-intelligence-results">
-<a class="anchor" href="#42-visualizing-business-intelligence-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.2. Visualizing business intelligence results</h2>
+<h2 id="42-visualizing-business-intelligence-results">4.2. Visualizing business intelligence results</h2>
 
-<h3 id="looker">
-<a class="anchor" href="#looker" aria-hidden="true"><span class="octicon octicon-link"></span></a>Looker</h3>
+<h3 id="looker">Looker</h3>
 <p>BI platform</p>
 
-<h3 id="bi-engine">
-<a class="anchor" href="#bi-engine" aria-hidden="true"><span class="octicon octicon-link"></span></a>BI Engine</h3>
+<h3 id="bi-engine">BI Engine</h3>
 <p>analysis service 관리</p>
 
-<h3 id="sheets">
-<a class="anchor" href="#sheets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sheets</h3>
+<h3 id="sheets">Sheets</h3>
 <p>Spreadsheet visualization</p>
 
-<h3 id="data-catalog">
-<a class="anchor" href="#data-catalog" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Catalog</h3>
+<h3 id="data-catalog">Data Catalog</h3>
 <p>Data discovery and metadata management</p>
 
-<h3 id="data-studio">
-<a class="anchor" href="#data-studio" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Studio</h3>
+<h3 id="data-studio">Data Studio</h3>
 <p>Dashboarding and visualization</p>
 
-<hr>
+<hr />
 
 
   </div><a class="u-url" href="/techblog/gcp/datastudio/2021/10/03/data-lifecycle-analyze-visualize.html" hidden></a>
