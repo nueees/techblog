@@ -2,7 +2,7 @@
 toc: true
 layout: post
 description: section1
-categories: [gcp,ingest]
+categories: [gcp,bigquery]
 title: Data Lifecycle - Ingest
 ---
 > [https://cloud.google.com/architecture/data-lifecycle-cloud-platform](https://cloud.google.com/architecture/data-lifecycle-cloud-platform#ingest)
