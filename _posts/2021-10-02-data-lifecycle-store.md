@@ -95,6 +95,71 @@ client = bigquery.Client()
 
 Query를 WEB UI 상으로 실행해서 지도에서 표시  
 
+#### example
+
+1) table
+```
+CREATE OR REPLACE TABLE ecommerce.revenue_transactions_20170801
+#schema
+(
+  fullVisitorId STRING NOT NULL OPTIONS(description="Unique visitor ID"),
+  visitId STRING NOT NULL OPTIONS(description="ID of the session, not unique across all users"),
+  channelGrouping STRING NOT NULL OPTIONS(description="Channel e.g. Direct, Organic, Referral..."),
+  totalTransactionRevenue FLOAT64 NOT NULL OPTIONS(description="Revenue for the transaction")
+)
+ OPTIONS(
+   description="Revenue transactions for 08/01/2017"
+ ) AS
+ SELECT DISTINCT
+  fullVisitorId,
+  CAST(visitId AS STRING) AS visitId,
+  channelGrouping,
+  totalTransactionRevenue / 1000000 AS totalTransactionRevenue
+ FROM `data-to-insights.ecommerce.all_sessions_raw`
+ WHERE date = '20170801'
+      AND totalTransactionRevenue IS NOT NULL #XX transactions
+;
+```
+
+
+2) view
+```
+CREATE OR REPLACE VIEW ecommerce.vw_large_transactions
+OPTIONS(
+  description="large transactions for review",
+  labels=[('org_unit','loss_prevention')],
+  expiration_timestamp=TIMESTAMP_ADD(CURRENT_TIMESTAMP(), INTERVAL 90 DAY) # 90일 이내 생성된 뷰 조회
+)
+AS
+#standardSQL
+SELECT DISTINCT
+  SESSION_USER() AS viewer_ldap,
+  REGEXP_EXTRACT(SESSION_USER(), r'@(.+)') AS domain,
+  date,
+  fullVisitorId,
+  visitId,
+  channelGrouping,
+  totalTransactionRevenue / 1000000 AS totalTransactionRevenue,
+  currencyCode,
+  STRING_AGG(DISTINCT v2ProductName ORDER BY v2ProductName LIMIT 10) AS products_ordered
+ FROM `data-to-insights.ecommerce.all_sessions_raw`
+ WHERE
+  (totalTransactionRevenue / 1000000) > 1000
+  AND currencyCode = 'USD'
+  AND REGEXP_EXTRACT(SESSION_USER(), r'@(.+)') IN ('google.com') # session user가 google.com 인 경우만 조회 가능
+ GROUP BY 1,2,3,4,5,6,7,8
+  ORDER BY date DESC # latest transactions
+  LIMIT 10;
+```
+
+session user 정보 조회 
+```
+SELECT
+  SESSION_USER() AS viewer_ldap;
+```
+
+
+
 #### for reducing the price
 
 1) query 하기 전에 preview 사용 (비용 X)
