@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      6 min read
     
 </span></p>
 
@@ -291,6 +291,72 @@ SELECT DISTINCT
    AND CAST(_TABLE_SUFFIX AS int64) &gt;= 2018
 </code></pre></div></div>
 
+<p>4) full outer join</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT DISTINCT
+website.productSKU AS website_SKU,
+inventory.SKU AS inventory_SKU
+FROM `data-to-insights.ecommerce.all_sessions_raw` AS website
+FULL JOIN `data-to-insights.ecommerce.products` AS inventory
+ON website.productSKU = inventory.SKU
+WHERE website.productSKU IS NULL OR inventory.SKU IS NULL
+</code></pre></div></div>
+
+<p>5) cross join</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CREATE OR REPLACE TABLE ecommerce.site_wide_promotion AS
+SELECT .05 AS discount; -- discount율 명시 테이블 만들고
+
+INSERT INTO ecommerce.site_wide_promotion (discount)
+VALUES (.04),
+       (.03); -- discount율 추가
+
+SELECT DISTINCT
+productSKU,
+v2ProductCategory,
+discount
+FROM `data-to-insights.ecommerce.all_sessions_raw` AS website
+CROSS JOIN ecommerce.site_wide_promotion
+WHERE v2ProductCategory LIKE '%Clearance%' -- 각 물품별 .05,.04,.03 3가지 할인율로 나옴 (x3)
+</code></pre></div></div>
+
+<p>6) duplication 제거</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#standardSQL
+# take the one name associated with a SKU
+WITH product_query AS (
+  SELECT
+  DISTINCT
+  v2ProductName,
+  productSKU
+  FROM `data-to-insights.ecommerce.all_sessions_raw`
+  WHERE v2ProductName IS NOT NULL
+)
+SELECT k.* FROM (
+  # aggregate the products into an array and
+  # only take 1 result
+  SELECT ARRAY_AGG(x LIMIT 1)[OFFSET(0)] k -- 1 row (0번째)만 가져오겠다
+  FROM product_query x
+  GROUP BY productSKU # unique 해야하는 데이터
+);
+</code></pre></div></div>
+
+<h4 id="working-with-arrays">Working with arrays</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#standardSQL
+# how can we find the products with more than 1 sku?
+SELECT
+DISTINCT
+COUNT(DISTINCT productSKU) AS SKU_count,
+STRING_AGG(DISTINCT productSKU LIMIT 5) AS SKU,
+v2ProductName
+FROM `data-to-insights.ecommerce.all_sessions_raw`
+WHERE productSKU IS NOT NULL
+GROUP BY v2ProductName
+HAVING SKU_count &gt; 1
+ORDER BY SKU_count DESC
+# product name is not unique (expected for variants)
+</code></pre></div></div>
+
+<p><a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/arrays">참고</a></p>
+
+<hr />
 <h4 id="for-reducing-the-price">for reducing the price</h4>
 
 <p>1) query 하기 전에 preview 사용 (비용 X)
@@ -302,12 +368,6 @@ SELECT DISTINCT
 7) 적절한 슬롯<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> 수 사용 ( on-demand / flat-rate pricing )</p>
 
 <!-- each query ran against your datasets의 audit logs 저장함  -->
-
-<hr />
-
-<h3 id="working-with-arrays">Working with arrays</h3>
-
-<p><a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/arrays">참고</a></p>
 
 <hr />
 <h3 id="cloud-data-fusion">Cloud Data Fusion</h3>
