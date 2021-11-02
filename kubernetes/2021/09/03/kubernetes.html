@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      9 min read
+      10 min read
     
 </span></p>
 
@@ -137,8 +137,10 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#61pods">6.1.Pods</a></li>
 <li class="toc-entry toc-h2"><a href="#62controller">6.2.Controller</a>
 <ul>
+<li class="toc-entry toc-h3"><a href="#deployment">Deployment</a></li>
 <li class="toc-entry toc-h3"><a href="#replicaset-레플리카셋">ReplicaSet (레플리카셋)</a></li>
 <li class="toc-entry toc-h3"><a href="#daemonset-데몬셋">DaemonSet (데몬셋)</a></li>
+<li class="toc-entry toc-h3"><a href="#statefulset">StatefulSet</a></li>
 </ul>
 </li>
 </ul>
@@ -459,11 +461,12 @@ $ kubectl delete service myweb-svc
 <h2 id="61pods">
 <a class="anchor" href="#61pods" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.1.Pods</h2>
 
-<p>도커에서 작업을 수행하기 위해 구동해야 하는 가장 작은 단위는 컨테이너<br>
+<p>도커에서 작업을 수행하기 위해 구동해야 하는 가장 작은 단위는 컨테이너 
+쿠버네티스 클러스터 내에서 애플리케이션 배포하며 동작하는 단위 <br>
 1 컨테이너 = 1 애플리케이션<br>
-Pod : 쿠버네티스에서 작업을 수행하기 위해 구동해야 하는 가장 작은 단위<br>
-쿠버네티스 클러스터 내에서 애플리케이션 배포하며 동작하는 단위<br>
-하나의 Pod는 하나의 node에서만 동작<br>
+하나의 Pod는 하나의 node에서만 동작  <br>
+동일한 Pod 의 모든 컨테이너는 동일한 리소스와 로컬 네트워크를 공유하여 머신이 분리되어 있어도 pod 내 컨테이너 간
+통신이 가능함<br>
 쿠버네티스 클러스터는 여러 개의 노드로 구성되며 각 노드는 컨테이너를 구동할 수 있도록 준비하고 있으나,<br>
 하나의 파드에 두개 이상의 컨테이너가 포함된 경우 각 컨테이너를 여러 노드에 분산시켜서 실행할 수는 없음.<br>
 1 pod 내 있는 컨테이너는 저장소, 네트워크 IP 등 공유</p>
@@ -525,10 +528,29 @@ cat testapp-pod-liveness.yml</li>
 
 <p>사용자가 의도한 상태로 유지 해 주는 기능</p>
 
+<h3 id="deployment">
+<a class="anchor" href="#deployment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deployment</h3>
+<p>stateless Application 배포 시 사용<br>
+Applicaion은 컨테이너 집합인 Pod 단위로 배포<br>
+사용자의 기대상태(Desired state)를 유지하도록 하는 controller</p>
+<ul>
+  <li>Liveness Probe: 응답 체크</li>
+  <li>Readlness Probe: 서비스 가능 상태 체크
+ReplicaSet에 대한 Update 담당</li>
+</ul>
+
+<p>use case:</p>
+<ul>
+  <li>신규 ReplicaSet을 생성하여 Pod를 새로운 버전으로 점진적 교체 수행 (Rolling Update)</li>
+  <li>Application configuration 분리 (Decoupling): Config Map</li>
+</ul>
+
 <h3 id="replicaset-레플리카셋">
 <a class="anchor" href="#replicaset-%EB%A0%88%ED%94%8C%EB%A6%AC%EC%B9%B4%EC%85%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>ReplicaSet (레플리카셋)</h3>
 
-<p>사용자가 요구하는 복제본 개수만큼 Pod를 복제하고 관리하는 기능</p>
+<p>사용자가 요구하는 복제본 개수만큼 Pod를 복제하고 관리하는 기능<br>
+주로 Deployment 의 spec 으로 정의하는 것을 권장함 <br>
+관리해야 하는 pod을 식별하기 위한 selector, 유지해야 하는 pod의 개수, pod template 포함</p>
 
 <ul>
   <li>Pod의 다중 레이블 조건 지원</li>
@@ -571,6 +593,11 @@ $ kubectl label nodes kube-node1 node=development # node에 label지정
 $ kubectl label nodes kube-node1 --show-label
 </code></pre></div></div>
 
+<h3 id="statefulset">
+<a class="anchor" href="#statefulset" aria-hidden="true"><span class="octicon octicon-link"></span></a>StatefulSet</h3>
+<p>Pod이 스케줄 될 때 지속적으로 유지되는 식별자를 가질 수 있도록 관리하는 object
+use case: 고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동</p>
+
 <hr>
 
 <h1 id="7network---service">
@@ -582,7 +609,13 @@ $ kubectl label nodes kube-node1 --show-label
 <h3 id="service-쿠버네티스-시스템에서-같은-애플리케이션을-실행하도록-구성된-컨트롤러에-의해-생성된-pod-그룹에-단일-네트워크-진입점-제공">
 <a class="anchor" href="#service-%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%97%90%EC%84%9C-%EA%B0%99%EC%9D%80-%EC%95%A0%ED%94%8C%EB%A6%AC%EC%BC%80%EC%9D%B4%EC%85%98%EC%9D%84-%EC%8B%A4%ED%96%89%ED%95%98%EB%8F%84%EB%A1%9D-%EA%B5%AC%EC%84%B1%EB%90%9C-%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC%EC%97%90-%EC%9D%98%ED%95%B4-%EC%83%9D%EC%84%B1%EB%90%9C-pod-%EA%B7%B8%EB%A3%B9%EC%97%90-%EB%8B%A8%EC%9D%BC-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EC%A7%84%EC%9E%85%EC%A0%90-%EC%A0%9C%EA%B3%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Service: 쿠버네티스 시스템에서 같은 애플리케이션을 실행하도록 구성된 컨트롤러에 의해 생성된 Pod 그룹에 단일 네트워크 진입점 제공</h3>
 
-<p>서비스에 부여된 IP는 해당 서비스가 종료될 때까지 유지하고 클라이언트는 이 서비스에 부여된 고정 IP 및 PORT를 통해 Pod에 접근 가능</p>
+<ul>
+  <li>서비스에 부여된 IP는 해당 서비스가 종료될 때까지 유지하고 클라이언트는 이 서비스에 부여된 고정 IP 및 PORT를 통해 Pod에 접근 가능</li>
+  <li>클러스터 내 Pod들에게 접근하기 위한 방법으로 사용</li>
+  <li>여러 Pod를 묶어 Healthy한 Pod로 Traffic 라우팅하는 로드 밸런싱 기능 제공</li>
+  <li>클러스터의 Service CIDR 중에서 지정된 IP로 생성 가능</li>
+  <li>서비스 이름은 클러스터내 고유한 DNS로 동작</li>
+</ul>
 
 <p>cat testapp-svc.yml</p>
 
