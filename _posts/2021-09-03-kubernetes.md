@@ -5,7 +5,7 @@ description: 5장
 categories: [kubernetes]
 title: Container Cluster Kubernetes
 ---
-<!-- ![]({{site.baseurl}}/images/post/1_1.jpg) -->
+
 출처\_Building Cloud private native 전문가 양성과정 교재
 
 # 5.Container Cluster
@@ -23,7 +23,16 @@ kubernates - 구글에서 개발된 컨테이너 오케스트레이션 도구
 
 ### 기능
 
-컨테이너 플랫폼, 마이크로서비스 플랫폼, 이식성있는 클라우드 플랫폼 제공
+컨테이너 플랫폼, 마이크로서비스 플랫폼, 이식성있는 클라우드 플랫폼 제공  
+- Automatic Binpacking  
+- Storage Orchestration  
+- Secret & Configuration Management  
+- Horizontal Scaling  
+- Service Discovery & Load Balancing  
+- Self Healing  
+- Batch Execution  
+- Automatic Rollbacks & Rollouts  
+
 
 CI/CD 파이프라인, 애플리케이션 레벨의 서비스, 로깅, 모니터링, 경고 솔루션 등을 제공하지 않음
 
@@ -102,7 +111,8 @@ cluster evnet 감지하고 대응
 운영환경에서는 multi master 환경을 구성 (FT)
 
 1) API 서버(kube-apiserver)  
-API는
+kubernetes API를 노출하는 component
+kubernetes object 관리, 제어를 위한 front-end
 
 2) etcd  
 cluster의 meta 정보 정장  
@@ -110,7 +120,7 @@ key-value 형태로 저장
 cluster configuration 정보 보관하고 있으므로 백업 필수
 
 3) scheduler  
-cluster 내 생성되는 pod를 감지하고 실행할 노드를 선택  
+cluster 내 생성되는(혹은 배정되지 않은) pod를 감지하고 그것을 구동할 노드를 선택  
 resourse 상태, HW/SW/Policy 제약, Affinity 등 다양한 기준에 따라 배치 결정
 
 4) cube-controller-manager
@@ -122,23 +132,21 @@ resourse 상태, HW/SW/Policy 제약, Affinity 등 다양한 기준에 따라 �
 
 5) cloud-controller-manager
 
-AWS, GCP 등 각 밴더 별 클라우드 서비스 관리
+AWS, GCP 등 각 밴더 별 클라우드 서비스 관리  
 
 -   node controller: 노드 관리, 노드 다운시 대응
 -   route controller: 클라우드 환경의 네트워크 경로
 -   service controller: 클라우드 로드밸런서 관리
 -   volume controller: 클라우드 볼륨 관리
 
-### 노드(node)
-
-container를 실행하고 싶은 만큼 구성  
-monion, worker 노드 라고도 함
+### 워커 노드(worker node)
+container를 실행하고 동작중인 Pods 유지시키고 kubernetes runtime 환경 구성 (minion이라고도 함)
 
 1) kubelet  
 각 노드에서 실행되는 agent로 마스터로부터 제공받은 구성 정보, 노드가 수행해야할 작업 동작
 
 2) kube-proxy  
-네트워크 프록시로, 서비스를 구현하기 위한 기능  
+네트워크 규칙 유지하고 연결에 대한 포워딩 수행하므로써 서비스 추상화 가능하게 함
 컨테이너에 연결될 네트워크 구성 관리
 
 3) container runtime  
