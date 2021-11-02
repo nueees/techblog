@@ -10,13 +10,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="3장" />
 <meta property="og:description" content="3장" />
-<link rel="canonical" href="https://nueees.github.io/techblog/kubernetes/2021/09/02/Docker-Image-Build.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/kubernetes/2021/09/02/Docker-Image-Build.html" />
+<link rel="canonical" href="https://nueees.github.io/techblog/kubernetes/2021/09/02/docker-image-build.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/kubernetes/2021/09/02/docker-image-build.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-09-02T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"3장","url":"https://nueees.github.io/techblog/kubernetes/2021/09/02/Docker-Image-Build.html","@type":"BlogPosting","headline":"Docker Image Build","dateModified":"2021-09-02T00:00:00-05:00","datePublished":"2021-09-02T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/kubernetes/2021/09/02/Docker-Image-Build.html"},"@context":"https://schema.org"}</script>
+{"description":"3장","url":"https://nueees.github.io/techblog/kubernetes/2021/09/02/docker-image-build.html","@type":"BlogPosting","headline":"Docker Image Build","dateModified":"2021-09-02T00:00:00-05:00","datePublished":"2021-09-02T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/kubernetes/2021/09/02/docker-image-build.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -109,45 +109,13 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#3building-docker-image">3.Building Docker Image</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#dockerfile">Dockerfile</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#dockerfile-생성">Dockerfile 생성</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#docker-image-build">Docker image build</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#docker-layer-구조">docker layer 구조</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#4docker-image-registry">4.Docker Image Registry</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#docker-image-registry">Docker image registry?</a></li>
-<li class="toc-entry toc-h2"><a href="#registry---docker-image-registry">Registry - Docker Image Registry</a></li>
-<li class="toc-entry toc-h2"><a href="#harbor---docker-image-registry">Harbor - Docker Image Registry</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#docker-compose-설치">docker-compose 설치</a></li>
-<li class="toc-entry toc-h3"><a href="#harbor-설치-파일-download">Harbor 설치 파일 download</a></li>
-<li class="toc-entry toc-h3"><a href="#configuration-fileyml-file-수정">Configuration File(YML File) 수정</a></li>
-<li class="toc-entry toc-h3"><a href="#harbor-설치">Harbor 설치</a></li>
-<li class="toc-entry toc-h3"><a href="#harbor-사용">Harbor 사용</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul><!-- ![](/techblog/images/post/1_1.jpg) -->
+    <!-- ![](/techblog/images/post/1_1.jpg) -->
 
 <p>출처_Building Cloud private native 전문가 양성과정 교재</p>
 
-<h1 id="3building-docker-image">
-<a class="anchor" href="#3building-docker-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.Building Docker Image</h1>
+<h1 id="3building-docker-image">3.Building Docker Image</h1>
 
-<h2 id="dockerfile">
-<a class="anchor" href="#dockerfile" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dockerfile</h2>
+<h2 id="dockerfile">Dockerfile</h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker run -it --name c1 centos
 # yum -y install httpd &gt; /dev/null 
@@ -158,11 +126,10 @@ window.onload = wrap_img;
 # dodker inspect httpd # ( "Cmd": ["/bin/sh", "-c", "#(nop)", "CMD [\"httpd-foreground\"]"...)
 </code></pre></div></div>
 
-<p>이 경우 직접 컨테이너를 구동하고 수정하는 방식으로는 특정 어플리케이션 지정할 수 없음<br>
+<p>이 경우 직접 컨테이너를 구동하고 수정하는 방식으로는 특정 어플리케이션 지정할 수 없음<br />
 Dockerfile을 사용해야 함</p>
 
-<h3 id="dockerfile-생성">
-<a class="anchor" href="#dockerfile-%EC%83%9D%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dockerfile 생성</h3>
+<h3 id="dockerfile-생성">Dockerfile 생성</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># mkdir dftest1
 # cd dftest1
@@ -250,10 +217,9 @@ CMD /usr/sbin/httpd -D FORGROUND
   </tbody>
 </table>
 
-<hr>
+<hr />
 
-<h2 id="docker-image-build">
-<a class="anchor" href="#docker-image-build" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker image build</h2>
+<h2 id="docker-image-build">Docker image build</h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker build -help
 # cat /root/file/Dockerfile
@@ -261,8 +227,7 @@ CMD /usr/sbin/httpd -D FORGROUND
 # docker images
 </code></pre></div></div>
 
-<h3 id="docker-layer-구조">
-<a class="anchor" href="#docker-layer-%EA%B5%AC%EC%A1%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>docker layer 구조</h3>
+<h3 id="docker-layer-구조">docker layer 구조</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker build -t base:1.0 /root/file # 실행시 레이어 구조가 하나씩 나옴
 </code></pre></div></div>
@@ -275,16 +240,13 @@ CMD /usr/sbin/httpd -D FORGROUND
   <li>step 5/5 CMD /usr/sbin/httpd -D FORGROUND</li>
 </ol>
 
-<hr>
+<hr />
 
-<h1 id="4docker-image-registry">
-<a class="anchor" href="#4docker-image-registry" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.Docker Image Registry</h1>
+<h1 id="4docker-image-registry">4.Docker Image Registry</h1>
 
-<h2 id="docker-image-registry">
-<a class="anchor" href="#docker-image-registry" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker image registry?</h2>
+<h2 id="docker-image-registry">Docker image registry?</h2>
 
-<h2 id="registry---docker-image-registry">
-<a class="anchor" href="#registry---docker-image-registry" aria-hidden="true"><span class="octicon octicon-link"></span></a>Registry - Docker Image Registry</h2>
+<h2 id="registry---docker-image-registry">Registry - Docker Image Registry</h2>
 
 <p>도커 허브에 공개되어 있는 registry 공식 이미지</p>
 
@@ -300,22 +262,19 @@ CMD /usr/sbin/httpd -D FORGROUND
 # docker images
 </code></pre></div></div>
 
-<h2 id="harbor---docker-image-registry">
-<a class="anchor" href="#harbor---docker-image-registry" aria-hidden="true"><span class="octicon octicon-link"></span></a>Harbor - Docker Image Registry</h2>
+<h2 id="harbor---docker-image-registry">Harbor - Docker Image Registry</h2>
 
-<p>one of private registries<br>
+<p>one of private registries<br />
 web 기반, 다양한 기능 제공</p>
 
-<h3 id="docker-compose-설치">
-<a class="anchor" href="#docker-compose-%EC%84%A4%EC%B9%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>docker-compose 설치</h3>
+<h3 id="docker-compose-설치">docker-compose 설치</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 # chmod +x /usr/local/bin/docker-compose
 # docker-compose --version
 </code></pre></div></div>
 
-<h3 id="harbor-설치-파일-download">
-<a class="anchor" href="#harbor-%EC%84%A4%EC%B9%98-%ED%8C%8C%EC%9D%BC-download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Harbor 설치 파일 download</h3>
+<h3 id="harbor-설치-파일-download">Harbor 설치 파일 download</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># wget "https://github.com/goharbor/harbor/releases/download/v2.3.3/harbor-offline-installer-v2.3.3.tgz"
 # tar xzvf harbor-offline-installer-version.tgz
@@ -323,8 +282,7 @@ web 기반, 다양한 기능 제공</p>
 
 <p>HTTPS 구성 후</p>
 
-<h3 id="configuration-fileyml-file-수정">
-<a class="anchor" href="#configuration-fileyml-file-%EC%88%98%EC%A0%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration File(YML File) 수정</h3>
+<h3 id="configuration-fileyml-file-수정">Configuration File(YML File) 수정</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># vi harbor.yml
 5  hostname: docker.nueees.co.kr
@@ -334,15 +292,13 @@ web 기반, 다양한 기능 제공</p>
 18 private_key: 
 </code></pre></div></div>
 
-<h3 id="harbor-설치">
-<a class="anchor" href="#harbor-%EC%84%A4%EC%B9%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>Harbor 설치</h3>
+<h3 id="harbor-설치">Harbor 설치</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl restart docker
 # ./install.sh
 </code></pre></div></div>
 
-<h3 id="harbor-사용">
-<a class="anchor" href="#harbor-%EC%82%AC%EC%9A%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Harbor 사용</h3>
+<h3 id="harbor-사용">Harbor 사용</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker login -u admin -p Harbor12345 192.168.56.101
 # docker tag centos:latest 192.168.56.101/library/docker:centos
@@ -353,9 +309,9 @@ web 기반, 다양한 기능 제공</p>
 
 <p>웹에서 Harbor IP 접속하여 대시보드 확인</p>
 
-<hr>
+<hr />
 
-  </div><a class="u-url" href="/techblog/kubernetes/2021/09/02/Docker-Image-Build.html" hidden></a>
+  </div><a class="u-url" href="/techblog/kubernetes/2021/09/02/docker-image-build.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
