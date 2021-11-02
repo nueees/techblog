@@ -237,11 +237,12 @@ $ kubectl delete service myweb-svc
 
 ## 6.1.Pods
 
-도커에서 작업을 수행하기 위해 구동해야 하는 가장 작은 단위는 컨테이너  
+도커에서 작업을 수행하기 위해 구동해야 하는 가장 작은 단위는 컨테이너 
+쿠버네티스 클러스터 내에서 애플리케이션 배포하며 동작하는 단위   
 1 컨테이너 = 1 애플리케이션  
-Pod : 쿠버네티스에서 작업을 수행하기 위해 구동해야 하는 가장 작은 단위  
-쿠버네티스 클러스터 내에서 애플리케이션 배포하며 동작하는 단위  
-하나의 Pod는 하나의 node에서만 동작  
+하나의 Pod는 하나의 node에서만 동작    
+동일한 Pod 의 모든 컨테이너는 동일한 리소스와 로컬 네트워크를 공유하여 머신이 분리되어 있어도 pod 내 컨테이너 간
+통신이 가능함  
 쿠버네티스 클러스터는 여러 개의 노드로 구성되며 각 노드는 컨테이너를 구동할 수 있도록 준비하고 있으나,  
 하나의 파드에 두개 이상의 컨테이너가 포함된 경우 각 컨테이너를 여러 노드에 분산시켜서 실행할 수는 없음.  
 1 pod 내 있는 컨테이너는 저장소, 네트워크 IP 등 공유
@@ -296,9 +297,24 @@ cat testapp-pod-label.yml
 
 사용자가 의도한 상태로 유지 해 주는 기능
 
+### Deployment
+stateless Application 배포 시 사용  
+Applicaion은 컨테이너 집합인 Pod 단위로 배포  
+사용자의 기대상태(Desired state)를 유지하도록 하는 controller  
+ - Liveness Probe: 응답 체크
+ - Readlness Probe: 서비스 가능 상태 체크
+ReplicaSet에 대한 Update 담당  
+
+use case:
+- 신규 ReplicaSet을 생성하여 Pod를 새로운 버전으로 점진적 교체 수행 (Rolling Update)
+- Application configuration 분리 (Decoupling): Config Map
+
+
 ### ReplicaSet (레플리카셋)
 
-사용자가 요구하는 복제본 개수만큼 Pod를 복제하고 관리하는 기능
+사용자가 요구하는 복제본 개수만큼 Pod를 복제하고 관리하는 기능  
+주로 Deployment 의 spec 으로 정의하는 것을 권장함   
+관리해야 하는 pod을 식별하기 위한 selector, 유지해야 하는 pod의 개수, pod template 포함  
 
 -   Pod의 다중 레이블 조건 지원
 -   Pod에 설정된 레이블의 키 조재 여부 조건 선택 가능
@@ -344,6 +360,12 @@ $ kubectl label nodes kube-node1 node=development # node에 label지정
 $ kubectl label nodes kube-node1 --show-label
 ```
 
+
+### StatefulSet
+Pod이 스케줄 될 때 지속적으로 유지되는 식별자를 가질 수 있도록 관리하는 object
+use case: 고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동 
+
+
 ---
 
 # 7.Network - Service
@@ -352,7 +374,11 @@ $ kubectl label nodes kube-node1 --show-label
 
 ### Service: 쿠버네티스 시스템에서 같은 애플리케이션을 실행하도록 구성된 컨트롤러에 의해 생성된 Pod 그룹에 단일 네트워크 진입점 제공
 
-서비스에 부여된 IP는 해당 서비스가 종료될 때까지 유지하고 클라이언트는 이 서비스에 부여된 고정 IP 및 PORT를 통해 Pod에 접근 가능
+- 서비스에 부여된 IP는 해당 서비스가 종료될 때까지 유지하고 클라이언트는 이 서비스에 부여된 고정 IP 및 PORT를 통해 Pod에 접근 가능  
+- 클러스터 내 Pod들에게 접근하기 위한 방법으로 사용  
+- 여러 Pod를 묶어 Healthy한 Pod로 Traffic 라우팅하는 로드 밸런싱 기능 제공  
+- 클러스터의 Service CIDR 중에서 지정된 IP로 생성 가능  
+- 서비스 이름은 클러스터내 고유한 DNS로 동작  
 
 cat testapp-svc.yml
 
