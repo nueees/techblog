@@ -271,13 +271,13 @@ ORDER BY SKU_count DESC
 ---
 #### for reducing the price
 
-1) query 하기 전에 preview 사용 (비용 X)
-2) 사전에 query result size 체크 (오른쪽 display)
-3) maximum billing limit 설정
-4) prevent asterisk(\*): column oriented storage로 wild card 사용시 column마다 압축 풀어서 가져와야 함
-5) partition table 및 clustered index table 사용: random access 줄어듦
-6) array 형 사용
-7) 적절한 슬롯[^2] 수 사용 ( on-demand / flat-rate pricing )
+1) query 하기 전에 preview 사용 (비용 X)  
+2) 사전에 query result size 체크 (오른쪽 display)  
+3) maximum billing limit 설정  
+4) prevent asterisk(\*): column oriented storage로 wild card 사용시 column마다 압축 풀어서 가져와야 함  
+5) partition table 및 clustered index table 사용: random access 줄어듦  
+6) array 형 사용  
+7) 적절한 슬롯[^2] 수 사용 ( on-demand / flat-rate pricing )  
 
 <!-- each query ran against your datasets의 audit logs 저장함  -->
 
