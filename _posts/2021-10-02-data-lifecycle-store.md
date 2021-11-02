@@ -191,7 +191,84 @@ partition expiration 되게 하면
    AND CAST(_TABLE_SUFFIX AS int64) >= 2018
 ```
 
+4) full outer join
+```
+SELECT DISTINCT
+website.productSKU AS website_SKU,
+inventory.SKU AS inventory_SKU
+FROM `data-to-insights.ecommerce.all_sessions_raw` AS website
+FULL JOIN `data-to-insights.ecommerce.products` AS inventory
+ON website.productSKU = inventory.SKU
+WHERE website.productSKU IS NULL OR inventory.SKU IS NULL
+```
 
+5) cross join
+```
+CREATE OR REPLACE TABLE ecommerce.site_wide_promotion AS
+SELECT .05 AS discount; -- discount율 명시 테이블 만들고
+
+INSERT INTO ecommerce.site_wide_promotion (discount)
+VALUES (.04),
+       (.03); -- discount율 추가
+
+SELECT DISTINCT
+productSKU,
+v2ProductCategory,
+discount
+FROM `data-to-insights.ecommerce.all_sessions_raw` AS website
+CROSS JOIN ecommerce.site_wide_promotion
+WHERE v2ProductCategory LIKE '%Clearance%' -- 각 물품별 .05,.04,.03 3가지 할인율로 나옴 (x3)
+```
+
+6) duplication 제거
+```
+#standardSQL
+# take the one name associated with a SKU
+WITH product_query AS (
+  SELECT
+  DISTINCT
+  v2ProductName,
+  productSKU
+  FROM `data-to-insights.ecommerce.all_sessions_raw`
+  WHERE v2ProductName IS NOT NULL
+)
+SELECT k.* FROM (
+  # aggregate the products into an array and
+  # only take 1 result
+  SELECT ARRAY_AGG(x LIMIT 1)[OFFSET(0)] k -- 1 row (0번째)만 가져오겠다
+  FROM product_query x
+  GROUP BY productSKU # unique 해야하는 데이터
+);
+```
+
+
+#### Working with arrays
+```
+#standardSQL
+# how can we find the products with more than 1 sku?
+SELECT
+DISTINCT
+COUNT(DISTINCT productSKU) AS SKU_count,
+STRING_AGG(DISTINCT productSKU LIMIT 5) AS SKU,
+v2ProductName
+FROM `data-to-insights.ecommerce.all_sessions_raw`
+WHERE productSKU IS NOT NULL
+GROUP BY v2ProductName
+HAVING SKU_count > 1
+ORDER BY SKU_count DESC
+# product name is not unique (expected for variants)
+```
+
+
+[참고](https://cloud.google.com/bigquery/docs/reference/standard-sql/arrays)
+
+
+
+
+
+
+
+---
 #### for reducing the price
 
 1) query 하기 전에 preview 사용 (비용 X)
@@ -203,14 +280,6 @@ partition expiration 되게 하면
 7) 적절한 슬롯[^2] 수 사용 ( on-demand / flat-rate pricing )
 
 <!-- each query ran against your datasets의 audit logs 저장함  -->
-
-
-
----
-
-### Working with arrays
-
-[참고](https://cloud.google.com/bigquery/docs/reference/standard-sql/arrays)
 
 
 
