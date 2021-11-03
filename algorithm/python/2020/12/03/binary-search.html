@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Binary search | Cho’s Tech blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Binary search" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="section4" />
+<meta property="og:description" content="section4" />
+<link rel="canonical" href="https://nueees.github.io/techblog/algorithm/python/2020/12/03/binary-search.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/algorithm/python/2020/12/03/binary-search.html" />
+<meta property="og:site_name" content="Cho’s Tech blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-03T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"section4","url":"https://nueees.github.io/techblog/algorithm/python/2020/12/03/binary-search.html","@type":"BlogPosting","headline":"Binary search","dateModified":"2020-12-03T00:00:00-06:00","datePublished":"2020-12-03T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/algorithm/python/2020/12/03/binary-search.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/techblog/">Cho&#39;s Tech blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/techblog/about/">About Me</a><a class="page-link" href="/techblog/gitInfo/">gitInfo</a><a class="page-link" href="/techblog/search/">Search</a><a class="page-link" href="/techblog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Binary search</h1><p class="page-description">section4</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-03T00:00:00-06:00" itemprop="datePublished">
+        Dec 3, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/techblog/categories/#algorithm">algorithm</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/techblog/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#41-binary-search">4.1. Binary search</a></li>
+<li class="toc-entry toc-h2"><a href="#42-cutting-lan-cable">4.2. Cutting LAN cable</a></li>
+<li class="toc-entry toc-h2"><a href="#43-dvd-recording">4.3. DVD recording</a></li>
+<li class="toc-entry toc-h2"><a href="#44-deciding-stables-size">4.4. Deciding Stables size</a></li>
+<li class="toc-entry toc-h2"><a href="#45-allocating-meeting-room">4.5. Allocating meeting room</a></li>
+<li class="toc-entry toc-h2"><a href="#46-selecting-korean-wrestling">4.6. Selecting Korean wrestling</a></li>
+<li class="toc-entry toc-h2"><a href="#47">4.7.</a></li>
+<li class="toc-entry toc-h2"><a href="#48">4.8.</a></li>
+<li class="toc-entry toc-h2"><a href="#49">4.9.</a></li>
+<li class="toc-entry toc-h2"><a href="#410">4.10.</a></li>
+</ul><p>Python Algorithm Practice</p>
+
+<hr>
+
+<h2 id="41-binary-search">
+<a class="anchor" href="#41-binary-search" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.1. Binary search</h2>
+<p>임의의 N개의 숫자가 입력으로 주어집니다. N개의 수를 오름차순으로 정렬한 다음 N개의 수 중 한 개의 수인 M이 주어지면 이분검색으로 M이 정렬된 상태에서 몇 번째에 있는지 구하는 프로그램을 작성하세요. 단 중복값은 존재하지 않습니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n, m = map(int, input().split())
+a = list(map(int, input().split()))
+a.sort()
+lt = 0
+rt = n-1
+while lt &lt;= rt:
+    mid=(lt+rt)//2
+    if a[mid] == m:
+        print(mid+1)
+        break
+    elif a[mid]&gt;m:
+        rt = mid-1
+    else:
+        lt = mid+1
+</code></pre></div></div>
+
+<hr>
+
+<h2 id="42-cutting-lan-cable">
+<a class="anchor" href="#42-cutting-lan-cable" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.2. Cutting LAN cable</h2>
+<p>엘리트 학원은 자체적으로 K개의 랜선을 가지고 있다. 그러나 K개의 랜선은 길이가 제각각이다. 
+선생님은 랜선을 모두 N개의 같은 길이의 랜선으로 만들고 싶었기 때문에 K개의 랜선을 잘라서 만들어야 한다.
+예를 들어 300cm 짜리 랜선에서 140cm 짜리 랜선을 두 개 잘라내면 20cm 은 버려야 한다. (이미 자른 랜선은 붙일 수 없다.)
+편의를 위해 랜선을 자를때 손실되는 길이는 없다고 가정하며, 기존의 K개의 랜선으로 N개의 랜선을 만들 수 없는 경우는 없다고 가정하자. 
+그리고 자를 때는 항상 센티미터 단위로 정수 길이만큼 자른다고 가정하자. 
+N개보다 많이 만드는 것도 N개를 만드는 것에 포함된다. 이때 만들 수 있는 최대 랜선의 길이를 구하는 프로그램을 작성하세요.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>k, n = map(int,input().split())
+line = []
+for i in range(k):
+    line.append(int(input()))
+
+line.sort()
+
+def count(len):
+    cnt = 0
+    for x in line:
+        cnt += (x//len)
+    return cnt
+
+
+largest = line[k-1] 
+
+lt = 1
+rt = largest
+while lt &lt;= rt:
+    mid = (lt+rt)//2
+    if count(mid) &gt;= n:
+        res = mid
+        lt = mid+1
+    else:
+        rt = mid-1
+
+print(res)
+</code></pre></div></div>
+
+<hr>
+
+<h2 id="43-dvd-recording">
+<a class="anchor" href="#43-dvd-recording" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.3. DVD recording</h2>
+<p>가수의 라이브 동영상을 DVD로 만들어 판매하려 한다. 
+DVD에는 총 N개의 곡이 들어가는데, DVD에 녹화할 때에는 라이브에서의 순서가 그대로 유지되어야 한다.
+즉, 1번 노래와 5번 노래를 같은 DVD에 녹화하기 위해서는 1번과 5번 사이의 모든 노래도 같은 DVD에 녹화해야 한다.
+또한 한 노래를 쪼개서 두 개의 DVD에 녹화하면 안된다.
+DVD 생산 최소화를 위해 M개가 한 세트인 DVD에 모든 동영상을 녹화하기로 하였다. 
+이 때 DVD의 크기(녹화 가능한 길이)를 최소로 하려고 한다. 
+그리고 M개의 DVD는 모두 같은 크기여야 제조원가가 적게 들기 때문에 꼭 같은 크기로 해야 한다.</p>
+
+<p>3개의 DVD용량이 17분짜리이면 (1, 2, 3, 4, 5) (6, 7), (8, 9) 이렇게 3개의 DVD로 녹음을 할 수 있다.
+17분 용량보다 작은 용량으로는 3개의 DVD에 모든 영상을 녹화할 수 없다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n, m = map(int, input().split())
+music = list(map(int, input().split()))
+max_music = max(music)
+
+def count(capacity):
+    cnt = 1
+    sum = 0
+    for x in music:
+        if sum+x &gt; capacity:
+            cnt += 1
+            sum = x
+        else:
+            sum += x
+    return cnt
+
+lt=1
+rt=sum(music)
+
+while lt &lt;= rt:
+    mid = (lt+rt)//2
+    if mid &gt; max_music and count(mid) &lt;= m:
+        res = mid
+        rt = mid-1
+    else:
+        lt = mid+1
+print(res)
+</code></pre></div></div>
+
+<hr>
+
+<h2 id="44-deciding-stables-size">
+<a class="anchor" href="#44-deciding-stables-size" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.4. Deciding Stables size</h2>
+<p>N개의 마구간이 수직선상에 있습니다. 각 마구간은 x1, x2, x3, ……, xN의 좌표를 가지며, 마구간 간에 좌표가 중복되는 일은 없습니다.
+각 마구간에는 한 마리의 말만 넣을 수 있고, 가장 가까운 두 말의 거리가 최대가 되게 말을 마구간에 배치하고 싶습니다. 
+C마리의 말을 N개의 마구간에 배치했을 때 가장 가까운 두 말의 거리가 최대가 되는 그 최대값을 출력하는 프로그램을 작성하세요.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n, c = map(int,input().split())
+stall = []
+for _ in range(n):
+    stall.append(int(input()))
+
+def count(len):
+    cnt = 1
+    ep = stall[0]
+
+    for i in range(1, n):
+        if stall[i] - ep &gt;= len:
+            cnt += 1
+            ep = stall[i]
+    return cnt
+
+stall.sort()
+lt = 1
+rt = stall[n-1]
+
+while lt &lt;= rt:
+    mid = (lt+rt)//2
+    if count(mid) &gt;= c:
+        res = mid
+        lt = mid+1
+    else:
+        rt = mid-1
+
+print(res)
+</code></pre></div></div>
+
+<hr>
+
+<h2 id="45-allocating-meeting-room">
+<a class="anchor" href="#45-allocating-meeting-room" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.5. Allocating meeting room</h2>
+<p>한 개의 회의실이 있는데 이를 사용하고자 하는 n개의 회의들에 대하여 회의실 사용표를 만들려고 한다.
+각 회의에 대해 시작시간과 끝나는 시간이 주어져 있고, 각 회의가 겹치지 않게 하면서 회의실을 사용할 수 있는 최대수의 회의를 찾아라.
+단, 회의는 한번 시작하면 중간에 중단될 수 없으며 한 회의가 끝나는 것과 동시에 다음 회의가 시작될 수 있다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+<hr>
+
+<h2 id="46-selecting-korean-wrestling">
+<a class="anchor" href="#46-selecting-korean-wrestling" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.6. Selecting Korean wrestling</h2>
+<p>현수는 씨름 감독입니다. 현수는 씨름 선수를 선발공고를 냈고, N명의 지원자가 지원을 했습니다.
+현수는 각 지원자의 키와 몸무게 정보를 알고 있습니다.
+현수는 씨름 선수 선발 원칙을 다음과 같이 정했습니다.
+“다른 모든 지원자와 일대일 비교하여 키와 몸무게 중 적어도 하나는 크거나, 무거운 지원자만 뽑기로 했습니다.”
+만약 A라는 지원자보다 키도 크고 몸무게도 무거운 지원자가 존재한다면 A지원자는 탈락입니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+<hr>
+
+<h2 id="47">
+<a class="anchor" href="#47" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.7.</h2>
+
+<hr>
+
+<h2 id="48">
+<a class="anchor" href="#48" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.8.</h2>
+
+<hr>
+
+<h2 id="49">
+<a class="anchor" href="#49" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.9.</h2>
+
+<hr>
+
+<h2 id="410">
+<a class="anchor" href="#410" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.10.</h2>
+
+<hr>
+
+  </div><a class="u-url" href="/techblog/algorithm/python/2020/12/03/binary-search.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/techblog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/techblog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/techblog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A challenge-loving junior data engineer.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
