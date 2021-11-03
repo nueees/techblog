@@ -4,19 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Microservice Architecture | Cho’s Tech blog</title>
+<title>Microservice | Cho’s Tech blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Microservice Architecture" />
+<meta property="og:title" content="Microservice" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="8장-9" />
-<meta property="og:description" content="8장-9" />
+<meta name="description" content="8장-9장" />
+<meta property="og:description" content="8장-9장" />
 <link rel="canonical" href="https://nueees.github.io/techblog/kubernetes/2021/09/03/microservice.html" />
 <meta property="og:url" content="https://nueees.github.io/techblog/kubernetes/2021/09/03/microservice.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-09-03T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"8장-9","url":"https://nueees.github.io/techblog/kubernetes/2021/09/03/microservice.html","@type":"BlogPosting","headline":"Microservice Architecture","dateModified":"2021-09-03T00:00:00-05:00","datePublished":"2021-09-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/kubernetes/2021/09/03/microservice.html"},"@context":"https://schema.org"}</script>
+{"description":"8장-9장","url":"https://nueees.github.io/techblog/kubernetes/2021/09/03/microservice.html","@type":"BlogPosting","headline":"Microservice","dateModified":"2021-09-03T00:00:00-05:00","datePublished":"2021-09-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/kubernetes/2021/09/03/microservice.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,13 +87,13 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Microservice Architecture</h1><p class="page-description">8장-9</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-09-03T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Microservice</h1><p class="page-description">8장-9장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-09-03T00:00:00-05:00" itemprop="datePublished">
         Sep 3, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      6 min read
     
 </span></p>
 
@@ -137,6 +137,7 @@ window.onload = wrap_img;
   <li>오랜 기간 사용할 경우 비용 부담 증가</li>
 </ul>
 
+<hr />
 <h2 id="82-클라우드-서비스-분류">8.2. 클라우드 서비스 분류</h2>
 
 <h3 id="saas-software-as-a-service-서비스로서-소프트웨어-애플리케이션-서비스를-제공">SaaS (Software as a Service): 서비스로서 소프트웨어 애플리케이션 서비스를 제공</h3>
@@ -219,8 +220,8 @@ ex) Google APP Engine, OpenShift</p>
 </ul>
 
 <h4 id="blue-green-배포">Blue-Green 배포</h4>
-<p><img src="https://www.redhat.com/cms/managed-files/blue-green-deployment-model.gif" alt="blue-green-deployment" />
-Blue: 이전 버전
+<p><img src="https://www.redhat.com/cms/managed-files/blue-green-deployment-model.gif" alt="blue-green-deployment" /><br />
+Blue: 이전 버전<br />
 Green: 신규 버전</p>
 
 <h4 id="canaria-배포">canaria 배포</h4>
@@ -236,17 +237,126 @@ Green: 신규 버전</p>
 Cloud Native한 패턴과 메커니즘을 제공 <br />
 많은 서비스들이 Java 기반의 Spring Boot로 개발되기에, Java 기반 MSA를 구축하고자 할 시 최적의 선택</p>
 
-<h3 id="spring-boot">Spring Boot</h3>
+<h4 id="spring-boot">Spring Boot</h4>
 <p>기존 Spring 이 가지고 있던 문제들을 해결하여, 보다 빠르게 상용 Spring Application을 개발하고자 시작<br />
 Conventioin over Configuration (설정보다 관례)</p>
+<ul>
+  <li>Library 관리 자동화 (Starter 이용)</li>
+  <li>자동 environment configuration (Annotaion 이용)</li>
+  <li>내장 Tomcat 및 JAR 모델 지원 ( Web Application이어도 JAR로 packaging runtime 지원)</li>
+</ul>
 
 <h4 id="annotaion">Annotaion</h4>
-<p>Annotation(@)은 JDK 1.5버전부터 지원되는 기능<br />
-마치 코드의 메타데이터 같은 역할을 하여, Compile, Runtime 과정에서 코드를 어떻게 처리할 것인지 나타냄<br />
+<p>마치 코드의 메타데이터 같은 역할을 하여, Compile, Runtime 과정에서 코드를 어떻게 처리할 것인지 나타냄<br />
 Annotation을 통해 Spring Boot가 지향하는 Convention over Configuration을 가능하게 함</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@SpringBootApplication
+public class TestApplication {
+  public static void main (String[] args) {
+    SpringApplicatoin.run(MyApplication.class, args);
+  }
+}
+</code></pre></div></div>
+
+<h3 id="msa-architecture">MSA architecture</h3>
+<p><a href="https://www.nginx.com/blog/introduction-to-microservices/">MSA architecture 참고 링크</a></p>
+
+<h3 id="msa-component">MSA component</h3>
+
+<p>1) Edge Server (API Gateway): Zuul/Ribbon, Spring Cloud GW<br />
+<img src="https://user-images.githubusercontent.com/83441376/140001251-f2111415-a76d-42ac-a2cc-fced85968fc9.png" alt="image" /><br />
+모든 클라이언트 요청에 대한 end point를 통합하는 서버(프록시 서버처럼 동작)<br />
+한 서비스에 한개 이상의 서버가 존재하기 때문에 이 서비스를 사용하는 클라이언트 입장에서는 다수의 end point가 생기게 되며, 
+end point를 변경이 일어났을때, 관리하기가 힘들다.<br />
+이런 문제를 해결하기 위해 서비스들의 end point를 하나로 묶을 수 있는 API 게이트웨이가 필요<br />
+각 서비스를 직접 호출하지않고 모든 요청이 API 게이트웨이를 통하게 만드는 것<br />
+하나의 요청에 여러 서비스를 호출한 후 하나의 결과로 취합</p>
+
+<p>요청에 따라 필요한 서비스로 라우팅<br />
+모든 서비스의 API 를 노출하는 대신 필요한 API 만을 노출해서 캡슐화<br />
+클라이언트 별로 다른 API 를 제공<br />
+하나의 요청에 필요한 서비스를 각각 호출해 결과를 모아서 응답<br />
+내부에서 사용하는 프로토콜이 다를 경우 외부에는 웹 친화적인 프로토콜(HTTP, WebSocket 등)으로 변환<br />
+클라이언트와의 통신을 줄일 수 있고, 클라이언트의 코드도 단순<br />
+인증 및 권한, 모니터링, load balancing, caching, logging 등 추가적인 기능</p>
+
+<p>하나의 엔트리 포인트를 갖는 것은 장점이자 단점</p>
+
+<p>API 게이트웨이에서 하는 역할이 많고, 게이트웨이에 장애가 나면 서비스 전체가 사용이 불가능 -&gt; circuit breaker<br />
+각 서비스의 API 를 수정하면 API 게이트웨이를 함께 수정해야 합니다. 이는 개발 과정에서 병목(bottleneck)이 되어 개발 과정 지연<br />
+API 게이트웨이 또한 개발하고 유지보수해야 할 대상</p>
+
+<p>2) Load Balancer: Ribbon</p>
+<ul>
+  <li>ServerList: 로드 밸런싱 대상 서버 목록<br />
+configuration을 통해 static 하게 설정 가능<br />
+eureka 등을 기반으로 dynamic하게 설정 가능</li>
+  <li>Rule: 요청을 보낼 서버를 선택<br />
+Round Robbin - 한 서버씩 돌아가며 전달<br />
+Available Filtering - 에러가 많은 서버 제외<br />
+weighted Response Time - 서버별 응답 시간에 따라 확률 조절</li>
+  <li>Ping: 서버list가 살아있는지 체크<br />
+static, dynamic 모두 가능</li>
+</ul>
+
+<p>3) Service Discovery (Service Registry): Eureka, Spring Cloud LB <br />
+<img src="https://user-images.githubusercontent.com/83441376/140001039-1e4c6908-fcfc-4b68-b2ba-effbf77107d8.png" alt="image" /></p>
+
+<p>클라우드에서 인스턴스는 동적으로 할당되기 때문에 IP주소나 포트 정보가 정해지지 않은 데다가 오토스케일링도 일어나고 중지되고 복구되면서 네트워크 위치가 계속해서 바뀌게 됩니다.</p>
+
+<p>따라서 클라이언트나 API 게이트웨이가 호출할 서비스를 찾는 매커니즘이 필요하고 이를 서비스 디스커버리(Service Discovery)라고 합니다. 이러한 로직을 구현하는 쪽에 따라서 두 가지 방식으로 나뉩니다.</p>
+
+<ul>
+  <li>클라이언트 사이드 디스커버리 패턴(Client-Side Discovery Pattern)</li>
+  <li>서버 사이드 디스커버리 패턴(Server-Side Discovery Pattern)</li>
+</ul>
+
+<p>API 게이트웨이는 각 서비스를 호출하기 위해 IP 주소와 포트를 알고 있어야 합니다. 기존 환경에서는 이러한 서버의 위치가 고정이라 문제가 없지만, 클라우드 기반에서는 각 서비스가 동적으로 할당된 서버에 배포되면서 해당 서비스의 위치를 파악하는 것이 어려워졌습니다. 이렇게 해당 서비스의 위치를 찾는 기술을 서비스 디스커버리(Service Discovery)라고 합니다. API 게이트웨이는 서버 사이드, 혹은 클라이언트 사이드 기준으로 서비스 디스커버리를 구현할 수 있습니다.</p>
+
+<p>4) Circuit Breaker: Hystrix, Resilence4j</p>
+<ul>
+  <li>회로 차단기 (Circuit Breaker)<br />
+이름 그대로 전기선에 유입된 과전류를 감지하는데 이와 마찬가지로 하위 컴포넌트가 과전류에 손상되지 않도록 보호<br />
+원격 자원에 대한 모든 호출을 모니터링하고 임계점까지 실패한다면 회로 차단기가 활성화 되어 빠른 실패를 유도, 그리고 문제가 있는 원격 자원을 더 이상 호출하지 못하게 함</li>
+  <li>폴백 (Fallback)<br />
+원격 서비스에 대한 호출이 실패할 때, 대체 코드(fallback method)를 실행</li>
+  <li>벌크헤드 (Bulkhead)<br />
+서비스에 대한 동시 요청 수를 제한<br />
+원격 자원에 대한 호출을 자원 별 스레드 풀로 분리<br />
+특정 원격 자원 호출이 느려지더라도 다른 자원들에 대한 호출은 영향이 없음</li>
+</ul>
+
+<p>5) Config Server: Spring Cloud Config Server<br />
+Spring Cloud Config는 분산 시스템에서 환경설정을 외부로 분리하여 중앙에서 관리할 수 있는 기능을 제공<br />
+Application data(환경별 구성 데이터)를 microservice와 분리<br />
+따라서 마이크로서비스 인스턴스가 아무리 많더라도 항상 동일한 구성을 유지할 수 있음<br />
+Spring Cloud Config에는 고유한 관리 저장소가 있지만 아래의 오픈 소스 프로젝트와도 통합할 수 있음</p>
+
+<ul>
+  <li>
+    <p>Spring Config Server : 공통 환경설정을 가지고 있는 Config Cloud Server
+환경설정(name-value pair, YAML 파일)을 위한 HTTP, 리소스 기반 API
+속성 값 암호화 및 암호 해독 (대칭 또는 비대칭)
+\@EnableConfigServer 어노테이션을 사용하여 쉽게 Spring Boot 어플케이션에 적용</p>
+  </li>
+  <li>
+    <p>Spring Config Client : 공통 환경설정을 받아 사용하는 Application Server
+Config Server에 붙어 원격 속성 소스로 Spring 환경 초기화
+속성 값 암호화 및 암호 해독 (대칭 또는 비대칭)</p>
+  </li>
+</ul>
+
+<p>6) Message Stream: RabbitMQ, Kafka<br />
+Spring cloud bus: 동적으로 config 변경을 적용하기 위한 MOM<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>을 구성한 MQ(Message Queue) Handler</p>
+
+<p>(1) MQ(Message Queue)에 Publisher(=config server)와 Subscriber(마이크로서비스)를 등록<br />
+(2) config 변경 정보를 MQ에 전송(Publish Message)<br />
+(3) 각 마이크로서비스에서 config 동적 반영(Reload Config)</p>
+
+<p>7) Monitoring: Zipkin</p>
 
 <hr />
-<h2 id="93-kubernetes를-활용한-microservice-구현">9.3 Kubernetes를 활용한 Microservice 구현</h2>
+
+<hr />
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
@@ -255,6 +365,9 @@ Annotation을 통해 Spring Boot가 지향하는 Convention over Configuration�
     </li>
     <li id="fn:2" role="doc-endnote">
       <p>코드 변경 사항을 repository에서 고객이 사용 가능한 production 환경까지 자동으로 release하는 개발 방식 <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>분산 시스템 환경에서 독립된 서비스 간에 비동기 방식으로 메세지를 전송/수신할 수 있게 도와주는 인프라 <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
