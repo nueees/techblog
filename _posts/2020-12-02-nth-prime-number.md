@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: section2
 categories: [algorithm, python]
