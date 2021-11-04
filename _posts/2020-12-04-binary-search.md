@@ -1,5 +1,5 @@
 ---
-toc: true
+toc: false
 layout: post
 description: section4
 categories: [algorithm, python]
@@ -160,7 +160,22 @@ print(res)
 각 회의에 대해 시작시간과 끝나는 시간이 주어져 있고, 각 회의가 겹치지 않게 하면서 회의실을 사용할 수 있는 최대수의 회의를 찾아라.
 단, 회의는 한번 시작하면 중간에 중단될 수 없으며 한 회의가 끝나는 것과 동시에 다음 회의가 시작될 수 있다.
 ```
+n = int(input())
+meeting = []
+for i in range(n):
+    s, e = map(int,input().split())
+    meeting.append((s,e))
 
+# meeting.sort()
+meeting.sort(key= lambda x : (x[1], x[0])) # order by end time, start time 순
+
+last_time = 0
+cnt = 0
+for s, e in meeting:
+    if last_time <= s: # 다음 시작시간이 이전 끝나는 시간 보다 같거나 크면 회의실에서 회의 가능
+        last_time = e
+        cnt += 1
+print(cnt)
 ```
 ---
 
@@ -168,11 +183,26 @@ print(res)
 현수는 씨름 감독입니다. 현수는 씨름 선수를 선발공고를 냈고, N명의 지원자가 지원을 했습니다.
 현수는 각 지원자의 키와 몸무게 정보를 알고 있습니다.
 현수는 씨름 선수 선발 원칙을 다음과 같이 정했습니다.
-“다른 모든 지원자와 일대일 비교하여 키와 몸무게 중 적어도 하나는 크거나, 무거운 지원자만 뽑기로 했습니다.”
+"다른 모든 지원자와 일대일 비교하여 키와 몸무게 중 적어도 하나는 크거나, 무거운 지원자만 뽑기로 했습니다."
 만약 A라는 지원자보다 키도 크고 몸무게도 무거운 지원자가 존재한다면 A지원자는 탈락입니다.
 
 ```
+n = int(input())
+candidate = []
+for i in range(n):
+    h, w = map(int, input().split())
+    candidate.append((h,w))
 
+candidate.sort(key=lambda x: (-x[0]))
+
+cnt = 0
+largest = 0
+for h, w in candidate:
+    if w > largest:
+        largest = w
+        cnt += 1
+    
+print(cnt)
 ```
 ---
 
