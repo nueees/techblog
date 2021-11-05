@@ -3,7 +3,7 @@ toc: false
 layout: post
 description: section4
 categories: [algorithm, python]
-title: Binary search
+title: Decision & Greedy algorithm
 ---
 
 Python Algorithm Practice
