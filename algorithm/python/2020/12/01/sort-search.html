@@ -263,7 +263,7 @@ print(arr)
 
 <h3 id="preorder-traversal">
 <a class="anchor" href="#preorder-traversal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preorder Traversal</h3>
-<p>left -&gt; right -&gt; root<br>
+<p>root -&gt; left -&gt; right<br>
 전위순회 출력 : 1 2 4 5 3 6 7</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def traversal(num):
     if num &gt; 7: return
@@ -275,7 +275,7 @@ traversal(1)
 </code></pre></div></div>
 <h3 id="inorder-traversal">
 <a class="anchor" href="#inorder-traversal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inorder Traversal</h3>
-<p>left -&gt; right -&gt; root<br>
+<p>left -&gt; root -&gt; right <br>
 중위순회 출력 : 4 2 5 1 6 3 7</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def traversal(num):
     if num &gt; 7: return
