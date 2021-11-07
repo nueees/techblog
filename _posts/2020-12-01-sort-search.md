@@ -1,9 +1,9 @@
 ---
-toc: false
+toc: true
 layout: post
 description: section1
 categories: [algorithm, python]
-title: Sort algorithm
+title: Basic Sort & Binary Search
 ---
 
 Python Algorithm Practice
@@ -146,7 +146,50 @@ print(arr)
 
 
 
-
 ---
 
+## 1.7. Depth First Search(DFS) for binary search 
+
+![]({{site.baseurl}}/images/post/binarytree.JPG)  
+
+### Preorder Traversal
+left -> right -> root  
+전위순회 출력 : 1 2 4 5 3 6 7   
+```
+def traversal(num):
+    if num > 7: return
+    else:
+        print(num, end=' ')
+        traversal(num*2)
+        traversal(num*2+1)
+traversal(1)
+```
+### Inorder Traversal
+left -> right -> root  
+중위순회 출력 : 4 2 5 1 6 3 7  
+```
+def traversal(num):
+    if num > 7: return
+    else:
+        traversal(num*2)
+        print(num, end=' ')
+        traversal(num*2+1)
+traversal(1)
+```
+
+### Preorder Traversal
+left -> right -> root  
+후위순회 출력 : 4 5 2 6 7 3 1   
+```
+def traversal(num):
+    if num > 7: return
+    else:
+        traversal(num*2)
+        print(num, end=' ')
+        traversal(num*2+1)
+traversal(1)
+```
+
+
+```
 
