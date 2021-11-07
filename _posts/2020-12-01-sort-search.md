@@ -153,7 +153,7 @@ print(arr)
 ![]({{site.baseurl}}/images/post/binarytree.JPG)  
 
 ### Preorder Traversal
-left -> right -> root  
+root -> left -> right  
 전위순회 출력 : 1 2 4 5 3 6 7   
 ```
 def traversal(num):
@@ -165,7 +165,7 @@ def traversal(num):
 traversal(1)
 ```
 ### Inorder Traversal
-left -> right -> root  
+left -> root -> right   
 중위순회 출력 : 4 2 5 1 6 3 7  
 ```
 def traversal(num):
