@@ -4,19 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Exhaustive Search, Basic DFS | Cho’s Tech blog</title>
+<title>Breadth First Search(BFS) | Cho’s Tech blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Exhaustive Search, Basic DFS" />
+<meta property="og:title" content="Breadth First Search(BFS)" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="section6" />
-<meta property="og:description" content="section6" />
-<link rel="canonical" href="https://nueees.github.io/techblog/algorithm/python/2020/12/06/exhaustive-search.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/algorithm/python/2020/12/06/exhaustive-search.html" />
+<meta name="description" content="section7" />
+<meta property="og:description" content="section7" />
+<link rel="canonical" href="https://nueees.github.io/techblog/algorithm/python/2020/12/07/bfs.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/algorithm/python/2020/12/07/bfs.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-12-06T00:00:00-06:00" />
+<meta property="article:published_time" content="2020-12-07T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"section6","url":"https://nueees.github.io/techblog/algorithm/python/2020/12/06/exhaustive-search.html","@type":"BlogPosting","headline":"Exhaustive Search, Basic DFS","dateModified":"2020-12-06T00:00:00-06:00","datePublished":"2020-12-06T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/algorithm/python/2020/12/06/exhaustive-search.html"},"@context":"https://schema.org"}</script>
+{"description":"section7","url":"https://nueees.github.io/techblog/algorithm/python/2020/12/07/bfs.html","@type":"BlogPosting","headline":"Breadth First Search(BFS)","dateModified":"2020-12-07T00:00:00-06:00","datePublished":"2020-12-07T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/algorithm/python/2020/12/07/bfs.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,13 +87,13 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Exhaustive Search, Basic DFS</h1><p class="page-description">section6</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-06T00:00:00-06:00" itemprop="datePublished">
-        Dec 6, 2020
+    <h1 class="post-title p-name" itemprop="name headline">Breadth First Search(BFS)</h1><p class="page-description">section7</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-07T00:00:00-06:00" itemprop="datePublished">
+        Dec 7, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      1 min read
     
 </span></p>
 
@@ -112,185 +112,124 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Python Algorithm Practice</p>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#71-최대점수-구하기-dfs">7.1. 최대점수 구하기 (DFS)</a></li>
+<li class="toc-entry toc-h2"><a href="#72">7.2.</a></li>
+<li class="toc-entry toc-h2"><a href="#73">7.3.</a></li>
+<li class="toc-entry toc-h2"><a href="#74">7.4.</a></li>
+<li class="toc-entry toc-h2"><a href="#75">7.5.</a></li>
+<li class="toc-entry toc-h2"><a href="#76">7.6.</a></li>
+<li class="toc-entry toc-h2"><a href="#77">7.7.</a></li>
+<li class="toc-entry toc-h2"><a href="#78">7.8.</a></li>
+<li class="toc-entry toc-h2"><a href="#79">7.9.</a></li>
+<li class="toc-entry toc-h2"><a href="#710">7.10.</a></li>
+<li class="toc-entry toc-h2"><a href="#711">7.11.</a></li>
+<li class="toc-entry toc-h2"><a href="#712">7.12.</a></li>
+<li class="toc-entry toc-h2"><a href="#713">7.13.</a></li>
+<li class="toc-entry toc-h2"><a href="#714">7.14.</a></li>
+<li class="toc-entry toc-h2"><a href="#715">7.15.</a></li>
+<li class="toc-entry toc-h2"><a href="#716">7.16.</a></li>
+<li class="toc-entry toc-h2"><a href="#717">7.17.</a></li>
+</ul><p>Python Algorithm Practice</p>
 
-<hr />
+<hr>
 
-<h2 id="61-recursive-program-for-binary-number">6.1. Recursive program for binary number</h2>
-<p>10진수 N이 입력되면 2진수로 변환하여 출력하는 프로그램을 작성하세요. 단 재귀함수를 이용해서 출력해야 합니다.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>num = int(input())
-def to_binary(num):
-    if num == 0:
+<h2 id="71-최대점수-구하기-dfs">
+<a class="anchor" href="#71-%EC%B5%9C%EB%8C%80%EC%A0%90%EC%88%98-%EA%B5%AC%ED%95%98%EA%B8%B0-dfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.1. 최대점수 구하기 (DFS)</h2>
+<p>이번 정보올림피아드대회에서 좋은 성적을 내기 위하여 현수는 선생님이 주신 N개의 문제를 풀려고 합니다.<br>
+각 문제는 그것을 풀었을 때 얻는 점수와 푸는데 걸리는 시간이 주어지게 됩니다.<br>
+제한시간 M안에 N개의 문제 중 최대점수를 얻을 수 있도록 해야 합니다. (해당문제는 해당시간이 걸리면 푸는 걸로 간주한다, 한 유형당 한개만 풀 수 있습니다.)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def DFS(L, sum, time):
+    global res
+    if time&gt;m:
         return
+    if L==n:
+        if sum&gt;res:
+            res=sum
     else:
-        to_binary(num//2)
-        print(num%2, end='')
-
-to_binary(num)
-</code></pre></div></div>
-
-<hr />
-
-<h2 id="62-subset-dfs">6.2. Subset (DFS)</h2>
-<p>자연수 N이 주어지면 1부터 N까지의 원소를 갖는 집합의 부분집합을 모두 출력하는 프로그램을 작성하세요.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def tree(root):
-    if root == n+1:
-        for i in range(1,n+1):
-            if a[i] == 1:
-                print(i, end='')
-        print()
-    else:
-        a[root] = 1
-        tree(root+1) 
-        a[root] = 0
-        tree(root+1)
-
-n = int(input())
-    a = [0]*(n+1)
-    tree(1)
-</code></pre></div></div>
-
-<hr />
-
-<h2 id="63-subset-sum-problem">6.3. Subset sum problem</h2>
-<p>N개의 원소로 구성된 자연수 집합이 주어지면, 이 집합을 두 개의 부분집합으로 나누었을 때 두 부분집합의 원소의 합이 서로 같은 경우가 존재하면 “YES”를 출력하고, 그렇지 않으면 “NO”를 출력하는 프로그램을 작성하세요.<br />
-둘로 나뉘는 두 부분집합은 서로소 집합이며, 두 부분집합을 합하면 입력으로 주어진 원래의 집합이 되어 합니다.<br />
-예를 들어 {1, 3, 5, 6, 7, 10}이 입력되면 {1, 3, 5, 7} = {6, 10} 으로 두 부분집합의 합이 16으로 같은 경우가 존재하는 것을 알 수 있다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def tree(L, sum):
-    if sum &gt; total//2:
-        return
-    if L == n:
-        if sum == (total-sum):
-            print("YES")
-            sys.exit(0)
-    else:
-        tree(L+1, sum+a[L])
-        tree(L+1, sum)
+        DFS(L+1, sum+pv[L], time+pt[L])
+        DFS(L+1, sum, time)
 
 if __name__=="__main__":
-    n = int(input())
-    a = list(map(int, input().split()))
-    total = sum(a)
-    tree(0, 0)
-    print("NO")
-</code></pre></div></div>
-
-<hr />
-
-<h2 id="64-getting-on-truck">6.4. Getting on truck</h2>
-<p>트럭은 C(kg) 넘게 태울수가 없다. C(kg)을 넘지 않으면서 사람을 가장 무겁게 태우고 싶다.<br />
-N명의 사람 수와 각 사람 수의 무게 W가 주어지면, 트럭에 태울 수 있는 가장 무거운 무게를 구하는 프로그램을 작성하세요.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def tree(L, sum):
-    global result
-    if sum &gt; c:
-        return
-    if L == n:
-        if sum &gt; result:
-            result = sum
-    else:
-        tree(L+1, sum+a[L])
-        tree(L+1, sum)
-
-
-if __name__=="__main__":
-    c, n = map(int, input().split())
-    a = [0]*n
-    result = -1
+    n, m=map(int, input().split())
+    pv=list()
+    pt=list()
     for i in range(n):
-        a[i] = int(input())
-    tree(0,0)
-    print(result)
+        a, b=map(int, input().split())
+        pv.append(a)
+        pt.append(b)
+    res=-2147000000
+    DFS(0, 0, 0)
+    print(res)
 </code></pre></div></div>
 
-<hr />
+<hr>
+<h2 id="72">
+<a class="anchor" href="#72" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.2.</h2>
 
-<h2 id="65">6.5.</h2>
+<hr>
+<h2 id="73">
+<a class="anchor" href="#73" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.3.</h2>
 
-<hr />
+<hr>
+<h2 id="74">
+<a class="anchor" href="#74" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.4.</h2>
 
-<h2 id="66">6.6.</h2>
+<hr>
+<h2 id="75">
+<a class="anchor" href="#75" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.5.</h2>
 
-<hr />
+<hr>
+<h2 id="76">
+<a class="anchor" href="#76" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.6.</h2>
 
-<h2 id="67">6.7.</h2>
+<hr>
+<h2 id="77">
+<a class="anchor" href="#77" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.7.</h2>
 
-<hr />
+<hr>
+<h2 id="78">
+<a class="anchor" href="#78" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.8.</h2>
 
-<h2 id="68">6.8.</h2>
+<hr>
+<h2 id="79">
+<a class="anchor" href="#79" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.9.</h2>
 
-<hr />
+<hr>
+<h2 id="710">
+<a class="anchor" href="#710" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.10.</h2>
 
-<h2 id="69">6.9.</h2>
+<hr>
+<h2 id="711">
+<a class="anchor" href="#711" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.11.</h2>
 
-<hr />
+<hr>
+<h2 id="712">
+<a class="anchor" href="#712" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.12.</h2>
 
-<h2 id="610">6.10.</h2>
+<hr>
+<h2 id="713">
+<a class="anchor" href="#713" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.13.</h2>
 
-<hr />
+<hr>
+<h2 id="714">
+<a class="anchor" href="#714" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.14.</h2>
 
-<h2 id="611">6.11.</h2>
+<hr>
+<h2 id="715">
+<a class="anchor" href="#715" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.15.</h2>
 
-<hr />
+<hr>
+<h2 id="716">
+<a class="anchor" href="#716" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.16.</h2>
 
-<h2 id="612">6.12.</h2>
+<hr>
+<h2 id="717">
+<a class="anchor" href="#717" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.17.</h2>
 
-<hr />
 
-<h2 id="613">6.13.</h2>
-
-<hr />
-
-<h2 id="614">6.14.</h2>
-
-<hr />
-
-<h2 id="615-breadth-first-search-bfs">6.15. Breadth First Search (BFS)</h2>
-<p>방향그래프가 주어지면 1번 정점에서 N번 정점으로 가는 모든 경로의 가지 수를 출력하는 프로그램을 작성하세요.<br />
-방문한 노드는 중복해서 방문하지 않습니다. <br />
-<img src="/techblog/images/post/BFS.JPG" alt="" /><br />
-위 그래프에서 1번 정점에서 5번 정점으로 가는 가지 수는 총 6가지입니다.<br />
-1 2 3 4 5<br />
-1 2 5<br />
-1 3 4 2 5<br />
-1 3 4 5<br />
-1 4 2 5<br />
-1 4 5</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def tree(vt):
-    global cnt
-    if vt == n:
-        cnt += 1
-        # for x in path:
-        #     print(x, end=' ')
-    else:
-        for i in range(1, n+1):
-            if g[vt][i]==1 and ch[i]==0:
-                ch[i] = 1
-                # path.append(i)
-                tree(i)
-                # path.pop()
-                ch[i] = 0
-
-if __name__=="__main__":
-    n, m = map(int, input().split())
-    g = [[0]*(n+1) for _ in range((n+1))]
-    ch = [0]*(n+1)
-    for i in range(m):
-        a, b = map(int, input().split())
-        g[a][b] = 1
-    cnt = 0
-    # path = []
-    ch[1] = 1
-    tree(1)
-    print(cnt)
-</code></pre></div></div>
-
-<hr />
-
-  </div><a class="u-url" href="/techblog/algorithm/python/2020/12/06/exhaustive-search.html" hidden></a>
+  </div><a class="u-url" href="/techblog/algorithm/python/2020/12/07/bfs.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
