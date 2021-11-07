@@ -4,19 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Basic algorithm | Cho’s Tech blog</title>
+<title>Kth number | Cho’s Tech blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Basic algorithm" />
+<meta property="og:title" content="Kth number" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="section2" />
 <meta property="og:description" content="section2" />
-<link rel="canonical" href="https://nueees.github.io/techblog/algorithm/python/2020/12/02/basic.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/algorithm/python/2020/12/02/basic.html" />
+<link rel="canonical" href="https://nueees.github.io/techblog/algorithm/python/2020/12/02/kth-number.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/algorithm/python/2020/12/02/kth-number.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-12-02T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"section2","url":"https://nueees.github.io/techblog/algorithm/python/2020/12/02/basic.html","@type":"BlogPosting","headline":"Basic algorithm","dateModified":"2020-12-02T00:00:00-06:00","datePublished":"2020-12-02T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/algorithm/python/2020/12/02/basic.html"},"@context":"https://schema.org"}</script>
+{"description":"section2","url":"https://nueees.github.io/techblog/algorithm/python/2020/12/02/kth-number.html","@type":"BlogPosting","headline":"Kth number","dateModified":"2020-12-02T00:00:00-06:00","datePublished":"2020-12-02T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/algorithm/python/2020/12/02/kth-number.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,7 +87,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Basic algorithm</h1><p class="page-description">section2</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-02T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Kth number</h1><p class="page-description">section2</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-02T00:00:00-06:00" itemprop="datePublished">
         Dec 2, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -112,11 +112,23 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Python Algorithm Practice</p>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#21-nth-prime-number">2.1. Nth Prime Number</a></li>
+<li class="toc-entry toc-h2"><a href="#22-nth-number">2.2. Nth Number</a></li>
+<li class="toc-entry toc-h2"><a href="#23-nth-biggest-number">2.3. Nth Biggest Number</a></li>
+<li class="toc-entry toc-h2"><a href="#24-closest-representative-value">2.4. Closest Representative value</a></li>
+<li class="toc-entry toc-h2"><a href="#25-regular-polyhedron">2.5. Regular Polyhedron</a></li>
+<li class="toc-entry toc-h2"><a href="#26-sum-the-digits-of-a-number">2.6. Sum the Digits of a Number</a></li>
+<li class="toc-entry toc-h2"><a href="#27-prime-number">2.7. Prime Number</a></li>
+<li class="toc-entry toc-h2"><a href="#28-prime-with-digits-reversed">2.8. Prime with digits reversed</a></li>
+<li class="toc-entry toc-h2"><a href="#29-dice-game">2.9. Dice game</a></li>
+<li class="toc-entry toc-h2"><a href="#210-calculate-a-score">2.10. Calculate a score</a></li>
+</ul><p>Python Algorithm Practice</p>
 
-<hr />
+<hr>
 
-<h2 id="21-nth-prime-number">2.1. Nth Prime Number</h2>
+<h2 id="21-nth-prime-number">
+<a class="anchor" href="#21-nth-prime-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. Nth Prime Number</h2>
 <p>두 개의 자연수 N과 K가 주어졌을 때, N의 약수들 중 K번째로 작은 수를 출력하는 프로그램을 작성하세요.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n, k = map(int, input().split())
 print(n,k)
@@ -133,9 +145,10 @@ else:
     print(-1)
 </code></pre></div></div>
 
-<hr />
+<hr>
 
-<h2 id="22-nth-number">2.2. Nth Number</h2>
+<h2 id="22-nth-number">
+<a class="anchor" href="#22-nth-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.2. Nth Number</h2>
 <p>N개의 숫자로 이루어진 숫자열이 주어지면 해당 숫자열중에서 s번째부터 e번째까지의 수를 오름차순 정렬했을 때 k번째로 나타나는 숫자를 출력하는 프로그램을 작성하세요.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>T = int(input())
@@ -149,12 +162,13 @@ for i in range(T):
     a.sort()
     print(a[k-1])
 </code></pre></div></div>
-<hr />
+<hr>
 
-<h2 id="23-nth-biggest-number">2.3. Nth Biggest Number</h2>
-<p>1부터 100사이의 자연수가 적힌 N장의 카드를 가지고 있습니다. 같은 숫자의 카드가 여러장 있을 수 있습니다. 
-이 중 3장을 뽑아 각 카드에 적힌 수를 합한 값을 기록하려고 합니다. 
-3장을 뽑을 수 있는 모든 경우를 기록합니다. 
+<h2 id="23-nth-biggest-number">
+<a class="anchor" href="#23-nth-biggest-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. Nth Biggest Number</h2>
+<p>1부터 100사이의 자연수가 적힌 N장의 카드를 가지고 있습니다. 같은 숫자의 카드가 여러장 있을 수 있습니다. <br>
+이 중 3장을 뽑아 각 카드에 적힌 수를 합한 값을 기록하려고 합니다. <br>
+3장을 뽑을 수 있는 모든 경우를 기록합니다. <br>
 기록한 값 중 K번째로 큰 수를 출력하는 프로그램을 작성하세요.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n, k = map(int, input().split())
 a = list(map(int, input().split()))
@@ -170,10 +184,11 @@ res = list(myset)
 res.sort(reverse=True)
 print(res[k-1])
 </code></pre></div></div>
-<hr />
+<hr>
 
-<h2 id="24-closest-representative-value">2.4. Closest Representative value</h2>
-<p>N명의 학생의 수학점수가 주어집니다. N명의 학생들의 평균(소수 첫째자리 반올림)을 구하고, N명의 학생 중 평균에 가장 가까운 학생은 몇 번째 학생인지 출력하는 프로그램을 작성하세요. 
+<h2 id="24-closest-representative-value">
+<a class="anchor" href="#24-closest-representative-value" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. Closest Representative value</h2>
+<p>N명의 학생의 수학점수가 주어집니다. N명의 학생들의 평균(소수 첫째자리 반올림)을 구하고, N명의 학생 중 평균에 가장 가까운 학생은 몇 번째 학생인지 출력하는 프로그램을 작성하세요. <br>
 평균과 가장 가까운 점수가 여러 개일 경우 먼저 점수가 높은 학생의 번호를 답으로 하고, 높은 점수를 가진 학생이 여러 명일 경우 그 중 학생번호가 빠른 학생의 번호를 답으로 합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n = int(input())
 a = list(map(int, input().split()))
@@ -191,10 +206,11 @@ for idx, x in enumerate(a):
             res = idx+1
 print(avg, res)
 </code></pre></div></div>
-<hr />
+<hr>
 
-<h2 id="25-regular-polyhedron">2.5. Regular Polyhedron</h2>
-<p>두 개의 정 N면체와 정 M면체의 두 개의 주사위를 던져서 나올 수 있는 눈의 합 중 가장 확률이 높은 숫자를 출력하는 프로그램을 작성하세요.
+<h2 id="25-regular-polyhedron">
+<a class="anchor" href="#25-regular-polyhedron" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.5. Regular Polyhedron</h2>
+<p>두 개의 정 N면체와 정 M면체의 두 개의 주사위를 던져서 나올 수 있는 눈의 합 중 가장 확률이 높은 숫자를 출력하는 프로그램을 작성하세요.<br>
 정답이 여러 개일 경우 오름차순으로 출력합니다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n, m = map(int, input().split())
 cnt = [0]*(n+m+1)
@@ -215,9 +231,10 @@ for i in range(1,len(cnt)):
     if cnt[i]==max:
         print(i, end=' ')
 </code></pre></div></div>
-<hr />
+<hr>
 
-<h2 id="26-sum-the-digits-of-a-number">2.6. Sum the Digits of a Number</h2>
+<h2 id="26-sum-the-digits-of-a-number">
+<a class="anchor" href="#26-sum-the-digits-of-a-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.6. Sum the Digits of a Number</h2>
 <p>N개의 자연수가 입력되면 각 자연수의 자릿수의 합을 구하고, 그 합이 최대인 자연수를 출력하는 프로그램을 작성하세요.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n = int(input())
 a = list(map(int, input().split()))
@@ -238,12 +255,12 @@ for x in a:
 
 print(res)
 </code></pre></div></div>
-<hr />
+<hr>
 
-<h2 id="27-prime-number">2.7. Prime Number</h2>
-<p>자연수 N이 입력되면 1부터 N까지의 소수의 개수를 출력하는 프로그램을 작성하세요. 
-예를 들어 20이 입력되면 1부터 20까지의 소수는 2, 3, 5, 7, 11, 13, 17, 19로 총 8개입니다.
-(제한시간은 1초)</p>
+<h2 id="27-prime-number">
+<a class="anchor" href="#27-prime-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.7. Prime Number</h2>
+<p>자연수 N이 입력되면 1부터 N까지의 소수의 개수를 출력하는 프로그램을 작성하세요. <br>
+예를 들어 20이 입력되면 1부터 20까지의 소수는 2, 3, 5, 7, 11, 13, 17, 19로 총 8개입니다. (제한시간은 1초)</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n = int(input())
 plist = [0]*(n+1)
 
@@ -256,11 +273,12 @@ for i in range(2,n+1):
 
 print(cnt)
 </code></pre></div></div>
-<hr />
+<hr>
 
-<h2 id="28-prime-with-digits-reversed">2.8. Prime with digits reversed</h2>
-<p>N개의 자연수가 입력되면 각 자연수를 뒤집은 후 그 뒤집은 수가 소수이면 그 수를 출력하는 프로그램을 작성하세요. 
-예를 들어 32를 뒤집으면 23이고, 23은 소수이다. 그러면 23을 출력한다. 
+<h2 id="28-prime-with-digits-reversed">
+<a class="anchor" href="#28-prime-with-digits-reversed" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.8. Prime with digits reversed</h2>
+<p>N개의 자연수가 입력되면 각 자연수를 뒤집은 후 그 뒤집은 수가 소수이면 그 수를 출력하는 프로그램을 작성하세요. <br>
+예를 들어 32를 뒤집으면 23이고, 23은 소수이다. 그러면 23을 출력한다. <br>
 단 910를 뒤집으면 19로 숫자화 해야 한다. 첫 자리부터의 연속된 0은 무시한다.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n = int(input())
 a = list(map(int, input().split()))
@@ -287,16 +305,17 @@ for x in a:
     if isPrime(tmp):
         print(tmp, end=' ')
 </code></pre></div></div>
-<hr />
+<hr>
 
-<h2 id="29-dice-game">2.9. Dice game</h2>
-<p>1에서부터 6까지의 눈을 가진 3개의 주사위를 던져서 다음과 같은 규칙에 따라 상금을 받는 게임이 있다.
-규칙(1) 같은 눈이 3개가 나오면 10,000원+(같은 눈)*1,000원의 상금을 받게 된다. 
-규칙(2) 같은 눈이 2개만 나오는 경우에는 1,000원+(같은 눈)*100원의 상금을 받게 된다. 
-규칙(3) 모두 다른 눈이 나오는 경우에는 (그 중 가장 큰 눈)*100원의 상금을 받게 된다. 
-예를 들어, 3개의 눈 3, 3, 6이 주어지면 상금은 1,000+3*100으로 계산되어 1,300원을 받게 된다. 
-또 3개의 눈이 2, 2, 2로 주어지면 10,000+2*1,000 으로 계산되어 12,000원을 받게 된다. 
-3개의 눈이 6, 2, 5로 주어지면 그 중 가장 큰 값이 6이므로 6*100으로 계산되어 600원을 상금으로 받게 된다.
+<h2 id="29-dice-game">
+<a class="anchor" href="#29-dice-game" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.9. Dice game</h2>
+<p>1에서부터 6까지의 눈을 가진 3개의 주사위를 던져서 다음과 같은 규칙에 따라 상금을 받는 게임이 있다.<br>
+규칙(1) 같은 눈이 3개가 나오면 10,000원+(같은 눈)*1,000원의 상금을 받게 된다. <br>
+규칙(2) 같은 눈이 2개만 나오는 경우에는 1,000원+(같은 눈)*100원의 상금을 받게 된다. <br>
+규칙(3) 모두 다른 눈이 나오는 경우에는 (그 중 가장 큰 눈)*100원의 상금을 받게 된다. <br>
+예를 들어, 3개의 눈 3, 3, 6이 주어지면 상금은 1,000+3*100으로 계산되어 1,300원을 받게 된다. <br>
+또 3개의 눈이 2, 2, 2로 주어지면 10,000+2*1,000 으로 계산되어 12,000원을 받게 된다. <br>
+3개의 눈이 6, 2, 5로 주어지면 그 중 가장 큰 값이 6이므로 6*100으로 계산되어 600원을 상금으로 받게 된다.<br>
 N 명이 주사위 게임에 참여하였을 때, 가장 많은 상금을 받은 사람의 상금을 출력하는 프로그램을 작성하세요.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n = int(input())
 sum = 0
@@ -315,13 +334,15 @@ for i in range(n):
     
     print(sum)
 </code></pre></div></div>
-<hr />
+<hr>
 
-<h2 id="210-calculate-a-score">2.10. Calculate a score</h2>
-<p>OX 문제는 맞거나 틀린 두 경우의 답을 가지는 문제를 말한다. 
-여러 개의 OX 문제로 만들어진 시험에서 연속적으로 답을 맞히는 경우에는 가산점을 주기 위해서 다음과 같이 점수 계산을 하기로 하였다.
-1번 문제가 맞는 경우에는 1점으로 계산한다. 앞의 문제에 대해서는 답을 틀리다가 답이 맞는 처음 문제는 1점으로 계산한다.
-또한, 연속으로 문제의 답이 맞는 경우에서 두 번째 문제는 2점, 세 번째 문제는 3점, …, K번째 문제는 K점으로 계산한다. 틀린 문제는 0점으로 계산한다.
+<h2 id="210-calculate-a-score">
+<a class="anchor" href="#210-calculate-a-score" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.10. Calculate a score</h2>
+<p>OX 문제는 맞거나 틀린 두 경우의 답을 가지는 문제를 말한다. <br>
+여러 개의 OX 문제로 만들어진 시험에서 연속적으로 답을 맞히는 경우에는 가산점을 주기 위해서 다음과 같이 점수 계산을 하기로 하였다.<br>
+1번 문제가 맞는 경우에는 1점으로 계산한다. 앞의 문제에 대해서는 답을 틀리다가 답이 맞는 처음 문제는 1점으로 계산한다.<br>
+또한, 연속으로 문제의 답이 맞는 경우에서 두 번째 문제는 2점, 세 번째 문제는 3점, …, K번째 문제는 K점으로 계산한다.<br>
+틀린 문제는 0점으로 계산한다. <br>
 예를 들어, 아래와 같이 10 개의 OX 문제에서 답이 맞은 문제의 경우에는 1로 표시하고, 틀린 경우에는 0으로 표시하였을 때, 점수 계산은 아래 표와 같이 계산되어, 총 점수는 1+1+2+3+1+2=10 점이다.</p>
 
 <table>
@@ -371,10 +392,10 @@ for x in a:
         cnt = 0
 print(sum)
 </code></pre></div></div>
-<hr />
+<hr>
 
 
-  </div><a class="u-url" href="/techblog/algorithm/python/2020/12/02/basic.html" hidden></a>
+  </div><a class="u-url" href="/techblog/algorithm/python/2020/12/02/kth-number.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
