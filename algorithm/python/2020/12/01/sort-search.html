@@ -4,19 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Sort algorithm | Cho’s Tech blog</title>
+<title>Basic Sort &amp; Binary Search | Cho’s Tech blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Sort algorithm" />
+<meta property="og:title" content="Basic Sort &amp; Binary Search" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="section1" />
 <meta property="og:description" content="section1" />
-<link rel="canonical" href="https://nueees.github.io/techblog/algorithm/python/2020/12/01/sort.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/algorithm/python/2020/12/01/sort.html" />
+<link rel="canonical" href="https://nueees.github.io/techblog/algorithm/python/2020/12/01/sort-search.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/algorithm/python/2020/12/01/sort-search.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-12-01T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"section1","url":"https://nueees.github.io/techblog/algorithm/python/2020/12/01/sort.html","@type":"BlogPosting","headline":"Sort algorithm","dateModified":"2020-12-01T00:00:00-06:00","datePublished":"2020-12-01T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/algorithm/python/2020/12/01/sort.html"},"@context":"https://schema.org"}</script>
+{"description":"section1","url":"https://nueees.github.io/techblog/algorithm/python/2020/12/01/sort-search.html","@type":"BlogPosting","headline":"Basic Sort &amp; Binary Search","dateModified":"2020-12-01T00:00:00-06:00","datePublished":"2020-12-01T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/algorithm/python/2020/12/01/sort-search.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,13 +87,13 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Sort algorithm</h1><p class="page-description">section1</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-01T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Basic Sort &amp; Binary Search</h1><p class="page-description">section1</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-01T00:00:00-06:00" itemprop="datePublished">
         Dec 1, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -112,9 +112,23 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Python Algorithm Practice</p>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#11-selection-sort">1.1. Selection sort</a></li>
+<li class="toc-entry toc-h2"><a href="#12-bubble-sort">1.2. Bubble sort</a></li>
+<li class="toc-entry toc-h2"><a href="#13-insertion-sort">1.3. Insertion sort</a></li>
+<li class="toc-entry toc-h2"><a href="#14-quick-sort">1.4. Quick sort</a></li>
+<li class="toc-entry toc-h2"><a href="#15-merge-sort">1.5. Merge sort</a></li>
+<li class="toc-entry toc-h2"><a href="#16-heap-sort">1.6. Heap sort</a></li>
+<li class="toc-entry toc-h2"><a href="#17-depth-first-searchdfs-for-binary-search">1.7. Depth First Search(DFS) for binary search</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#preorder-traversal">Preorder Traversal</a></li>
+<li class="toc-entry toc-h3"><a href="#inorder-traversal">Inorder Traversal</a></li>
+<li class="toc-entry toc-h3"><a href="#preorder-traversal-1">Preorder Traversal</a></li>
+</ul>
+</li>
+</ul><p>Python Algorithm Practice</p>
 
-<hr />
+<hr>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import random
 arr = random.sample(range(1,11),10)
@@ -122,7 +136,8 @@ size = len(arr)
 k = 1 # search 1st
 </code></pre></div></div>
 
-<h2 id="11-selection-sort">1.1. Selection sort</h2>
+<h2 id="11-selection-sort">
+<a class="anchor" href="#11-selection-sort" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. Selection sort</h2>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in range(0,size-1):
     min_idx = i
     for j in range(i+1, size):
@@ -133,8 +148,9 @@ k = 1 # search 1st
 print(arr[k])
 </code></pre></div></div>
 
-<hr />
-<h2 id="12-bubble-sort">1.2. Bubble sort</h2>
+<hr>
+<h2 id="12-bubble-sort">
+<a class="anchor" href="#12-bubble-sort" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Bubble sort</h2>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for end in range(size-1, 0, -1):
     for i in range(end):
         # print(end, i)
@@ -143,8 +159,9 @@ print(arr[k])
 print(arr[k])
 </code></pre></div></div>
 
-<hr />
-<h2 id="13-insertion-sort">1.3. Insertion sort</h2>
+<hr>
+<h2 id="13-insertion-sort">
+<a class="anchor" href="#13-insertion-sort" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Insertion sort</h2>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for end in range(size):
     for i in range(end, 0, -1):
         # print(end, i)
@@ -153,8 +170,9 @@ print(arr[k])
 print(arr[k])
 </code></pre></div></div>
 
-<hr />
-<h2 id="14-quick-sort">1.4. Quick sort</h2>
+<hr>
+<h2 id="14-quick-sort">
+<a class="anchor" href="#14-quick-sort" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.4. Quick sort</h2>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def quick_sort(arr):
     if len(arr) &lt;= 1:
         return arr
@@ -173,8 +191,9 @@ print(arr[k])
 quick_sort(arr)
 </code></pre></div></div>
 
-<hr />
-<h2 id="15-merge-sort">1.5. Merge sort</h2>
+<hr>
+<h2 id="15-merge-sort">
+<a class="anchor" href="#15-merge-sort" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.5. Merge sort</h2>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def merge_sort(arr):
     if len(arr) &lt; 2:
         return arr
@@ -201,8 +220,9 @@ quick_sort(arr)
 merge_sort(arr)
 </code></pre></div></div>
 
-<hr />
-<h2 id="16-heap-sort">1.6. Heap sort</h2>
+<hr>
+<h2 id="16-heap-sort">
+<a class="anchor" href="#16-heap-sort" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.6. Heap sort</h2>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># subtree rooted at index i.
 def heapify(arr, n, i):
     largest = i   # Initialize largest as root_i
@@ -234,10 +254,55 @@ for i in range(n-1, 0, -1):
 print(arr)
 </code></pre></div></div>
 
-<hr />
+<hr>
+
+<h2 id="17-depth-first-searchdfs-for-binary-search">
+<a class="anchor" href="#17-depth-first-searchdfs-for-binary-search" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.7. Depth First Search(DFS) for binary search</h2>
+
+<p><img src="/techblog/images/post/binarytree.JPG" alt=""></p>
+
+<h3 id="preorder-traversal">
+<a class="anchor" href="#preorder-traversal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preorder Traversal</h3>
+<p>left -&gt; right -&gt; root<br>
+전위순회 출력 : 1 2 4 5 3 6 7</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def traversal(num):
+    if num &gt; 7: return
+    else:
+        print(num, end=' ')
+        traversal(num*2)
+        traversal(num*2+1)
+traversal(1)
+</code></pre></div></div>
+<h3 id="inorder-traversal">
+<a class="anchor" href="#inorder-traversal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inorder Traversal</h3>
+<p>left -&gt; right -&gt; root<br>
+중위순회 출력 : 4 2 5 1 6 3 7</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def traversal(num):
+    if num &gt; 7: return
+    else:
+        traversal(num*2)
+        print(num, end=' ')
+        traversal(num*2+1)
+traversal(1)
+</code></pre></div></div>
+
+<h3 id="preorder-traversal-1">
+<a class="anchor" href="#preorder-traversal-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preorder Traversal</h3>
+<p>left -&gt; right -&gt; root<br>
+후위순회 출력 : 4 5 2 6 7 3 1</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def traversal(num):
+    if num &gt; 7: return
+    else:
+        traversal(num*2)
+        print(num, end=' ')
+        traversal(num*2+1)
+traversal(1)
+</code></pre></div></div>
+
+<p>```</p>
 
 
-  </div><a class="u-url" href="/techblog/algorithm/python/2020/12/01/sort.html" hidden></a>
+  </div><a class="u-url" href="/techblog/algorithm/python/2020/12/01/sort-search.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
