@@ -1,0 +1,204 @@
+---
+toc: false
+layout: post
+description: section6
+categories: [algorithm, python]
+title: Exhaustive Search, Basic DFS
+---
+
+Python Algorithm Practice
+
+---
+
+## 6.1. Recursive program for binary number
+10진수 N이 입력되면 2진수로 변환하여 출력하는 프로그램을 작성하세요. 단 재귀함수를 이용해서 출력해야 합니다.  
+```
+num = int(input())
+def to_binary(num):
+    if num == 0:
+        return
+    else:
+        to_binary(num//2)
+        print(num%2, end='')
+
+to_binary(num)
+```
+
+---
+
+## 6.2. Subset (DFS)
+자연수 N이 주어지면 1부터 N까지의 원소를 갖는 집합의 부분집합을 모두 출력하는 프로그램을 작성하세요.  
+
+```
+def tree(root):
+    if root == n+1:
+        for i in range(1,n+1):
+            if a[i] == 1:
+                print(i, end='')
+        print()
+    else:
+        a[root] = 1
+        tree(root+1) 
+        a[root] = 0
+        tree(root+1)
+
+n = int(input())
+    a = [0]*(n+1)
+    tree(1)
+```
+
+---
+
+## 6.3. Subset sum problem
+N개의 원소로 구성된 자연수 집합이 주어지면, 이 집합을 두 개의 부분집합으로 나누었을 때 두 부분집합의 원소의 합이 서로 같은 경우가 존재하면 "YES"를 출력하고, 그렇지 않으면 "NO"를 출력하는 프로그램을 작성하세요.  
+둘로 나뉘는 두 부분집합은 서로소 집합이며, 두 부분집합을 합하면 입력으로 주어진 원래의 집합이 되어 합니다.  
+예를 들어 {1, 3, 5, 6, 7, 10}이 입력되면 {1, 3, 5, 7} = {6, 10} 으로 두 부분집합의 합이 16으로 같은 경우가 존재하는 것을 알 수 있다.  
+
+```
+def tree(L, sum):
+    if sum > total//2:
+        return
+    if L == n:
+        if sum == (total-sum):
+            print("YES")
+            sys.exit(0)
+    else:
+        tree(L+1, sum+a[L])
+        tree(L+1, sum)
+
+if __name__=="__main__":
+    n = int(input())
+    a = list(map(int, input().split()))
+    total = sum(a)
+    tree(0, 0)
+    print("NO")
+```
+
+---
+
+## 6.4. Getting on truck
+트럭은 C(kg) 넘게 태울수가 없다. C(kg)을 넘지 않으면서 사람을 가장 무겁게 태우고 싶다.  
+N명의 사람 수와 각 사람 수의 무게 W가 주어지면, 트럭에 태울 수 있는 가장 무거운 무게를 구하는 프로그램을 작성하세요.  
+
+```
+def tree(L, sum):
+    global result
+    if sum > c:
+        return
+    if L == n:
+        if sum > result:
+            result = sum
+    else:
+        tree(L+1, sum+a[L])
+        tree(L+1, sum)
+
+
+if __name__=="__main__":
+    c, n = map(int, input().split())
+    a = [0]*n
+    result = -1
+    for i in range(n):
+        a[i] = int(input())
+    tree(0,0)
+    print(result)
+```
+
+---
+
+## 6.5.
+
+
+---
+
+## 6.6.
+
+
+---
+
+## 6.7.
+
+
+---
+
+## 6.8.
+
+
+---
+
+## 6.9.
+
+
+---
+
+## 6.10.
+
+
+---
+
+## 6.11.
+
+
+---
+
+## 6.12.  
+
+
+---
+
+## 6.13. 
+
+
+---
+
+## 6.14. 
+
+
+---
+
+## 6.15. Breadth First Search (BFS)
+방향그래프가 주어지면 1번 정점에서 N번 정점으로 가는 모든 경로의 가지 수를 출력하는 프로그램을 작성하세요.  
+방문한 노드는 중복해서 방문하지 않습니다.   
+![]({{site.baseurl}}/images/post/BFS.JPG)  
+위 그래프에서 1번 정점에서 5번 정점으로 가는 가지 수는 총 6가지입니다.  
+1 2 3 4 5  
+1 2 5  
+1 3 4 2 5  
+1 3 4 5  
+1 4 2 5  
+1 4 5  
+
+
+```
+def tree(vt):
+    global cnt
+    if vt == n:
+        cnt += 1
+        # for x in path:
+        #     print(x, end=' ')
+    else:
+        for i in range(1, n+1):
+            if g[vt][i]==1 and ch[i]==0:
+                ch[i] = 1
+                # path.append(i)
+                tree(i)
+                # path.pop()
+                ch[i] = 0
+
+if __name__=="__main__":
+    n, m = map(int, input().split())
+    g = [[0]*(n+1) for _ in range((n+1))]
+    ch = [0]*(n+1)
+    for i in range(m):
+        a, b = map(int, input().split())
+        g[a][b] = 1
+    cnt = 0
+    # path = []
+    ch[1] = 1
+    tree(1)
+    print(cnt)
+```
+
+
+
+
+---
