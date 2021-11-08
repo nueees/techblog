@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -215,7 +215,53 @@ Scala나 Java 사용하면 Jupyter 지원</p>
 <p>Data discovery and metadata management</p>
 
 <h3 id="data-studio">Data Studio</h3>
-<p>Dashboarding and visualization</p>
+<p>Dashboarding and visualization<br />
+over 200 connectors ( Google Analytics, BigQuery, Sheets, and external data sources…)</p>
+
+<p>1) Intro</p>
+<ul>
+  <li>connect bigquery and data studio</li>
+  <li>visualize my data in data studio</li>
+</ul>
+
+<p>2) getting set up</p>
+<ul>
+  <li>accesse public datasets ( <a href="http://g.co/cloud/marketplace-datasets">catalog</a> )</li>
+  <li>set up my GCP ( <a href="http://console.cloud.google.com/">my console</a> )</li>
+</ul>
+
+<p>3) connecting data studio and bigquery</p>
+
+<p>(1) Open <a href="https://datastudio.google.com/">data studio</a><br />
+(2) Start with a Template (Blank template)<br />
+(3) Add a data to report Connect to BigQuery (Allow permission to view BigQuery data)<br />
+(4) Add table “san_francisco_311” (in public datasets) <br />
+(5) Click Manage added data sources under Resources<br />
+(6) Edit table fields of “311_service_requests” <br />
+(7) “latitude”,”longitude” field from text to Latitude, Longitude in Geo</p>
+
+<p>4) creating visualizations</p>
+
+<ul>
+  <li>Click “Add a chart” and select “Treemap”</li>
+  <li>Place the “Treemap” chart and change the parameter (“category” field)</li>
+</ul>
+
+<p>5) building a dashboard</p>
+
+<ul>
+  <li>Click “Add a chart”, select “Google Maps” and change its parameters (Dimension/Tooltip : “neighborhood”, Metric/Bubble size: “record count”)</li>
+  <li>Click “Add a chart” and select “Scorecard”</li>
+  <li>Select “Add a filter” in the Data panel and create filter (“Street and Sidewalk cleaning” in “category” field)</li>
+</ul>
+
+<p>6) creating filters</p>
+<ul>
+  <li>Click “Filter Control” (set filter dimension to “neighborhood”)</li>
+  <li>Click “Arrange” and select “Make page-level”</li>
+</ul>
+
+<p>7) test it and share it</p>
 
 <hr />
 
