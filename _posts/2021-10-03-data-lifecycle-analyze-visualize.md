@@ -117,11 +117,15 @@ Spreadsheet visualization
 ### Data Catalog
 Data discovery and metadata management  
 
+
+
+
 ### Data Studio
 Dashboarding and visualization  
 over 200 connectors ( Google Analytics, BigQuery, Sheets, and external data sources...)
 
-
+---
+#### Practice
 1) Intro  
 - connect bigquery and data studio  
 - visualize my data in data studio  
@@ -154,10 +158,32 @@ over 200 connectors ( Google Analytics, BigQuery, Sheets, and external data sour
 
 6) creating filters  
 - Click "Filter Control" (set filter dimension to "neighborhood")  
-- Click "Arrange" and select "Make page-level"
+- Click "Arrange" and select "Make page-level"  
 
-7) test it and share it
+7) test it and share it  
+- [practice_data_studio](https://datastudio.google.com/s/h0mhT-tvKh4)  
 
+
+<!-- 
+#### Practice02  
+
+1) Intro  
+- How a Google Data Studio Community Connector works  
+- How to use Google Apps Script to build a Community Connector  
+- How to use Community Connectors in Data Studio  
+
+2) Community Connectors  
+![image](https://user-images.githubusercontent.com/83441376/140704891-ca0f7c14-9141-4169-8a93-53a05047b9c8.png)  
+Fetch data through Web APIs, JDBC APIs, flat files (CSV, JSON, XML), and Apps Script Services.  
+ex) after publishing a package on npm, then to tack the download count -> npm package download counts API  
+
+![image](https://user-images.githubusercontent.com/83441376/140705597-1f6c8bad-2e89-4ce9-882e-9ba4c4eaac61.png)  
+Work flow:   
+- getAuthType()  
+- getConfig()  
+- getSchema()  
+- getData()  
+ -->
 
 ---
 
