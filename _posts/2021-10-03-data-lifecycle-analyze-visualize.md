@@ -119,13 +119,47 @@ Data discovery and metadata management
 
 ### Data Studio
 Dashboarding and visualization  
+over 200 connectors ( Google Analytics, BigQuery, Sheets, and external data sources...)
 
 
+1) Intro  
+- connect bigquery and data studio  
+- visualize my data in data studio  
 
+
+2) getting set up  
+- accesse public datasets ( [catalog](http://g.co/cloud/marketplace-datasets) )  
+- set up my GCP ( [my console](http://console.cloud.google.com/) )  
+
+3) connecting data studio and bigquery  
+
+(1) Open [data studio](https://datastudio.google.com/ )  
+(2) Start with a Template (Blank template)  
+(3) Add a data to report Connect to BigQuery (Allow permission to view BigQuery data)  
+(4) Add table "san_francisco_311" (in public datasets)   
+(5) Click Manage added data sources under Resources  
+(6) Edit table fields of "311_service_requests"   
+(7) "latitude","longitude" field from text to Latitude, Longitude in Geo  
+
+4) creating visualizations   
+  
+- Click "Add a chart" and select "Treemap"  
+- Place the "Treemap" chart and change the parameter ("category" field)  
+
+5) building a dashboard  
+
+- Click "Add a chart", select "Google Maps" and change its parameters (Dimension/Tooltip : "neighborhood", Metric/Bubble size: "record count")  
+- Click "Add a chart" and select "Scorecard"  
+- Select "Add a filter" in the Data panel and create filter ("Street and Sidewalk cleaning" in "category" field)  
+
+6) creating filters  
+- Click "Filter Control" (set filter dimension to "neighborhood")  
+- Click "Arrange" and select "Make page-level"
+
+7) test it and share it
 
 
 ---
-
 
 
 
