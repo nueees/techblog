@@ -115,10 +115,28 @@ window.onload = wrap_img;
     <ul class="section-nav">
 <li class="toc-entry toc-h1"><a href="#2-storage">2. Storage</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#21-s3-simple-storage-service">2.1. S3 (Simple Storage Service)</a></li>
-<li class="toc-entry toc-h2"><a href="#22-ebs">2.2. EBS</a></li>
-<li class="toc-entry toc-h2"><a href="#23-efs">2.3. EFS</a></li>
-<li class="toc-entry toc-h2"><a href="#24-s3-glacier">2.4. S3 Glacier</a></li>
+<li class="toc-entry toc-h2"><a href="#21-s3-simple-storage-service">2.1. S3 (Simple Storage Service)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#lifecycle-구성">Lifecycle 구성</a></li>
+<li class="toc-entry toc-h3"><a href="#s3-type">S3 type</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#standard-infrequent-access">Standard-Infrequent Access</a></li>
+<li class="toc-entry toc-h4"><a href="#one-zone-infrequent-access">One Zone-Infrequent Access</a></li>
+<li class="toc-entry toc-h4"><a href="#glacier">Glacier</a></li>
+<li class="toc-entry toc-h4"><a href="#glacier-deep-archive">Glacier Deep Archive</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#23-ebs-elastic-block-store">2.3. EBS (Elastic Block Store)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#ebs-type">EBS type</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#24-efs-elastic-file-system">2.4. EFS (Elastic File System)</a></li>
+<li class="toc-entry toc-h2"><a href="#25-storage-gateway">2.5. Storage Gateway</a></li>
+<li class="toc-entry toc-h2"><a href="#26-datasync">2.6. DataSync</a></li>
+<li class="toc-entry toc-h2"><a href="#27-fsx">2.7. FSx</a></li>
 </ul>
 </li>
 </ul><p>AWS Documentation</p>
@@ -131,14 +149,82 @@ window.onload = wrap_img;
 <h2 id="21-s3-simple-storage-service">
 <a class="anchor" href="#21-s3-simple-storage-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. S3 (Simple Storage Service)</h2>
 
-<h2 id="22-ebs">
-<a class="anchor" href="#22-ebs" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.2. EBS</h2>
+<h3 id="lifecycle-구성">
+<a class="anchor" href="#lifecycle-%EA%B5%AC%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lifecycle 구성</h3>
+<p>Transition Action: 특정 시간이 지나면 이동 ( -&gt; Glacier)
+ Expiration Action: 특정 시간이 지나면 삭제</p>
 
-<h2 id="23-efs">
-<a class="anchor" href="#23-efs" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. EFS</h2>
+<h3 id="s3-type">
+<a class="anchor" href="#s3-type" aria-hidden="true"><span class="octicon octicon-link"></span></a>S3 type</h3>
 
-<h2 id="24-s3-glacier">
-<a class="anchor" href="#24-s3-glacier" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. S3 Glacier</h2>
+<h4 id="standard-infrequent-access">
+<a class="anchor" href="#standard-infrequent-access" aria-hidden="true"><span class="octicon octicon-link"></span></a>Standard-Infrequent Access</h4>
+<p>접근 빈도 낮고 필요시 빠른 접근해야하는 데이터</p>
+
+<h4 id="one-zone-infrequent-access">
+<a class="anchor" href="#one-zone-infrequent-access" aria-hidden="true"><span class="octicon octicon-link"></span></a>One Zone-Infrequent Access</h4>
+<p>단일 AZ에 중복 저장 후 Multi AZ에 저장<br>
+접근 빈도 낮은 데이터</p>
+
+<h4 id="glacier">
+<a class="anchor" href="#glacier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Glacier</h4>
+<p>장기 보관(백업)용으로 검색 오래걸리나,<br>
+Expedited Retrievals 사용시 빠르게 검색 가능</p>
+
+<h4 id="glacier-deep-archive">
+<a class="anchor" href="#glacier-deep-archive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Glacier Deep Archive</h4>
+<p>장기 보관용이나 접근 빈도 낮을 때 사용</p>
+
+<hr>
+<h2 id="23-ebs-elastic-block-store">
+<a class="anchor" href="#23-ebs-elastic-block-store" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. EBS (Elastic Block Store)</h2>
+<p>단일 AZ에 데이터를 저장</p>
+
+<p><img src="https://user-images.githubusercontent.com/83441376/141413218-4ef07d56-c15f-4bad-bab5-14e8d85d94f4.png" alt="image"></p>
+<h3 id="ebs-type">
+<a class="anchor" href="#ebs-type" aria-hidden="true"><span class="octicon octicon-link"></span></a>EBS type</h3>
+<p>SSD: IOPS(Input/Output Operations Per Second)가 높고 high performance<br>
+HDD: 처리량(Throughput)이 높고 작업 많을 때</p>
+
+<p>추가로, 보안을 위해 KMS(Key Management Service)에서 제공되는 키 사용 가능, 스냅샷 기능 사용 가능</p>
+
+<hr>
+
+<h2 id="24-efs-elastic-file-system">
+<a class="anchor" href="#24-efs-elastic-file-system" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. EFS (Elastic File System)</h2>
+<p>다중 AZ에 데이터를 저장, 연결</p>
+
+<hr>
+
+<h2 id="25-storage-gateway">
+<a class="anchor" href="#25-storage-gateway" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.5. Storage Gateway</h2>
+<p>on-premise에서 S3으로 migration (CDC)과 같은 Hybrid Cloud Storage 환경 load 작업 시<br>
+대용량 데이터 작업 시 -&gt; DataSync 사용</p>
+
+<p>1) File Gateway<br>
+NFS(Network File System), SMB(Server Message Block) protocol 지원</p>
+
+<p>2) FSx File Gateway<br>
+Windows File server 공유 할 때</p>
+
+<p>3) Volume Gateway <br>
+자주 사용되는 데이터 caching 해서 사용, AWS에 비동기로 point-in-time 스냅샷 백업 시</p>
+
+<p>4) Tape Gateway<br>
+Glacier에 저장할 때</p>
+
+<hr>
+
+<h2 id="26-datasync">
+<a class="anchor" href="#26-datasync" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.6. DataSync</h2>
+<p>on-premise에서 S3, EFS(Elastic File System), FSx으로 대용량 load 작업 시</p>
+
+<hr>
+
+<h2 id="27-fsx">
+<a class="anchor" href="#27-fsx" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.7. FSx</h2>
+<p>Windows File system<br>
+SMB(Server Message Block) protocol 지원</p>
 
 
   </div><a class="u-url" href="/techblog/aws/s3/2021/11/02/aws-s3.html" hidden></a>

@@ -36,7 +36,7 @@
     
         ,"post3": {
             "title": "S3 (Simple Storage Service)",
-            "content": "AWS Documentation . . 2. Storage . 2.1. S3 (Simple Storage Service) . 2.2. EBS . 2.3. EFS . 2.4. S3 Glacier .",
+            "content": "AWS Documentation . . 2. Storage . 2.1. S3 (Simple Storage Service) . Lifecycle 구성 . Transition Action: 특정 시간이 지나면 이동 ( -&gt; Glacier) Expiration Action: 특정 시간이 지나면 삭제 . S3 type . Standard-Infrequent Access . 접근 빈도 낮고 필요시 빠른 접근해야하는 데이터 . One Zone-Infrequent Access . 단일 AZ에 중복 저장 후 Multi AZ에 저장 접근 빈도 낮은 데이터 . Glacier . 장기 보관(백업)용으로 검색 오래걸리나, Expedited Retrievals 사용시 빠르게 검색 가능 . Glacier Deep Archive . 장기 보관용이나 접근 빈도 낮을 때 사용 . . 2.3. EBS (Elastic Block Store) . 단일 AZ에 데이터를 저장 . . EBS type . SSD: IOPS(Input/Output Operations Per Second)가 높고 high performance HDD: 처리량(Throughput)이 높고 작업 많을 때 . 추가로, 보안을 위해 KMS(Key Management Service)에서 제공되는 키 사용 가능, 스냅샷 기능 사용 가능 . . 2.4. EFS (Elastic File System) . 다중 AZ에 데이터를 저장, 연결 . . 2.5. Storage Gateway . on-premise에서 S3으로 migration (CDC)과 같은 Hybrid Cloud Storage 환경 load 작업 시 대용량 데이터 작업 시 -&gt; DataSync 사용 . 1) File Gateway NFS(Network File System), SMB(Server Message Block) protocol 지원 . 2) FSx File Gateway Windows File server 공유 할 때 . 3) Volume Gateway 자주 사용되는 데이터 caching 해서 사용, AWS에 비동기로 point-in-time 스냅샷 백업 시 . 4) Tape Gateway Glacier에 저장할 때 . . 2.6. DataSync . on-premise에서 S3, EFS(Elastic File System), FSx으로 대용량 load 작업 시 . . 2.7. FSx . Windows File system SMB(Server Message Block) protocol 지원 .",
             "url": "https://nueees.github.io/techblog/aws/s3/2021/11/02/aws-s3.html",
             "relUrl": "/aws/s3/2021/11/02/aws-s3.html",
             "date": " • Nov 2, 2021"
