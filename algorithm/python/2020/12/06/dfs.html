@@ -118,14 +118,13 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#63-subset-sum-problem-dfs">6.3. Subset sum problem (DFS)</a></li>
 <li class="toc-entry toc-h2"><a href="#64-getting-on-truck-dfs">6.4. Getting on truck (DFS)</a></li>
 <li class="toc-entry toc-h2"><a href="#65-duplicated-permutation-dfs">6.5. Duplicated permutation (DFS)</a></li>
-<li class="toc-entry toc-h2"><a href="#66-give-change">6.6. Give change</a></li>
+<li class="toc-entry toc-h2"><a href="#66-give-change-dfs">6.6. Give change (DFS)</a></li>
 <li class="toc-entry toc-h2"><a href="#67-get-permutation-dfs">6.7. Get permutation (DFS)</a></li>
-<li class="toc-entry toc-h2"><a href="#68-guess-permutation-dfs">6.8. Guess permutation (DFS)</a></li>
+<li class="toc-entry toc-h2"><a href="#68-pascals-triangle-dfs">6.8. Pascal’s triangle (DFS)</a></li>
 <li class="toc-entry toc-h2"><a href="#69-get-combination-dfs">6.9. Get combination (DFS)</a></li>
 <li class="toc-entry toc-h2"><a href="#610-guess-combination-dfs">6.10. Guess combination (DFS)</a></li>
 <li class="toc-entry toc-h2"><a href="#611-adjacent-matrix-dfs">6.11. Adjacent matrix (DFS)</a></li>
-<li class="toc-entry toc-h2"><a href="#612-explore-route">6.12. Explore route</a></li>
-<li class="toc-entry toc-h2"><a href="#613-breadth-first-search-bfs">6.13. Breadth First Search (BFS)</a></li>
+<li class="toc-entry toc-h2"><a href="#612-breadth-first-search-bfs">6.12. Breadth First Search (BFS)</a></li>
 </ul><p>Python Algorithm Practice</p>
 
 <hr>
@@ -252,8 +251,8 @@ if __name__=="__main__":
 
 <hr>
 
-<h2 id="66-give-change">
-<a class="anchor" href="#66-give-change" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.6. Give change</h2>
+<h2 id="66-give-change-dfs">
+<a class="anchor" href="#66-give-change-dfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.6. Give change (DFS)</h2>
 <p>다음과 같이 여러 단위의 동전들이 주어져 있을때 거스름돈을 가장 적은 수의 동전으로 교환해주려면 어떻게 주면 되는가? 각 단위의 동전은 무한정 쓸 수 있다.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def tree(L, sum): # L동전개수
@@ -287,60 +286,63 @@ if __name__ == "__main__":
 <a class="anchor" href="#67-get-permutation-dfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.7. Get permutation (DFS)</h2>
 <p>1부터 N까지 번호가 적힌 구슬이 있습니다. 이 중 M개를 뽑아 일렬로 나열하는 방법을 모두 출력합니다.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def DFS(L):
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def tree(L):
     global cnt
-    if L==m:
+    if L == m:
         for i in range(m):
             print(res[i], end=' ')
         print()
-        cnt+=1
+        cnt += 1
     else:
-        for i in range(1, n+1):
-            if ch[i]==0:
-                ch[i]=1
-                res[L]=i
-                DFS(L+1)
-                ch[i]=0
+        for i in range(1,n+1):
+            if ch[i] == 0:
+                ch[i] = 1
+                res[L] = i
+                tree(L+1)
+                ch[i] = 0
+
 
 if __name__=="__main__":
-    n, m=map(int, input().split())
-    res=[0]*n
-    ch=[0]*(n+1)
-    cnt=0
-    DFS(0)
+    n, m = map(int, input().split())
+    res = [0]*m
+    ch = [0]*(n+1)
+    cnt = 0
+    tree(0)
     print(cnt)
 </code></pre></div></div>
 
 <hr>
 
-<h2 id="68-guess-permutation-dfs">
-<a class="anchor" href="#68-guess-permutation-dfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.8. Guess permutation (DFS)</h2>
+<h2 id="68-pascals-triangle-dfs">
+<a class="anchor" href="#68-pascals-triangle-dfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.8. Pascal’s triangle (DFS)</h2>
 <p>가장 윗줄에 1부터 N까지의 숫자가 한 개씩 적혀 있다. 그리고 둘째 줄부터 차례대로 파스칼의 삼각형처럼 위의 두개를 더한 값이 저장되게 된다. 예를 들어 N이 4 이고 가장 윗 줄에 3 1 2 4 가 있다고 했을 때, 다음과 같은 삼각형이 그려진다.<br>
-3 1 2 4<br>
-　4 3 6<br>
-　　7 9<br>
-　　　16</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def DFS(L, sum):
-    if L==n and sum==f:
-        for x in p:
-            print(x, end=' ')
+3　1　2　4<br>
+　4　3　6<br>
+　　7　9<br>
+　　16</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def tree(L, sum):
+    if L == 4 and sum == f:
+        for i in p:
+            print(i, end=' ')
         sys.exit(0)
     else:
         for i in range(1, n+1):
-            if ch[i]==0:
-                ch[i]=1
-                p[L]=i
-                DFS(L+1, sum+(p[L]*b[L]))
-                ch[i]=0
+            if ch[i] == 0:
+                ch[i] = 1
+                p[L] = i
+                tree(L+1, sum+(p(L)*b[L]))
+                ch[i] = 0
+        
 
 if __name__ == "__main__":
-    n, f=map(int, input().split())
-    p=[0]*n
-    b=[1]*n
-    ch=[0]*(n+1)
+    n, f = map(int, input().split())
+    p = [0]*n
+    b = [1]*n
+    ch = [0]*(n+1)
     for i in range(1, n):
-        b[i]=b[i-1]*(n-i)//i
-    DFS(0, 0)
+        b[i] = b[i-1] * (n-i)//i
+        print(b[i])
+    tree(0, 0)
  
 </code></pre></div></div>
 
@@ -350,23 +352,21 @@ if __name__ == "__main__":
 <a class="anchor" href="#69-get-combination-dfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.9. Get combination (DFS)</h2>
 <p>1부터 N까지 번호가 적힌 구슬이 있습니다. 이 중 M개를 뽑는 방법의 수를 출력하는 프로그램을 작성하세요.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def DFS(L, s):
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def tree(L, s):
     global cnt
-    if L==m:
+    if L == m:
         for i in range(m):
             print(res[i], end=' ')
         print()
-        cnt+=1
+        cnt += 1
     else:
         for i in range(s, n+1):
-            res[L]=i
-            DFS(L+1, i+1)
-           
+            res[L] = tree(L+1, i+1)
 
-n, m=map(int, input().split())
-res=[0]*(n+1)
-cnt=0
-DFS(0, 1)
+n, m = map(int, input().split())
+res = [0]*(n+1)
+cnt = 0
+tree(0, 1)
 print(cnt)
 </code></pre></div></div>
 
@@ -377,21 +377,21 @@ print(cnt)
 <p>N개의 정수가 주어지면 그 숫자들 중 K개를 뽑는 조합의 합이 임의의 정수 M의 배수인 개수는 몇 개가 있는지 출력하는 프로그램을 작성하세요.<br>
 예를 들면 5개의 숫자 2 4 5 8 12가 주어지고, 3개를 뽑은 조합의 합이 6의 배수인 조합을 찾으면 4+8+12 2+4+12로 2가지가 있습니다.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def DFS(L, s, sum):
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def tree(L, s, sum):
     global cnt
-    if L==k:
-        if sum%m==0:
-            cnt+=1
+    if L == k:
+        if sum%m == 0:
+            cnt += 1
     else:
         for i in range(s, n):
-            DFS(L+1, i+1, sum+a[i])
+            tree(L+1, i+1, sum+a[i])
  
 if __name__=="__main__":
-    n, k=map(int, input().split())
-    a=list(map(int, input().split()))
-    m=int(input())
-    cnt=0
-    DFS(0, 0, 0)
+    n, k = map(int, input().split())
+    a = list(map(int, input().split()))
+    m = int(input())
+    cnt = 0
+    tree(0, 0, 0)
     print(cnt)
 </code></pre></div></div>
 
@@ -402,30 +402,11 @@ if __name__=="__main__":
 <p>아래 그림과 같은 그래프 정보를 인접행렬로 표현해보세요.<br>
 <img src="/techblog/images/post/adjacentmatrix.JPG" alt=""></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-</code></pre></div></div>
-
-<hr>
-
-<h2 id="612-explore-route">
-<a class="anchor" href="#612-explore-route" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.12. Explore route</h2>
-<p>방향그래프가 주어지면 1번 정점에서 N번 정점으로 가는 모든 경로의 가지 수를 출력하는 프로그램을 작성하세요.<br>
-아래 그래프에서 1번 정점에서 5번 정점으로 가는 가지 수는<br>
-<img src="/techblog/images/post/exploreroute.JPG" alt=""> <br>
-1 2 3 4 5<br>
-1 2 5<br>
-1 3 4 2 5<br>
-1 3 4 5<br>
-1 4 2 5<br>
-1 4 5<br>
-총 6 가지입니다. <br>
-그래프에서 경로란 방문한 노드는 중복해서 방문하지 않습니다.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n=int(input())
-m=int(input())
-g=[[0]*(n+1) for _ in range(n+1)]
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n = int(input())
+m = int(input())
+g = [[0]*(n+1) for _ in range(n+1)]
 for i in range(m):
-    a, b=map(int, input().split())
+    a, b = map(int, input().split())
     g[a][b]=1
     g[b][a]=1
 
@@ -437,8 +418,8 @@ for i in range(1, n+1):
 
 <hr>
 
-<h2 id="613-breadth-first-search-bfs">
-<a class="anchor" href="#613-breadth-first-search-bfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.13. Breadth First Search (BFS)</h2>
+<h2 id="612-breadth-first-search-bfs">
+<a class="anchor" href="#612-breadth-first-search-bfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.12. Breadth First Search (BFS)</h2>
 <p>방향그래프가 주어지면 1번 정점에서 N번 정점으로 가는 모든 경로의 가지 수를 출력하는 프로그램을 작성하세요.<br>
 방문한 노드는 중복해서 방문하지 않습니다. <br>
 <img src="/techblog/images/post/BFS.JPG" alt=""><br>
