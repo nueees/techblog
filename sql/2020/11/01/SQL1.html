@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      5 min read
     
 </span></p>
 
@@ -128,13 +128,31 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#input-3">input:</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#14-hierarchical-table2">1.4. Hierarchical Table2</a>
+<li class="toc-entry toc-h2"><a href="#14-join-table">1.4. Join Table</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#input-4">input:</a></li>
 <li class="toc-entry toc-h3"><a href="#output-2">output:</a></li>
 </ul>
 </li>
-</ul><p>Python Algorithm Practice</p>
+<li class="toc-entry toc-h2"><a href="#15-max-min-values">1.5. Max, Min values</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#input-5">input:</a></li>
+<li class="toc-entry toc-h3"><a href="#output-3">output:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#16-join-table2">1.6. Join table2</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#input-6">input:</a></li>
+<li class="toc-entry toc-h3"><a href="#output-4">output:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#17-grouping-and-ranking">1.7. grouping and ranking</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#input-7">input:</a></li>
+<li class="toc-entry toc-h3"><a href="#output-5">output:</a></li>
+</ul>
+</li>
+</ul><p>HackerRank</p>
 
 <hr>
 
@@ -295,8 +313,8 @@ order by N
 
 <hr>
 
-<h2 id="14-hierarchical-table2">
-<a class="anchor" href="#14-hierarchical-table2" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.4. Hierarchical Table2</h2>
+<h2 id="14-join-table">
+<a class="anchor" href="#14-join-table" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.4. Join Table</h2>
 
 <h3 id="input-4">
 <a class="anchor" href="#input-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
@@ -334,10 +352,200 @@ E4, M3, SM3, LM2, C2</p>
 <p>C1 Monika 1 2 1 2<br>
 C2 Samantha 1 1 2 2</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select e.company_code, founder
+     , count(distinct e.lead_manager_code)
+     , count(distinct e.senior_manager_code) 
+     , count(distinct e.manager_code)
+     , count(distinct e.employee_code )
+from (select distinct company_code, founder from Company) C
+left outer join (select distinct lead_manager_code, company_code from Lead_Manager) LM
+ on C.company_code = LM.company_code
+left outer join (select distinct senior_manager_code, lead_manager_code, company_code from Senior_Manager) SM
+ on LM.lead_manager_code = SM.lead_manager_code
+left outer join (select distinct manager_code, senior_manager_code, lead_manager_code, company_code from Manager) M
+ on SM.senior_manager_code = M.senior_manager_code
+left outer join (select distinct employee_code, manager_code, senior_manager_code, lead_manager_code, company_code from Employee) E
+ on M.manager_code = E.manager_code
+group by e.company_code, founder
+order by 1
+;
 </code></pre></div></div>
 
 <hr>
+
+<h2 id="15-max-min-values">
+<a class="anchor" href="#15-max-min-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.5. Max, Min values</h2>
+
+<h3 id="input-5">
+<a class="anchor" href="#input-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
+<p>DEF, ABC, PQRS, WXY</p>
+
+<h3 id="output-3">
+<a class="anchor" href="#output-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>output:</h3>
+<p>ABC 3<br>
+PQRS 4</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>with wstation as 
+(select  city
+       , length(city) as lencity
+from station
+order by 2, 1
+)
+, w2station as
+(select city, lencity
+  from (select row_number() over (partition by lencity order by city) as rnum
+             , city
+             , lencity
+        from wstation
+        )
+where rnum &lt; 2
+)
+select *
+from w2station
+where (lencity = (select min(lencity) from wstation)
+       or lencity = (select max(lencity) from wstation)
+      ) 
+;
+</code></pre></div></div>
+
+<hr>
+
+<h2 id="16-join-table2">
+<a class="anchor" href="#16-join-table2" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.6. Join table2</h2>
+
+<h3 id="input-6">
+<a class="anchor" href="#input-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
+<p>STUDENTS<br>
+ID, Name, Marks<br>
+1, Julia, 88<br>
+2, Samantha, 68<br>
+3, Maria, 99<br>
+4, Scarlet, 78<br>
+5, Ashley, 63<br>
+6, Jane, 81</p>
+
+<p>GRADES 
+Grade, Min_Mark, Max_Mark<br>
+1, 0, 9<br>
+2, 10, 19<br>
+3, 20, 29<br>
+4, 30, 39<br>
+5, 40, 49<br>
+6, 50, 59<br>
+7, 60, 69<br>
+8, 70, 79<br>
+9, 80, 89<br>
+10, 90, 100</p>
+
+<h3 id="output-4">
+<a class="anchor" href="#output-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>output:</h3>
+<p>lower than 8, name is null</p>
+
+<p>Maria 10 99<br>
+Jane 9 81<br>
+Julia 9 88 <br>
+Scarlet 8 78<br>
+NULL 7 63<br>
+NULL 7 68</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select case
+           when g.grade &gt; 7 then s.name
+           else NULL
+       end as name
+        , g.grade
+        , s.marks
+from STUDENTS s
+inner join GRADES g 
+  on s.marks between g.min_mark and g.max_mark
+order by g.grade desc, name
+;
+</code></pre></div></div>
+
+<hr>
+
+<h2 id="17-grouping-and-ranking">
+<a class="anchor" href="#17-grouping-and-ranking" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.7. grouping and ranking</h2>
+
+<h3 id="input-7">
+<a class="anchor" href="#input-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
+<p>HACKERS<br>
+h_id, name<br>
+5580, Rose<br>
+8439, Angela<br>
+27205, Frank<br>
+52243, Patrick<br>
+52348, Lisa<br>
+57645, Kimberly<br>
+77726, Bonnie<br>
+83082, Michael<br>
+86870, Todd<br>
+90411, Joe</p>
+
+<p>DIFFICULTY<br>
+d_level, score<br>
+1, 20<br>
+2, 30<br>
+3, 40<br>
+4, 60<br>
+5, 80<br>
+6, 100<br>
+7, 120</p>
+
+<p>CHALLENGE
+c_id, h_id, d_level<br>
+4810, 77726, 4<br>
+21089, 27205, 1<br>
+36566, 5580, 7<br>
+66730, 52243, 6<br>
+71055, 52243, 2</p>
+
+<p>SUBMISSION
+s_id, h_id, c_id, score
+68628, 77726, 36566, 30<br>
+65300, 77726, 21089, 10<br>
+40326, 52243, 36566, 77<br>
+8941, 27205, 4810, 4<br>
+83554, 77726, 66730, 30<br>
+…<br>
+97397, 90411, 66730, 100<br>
+84162, 83082, 4810, 40<br>
+97431, 90411, 71055, 30</p>
+
+<h3 id="output-5">
+<a class="anchor" href="#output-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>output:</h3>
+<p>90411 Joe</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>with wsub as (
+select s.hacker_id, h.name
+     , s.challenge_id
+     , s.score
+from Hackers h
+left outer join Submissions s
+  on s.hacker_id = h.hacker_id
+left outer join Challenges c
+  on s.challenge_id = c.challenge_id
+left outer join Difficulty d
+  on c.difficulty_level = d.difficulty_level
+where s.score = d.score
+  and s.score is not null
+group by s.hacker_id, h.name, s.challenge_id, s.score
+order by s.challenge_id, s.score desc
+)
+select hacker_id, name
+from
+(
+    select rank() over(order by cnt desc) as rank
+         , hacker_id, name, cnt
+     from(
+           select hacker_id, name
+                , count(distinct challenge_id) as cnt
+            from wsub
+            group by hacker_id, name
+         )
+)
+where rank = 1
+;
+</code></pre></div></div>
 
 
   </div><a class="u-url" href="/techblog/sql/2020/11/01/SQL1.html" hidden></a>
