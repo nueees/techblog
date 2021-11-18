@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>SQL1 | Cho’s Tech blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="SQL1" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="section1" />
+<meta property="og:description" content="section1" />
+<link rel="canonical" href="https://nueees.github.io/techblog/sql/2020/11/01/SQL1.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/sql/2020/11/01/SQL1.html" />
+<meta property="og:site_name" content="Cho’s Tech blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-11-01T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"section1","url":"https://nueees.github.io/techblog/sql/2020/11/01/SQL1.html","@type":"BlogPosting","headline":"SQL1","dateModified":"2020-11-01T00:00:00-05:00","datePublished":"2020-11-01T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/sql/2020/11/01/SQL1.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/techblog/">Cho&#39;s Tech blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/techblog/about/">About Me</a><a class="page-link" href="/techblog/gitInfo/">gitInfo</a><a class="page-link" href="/techblog/search/">Search</a><a class="page-link" href="/techblog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">SQL1</h1><p class="page-description">section1</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-11-01T00:00:00-05:00" itemprop="datePublished">
+        Nov 1, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      2 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/techblog/categories/#sql">sql</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#11-sub-string">1.1. Sub-String</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#input">input:</a></li>
+<li class="toc-entry toc-h3"><a href="#output">output:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#12-pivot">1.2. Pivot</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#input-1">input:</a></li>
+<li class="toc-entry toc-h3"><a href="#output-1">output:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#13-hierarchical-table">1.3. Hierarchical Table</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#input-2">input:</a></li>
+<li class="toc-entry toc-h3"><a href="#input-3">input:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#14-hierarchical-table2">1.4. Hierarchical Table2</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#input-4">input:</a></li>
+<li class="toc-entry toc-h3"><a href="#output-2">output:</a></li>
+</ul>
+</li>
+</ul><p>Python Algorithm Practice</p>
+
+<hr>
+
+<h2 id="11-sub-string">
+<a class="anchor" href="#11-sub-string" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. Sub-String</h2>
+
+<h3 id="input">
+<a class="anchor" href="#input" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
+<p>name, occupation<br>
+Ashley Professor<br>
+Samantha Actor<br>
+Julia Doctor<br>
+Britney Professor<br>
+Maria Professor<br>
+Meera Professor<br>
+Priya Doctor<br>
+Priyanka Professor<br>
+Jennifer Actor<br>
+Ketty Actor<br>
+Belvet Professor<br>
+Naomi Professor<br>
+Jane Singer<br>
+Jenny Singer<br>
+Kristeen Singer<br>
+Christeen Singer<br>
+Eve Actor<br>
+Aamina Doctor</p>
+
+<h3 id="output">
+<a class="anchor" href="#output" aria-hidden="true"><span class="octicon octicon-link"></span></a>output:</h3>
+<p>Samantha(D)<br>
+Julia(A)<br>
+Maria(A)<br>
+Meera(S)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select
+        name||'('||substr(occupation,1,1)||')'
+  from OCCUPATIONS
+;  
+</code></pre></div></div>
+
+<hr>
+
+<h2 id="12-pivot">
+<a class="anchor" href="#12-pivot" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Pivot</h2>
+
+<h3 id="input-1">
+<a class="anchor" href="#input-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
+<p>name, occupation<br>
+Ashley Professor<br>
+Samantha Actor<br>
+Julia Doctor<br>
+Britney Professor<br>
+Maria Professor<br>
+Meera Professor<br>
+Priya Doctor<br>
+Priyanka Professor<br>
+Jennifer Actor<br>
+Ketty Actor<br>
+Belvet Professor<br>
+Naomi Professor<br>
+Jane Singer<br>
+Jenny Singer<br>
+Kristeen Singer<br>
+Christeen Singer<br>
+Eve Actor<br>
+Aamina Doctor</p>
+
+<h3 id="output-1">
+<a class="anchor" href="#output-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>output:</h3>
+<p>doc,pro,sing,act
+Jenny,    Ashley,     Meera,  Jane<br>
+Samantha, Christeen,  Priya,  Julia<br>
+NULL,     Ketty,      NULL,   Maria</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>with wocc as (
+    select  case 
+                when occupation = 'Doctor' then name 
+                else Null
+            end as doc
+            ,case 
+                when occupation = 'Professor' then name 
+                else Null
+            end as pro
+            ,case 
+                when occupation = 'Singer' then name 
+                else Null
+            end as sing
+            ,case 
+                when occupation = 'Actor' then name 
+                else Null
+            end as act
+     from OCCUPATIONS
+ )
+ select * 
+ from (
+     select d.doc, p.pro, s.sing, a.act
+     from
+             (select row_number() over (order by sub.doc) col, sub.doc from wocc sub) d
+            ,(select row_number() over (order by sub.pro) col, sub.pro from wocc sub) p
+            ,(select row_number() over (order by sub.sing) col, sub.sing from wocc sub) s
+            ,(select row_number() over (order by sub.act) col, sub.act from wocc sub) a
+    where d.col = p.col
+      and p.col = s.col
+      and s.col = a.col
+ )
+ where rownum &lt; (select cnt
+                 from (
+                     select occupation, count(*) as cnt
+                     from OCCUPATIONS
+                     group by occupation
+                     order by 2 desc
+                     )
+                where rownum = 1)+1
+;                
+</code></pre></div></div>
+
+<hr>
+
+<h2 id="13-hierarchical-table">
+<a class="anchor" href="#13-hierarchical-table" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Hierarchical Table</h2>
+
+<h3 id="input-2">
+<a class="anchor" href="#input-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
+<p>child, parent<br>
+1,2<br>
+3,2<br>
+6,8<br>
+9,8<br>
+2,5<br>
+8,5<br>
+5,null</p>
+
+<h3 id="input-3">
+<a class="anchor" href="#input-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
+<p>1 Leaf<br>
+2 Inner<br>
+3 Leaf<br>
+5 Root<br>
+6 Leaf<br>
+8 Inner<br>
+9 Leaf</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select 
+       N
+     , case
+            when CONNECT_BY_ISLEAF = 1 then 'Leaf'
+            when CONNECT_BY_ISLEAF = 0 and P is null then 'Root'
+            else 'Inner'
+      end
+from BST T1
+start with P is null
+connect by prior N = P
+order by N
+;
+
+</code></pre></div></div>
+
+<hr>
+
+<h2 id="14-hierarchical-table2">
+<a class="anchor" href="#14-hierarchical-table2" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.4. Hierarchical Table2</h2>
+
+<h3 id="input-4">
+<a class="anchor" href="#input-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
+<p>COMPANY<br>
+c_code, founder<br>
+C1, Monika<br>
+C2, Samantha</p>
+
+<p>LEAD_MANAGER<br>
+l_m_code, c_code<br>
+LM1, C1<br>
+LM2, C2</p>
+
+<p>SENIOR_MANAGER<br>
+s_m_code, l_m_code, c_code<br>
+SM1, LM1, C1<br>
+SM2, LM1, C1<br>
+SM3, LM2, C2</p>
+
+<p>MANAGER<br>
+m_code, s_m_code, l_m_code, c_code<br>
+M1, SM1, LM1, C1<br>
+M2, SM3, LM2, C2<br>
+M3, SM3, LM2, C2</p>
+
+<p>EMPLOYEE<br>
+s_m_code, l_m_code, c_code<br>
+E1, M1, SM1, LM1, C1<br>
+E2, M1, SM1, LM1, C1<br>
+E3, M2, SM3, LM2, C2<br>
+E4, M3, SM3, LM2, C2</p>
+
+<h3 id="output-2">
+<a class="anchor" href="#output-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>output:</h3>
+<p>C1 Monika 1 2 1 2<br>
+C2 Samantha 1 1 2 2</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<hr>
+
+
+  </div><a class="u-url" href="/techblog/sql/2020/11/01/SQL1.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/techblog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/techblog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/techblog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A challenge-loving junior data engineer.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
