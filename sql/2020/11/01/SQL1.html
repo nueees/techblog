@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      6 min read
     
 </span></p>
 
@@ -146,10 +146,16 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#output-4">output:</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#17-grouping-and-ranking">1.7. grouping and ranking</a>
+<li class="toc-entry toc-h2"><a href="#17-group-by--having">1.7. Group by &amp; Having</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#input-7">input:</a></li>
 <li class="toc-entry toc-h3"><a href="#output-5">output:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#18-grouping-and-ranking">1.8. grouping and ranking</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#input-8">input:</a></li>
+<li class="toc-entry toc-h3"><a href="#output-6">output:</a></li>
 </ul>
 </li>
 </ul><p>HackerRank</p>
@@ -463,8 +469,8 @@ order by g.grade desc, name
 
 <hr>
 
-<h2 id="17-grouping-and-ranking">
-<a class="anchor" href="#17-grouping-and-ranking" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.7. grouping and ranking</h2>
+<h2 id="17-group-by--having">
+<a class="anchor" href="#17-group-by--having" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.7. Group by &amp; Having</h2>
 
 <h3 id="input-7">
 <a class="anchor" href="#input-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
@@ -516,11 +522,9 @@ s_id, h_id, c_id, score
 <p>90411 Joe</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>with wsub as (
-select s.hacker_id, h.name
-     , s.challenge_id
-     , s.score
-from Hackers h
-left outer join Submissions s
+select h.hacker_id, h.name, count(distinct s.challenge_id) as cnt --, s.score
+from Submissions s
+left outer join Hackers h
   on s.hacker_id = h.hacker_id
 left outer join Challenges c
   on s.challenge_id = c.challenge_id
@@ -528,21 +532,80 @@ left outer join Difficulty d
   on c.difficulty_level = d.difficulty_level
 where s.score = d.score
   and s.score is not null
-group by s.hacker_id, h.name, s.challenge_id, s.score
-order by s.challenge_id, s.score desc
+group by h.hacker_id, h.name
+having count(distinct s.challenge_id) &gt; 1
+order by cnt desc, h.hacker_id 
 )
 select hacker_id, name
-from
-(
-    select rank() over(order by cnt desc) as rank
-         , hacker_id, name, cnt
-     from(
-           select hacker_id, name
-                , count(distinct challenge_id) as cnt
-            from wsub
-            group by hacker_id, name
-         )
+from wsub;
+</code></pre></div></div>
+
+<hr>
+
+<h2 id="18-grouping-and-ranking">
+<a class="anchor" href="#18-grouping-and-ranking" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.8. grouping and ranking</h2>
+
+<h3 id="input-8">
+<a class="anchor" href="#input-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
+<p>WANDS<br>
+id, code, coins_needed, power
+1, 4, 3588, 8<br>
+2, 3, 9365, 3<br>
+3, 3, 7187, 10<br>
+4, 3, 734, 8<br>
+5, 1, 6020, 8<br>
+6, 2, 6773, 3<br>
+7, 3, 9873, 10<br>
+8, 3, 7721, 8<br>
+9, 1, 1647, 8<br>
+10, 4, 504, 3<br>
+11, 2, 7587, 10<br>
+12, 5, 9897, 8<br>
+13, 3, 4651, 8<br>
+14, 2, 5408, 3<br>
+15, 2, 6018, 10<br>
+16, 4, 7710, 8<br>
+17, 2, 8798, 8<br>
+18, 2, 3312, 3<br>
+19, 4, 7651, 10<br>
+20, 5, 5689, 8</p>
+
+<p>WANDS_PROPERTY
+code, age, is_evil <br>
+1, 45, 0
+2, 40, 0<br>
+3, 4, 1<br>
+4, 20, 0<br>
+5, 17, 0</p>
+
+<h3 id="output-6">
+<a class="anchor" href="#output-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>output:</h3>
+<p>9 45 1647 10<br>
+12 17 9897 10<br>
+1 20 3688 8<br>
+15 40 6018 7<br>
+19 20 7651 6<br>
+11 40 7587 5<br>
+10 20 504 5<br>
+18 40 3312 3<br>
+20 17 5689 3<br>
+5 45 6020 2<br>
+14 40 5408 1</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>with wsub as (
+select rank() over (partition by w.power, wp.age order by w.coins_needed) as rank
+     , w.power
+     , wp.age
+     , w.coins_needed
+     , w.id
+from WANDS w
+inner join WANDS_PROPERTY wp
+             on w.code = wp.code
+            and wp.is_evil = 0  
+order by  w.power desc, wp.age desc, w.coins_needed
 )
+select id, age, coins_needed, power
+from wsub
 where rank = 1
 ;
 </code></pre></div></div>
