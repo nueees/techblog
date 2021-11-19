@@ -117,6 +117,7 @@ window.onload = wrap_img;
 <ul>
 <li class="toc-entry toc-h2"><a href="#21-s3-simple-storage-service">2.1. S3 (Simple Storage Service)</a>
 <ul>
+<li class="toc-entry toc-h3"><a href="#object-storage">Object Storage</a></li>
 <li class="toc-entry toc-h3"><a href="#lifecycle-구성">Lifecycle 구성</a></li>
 <li class="toc-entry toc-h3"><a href="#s3-type">S3 type</a>
 <ul>
@@ -130,6 +131,7 @@ window.onload = wrap_img;
 </li>
 <li class="toc-entry toc-h2"><a href="#23-ebs-elastic-block-store">2.3. EBS (Elastic Block Store)</a>
 <ul>
+<li class="toc-entry toc-h3"><a href="#block-storage">Block Storage</a></li>
 <li class="toc-entry toc-h3"><a href="#ebs-type">EBS type</a></li>
 </ul>
 </li>
@@ -148,6 +150,10 @@ window.onload = wrap_img;
 
 <h2 id="21-s3-simple-storage-service">
 <a class="anchor" href="#21-s3-simple-storage-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. S3 (Simple Storage Service)</h2>
+
+<h3 id="object-storage">
+<a class="anchor" href="#object-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Object Storage</h3>
+<p>오브젝트 스토리지는 블록 스토리지와는 다르게 데이터 자체가 단독으로 구성됩니다. 고유 식별자가 존재하는 평면적인 주소 공간에 데이터 오브젝트 그 자체가 저장되므로 접근과 색인이 더 깔끔해집니다. 클라우드 서비스에서 기본적으로 사용되고 있으며, 찾고 싶은 데이터의 key(고유 식별자)만 알고 있다면, 색인을 이용해 접근이 편해집니다.</p>
 
 <h3 id="lifecycle-구성">
 <a class="anchor" href="#lifecycle-%EA%B5%AC%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lifecycle 구성</h3>
@@ -178,6 +184,12 @@ Expedited Retrievals 사용시 빠르게 검색 가능</p>
 <hr>
 <h2 id="23-ebs-elastic-block-store">
 <a class="anchor" href="#23-ebs-elastic-block-store" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. EBS (Elastic Block Store)</h2>
+
+<h3 id="block-storage">
+<a class="anchor" href="#block-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Block Storage</h3>
+<p>블록 스토리지는 파일이 균일한 블록에 저장되는 데이터 저장소를 의미합니다. 가장 일반적인 저장소의 역할을 수행합니다.
+좀 더 자세하게 말하자면, 데이터를 블록 단위로 쪼개어서 별도로 ‘분리’ 해 저장하는 것을 의미합니다. 그 후 해당하는 데이터 요청 시 나누어진 데이터를 다시 결합해 제공,응답합니다. 주로 SAN(Storage Area Network) 환경에 배포됩니다.(컴퓨터에 HDD,SDD를 직접 꽃아 사용하는 것과 유사)</p>
+
 <p>단일 AZ에 데이터를 저장</p>
 
 <p><img src="https://user-images.githubusercontent.com/83441376/141413218-4ef07d56-c15f-4bad-bab5-14e8d85d94f4.png" alt="image"></p>
