@@ -15,7 +15,7 @@ Python Intermediate Programming
 단위 실행 가능한 코루틴(Coroutine) 구현과 연동  
 
 ### iter function
-파이썬 반복 가능한 타입: for, collections, text file, List, Dict, Set, Tuple, unpacking, \*args
+파이썬 반복 가능한 타입: for, collections, text file, List, Dict, Set, Tuple, unpacking, \*args  
 
 ### next
 
