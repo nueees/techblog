@@ -10,13 +10,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="5장" />
 <meta property="og:description" content="5장" />
-<link rel="canonical" href="https://nueees.github.io/techblog/statistics/python/2021/12/05/CDA.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/statistics/python/2021/12/05/CDA.html" />
+<link rel="canonical" href="https://nueees.github.io/techblog/statistics/python/2020/01/05/CDA.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/statistics/python/2020/01/05/CDA.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-12-05T00:00:00-06:00" />
+<meta property="article:published_time" content="2020-01-05T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"5장","url":"https://nueees.github.io/techblog/statistics/python/2021/12/05/CDA.html","@type":"BlogPosting","headline":"CDA","dateModified":"2021-12-05T00:00:00-06:00","datePublished":"2021-12-05T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/statistics/python/2021/12/05/CDA.html"},"@context":"https://schema.org"}</script>
+{"description":"5장","url":"https://nueees.github.io/techblog/statistics/python/2020/01/05/CDA.html","@type":"BlogPosting","headline":"CDA","dateModified":"2020-01-05T00:00:00-06:00","datePublished":"2020-01-05T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/statistics/python/2020/01/05/CDA.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,13 +87,13 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">CDA</h1><p class="page-description">5장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-12-05T00:00:00-06:00" itemprop="datePublished">
-        Dec 5, 2021
+    <h1 class="post-title p-name" itemprop="name headline">CDA</h1><p class="page-description">5장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-05T00:00:00-06:00" itemprop="datePublished">
+        Jan 5, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      7 min read
+      6 min read
     
 </span></p>
 
@@ -166,35 +166,6 @@ window.onload = wrap_img;
 </ul>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">spst</span><span class="p">.</span><span class="n">poisson</span><span class="p">.</span><span class="n">rvs</span><span class="p">.</span><span class="n">__doc__</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        Random variates of given type.
-
-        Parameters
-        ----------
-        arg1, arg2, arg3,... : array_like
-            The shape parameter(s) for the distribution (see docstring of the
-            instance object for more information).
-        loc : array_like, optional
-            Location parameter (default=0).
-        size : int or tuple of ints, optional
-            Defining number of random variates (Default is 1).  Note that `size`
-            has to be given as keyword, not as positional argument.
-        random_state : {None, int, `~np.random.RandomState`, `~np.random.Generator`}, optional
-            This parameter defines the object to use for drawing random
-            variates.
-            If `random_state` is `None` the `~np.random.RandomState` singleton
-            is used.
-            If `random_state` is an int, a new ``RandomState`` instance is used,
-            seeded with random_state.
-            If `random_state` is already a ``RandomState`` or ``Generator``
-            instance, then that object is used.
-            Default is None.
-
-        Returns
-        -------
-        rvs : ndarray or scalar
-            Random variates of given `size`.
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
@@ -422,8 +393,6 @@ p값이 유의수준 5%보다 크기 때문에 두 그룹은 같다고 판단.</
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:&gt;
 </code></pre></div></div>
 
-<p><img src="2021-12-05-CDA_files/2021-12-05-CDA_25_1.png" alt="png"></p>
-
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spst</span><span class="p">.</span><span class="n">ttest_rel</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="n">before</span><span class="p">,</span>
                 <span class="n">b</span> <span class="o">=</span> <span class="n">after</span><span class="p">)</span>
 </code></pre></div></div>
@@ -539,8 +508,6 @@ Residual  27948.102  995.0       NaN       NaN
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\Administrator\anaconda3\lib\site-packages\statsmodels\sandbox\stats\multicomp.py:775: UserWarning: FixedFormatter should only be used together with FixedLocator
   ax1.set_yticklabels(np.insert(self.groupsunique.astype(str), 0, ''))
 </code></pre></div></div>
-
-<p><img src="2021-12-05-CDA_files/2021-12-05-CDA_32_1.png" alt="png"></p>
 
 <table class="simpletable">
 <caption>Multiple Comparison of Means - Tukey HSD, FWER=0.05</caption>
@@ -711,7 +678,7 @@ p-value : 0.03771251880967476516
   <li>pants 0과 pants 1 그룹을 비교했을 때 shirts 0, 1의 차이가 있다. pants가 0, 1, 2였다면 0, 1, 2에 따라 차이가 있다라고 해석할 수 있음</li>
 </ul>
 
-  </div><a class="u-url" href="/techblog/statistics/python/2021/12/05/CDA.html" hidden></a>
+  </div><a class="u-url" href="/techblog/statistics/python/2020/01/05/CDA.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
