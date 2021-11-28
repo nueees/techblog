@@ -4,19 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Cho’s Tech blog | A challenge-loving junior data engineer.</title>
+<title>Python Concurrency | Cho’s Tech blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Cho’s Tech blog" />
+<meta property="og:title" content="Python Concurrency" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A challenge-loving junior data engineer." />
-<meta property="og:description" content="A challenge-loving junior data engineer." />
-<link rel="canonical" href="https://nueees.github.io/techblog/" />
-<meta property="og:url" content="https://nueees.github.io/techblog/" />
+<meta name="description" content="section5" />
+<meta property="og:description" content="section5" />
+<link rel="canonical" href="https://nueees.github.io/techblog/python/2021/01/05/python-concurrency.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/python/2021/01/05/python-concurrency.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
-<meta property="og:image" content="https://nueees.github.io/techblog/images/logo.png" />
-<link rel="next" href="https://nueees.github.io/techblog/page2/" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-05T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"A challenge-loving junior data engineer.","url":"https://nueees.github.io/techblog/","@type":"WebSite","headline":"Cho’s Tech blog","image":"https://nueees.github.io/techblog/images/logo.png","name":"Cho’s Tech blog","@context":"https://schema.org"}</script>
+{"description":"section5","url":"https://nueees.github.io/techblog/python/2021/01/05/python-concurrency.html","@type":"BlogPosting","headline":"Python Concurrency","dateModified":"2021-01-05T00:00:00-06:00","datePublished":"2021-01-05T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/python/2021/01/05/python-concurrency.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -84,118 +84,139 @@ window.onload = wrap_img;
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home"><h1 id="welcome">Welcome</h1>
-<p><img src="/techblog/images/hi.jpg" width="20%" /></p>
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-<h2 id="this-site-is-chos-techblog">This site is Cho’s techblog.</h2>
-
-<p><img src="https://ghchart.rshah.org/nueees" alt="grass" title="https://ghchart.rshah.org/nueees" /></p>
-
-<h1 id="posts">Posts</h1>
-
-
-
-  
-
-  <!-- Hide posts if front matter flag hide:true -->
-  
-  
-
-  <!-- Sort posts by rank, then date -->
-  
-  
-  
-
- 
-  
-
-   <!-- Assemble final sorted posts array -->
-  
-  <ul class="post-list"><li><h3>
-    <a class="post-link" href="/techblog/aws/elb/2021/11/05/aws-elb.html">
-    ELB (Elastic Load Balancing)
-    </a>
-</h3><p class="post-meta-description">section5</p><p class="post-meta">Nov 5, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/aws/ecs/2021/11/04/aws-ecs.html">
-    ECS (Elastic Container Service)
-    </a>
-</h3><p class="post-meta-description">section4</p><p class="post-meta">Nov 4, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/aws/dynamodb/2021/11/03/aws-dynamodb.html">
-    DynamoDB
-    </a>
-</h3><p class="post-meta-description">section3</p><p class="post-meta">Nov 3, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/aws/s3/2021/11/02/aws-s3.html">
-    S3 (Simple Storage Service)
-    </a>
-</h3><p class="post-meta-description">section2</p><p class="post-meta">Nov 2, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/aws/ec2/2021/11/01/aws-ec2.html">
-    EC2 (Elastic Compute Cloud)
-    </a>
-</h3><p class="post-meta-description">section1</p><p class="post-meta">Nov 1, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/gcp/datastudio/2021/10/03/data-lifecycle-analyze-visualize.html">
-    Data Lifecycle - Analyze &amp; Visualize
-    </a>
-</h3><p class="post-meta-description">section3,4</p><p class="post-meta">Oct 3, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/gcp/bigquery/2021/10/02/data-lifecycle-store.html">
-    Data Lifecycle - Store
-    </a>
-</h3><p class="post-meta-description">section2</p><p class="post-meta">Oct 2, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/gcp/2021/10/01/data-lifecycle-ingest.html">
-    Data Lifecycle - Ingest
-    </a>
-</h3><p class="post-meta-description">section1</p><p class="post-meta">Oct 1, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/kubernetes/2021/09/03/microservice.html">
-    Microservice
-    </a>
-</h3><p class="post-meta-description">8장-9장</p><p class="post-meta">Sep 3, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/kubernetes/2021/09/02/kubernetes.html">
-    Kubernetes
-    </a>
-</h3><p class="post-meta-description">5장-7장</p><p class="post-meta">Sep 2, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/kubernetes/2021/09/01/docker.html">
-    Docker
-    </a>
-</h3><p class="post-meta-description">1장-4장</p><p class="post-meta">Sep 1, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/spark/etl/2021/02/03/apache-spark.html">
-    Apache Spark
-    </a>
-</h3><p class="post-meta-description">section3</p><p class="post-meta">Feb 3, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/hadoop/filesystem/2021/02/02/apache-hadoop.html">
-    Apache Hadoop
-    </a>
-</h3><p class="post-meta-description">section2</p><p class="post-meta">Feb 2, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/kafka/message_broker/queue/2021/02/01/apache-kafka.html">
-    Apache Kafka
-    </a>
-</h3><p class="post-meta-description">section1</p><p class="post-meta">Feb 1, 2021</p>
-</li><li><h3>
-    <a class="post-link" href="/techblog/python/2021/01/05/python-concurrency.html">
-    Python Concurrency
-    </a>
-</h3><p class="post-meta-description">section5</p><p class="post-meta">Jan 5, 2021</p>
-</li></ul>
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Python Concurrency</h1><p class="page-description">section5</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-01-05T00:00:00-06:00" itemprop="datePublished">
+        Jan 5, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
 
     
-      <div class="pager">
-        <ul class="pagination">
-          <li><div class="pager-edge">•</div></li>
-          <li><div class="current-page">1</div></li>
-          <li><a href="/techblog/page2/" class="next-page">2</a></li>
-        </ul>
-      </div></div>
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/techblog/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#51-generator-pattern">5.1. Generator Pattern</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#iter-function">iter function</a></li>
+<li class="toc-entry toc-h3"><a href="#next">next</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#52-generator-functions">5.2. Generator Functions</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#filterfalse">filterfalse</a></li>
+<li class="toc-entry toc-h3"><a href="#accumulate">accumulate</a></li>
+<li class="toc-entry toc-h3"><a href="#chain">chain</a></li>
+<li class="toc-entry toc-h3"><a href="#product">product</a></li>
+<li class="toc-entry toc-h3"><a href="#groupby">groupby</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#53-coroutine">5.3. Coroutine</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#yield">yield</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#54-futures">5.4. Futures</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#gil">GIL</a></li>
+<li class="toc-entry toc-h3"><a href="#map">map</a></li>
+<li class="toc-entry toc-h3"><a href="#wait-as_completed">wait, as_completed</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#55-asyncio">5.5. asyncio</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#async">async</a></li>
+<li class="toc-entry toc-h3"><a href="#await">await</a></li>
+</ul>
+</li>
+</ul><p>Python Intermediate Programming</p>
+
+<hr>
+
+<h2 id="51-generator-pattern">
+<a class="anchor" href="#51-generator-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.1. Generator Pattern</h2>
+<p>작은 메모리 조각 사용<br>
+단위 실행 가능한 코루틴(Coroutine) 구현과 연동</p>
+
+<h3 id="iter-function">
+<a class="anchor" href="#iter-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>iter function</h3>
+<p>파이썬 반복 가능한 타입: for, collections, text file, List, Dict, Set, Tuple, unpacking, *args</p>
+
+<h3 id="next">
+<a class="anchor" href="#next" aria-hidden="true"><span class="octicon octicon-link"></span></a>next</h3>
+
+<hr>
+
+<h2 id="52-generator-functions">
+<a class="anchor" href="#52-generator-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.2. Generator Functions</h2>
+
+<h3 id="filterfalse">
+<a class="anchor" href="#filterfalse" aria-hidden="true"><span class="octicon octicon-link"></span></a>filterfalse</h3>
+
+<h3 id="accumulate">
+<a class="anchor" href="#accumulate" aria-hidden="true"><span class="octicon octicon-link"></span></a>accumulate</h3>
+
+<h3 id="chain">
+<a class="anchor" href="#chain" aria-hidden="true"><span class="octicon octicon-link"></span></a>chain</h3>
+
+<h3 id="product">
+<a class="anchor" href="#product" aria-hidden="true"><span class="octicon octicon-link"></span></a>product</h3>
+
+<h3 id="groupby">
+<a class="anchor" href="#groupby" aria-hidden="true"><span class="octicon octicon-link"></span></a>groupby</h3>
+
+<hr>
+
+<h2 id="53-coroutine">
+<a class="anchor" href="#53-coroutine" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.3. Coroutine</h2>
+
+<h3 id="yield">
+<a class="anchor" href="#yield" aria-hidden="true"><span class="octicon octicon-link"></span></a>yield</h3>
+<p>메인 &lt;-&gt; 서브</p>
+
+<hr>
+
+<h2 id="54-futures">
+<a class="anchor" href="#54-futures" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.4. Futures</h2>
+
+<h3 id="gil">
+<a class="anchor" href="#gil" aria-hidden="true"><span class="octicon octicon-link"></span></a>GIL</h3>
+
+<h3 id="map">
+<a class="anchor" href="#map" aria-hidden="true"><span class="octicon octicon-link"></span></a>map</h3>
+
+<h3 id="wait-as_completed">
+<a class="anchor" href="#wait-as_completed" aria-hidden="true"><span class="octicon octicon-link"></span></a>wait, as_completed</h3>
+
+<hr>
+
+<h2 id="55-asyncio">
+<a class="anchor" href="#55-asyncio" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.5. asyncio</h2>
+
+<h3 id="async">
+<a class="anchor" href="#async" aria-hidden="true"><span class="octicon octicon-link"></span></a>async</h3>
+
+<h3 id="await">
+<a class="anchor" href="#await" aria-hidden="true"><span class="octicon octicon-link"></span></a>await</h3>
+
+<hr>
+
+  </div><a class="u-url" href="/techblog/python/2021/01/05/python-concurrency.html" hidden></a>
+</article>
       </div>
     </main><footer class="site-footer h-card">
   <data class="u-url" href="/techblog/"></data>
