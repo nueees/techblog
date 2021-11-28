@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>QDA | Cho’s Tech blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="QDA" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="6장" />
+<meta property="og:description" content="6장" />
+<link rel="canonical" href="https://nueees.github.io/techblog/statistics/python/2020/01/05/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/statistics/python/2020/01/05/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3.html" />
+<meta property="og:site_name" content="Cho’s Tech blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-05T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"6장","url":"https://nueees.github.io/techblog/statistics/python/2020/01/05/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3.html","@type":"BlogPosting","headline":"QDA","dateModified":"2020-01-05T00:00:00-06:00","datePublished":"2020-01-05T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/statistics/python/2020/01/05/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/techblog/">Cho&#39;s Tech blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/techblog/about/">About Me</a><a class="page-link" href="/techblog/gitInfo/">gitInfo</a><a class="page-link" href="/techblog/search/">Search</a><a class="page-link" href="/techblog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">QDA</h1><p class="page-description">6장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-05T00:00:00-06:00" itemprop="datePublished">
+        Jan 5, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      12 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/techblog/categories/#statistics">statistics</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/techblog/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#06_통계분석_2">06_통계분석_2</a></li>
+<li class="toc-entry toc-h1"><a href="#판별분석-qdaquadratic-discriminant-analysis">판별분석 QDA(Quadratic Discriminant Analysis)</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#lda-linear-discriminant-analysis">LDA (Linear Discriminant Analysis)</a></li>
+<li class="toc-entry toc-h2"><a href="#qda-quadratic-discriminant-analysis">QDA (Quadratic Discriminant Analysis)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#multidimensional-scaling-mds-다차원척도법">MultiDimensional Scaling (MDS) 다차원척도법</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#종류">종류</a></li>
+<li class="toc-entry toc-h2"><a href="#계량적구간척도-비율척도">계량적(구간척도, 비율척도)</a></li>
+<li class="toc-entry toc-h2"><a href="#non-metric-mds-다차원척도법-비계량적순서척도">non-metric MDS: 다차원척도법 비계량적(순서척도)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ca-correspondence-analysis---대응분석">CA (Correspondence Analysis) - 대응분석</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#차원-축소-기법">차원 축소 기법</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#1-feature-extraction">1. Feature Extraction</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#unsupervised-pca-autoencoder">Unsupervised: PCA, AutoEncoder</a></li>
+<li class="toc-entry toc-h4"><a href="#supervised-pls부분-최소제곱법">Supervised: PLS(부분 최소제곱법)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#2-feature-selection">2. Feature Selection</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#unsupervised-pca-loading">Unsupervised: PCA loading</a></li>
+<li class="toc-entry toc-h4"><a href="#supervised-information-gain-stepwise-losso-regression-genetic-algorithm">Supervised: Information Gain, Stepwise, Losso regression, Genetic algorithm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#대응분석">대응분석</a></li>
+<li class="toc-entry toc-h2"><a href="#pca-vs-ca">PCA vs CA</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#pca-많은-종의-생물에서-패턴-찾을-때">PCA: 많은 종의 생물에서 패턴 찾을 때</a></li>
+<li class="toc-entry toc-h3"><a href="#ca-생물-종간의-상대적인-패턴을-찾을-때">CA: 생물 종간의 상대적인 패턴을 찾을 때</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#chi-squared-test-vs-ca">chi-squared test vs CA</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#chi-squared-test-두-범주형-변수간의-연관성을-찾을-떄">chi-squared test: 두 범주형 변수간의 연관성을 찾을 떄,</a></li>
+<li class="toc-entry toc-h3"><a href="#ca-두-변수가-가지고-있는-범주들-사이의-관계를-찾을-때-두-개-이상의-범주-군-사이의-상관성을-분석하는-기법">CA: 두 변수가 가지고 있는 범주들 사이의 관계를 찾을 때, 두 개 이상의 범주 군 사이의 상관성을 분석하는 기법</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#시계열-분석---fbprophet">시계열 분석 - fbprophet</a></li>
+<li class="toc-entry toc-h1"><a href="#연관성-분석--장바구니분석">연관성 분석 = 장바구니분석</a></li>
+<li class="toc-entry toc-h1"><a href="#요인분석">요인분석</a></li>
+</ul><!-- [kaggle/GREG HAMEL/Hypothesis Testing](https://www.kaggle.com/hamelg/python-for-data-24-hypothesis-testing) -->
+
+<hr>
+
+<h1 id="06_통계분석_2">
+<a class="anchor" href="#06_%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D_2" aria-hidden="true"><span class="octicon octicon-link"></span></a>06_통계분석_2</h1>
+
+<h1 id="판별분석-qdaquadratic-discriminant-analysis">
+<a class="anchor" href="#%ED%8C%90%EB%B3%84%EB%B6%84%EC%84%9D-qdaquadratic-discriminant-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>판별분석 QDA(Quadratic Discriminant Analysis)</h1>
+<p>선형판별분석(LDA), 이차판별 분석(QDA)은 확률론적 생성모형</p>
+
+<ul>
+  <li>
+    <p>가능도 y의 클래스값에 따른 x의 분포에 대한 정보를 먼저 알아낸 후, 베이즈 정리를 사용하여 주어진 x에 대한 y의 확률분포를 찾음</p>
+  </li>
+  <li>
+    <p>주로 PCA와 같이 차원을 독립변수들을 축소할 때 사용</p>
+  </li>
+  <li>클래스를 최대한 분리할 수 있는 축(boundary)를 찾아 분류</li>
+  <li>
+    <p>분산 대비 평균의 차이를 극대화 하는 boundary를 찾아 분류</p>
+  </li>
+  <li>여기서는 이차 판별분석으로 “분류”하는 예시</li>
+  <li>모든 클래스k에 대하여 동일한 covariance matrix를 가정했던 LDA와 달리 QDA는 k클래스 마다 각각의 covariance matrix를 가지게 함</li>
+  <li>k의 클래스 별 공분산 구조가 확연히 다를때 사용</li>
+  <li>설명변수가 많아질 수록 추정하는 모수도 많아지므로 샘플이 많이 필요 (+속도 저하)</li>
+  <li>샘플이 적어서 분산을 줄이는 것이 중요할 경우 LDA를, 샘플이 많아서 분산에 대한 우려가 적을때, 혹은 공분산에 대한 가정이 비현실적으로 판단될 때에는 QDA를 사용</li>
+</ul>
+
+<h2 id="lda-linear-discriminant-analysis">
+<a class="anchor" href="#lda-linear-discriminant-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>LDA (Linear Discriminant Analysis)</h2>
+
+<ul>
+  <li>기본 가정
+    <ul>
+      <li>각 클래스 동일한 공분산 구조를 갖고있음.</li>
+      <li>각 클래스마다 정규분포를 따른다.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">LinearDiscriminantAnalysis</span><span class="p">()</span>
+
+<span class="n">clf</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="n">clf</span><span class="p">.</span><span class="n">predict</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[2]
+</code></pre></div></div>
+
+<h2 id="qda-quadratic-discriminant-analysis">
+<a class="anchor" href="#qda-quadratic-discriminant-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>QDA (Quadratic Discriminant Analysis)</h2>
+
+<ul>
+  <li>기본 가정
+    <ul>
+      <li>각 클래스는 정규분포를 가진다. (공분산 가정 X)</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="kn">import</span> <span class="n">QuadraticDiscriminantAnalysis</span>
+<span class="n">quad_clf</span> <span class="o">=</span> <span class="n">QuadraticDiscriminantAnalysis</span><span class="p">()</span>
+<span class="n">quad_clf</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">clf</span><span class="p">.</span><span class="n">predict</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[2]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">y_pred2</span> <span class="o">=</span> <span class="n">quad_clf</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred2</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>QuadraticDiscriminantAnalysis()
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_moons</span><span class="p">,</span> <span class="n">make_circles</span><span class="p">,</span> <span class="n">make_classification</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="n">h</span><span class="o">=</span><span class="mf">0.2</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"LDA"</span><span class="p">,</span> <span class="s">"QDA"</span><span class="p">]</span>
+<span class="n">classifiers</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">LinearDiscriminantAnalysis</span><span class="p">(),</span>
+    <span class="n">QuadraticDiscriminantAnalysis</span><span class="p">()]</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_informative</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                           <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">rng</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">linearly_separable</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_moons</span><span class="p">(</span><span class="n">noise</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="n">make_circles</span><span class="p">(</span><span class="n">noise</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">linearly_separable</span>
+            <span class="p">]</span>
+
+<span class="n">figure</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">27</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># iterate over datasets
+</span><span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+    <span class="c1"># preprocess dataset, split into training and test part
+</span>    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ds</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">().</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="p">.</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">].</span><span class="nb">min</span><span class="p">()</span> <span class="o">-</span> <span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">].</span><span class="nb">max</span><span class="p">()</span> <span class="o">+</span> <span class="p">.</span><span class="mi">5</span>
+    <span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">].</span><span class="nb">min</span><span class="p">()</span> <span class="o">-</span> <span class="p">.</span><span class="mi">5</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">].</span><span class="nb">max</span><span class="p">()</span> <span class="o">+</span> <span class="p">.</span><span class="mi">5</span>
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span>
+                         <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+
+    <span class="c1"># just plot the dataset first
+</span>    <span class="n">cm</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">RdBu</span>
+    <span class="n">cm_bright</span> <span class="o">=</span> <span class="n">ListedColormap</span><span class="p">([</span><span class="s">'#FF0000'</span><span class="p">,</span> <span class="s">'#0000FF'</span><span class="p">])</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">datasets</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">classifiers</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="c1"># Plot the training points
+</span>    <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm_bright</span><span class="p">)</span>
+    <span class="c1"># and testing points
+</span>    <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_test</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm_bright</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xx</span><span class="p">.</span><span class="nb">min</span><span class="p">(),</span> <span class="n">xx</span><span class="p">.</span><span class="nb">max</span><span class="p">())</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">yy</span><span class="p">.</span><span class="nb">min</span><span class="p">(),</span> <span class="n">yy</span><span class="p">.</span><span class="nb">max</span><span class="p">())</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_xticks</span><span class="p">(())</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_yticks</span><span class="p">(())</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># iterate over classifiers
+</span>    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">classifiers</span><span class="p">):</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">datasets</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">classifiers</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">clf</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">clf</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+        <span class="c1"># Plot the decision boundary. For that, we will assign a color to each
+</span>        <span class="c1"># point in the mesh [x_min, m_max]x[y_min, y_max].
+</span>        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="s">"decision_function"</span><span class="p">):</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">clf</span><span class="p">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="p">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="p">.</span><span class="n">ravel</span><span class="p">()])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">clf</span><span class="p">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="p">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="p">.</span><span class="n">ravel</span><span class="p">()])[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Put the result into a color plot
+</span>        <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="p">.</span><span class="mi">8</span><span class="p">)</span>
+
+        <span class="c1"># Plot also the training points
+</span>        <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm_bright</span><span class="p">)</span>
+        <span class="c1"># and testing points
+</span>        <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_test</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm_bright</span><span class="p">,</span>
+                   <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="p">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xx</span><span class="p">.</span><span class="nb">min</span><span class="p">(),</span> <span class="n">xx</span><span class="p">.</span><span class="nb">max</span><span class="p">())</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">yy</span><span class="p">.</span><span class="nb">min</span><span class="p">(),</span> <span class="n">yy</span><span class="p">.</span><span class="nb">max</span><span class="p">())</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">set_xticks</span><span class="p">(())</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">set_yticks</span><span class="p">(())</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">xx</span><span class="p">.</span><span class="nb">max</span><span class="p">()</span> <span class="o">-</span> <span class="p">.</span><span class="mi">3</span><span class="p">,</span> <span class="n">yy</span><span class="p">.</span><span class="nb">min</span><span class="p">()</span> <span class="o">+</span> <span class="p">.</span><span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="s">'%.2f'</span> <span class="o">%</span> <span class="n">score</span><span class="p">).</span><span class="n">lstrip</span><span class="p">(</span><span class="s">'0'</span><span class="p">),</span>
+                <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">'right'</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">figure</span><span class="p">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="p">.</span><span class="mi">02</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="p">.</span><span class="mi">98</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_8_0.png" alt="png"></p>
+
+<h1 id="multidimensional-scaling-mds-다차원척도법">
+<a class="anchor" href="#multidimensional-scaling-mds-%EB%8B%A4%EC%B0%A8%EC%9B%90%EC%B2%99%EB%8F%84%EB%B2%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>MultiDimensional Scaling (MDS) 다차원척도법</h1>
+
+<p>여러 차원 축소 기법 중 하나
+<img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_compare_methods_001.png" alt="차원축소예시들"></p>
+
+<h2 id="종류">
+<a class="anchor" href="#%EC%A2%85%EB%A5%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>종류</h2>
+<p>1) 계량적: PCoA (principle coordinates analysis)<br>
+Classical multidimensional scaling으로, PCA (principle component analysis)와 매우 비슷하나,<br>
+PCA: Euclidean 거리 사용하고 선형 관계 있으면 사용 (대부분 geological data)<br>
+PCoA: Euclidean 거리 외 다른 측정방법 사용하고 선형 관계 있으면 사용 (biogeographic data)</p>
+
+<p>2) 비계량적: Non-MultiDimensional Scaling (NMDS)<br>
+NMDS: Euclidean 거리 외 다른 측정방법 사용하고 선형 관계 없으면 사용 (어떤 지역 species 개체 수 많은 지)</p>
+
+<h2 id="계량적구간척도-비율척도">
+<a class="anchor" href="#%EA%B3%84%EB%9F%89%EC%A0%81%EA%B5%AC%EA%B0%84%EC%B2%99%EB%8F%84-%EB%B9%84%EC%9C%A8%EC%B2%99%EB%8F%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>계량적(구간척도, 비율척도)</h2>
+
+<p>mds 객체 생설할 때 dissimilarity로 euclidean할지 precomputed 미리 계산된 걸로 할 지 정하고<br>
+mds.fit_transform 옵션에서 계산된 manhattan_distances 넣어주면 됨</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">MDS</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">sklearn.datasets</span> <span class="k">as</span> <span class="n">dt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>         
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">manhattan_distances</span><span class="p">,</span> <span class="n">euclidean_distances</span>
+<span class="kn">from</span> <span class="nn">matplotlib.offsetbox</span> <span class="kn">import</span> <span class="n">OffsetImage</span><span class="p">,</span> <span class="n">AnnotationBbox</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">mds2</span> <span class="o">=</span> <span class="n">MDS</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X2_transform</span> <span class="o">=</span> <span class="n">mds2</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X2_transform</span><span class="p">)</span>
+
+<span class="n">stress2</span> <span class="o">=</span> <span class="n">mds2</span><span class="p">.</span><span class="n">stress_</span>
+<span class="k">print</span><span class="p">(</span><span class="n">stress2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[ 0.72521687  0.52943352]
+ [ 0.61640884 -0.48411805]
+ [-0.9113603  -0.47905115]
+ [-0.2190564   0.71505714]
+ [-0.21120901 -0.28132146]]
+0.18216844548575456
+</code></pre></div></div>
+
+<p>stress는 잘 피팅되었는지 검증용으로, 계산된 거리가 dissimilarity 차이를 보여주는데</p>
+
+<p>stress가 통상 0.2 이상이면 차원 높여야 함</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># plt.scatter([1,2,3,4], [10,30,20,40], s=[30,60,90,120], c=range(4), cmap='jet')
+# plt.colorbar()
+</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s">'r'</span><span class="p">,</span> <span class="s">'g'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'m'</span><span class="p">]</span>
+<span class="n">size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s">'3d'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X2</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X2</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">zs</span><span class="o">=</span><span class="n">X2</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Original Points'</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X2_transform</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X2_transform</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Embedding in 2D'</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_15_0.png" alt="png"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dist_manhattan</span> <span class="o">=</span> <span class="n">manhattan_distances</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
+<span class="n">mds3</span> <span class="o">=</span> <span class="n">MDS</span><span class="p">(</span><span class="n">dissimilarity</span><span class="o">=</span><span class="s">'precomputed'</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># Get the embeddings
+</span><span class="n">X2_transform_L1</span> <span class="o">=</span> <span class="n">mds3</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dist_manhattan</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X2_transform_L1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">mds3</span><span class="p">.</span><span class="n">stress_</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[ 0.9847767   0.84738596]
+ [ 0.81047787 -0.37601578]
+ [-1.104849   -1.06040621]
+ [-0.29311254  0.87364759]
+ [-0.39729303 -0.28461157]]
+0.4047164940033806
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s">'3d'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X2</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X2</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">zs</span><span class="o">=</span><span class="n">X2</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Original Points'</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X2_transform</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X2_transform</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Embedding in 2D'</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X2_transform_L1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X2_transform_L1</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Embedding in 2D L1'</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_17_0.png" alt="png"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># print(load_digits.__doc__)
+</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">mds</span> <span class="o">=</span> <span class="n">MDS</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">X_transformed</span> <span class="o">=</span> <span class="n">mds</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">[:</span><span class="mi">100</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X_transformed</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Y</span><span class="p">.</span><span class="n">size</span><span class="p">)</span>
+<span class="c1"># print(X_transformed[:5,0])
+# print(X_transformed[:5,1])
+</span><span class="k">print</span><span class="p">(</span><span class="n">mds</span><span class="p">.</span><span class="n">stress_</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(100, 64)
+(100, 2)
+100
+1133807.722583498
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">colormap</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'g'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'m'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">,</span> <span class="s">'k'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">])</span>
+<span class="c1"># colormap[Y]
+</span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_transformed</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X_transformed</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">colormap</span><span class="p">[</span><span class="n">Y</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Embedding in 2D'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_19_0.png" alt="png"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nmds</span> <span class="o">=</span> <span class="n">MDS</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">nX_transformed2</span> <span class="o">=</span> <span class="n">nmds</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c1"># print(nX_transformed2)
+</span><span class="n">nX_transformed2</span> <span class="o">*=</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">X</span> <span class="o">**</span> <span class="mi">2</span><span class="p">).</span><span class="nb">sum</span><span class="p">())</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">nX_transformed</span> <span class="o">**</span> <span class="mi">2</span><span class="p">).</span><span class="nb">sum</span><span class="p">())</span>
+<span class="c1"># print(nX_transformed2)
+</span><span class="n">Y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
+<span class="c1"># print(Y.size)
+# print(nX_transformed[:5,0])
+# print(nX_transformed[:5,1])
+# print(nmds.stress_)
+</span>
+<span class="n">colormap</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'g'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'m'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">,</span> <span class="s">'k'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">])</span>
+<span class="c1"># colormap[Y]
+</span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">nX_transformed2</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">nX_transformed2</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">colormap</span><span class="p">[</span><span class="n">Y</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Embedding in non mds 2D'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_20_0.png" alt="png"></p>
+
+<h2 id="non-metric-mds-다차원척도법-비계량적순서척도">
+<a class="anchor" href="#non-metric-mds-%EB%8B%A4%EC%B0%A8%EC%9B%90%EC%B2%99%EB%8F%84%EB%B2%95-%EB%B9%84%EA%B3%84%EB%9F%89%EC%A0%81%EC%88%9C%EC%84%9C%EC%B2%99%EB%8F%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>non-metric MDS: 다차원척도법 비계량적(순서척도)</h2>
+
+<p>1) 차이에 대해 수치화(quantified) 한 값을 얻기 힘들때, 순서만 알 수 있을 때 사용<br>
+예) 검정색-진회색-연회색-흰색… 중 가장 밝은 색, 빈도 수가 많은 데이터</p>
+
+<p>2) 유클리디안 외 user-selected 거리 메트릭을 사용하고 싶을 때 (Jaccard,…)</p>
+
+<p>Metric = False 옵션 주면 됨.</p>
+
+<p>3) 차원이 미리 결정되어야 하고, local minima(지역 최소값) 수렴 가능성이 있고, 시간 오래 걸리는 게 단점</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits</span> <span class="kn">import</span> <span class="n">mplot3d</span>
+
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'../data/yeast-transcriptomics/SC_expression.csv'</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:]</span>
+<span class="c1"># print(df.corr())
+# print(df.T)
+</span><span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">T</span><span class="p">.</span><span class="n">values</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">scaled</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+<span class="c1"># print(scaled)
+</span><span class="n">mds</span> <span class="o">=</span> <span class="n">MDS</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">mds_scaled</span> <span class="o">=</span> <span class="n">mds</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">scaled</span><span class="p">)</span>
+<span class="n">nmds</span> <span class="o">=</span> <span class="n">MDS</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">nmds_scaled</span> <span class="o">=</span> <span class="n">nmds</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">scaled</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">mds_scaled</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">y</span><span class="o">=</span><span class="n">mds_scaled</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'best'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'MDS'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">nmds_scaled</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">y</span><span class="o">=</span><span class="n">nmds_scaled</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'best'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'nMDS'</span><span class="p">)</span>
+
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>No handles with labels found to put in legend.
+No handles with labels found to put in legend.
+
+
+
+
+
+Text(0.5, 1.0, 'MDS')
+</code></pre></div></div>
+
+<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_22_2.png" alt="png"></p>
+
+<h1 id="ca-correspondence-analysis---대응분석">
+<a class="anchor" href="#ca-correspondence-analysis---%EB%8C%80%EC%9D%91%EB%B6%84%EC%84%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>CA (Correspondence Analysis) - 대응분석</h1>
+
+<h2 id="차원-축소-기법">
+<a class="anchor" href="#%EC%B0%A8%EC%9B%90-%EC%B6%95%EC%86%8C-%EA%B8%B0%EB%B2%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>차원 축소 기법</h2>
+<p><a href="https://techblog-history-younghunjo1.tistory.com/174">출처</a></p>
+
+<h3 id="1-feature-extraction">
+<a class="anchor" href="#1-feature-extraction" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Feature Extraction</h3>
+
+<p>supervised/unsupervised는 Y값의 분산 활용 유무로 나뉨</p>
+
+<h4 id="unsupervised-pca-autoencoder">
+<a class="anchor" href="#unsupervised-pca-autoencoder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unsupervised: PCA, AutoEncoder</h4>
+<p>PCA는 X라는 독립변수들의 간의 선형결합으로 추출된 새로운 변수 추출</p>
+<h4 id="supervised-pls부분-최소제곱법">
+<a class="anchor" href="#supervised-pls%EB%B6%80%EB%B6%84-%EC%B5%9C%EC%86%8C%EC%A0%9C%EA%B3%B1%EB%B2%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supervised: PLS(부분 최소제곱법)</h4>
+<p>PLS는 X라는 독립변수들의 선형결합과 Y라는 종속변수 이 2개 간의 공분산을 최대화 하는 새로운 변수 추출함<br>
+PCA의 일반적인 선형결합으로 추출된 새로운 변수가 설명하지 못하는 부분에 반복적으로 최소제곱법을 적용함</p>
+
+<h3 id="2-feature-selection">
+<a class="anchor" href="#2-feature-selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Feature Selection</h3>
+<h4 id="unsupervised-pca-loading">
+<a class="anchor" href="#unsupervised-pca-loading" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unsupervised: PCA loading</h4>
+<h4 id="supervised-information-gain-stepwise-losso-regression-genetic-algorithm">
+<a class="anchor" href="#supervised-information-gain-stepwise-losso-regression-genetic-algorithm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supervised: Information Gain, Stepwise, Losso regression, Genetic algorithm</h4>
+
+<h2 id="대응분석">
+<a class="anchor" href="#%EB%8C%80%EC%9D%91%EB%B6%84%EC%84%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>대응분석</h2>
+<p>PLS 군에 속하는 차원축소 방법<br>
+다변량 범주형 자료 대상으로 탐색적 분석 시 사용<br>
+분할표에서 행과 열의 범주들간의 대응 관계를 탐구하기 위해 2차원 공간상 관계로 시각화</p>
+
+<p>python은 big data, ML용으로 많이 사용되므로 상대적으로 데이터 양이 한정적인 대응분석은 잘 사용하지 않는 듯함</p>
+
+<p>Homogeneity (동질성): 각 행에 대해 열의 분포가 동일한가?<br>
+Independence (독립성): 두 범주형 변수(X,Y)는 서로 독립인가?<br>
+이원분할표 -&gt; 단순대응분석  (독립성, 동질성 검정 -&gt; chi-squared test)<br>
+다원분할표 -&gt; 다중대응분석  (chi-squared test 신뢰도가 떨어지므로 )</p>
+
+<h2 id="pca-vs-ca">
+<a class="anchor" href="#pca-vs-ca" aria-hidden="true"><span class="octicon octicon-link"></span></a>PCA vs CA</h2>
+<h3 id="pca-많은-종의-생물에서-패턴-찾을-때">
+<a class="anchor" href="#pca-%EB%A7%8E%EC%9D%80-%EC%A2%85%EC%9D%98-%EC%83%9D%EB%AC%BC%EC%97%90%EC%84%9C-%ED%8C%A8%ED%84%B4-%EC%B0%BE%EC%9D%84-%EB%95%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>PCA: 많은 종의 생물에서 패턴 찾을 때</h3>
+<h3 id="ca-생물-종간의-상대적인-패턴을-찾을-때">
+<a class="anchor" href="#ca-%EC%83%9D%EB%AC%BC-%EC%A2%85%EA%B0%84%EC%9D%98-%EC%83%81%EB%8C%80%EC%A0%81%EC%9D%B8-%ED%8C%A8%ED%84%B4%EC%9D%84-%EC%B0%BE%EC%9D%84-%EB%95%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>CA: 생물 종간의 상대적인 패턴을 찾을 때</h3>
+
+<p>예)<br>
+A = {50,20,10}<br>
+B = {5,2,1}<br>
+PCA의 경우 A와 B를 완전 다르다고 판단 (유클리디안 거리 측정법 사용) <br>
+CA의 경우 A와 B가 비슷하다고 판단</p>
+
+<h2 id="chi-squared-test-vs-ca">
+<a class="anchor" href="#chi-squared-test-vs-ca" aria-hidden="true"><span class="octicon octicon-link"></span></a>chi-squared test vs CA</h2>
+<h3 id="chi-squared-test-두-범주형-변수간의-연관성을-찾을-떄">
+<a class="anchor" href="#chi-squared-test-%EB%91%90-%EB%B2%94%EC%A3%BC%ED%98%95-%EB%B3%80%EC%88%98%EA%B0%84%EC%9D%98-%EC%97%B0%EA%B4%80%EC%84%B1%EC%9D%84-%EC%B0%BE%EC%9D%84-%EB%96%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>chi-squared test: 두 범주형 변수간의 연관성을 찾을 떄,</h3>
+<h3 id="ca-두-변수가-가지고-있는-범주들-사이의-관계를-찾을-때-두-개-이상의-범주-군-사이의-상관성을-분석하는-기법">
+<a class="anchor" href="#ca-%EB%91%90-%EB%B3%80%EC%88%98%EA%B0%80-%EA%B0%80%EC%A7%80%EA%B3%A0-%EC%9E%88%EB%8A%94-%EB%B2%94%EC%A3%BC%EB%93%A4-%EC%82%AC%EC%9D%B4%EC%9D%98-%EA%B4%80%EA%B3%84%EB%A5%BC-%EC%B0%BE%EC%9D%84-%EB%95%8C-%EB%91%90-%EA%B0%9C-%EC%9D%B4%EC%83%81%EC%9D%98-%EB%B2%94%EC%A3%BC-%EA%B5%B0-%EC%82%AC%EC%9D%B4%EC%9D%98-%EC%83%81%EA%B4%80%EC%84%B1%EC%9D%84-%EB%B6%84%EC%84%9D%ED%95%98%EB%8A%94-%EA%B8%B0%EB%B2%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>CA: 두 변수가 가지고 있는 범주들 사이의 관계를 찾을 때, 두 개 이상의 범주 군 사이의 상관성을 분석하는 기법</h3>
+
+<p>예)<br>
+X = df[[‘bill_length_mm’,’bill_depth_mm’]] <br>
+Y = df[[‘flipper_length_mm’,’body_mass_g’]]<br>
+chi-squared test로는 X와 Y의 독립성 검정을 실시하고, 두 group간에는 상당히 연관 관계가 있다고 판단까지<br>
+CA로는 X와 Y의 group내에서 어떤식으로 연관관계가 있는지 판단</p>
+
+<p><a href="https://cmdlinetips.com/2020/12/canonical-correlation-analysis-in-python/">example코드출처</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_decomposition</span> <span class="kn">import</span> <span class="n">CCA</span> <span class="c1">#Canonical Correlation Analysis
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">link2data</span> <span class="o">=</span> <span class="s">"https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">link2data</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span><span class="n">df</span><span class="p">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># pre-processing
+</span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s">'bill_length_mm'</span><span class="p">,</span><span class="s">'bill_depth_mm'</span><span class="p">]]</span>
+<span class="c1"># print(X.head())
+</span><span class="n">X_mc</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">-</span><span class="n">X</span><span class="p">.</span><span class="n">mean</span><span class="p">())</span><span class="o">/</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">std</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X_mc</span><span class="p">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="n">Y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s">'flipper_length_mm'</span><span class="p">,</span><span class="s">'body_mass_g'</span><span class="p">]]</span>
+<span class="c1"># print(Y.head())
+</span><span class="n">Y_mc</span> <span class="o">=</span> <span class="p">(</span><span class="n">Y</span><span class="o">-</span><span class="n">Y</span><span class="p">.</span><span class="n">mean</span><span class="p">())</span><span class="o">/</span><span class="p">(</span><span class="n">Y</span><span class="p">.</span><span class="n">std</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Y_mc</span><span class="p">.</span><span class="n">head</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  \
+0  Adelie  Torgersen            39.1           18.7              181.0   
+1  Adelie  Torgersen            39.5           17.4              186.0   
+2  Adelie  Torgersen            40.3           18.0              195.0   
+4  Adelie  Torgersen            36.7           19.3              193.0   
+5  Adelie  Torgersen            39.3           20.6              190.0   
+
+   body_mass_g     sex  
+0       3750.0    MALE  
+1       3800.0  FEMALE  
+2       3250.0  FEMALE  
+4       3450.0  FEMALE  
+5       3650.0    MALE  
+   bill_length_mm  bill_depth_mm
+0       -0.894695       0.779559
+1       -0.821552       0.119404
+2       -0.675264       0.424091
+4       -1.333559       1.084246
+5       -0.858123       1.744400
+   flipper_length_mm  body_mass_g
+0          -1.424608    -0.567621
+1          -1.067867    -0.505525
+2          -0.425733    -1.188572
+4          -0.568429    -0.940192
+5          -0.782474    -0.691811
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ca</span> <span class="o">=</span> <span class="n">CCA</span><span class="p">()</span>
+<span class="n">ca</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_mc</span><span class="p">,</span> <span class="n">Y_mc</span><span class="p">)</span>
+<span class="n">X_c</span><span class="p">,</span> <span class="n">Y_c</span> <span class="o">=</span> <span class="n">ca</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_mc</span><span class="p">,</span> <span class="n">Y_mc</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X_c</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Y_c</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[-1.18625232 -0.01036701]
+ [-0.70957262 -0.4560358 ]
+ [-0.79073194 -0.13080943]
+ [-1.7186634  -0.07362316]
+ [-1.77229457  0.73624799]]
+[[-1.40879506  0.68286617]
+ [-1.05385671  0.42987851]
+ [-0.3935502  -0.83961988]
+ [-0.5428878  -0.45857086]
+ [-0.76354771 -0.01420367]]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cc_res</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">"CCX_1"</span><span class="p">:</span><span class="n">X_c</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+                       <span class="s">"CCY_1"</span><span class="p">:</span><span class="n">Y_c</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+                       <span class="s">"CCX_2"</span><span class="p">:</span><span class="n">X_c</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+                       <span class="s">"CCY_2"</span><span class="p">:</span><span class="n">Y_c</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+                       <span class="s">"Species"</span><span class="p">:</span><span class="n">df</span><span class="p">.</span><span class="n">species</span><span class="p">.</span><span class="n">tolist</span><span class="p">(),</span>
+                      <span class="s">"Island"</span><span class="p">:</span><span class="n">df</span><span class="p">.</span><span class="n">island</span><span class="p">.</span><span class="n">tolist</span><span class="p">(),</span>
+                      <span class="s">"sex"</span><span class="p">:</span><span class="n">df</span><span class="p">.</span><span class="n">sex</span><span class="p">.</span><span class="n">tolist</span><span class="p">()})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cc_res</span><span class="p">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">X_c</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Y_c</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]))</span> <span class="c1"># 첫번째 변수끼리의 공분산
+</span><span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">X_c</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Y_c</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]))</span> <span class="c1"># 두번째 변수끼리의 공분산
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      CCX_1     CCY_1     CCX_2     CCY_2 Species     Island     sex
+0 -1.186252 -1.408795 -0.010367  0.682866  Adelie  Torgersen    MALE
+1 -0.709573 -1.053857 -0.456036  0.429879  Adelie  Torgersen  FEMALE
+2 -0.790732 -0.393550 -0.130809 -0.839620  Adelie  Torgersen  FEMALE
+3 -1.718663 -0.542888 -0.073623 -0.458571  Adelie  Torgersen  FEMALE
+4 -1.772295 -0.763548  0.736248 -0.014204  Adelie  Torgersen    MALE
+[[1.         0.78763151]
+ [0.78763151 1.        ]]
+[[1.         0.08638695]
+ [0.08638695 1.        ]]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">set_context</span><span class="p">(</span><span class="s">"talk"</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">"CCX_1"</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="s">"CCY_1"</span><span class="p">,</span> 
+                <span class="n">hue</span><span class="o">=</span><span class="s">"Species"</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">cc_res</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Comp. 1, corr = %.2f'</span> <span class="o">%</span>
+         <span class="n">np</span><span class="p">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">X_c</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Y_c</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">"CCX_2"</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="s">"CCY_2"</span><span class="p">,</span> 
+                <span class="n">hue</span><span class="o">=</span><span class="s">"Species"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">cc_res</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Comp. 2, corr = %.2f'</span> <span class="o">%</span>
+         <span class="n">np</span><span class="p">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">X_c</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Y_c</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># fig.add_subplot(122)
+# sns.scatterplot(x="CCX_2",
+#                 y="CCY_2", 
+#                 hue="sex", data=cc_res)
+# plt.title('Second Pair of Canonical Covariate, corr = %.2f' %
+#          np.corrcoef(X_c[:, 1], Y_c[:, 1])[0, 1])
+</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Text(0.5, 1.0, 'Comp. 2, corr = 0.09')
+</code></pre></div></div>
+
+<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_29_1.png" alt="png"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ccX_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">"CCX_1"</span><span class="p">:</span><span class="n">X_c</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+                       <span class="s">"CCX_2"</span><span class="p">:</span><span class="n">X_c</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+                       <span class="s">"Species"</span><span class="p">:</span><span class="n">df</span><span class="p">.</span><span class="n">species</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">).</span><span class="n">cat</span><span class="p">.</span><span class="n">codes</span><span class="p">,</span>
+                      <span class="s">"Island"</span><span class="p">:</span><span class="n">df</span><span class="p">.</span><span class="n">island</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">).</span><span class="n">cat</span><span class="p">.</span><span class="n">codes</span><span class="p">,</span>
+                      <span class="s">"sex"</span><span class="p">:</span><span class="n">df</span><span class="p">.</span><span class="n">sex</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'category'</span><span class="p">).</span><span class="n">cat</span><span class="p">.</span><span class="n">codes</span><span class="p">,</span>
+                       <span class="s">"bill_length"</span><span class="p">:</span><span class="n">X_mc</span><span class="p">.</span><span class="n">bill_length_mm</span><span class="p">,</span>
+                      <span class="s">"bill_depth"</span><span class="p">:</span><span class="n">X_mc</span><span class="p">.</span><span class="n">bill_depth_mm</span><span class="p">})</span>
+<span class="n">corr_X_df</span><span class="o">=</span> <span class="n">ccX_df</span><span class="p">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s">'pearson'</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="n">corr_X_df</span><span class="p">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">X_df_lt</span> <span class="o">=</span> <span class="n">corr_X_df</span><span class="p">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">tril</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">corr_X_df</span><span class="p">.</span><span class="n">shape</span><span class="p">)).</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">bool</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">X_df_lt</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s">"coolwarm"</span><span class="p">,</span><span class="n">annot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s">'.1g'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">"Heatmap_Canonical_Correlates_from_X_and_data.jpg"</span><span class="p">,</span>
+                    <span class="nb">format</span><span class="o">=</span><span class="s">'jpeg'</span><span class="p">,</span>
+                    <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                CCX_1         CCX_2   Species    Island       sex  \
+CCX_1    1.000000e+00 -1.217716e-16  0.935057 -0.561781  0.025383   
+CCX_2   -1.217716e-16  1.000000e+00 -0.078719  0.228933  0.576790   
+Species  9.350575e-01 -7.871884e-02  1.000000 -0.622428  0.010964   
+Island  -5.617810e-01  2.289327e-01 -0.622428  1.000000 -0.012435   
+sex      2.538332e-02  5.767897e-01  0.010964 -0.012435  1.000000   
+
+         bill_length  bill_depth  
+CCX_1       0.828437   -0.734650  
+CCX_2       0.560082    0.678447  
+Species     0.730548   -0.740346  
+Island     -0.337179    0.568031  
+sex         0.344078    0.372673  
+
+
+C:\Users\ADMINI~1\AppData\Local\Temp/ipykernel_24036/698194835.py:12: DeprecationWarning: `np.bool` is a deprecated alias for the builtin `bool`. To silence this warning, use `bool` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.bool_` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  X_df_lt = corr_X_df.where(np.tril(np.ones(corr_X_df.shape)).astype(np.bool))
+</code></pre></div></div>
+
+<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_30_2.png" alt="png"></p>
+
+<h1 id="시계열-분석---fbprophet">
+<a class="anchor" href="#%EC%8B%9C%EA%B3%84%EC%97%B4-%EB%B6%84%EC%84%9D---fbprophet" aria-hidden="true"><span class="octicon octicon-link"></span></a>시계열 분석 - fbprophet</h1>
+<ul>
+  <li>prophet은 페이스북에서 개발한 시계열 예측 패키지다. ARIMA와 같은 확률론적이고 이론적인 모형이 아니라 몇가지 경험적 규칙(heuristic rule)을 사용하는 단순 회귀모형이지만 단기적 예측에서는 큰 문제 없이 사용할 수 있다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://raw.githubusercontent.com/facebook/prophet/master/examples/example_wp_log_peyton_manning.csv"</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">df</span><span class="p">.</span><span class="n">tail</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ds</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2900</th>
+      <td>2016-01-16</td>
+      <td>7.817223</td>
+    </tr>
+    <tr>
+      <th>2901</th>
+      <td>2016-01-17</td>
+      <td>9.273878</td>
+    </tr>
+    <tr>
+      <th>2902</th>
+      <td>2016-01-18</td>
+      <td>10.333775</td>
+    </tr>
+    <tr>
+      <th>2903</th>
+      <td>2016-01-19</td>
+      <td>9.125871</td>
+    </tr>
+    <tr>
+      <th>2904</th>
+      <td>2016-01-20</td>
+      <td>8.891374</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">fbprophet</span> <span class="kn">import</span> <span class="n">Prophet</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">()</span>
+<span class="n">m</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO:numexpr.utils:NumExpr defaulting to 4 threads.
+INFO:fbprophet:Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+
+
+
+
+
+&lt;fbprophet.forecaster.Prophet at 0x1ec2c8e2308&gt;
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">future</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">make_future_dataframe</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">365</span><span class="p">)</span>
+<span class="n">future</span><span class="p">.</span><span class="n">tail</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3265</th>
+      <td>2017-01-15</td>
+    </tr>
+    <tr>
+      <th>3266</th>
+      <td>2017-01-16</td>
+    </tr>
+    <tr>
+      <th>3267</th>
+      <td>2017-01-17</td>
+    </tr>
+    <tr>
+      <th>3268</th>
+      <td>2017-01-18</td>
+    </tr>
+    <tr>
+      <th>3269</th>
+      <td>2017-01-19</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<ul>
+  <li>yhat이 예측값</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">forecast</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
+<span class="n">forecast</span><span class="p">[[</span><span class="s">'ds'</span><span class="p">,</span> <span class="s">'yhat'</span><span class="p">,</span> <span class="s">'yhat_lower'</span><span class="p">,</span> <span class="s">'yhat_upper'</span><span class="p">]].</span><span class="n">tail</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ds</th>
+      <th>yhat</th>
+      <th>yhat_lower</th>
+      <th>yhat_upper</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3265</th>
+      <td>2017-01-15</td>
+      <td>8.203217</td>
+      <td>7.465164</td>
+      <td>8.969418</td>
+    </tr>
+    <tr>
+      <th>3266</th>
+      <td>2017-01-16</td>
+      <td>8.528203</td>
+      <td>7.758541</td>
+      <td>9.264207</td>
+    </tr>
+    <tr>
+      <th>3267</th>
+      <td>2017-01-17</td>
+      <td>8.315601</td>
+      <td>7.668485</td>
+      <td>9.087909</td>
+    </tr>
+    <tr>
+      <th>3268</th>
+      <td>2017-01-18</td>
+      <td>8.148207</td>
+      <td>7.397069</td>
+      <td>8.896107</td>
+    </tr>
+    <tr>
+      <th>3269</th>
+      <td>2017-01-19</td>
+      <td>8.160103</td>
+      <td>7.498117</td>
+      <td>8.846597</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig1</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_37_0.png" alt="png"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig2</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">plot_components</span><span class="p">(</span><span class="n">forecast</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_38_0.png" alt="png"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<h1 id="연관성-분석--장바구니분석">
+<a class="anchor" href="#%EC%97%B0%EA%B4%80%EC%84%B1-%EB%B6%84%EC%84%9D--%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%EB%B6%84%EC%84%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>연관성 분석 = 장바구니분석</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">mlxtend.preprocessing</span> <span class="kn">import</span> <span class="n">TransactionEncoder</span>
+<span class="kn">from</span> <span class="nn">mlxtend.frequent_patterns</span> <span class="kn">import</span> <span class="n">apriori</span><span class="p">,</span> <span class="n">association_rules</span>
+</code></pre></div></div>
+
+<ul>
+  <li>구매한 물건이 담긴 데이터</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span> <span class="o">=</span> <span class="p">[[</span><span class="s">'Milk'</span><span class="p">,</span> <span class="s">'Onion'</span><span class="p">,</span> <span class="s">'Nutmeg'</span><span class="p">,</span> <span class="s">'Eggs'</span><span class="p">,</span> <span class="s">'Yogurt'</span><span class="p">],</span>
+           <span class="p">[</span><span class="s">'Onion'</span><span class="p">,</span> <span class="s">'Nutmeg'</span><span class="p">,</span> <span class="s">'Eggs'</span><span class="p">,</span> <span class="s">'Yogurt'</span><span class="p">],</span>
+           <span class="p">[</span><span class="s">'Milk'</span><span class="p">,</span> <span class="s">'Apple'</span><span class="p">,</span> <span class="s">'Eggs'</span><span class="p">],</span>
+           <span class="p">[</span><span class="s">'Milk'</span><span class="p">,</span> <span class="s">'Unicorn'</span><span class="p">,</span> <span class="s">'Corn'</span><span class="p">,</span> <span class="s">'Yogurt'</span><span class="p">],</span>
+           <span class="p">[</span><span class="s">'Corn'</span><span class="p">,</span> <span class="s">'Onion'</span><span class="p">,</span> <span class="s">'Onion'</span><span class="p">,</span> <span class="s">'Ice cream'</span><span class="p">,</span> <span class="s">'Eggs'</span><span class="p">]]</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Encoding을 해 줌 : 인스턴스 생성 -&gt; fit -&gt; transform</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">te</span> <span class="o">=</span> <span class="n">TransactionEncoder</span><span class="p">()</span>
+<span class="n">te_ary</span> <span class="o">=</span> <span class="n">te</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">).</span><span class="n">transform</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">te_ary</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">te</span><span class="p">.</span><span class="n">columns_</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">frequent_itemsets</span> <span class="o">=</span> <span class="n">apriori</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">min_support</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">use_colnames</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c1">## parameter
+# max_len=3 : 아이템 조합이 3개까지 제한
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">frequent_itemsets</span> <span class="c1"># 전체 구매 데이터 중 해당 itemset이 포함된 확률
+</span></code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>support</th>
+      <th>itemsets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.8</td>
+      <td>(Eggs)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.6</td>
+      <td>(Milk)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.6</td>
+      <td>(Onion)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.6</td>
+      <td>(Yogurt)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.6</td>
+      <td>(Eggs, Onion)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">association_rules</span><span class="p">(</span><span class="n">frequent_itemsets</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s">"lift"</span><span class="p">,</span> <span class="n">min_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># metric 기준 min_threshold 이상
+</span></code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedents</th>
+      <th>consequents</th>
+      <th>antecedent support</th>
+      <th>consequent support</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+      <th>leverage</th>
+      <th>conviction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>(Eggs)</td>
+      <td>(Onion)</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>0.6</td>
+      <td>0.75</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>1.6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>(Onion)</td>
+      <td>(Eggs)</td>
+      <td>0.6</td>
+      <td>0.8</td>
+      <td>0.6</td>
+      <td>1.00</td>
+      <td>1.25</td>
+      <td>0.12</td>
+      <td>inf</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>첫 줄 해석</strong></p>
+<ul>
+  <li>antencedents와 consequents가 있는데 각각의 support를 보여줌.</li>
+  <li>그리고 조합의 support, confidence, lift를 보여주는데</li>
+  <li>confidence : Onion을 사는 고객 중 Eggs+Onion이 75%</li>
+  <li>lift: 1이면 서로 영향이 없는 것. 그냥 Onion을 사는 것보다 Egg를 샀을 때 구매율이 1.25배 높아진다는 소리</li>
+</ul>
+
+<h1 id="요인분석">
+<a class="anchor" href="#%EC%9A%94%EC%9D%B8%EB%B6%84%EC%84%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>요인분석</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(1797, 64)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 0.,  0.,  5., ...,  0.,  0.,  0.],
+       [ 0.,  0.,  0., ..., 10.,  0.,  0.],
+       [ 0.,  0.,  0., ..., 16.,  9.,  0.],
+       ...,
+       [ 0.,  0.,  1., ...,  6.,  0.,  0.],
+       [ 0.,  0.,  2., ..., 12.,  0.,  0.],
+       [ 0.,  0., 10., ..., 12.,  1.,  0.]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">FactorAnalysis</span>
+<span class="n">transformer</span> <span class="o">=</span> <span class="n">FactorAnalysis</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X_transformed</span> <span class="o">=</span> <span class="n">transformer</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X_transformed</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(1797, 5)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_transformed</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[-0.15740939,  0.30545241,  1.88630105,  0.89678859, -0.17029374],
+       [-0.87586253,  0.13827044, -1.75345561, -0.83281075, -0.74288303],
+       [-0.99892214, -0.43236642, -1.22222905, -0.82192628, -0.77094974],
+       ...,
+       [-0.70066938,  0.09868465, -0.99651414, -0.14234655, -0.61502155],
+       [-0.37322424, -0.18103725,  1.07294051, -0.6538424 , -0.28351881],
+       [ 0.64021206, -0.87404644, -0.04237855,  0.32160612, -0.47697811]])
+</code></pre></div></div>
+
+<!-- # 사회연결망 분석(SNA) -->
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ...
+</span></code></pre></div></div>
+
+  </div><a class="u-url" href="/techblog/statistics/python/2020/01/05/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/techblog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/techblog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/techblog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A challenge-loving junior data engineer.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
