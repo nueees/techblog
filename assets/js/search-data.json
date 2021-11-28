@@ -191,8 +191,8 @@
         ,"post17": {
             "title": "Python Magic Method",
             "content": "Python Intermediate Programming docs.python.org . . 2.1. Magic Methods . str . ge/le . add/sub/mul/div . bool . init . repr . . 2.2. Named Tuple .",
-            "url": "https://nueees.github.io/techblog/python/2021/01/02/python-magic-method.html",
-            "relUrl": "/python/2021/01/02/python-magic-method.html",
+            "url": "https://nueees.github.io/techblog/python/2021/01/02/python-magicmethod.html",
+            "relUrl": "/python/2021/01/02/python-magicmethod.html",
             "date": " • Jan 2, 2021"
         }
         
