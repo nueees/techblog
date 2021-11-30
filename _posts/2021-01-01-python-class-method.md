@@ -215,24 +215,16 @@ class Car(object):
     price_per_raise = 1.0
 
     def __init__(self, company, details):
-        self._company = company
+        self._company = company # 인스턴스 변수 앞에 언더바 붙임
         self._details = details
         
  
-    # Class Method
-    @classmethod
-    def raise_price(cls, per):
-        if per <= 1:
-            print('Please Enter 1 or More')
-            return
-        cls.price_per_raise = per
-        return 'Succeed! price increased.'
     
     
     
     # Instance Method
     # self : 객체의 고유한 속성 값 사용
-    def detail_info(self):
+    def detail_info(self): # 첫변수 self로 받음
         print('Current Id : {}'.format(id(self)))
         print('Car Detail Info : {} {}'.format(self._company, self._details.get('price')))
         
@@ -244,10 +236,19 @@ class Car(object):
     def get_price_culc(self):
         return 'After Car Price -> company : {}, price : {}'.format(self._company, self._details.get('price') * Car.price_per_raise)
 
+    # Class Method
+    @classmethod
+    def raise_price(cls, per): # 첫변수 무조건 cls로 받음
+        if per <= 1:
+            print('Please Enter 1 or More')
+            return
+        cls.price_per_raise = per
+        return 'Succeed! price increased.'
+    
 
     # Static Method
     @staticmethod
-    def is_bmw(inst):
+    def is_bmw(inst): # 전달 변수 없어도 되나 차량확인시 필요 변수 inst 전달
         if inst._company == 'Bmw':
             return 'OK! This car is {}.'.format(inst._company)
         return 'Sorry. This car is not Bmw.'
@@ -261,14 +262,16 @@ car2 = Car('Audi', {'color' : 'Silver', 'horsepower': 300, 'price': 6000})
 ```
 
 ### Class Method
+데코레이터 \@classmethod 사용  
+첫 변수로 cls 받아서 사용
 
 
 ### Instance Method
-
+객체의 고유한 속성 값 self 변수 받아서 사용  
 
 ### Static Method
-
-
+데코레이터 \@staticmethod 사용
+class나 instance method처럼 cls나 self를 받지 않고 구현
 
 
 
