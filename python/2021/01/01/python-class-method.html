@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      4 min read
     
 </span></p>
 
@@ -322,24 +322,16 @@ print(Car.car_count)
     price_per_raise = 1.0
 
     def __init__(self, company, details):
-        self._company = company
+        self._company = company # 인스턴스 변수 앞에 언더바 붙임
         self._details = details
         
  
-    # Class Method
-    @classmethod
-    def raise_price(cls, per):
-        if per &lt;= 1:
-            print('Please Enter 1 or More')
-            return
-        cls.price_per_raise = per
-        return 'Succeed! price increased.'
     
     
     
     # Instance Method
     # self : 객체의 고유한 속성 값 사용
-    def detail_info(self):
+    def detail_info(self): # 첫변수 self로 받음
         print('Current Id : {}'.format(id(self)))
         print('Car Detail Info : {} {}'.format(self._company, self._details.get('price')))
         
@@ -351,10 +343,19 @@ print(Car.car_count)
     def get_price_culc(self):
         return 'After Car Price -&gt; company : {}, price : {}'.format(self._company, self._details.get('price') * Car.price_per_raise)
 
+    # Class Method
+    @classmethod
+    def raise_price(cls, per): # 첫변수 무조건 cls로 받음
+        if per &lt;= 1:
+            print('Please Enter 1 or More')
+            return
+        cls.price_per_raise = per
+        return 'Succeed! price increased.'
+    
 
     # Static Method
     @staticmethod
-    def is_bmw(inst):
+    def is_bmw(inst): # 전달 변수 없어도 되나 차량확인시 필요 변수 inst 전달
         if inst._company == 'Bmw':
             return 'OK! This car is {}.'.format(inst._company)
         return 'Sorry. This car is not Bmw.'
@@ -368,12 +369,17 @@ car2 = Car('Audi', {'color' : 'Silver', 'horsepower': 300, 'price': 6000})
 
 <h3 id="class-method">
 <a class="anchor" href="#class-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class Method</h3>
+<p>데코레이터 \@classmethod 사용<br>
+첫 변수로 cls 받아서 사용</p>
 
 <h3 id="instance-method">
 <a class="anchor" href="#instance-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instance Method</h3>
+<p>객체의 고유한 속성 값 self 변수 받아서 사용</p>
 
 <h3 id="static-method">
 <a class="anchor" href="#static-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Static Method</h3>
+<p>데코레이터 \@staticmethod 사용
+class나 instance method처럼 cls나 self를 받지 않고 구현</p>
 
 
   </div><a class="u-url" href="/techblog/python/2021/01/01/python-class-method.html" hidden></a>
