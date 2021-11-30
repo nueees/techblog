@@ -52,7 +52,7 @@ print([id(i) for i in marks2])
 > [1817473087040, 1817473087040, 1817473087040, 1817473087040, 1817473087040]
 ```
 
-shallow copy: 객체 껍데기만 복사하고 내용은 동일한 객체 참조
+shallow copy: 객체 껍데기만 복사하고 내용은 동일한 객체 참조  
 mutable한 list의 경우 수정되고, immutable한 tuple의 경우 별도의 객체에 저장됨  
 ```
 import copy
@@ -76,8 +76,8 @@ print(a) # mutable list의 경우 둘 다 값이 변경됨
 
 ```
 
-deep copy: 객체 복사 후 내용도 재귀적으로 복사
-mutable한 list의 경우 수정되고, immutable한 tuple의 경우 별도의 객체에 저장됨  
+deep copy: 객체 복사 후 내용도 재귀적으로 복사  
+mutable, immutable 상관없이 별도의 객체에 저장됨  
 ```
 a = [1, [1, 2, 3]]
 b = copy.deepcopy(a)  # deep copy
