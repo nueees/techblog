@@ -143,7 +143,7 @@ t1 = (10, 20, (30, 40, 50))
 t2 = (10, 20, [30, 40, 50])
 print( hash(t1))
 > 465510690262297113
-print( hash(t1)) # error남
+print( hash(t2)) # hash error남
 ```
 
 ### setdefault 미사용 (dict)
