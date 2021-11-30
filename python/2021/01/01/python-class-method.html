@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      3 min read
     
 </span></p>
 
@@ -112,9 +112,12 @@ window.onload = wrap_img;
     <ul class="section-nav">
 <li class="toc-entry toc-h2"><a href="#11-oop-object-oriented-programming">1.1. OOP (Object Oriented Programming)</a>
 <ul>
+<li class="toc-entry toc-h3"><a href="#using-list">Using List</a></li>
+<li class="toc-entry toc-h3"><a href="#using-dictionary">Using Dictionary</a></li>
 <li class="toc-entry toc-h3"><a href="#using-class">Using Class</a></li>
 <li class="toc-entry toc-h3"><a href="#class-variables">Class variables</a></li>
 <li class="toc-entry toc-h3"><a href="#instance-variables">Instance variables</a></li>
+<li class="toc-entry toc-h3"><a href="#class-variables-1">Class variables</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#12-method">1.2. Method</a>
@@ -132,18 +135,236 @@ window.onload = wrap_img;
 <a class="anchor" href="#11-oop-object-oriented-programming" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. OOP (Object Oriented Programming)</h2>
 <p>객체 지향 프로그래밍: 코드 재사용</p>
 
+<h3 id="using-list">
+<a class="anchor" href="#using-list" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using List</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>car_company_list = ['Ferrari', 'Bmw', 'Audi']
+car_detail_list = [
+    {'color' : 'White', 'horsepower': 400, 'price': 8000},
+    {'color' : 'Black', 'horsepower': 270, 'price': 5000},
+    {'color' : 'Silver', 'horsepower': 300, 'price': 6000}
+]
+
+car_company_list[1]
+del car_detail_list[1]
+</code></pre></div></div>
+<p>관리가 불편하고 인덱스로 접근하기 때문에 오류 가능성이 높음</p>
+
+<h3 id="using-dictionary">
+<a class="anchor" href="#using-dictionary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using Dictionary</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cars_dicts = [
+    {'car_company': 'Ferrari', 'car_detail': {'color' : 'White', 'horsepower': 400, 'price': 8000}},
+    {'car_company': 'Bmw', 'car_detail': {'color' : 'Black', 'horsepower': 270, 'price': 5000}},
+    {'car_company': 'Audi', 'car_detail': {'color' : 'Silver', 'horsepower': 300, 'price': 6000}}
+]
+
+del cars_dicts[1]
+</code></pre></div></div>
+<p>재사용성이 낮고, 중첩시 overwrite, 키 조회 예외 처리 따로 해야함</p>
+
 <h3 id="using-class">
 <a class="anchor" href="#using-class" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using Class</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Car():
+    def __init__(self, company, details):
+        self._company = company
+        self._details = details
+
+    def __str__(self):
+        return 'str : {} - {}'.format(self._company, self._details)
+
+    def __repr__(self):
+        return 'repr : {} - {}'.format(self._company, self._details)
+    
+
+car1 = Car('Ferrari', {'color' : 'White', 'horsepower': 400, 'price': 8000})
+car2 = Car('Bmw', {'color' : 'Black', 'horsepower': 270, 'price': 5000})
+car3 = Car('Audi', {'color' : 'Silver', 'horsepower': 300, 'price': 6000})
+
+print(car1.__dict__)
+&gt; {'_company': 'Ferrari', '_details': {'color': 'White', 'horsepower': 400, 'price': 8000}}
+</code></pre></div></div>
+<p>재사용성 높고, 메소드 활용 가능</p>
 
 <h3 id="class-variables">
 <a class="anchor" href="#class-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class variables</h3>
 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Car():
+    """
+    Car Class
+    Author : Cho
+    Date : 2021.01.01
+    """
+
+    # 클래스 변수
+    car_count = 0
+
+    def __init__(self, company, details):
+        self._company = company
+        self._details = details
+        Car.car_count += 1
+
+    def __str__(self):
+        return 'str : {} - {}'.format(self._company, self._details)
+
+    def __repr__(self):
+        return 'repr : {} - {}'.format(self._company, self._details)
+
+    def detail_info(self):
+        print('Current Id : {}'.format(id(self)))
+        print('Car Detail Info : {} {}'.format(self._company, self._details.get('price')))
+
+    def __del__(self):
+        Car.car_count -= 1
+</code></pre></div></div>
+
+<p>self 값</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>car1 = Car('Ferrari', {'color' : 'White', 'horsepower': 400, 'price': 8000})
+car2 = Car('Bmw', {'color' : 'Black', 'horsepower': 270, 'price': 5000})
+car3 = Car('Audi', {'color' : 'Silver', 'horsepower': 300, 'price': 6000})
+print(car1)
+&gt; str : Ferrari - {'color': 'White', 'horsepower': 400, 'price': 8000}
+</code></pre></div></div>
+
+<p>id 값</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(id(car1))
+&gt; 1817466634144
+</code></pre></div></div>
+
+<p>dir 값</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(dir(car1))
+&gt; ['__class__', '__del__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_company', '_details', 'car_count', 'detail_info']
+</code></pre></div></div>
+
+<p>dict 값</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(car1.__dict__)
+&gt; {'_company': 'Ferrari', '_details': {'color': 'White', 'horsepower': 400, 'price': 8000}}
+</code></pre></div></div>
+
+<p>doc 값</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(Car.__doc__)
+&gt;   Car Class
+    Author : Kim
+    Date : 2019.11.08
+</code></pre></div></div>
+
+<p>user defined method 값</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>car1.detail_info()
+&gt; Current Id : 1817466634144
+  Car Detail Info : Ferrari 8000
+
+Car.detail_info() # self missing error 발생
+Car.detail_info(car1)
+&gt; Current Id : 1817466634144
+  Car Detail Info : Ferrari 8000
+</code></pre></div></div>
+
+<p>class 비교</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(car1.__class__, car2.__class__)
+&gt; &lt;class '__main__.Car'&gt; &lt;class '__main__.Car'&gt;
+print(id(car1.__class__) == id(car2.__class__))
+&gt; True
+
+</code></pre></div></div>
+
 <h3 id="instance-variables">
 <a class="anchor" href="#instance-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instance variables</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(car1._company) # 직접접근 방법, 권장 X
+&gt; Ferrari
+</code></pre></div></div>
+
+<h3 id="class-variables-1">
+<a class="anchor" href="#class-variables-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class variables</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(car1.car_count)
+&gt; 3
+print(Car.car_count)
+&gt; 3
+</code></pre></div></div>
+
+<p>class 공유 확인</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(Car.__dict__)
+&gt; {'__module__': '__main__'
+  , '__doc__': '\n
+                  Car Class\n
+                  Author : Kim\n
+                  Date : 2019.11.08\n'
+  , 'car_count': 2
+  , '__init__': &lt;function Car.__init__ at 0x000001A729721CA0&gt;
+  , '__str__': &lt;function Car.__str__ at 0x000001A7297C0550&gt;
+  , '__repr__': &lt;function Car.__repr__ at 0x000001A7297C05E0&gt;
+  , 'detail_info': &lt;function Car.detail_info at 0x000001A7297C0670&gt;
+  , '__del__': &lt;function Car.__del__ at 0x000001A7297C0700&gt;
+  , '__dict__': &lt;attribute '__dict__' of 'Car' objects&gt;
+  , '__weakref__': &lt;attribute '__weakref__' of 'Car' objects&gt;}
+
+print(car1.__dict__)
+&gt; {'_company': 'Ferrari', '_details': {'color': 'White', 'horsepower': 400, 'price': 8000}}
+</code></pre></div></div>
+
+<p>instance namespace 없으면 class(상위)에서 검색</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(car1.car_count)
+&gt; 2
+print(Car.car_count)
+&gt; 2
+</code></pre></div></div>
 
 <hr>
 <h2 id="12-method">
 <a class="anchor" href="#12-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Method</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Car(object):
+    '''
+    Car Class
+    Author : Cho
+    Date : 2021.01.01
+    Description : Class, Static, Instance Method
+    '''
+
+    # Class Variable
+    price_per_raise = 1.0
+
+    def __init__(self, company, details):
+        self._company = company
+        self._details = details
+        
+ 
+    # Class Method
+    @classmethod
+    def raise_price(cls, per):
+        if per &lt;= 1:
+            print('Please Enter 1 or More')
+            return
+        cls.price_per_raise = per
+        return 'Succeed! price increased.'
+    
+    
+    
+    # Instance Method
+    # self : 객체의 고유한 속성 값 사용
+    def detail_info(self):
+        print('Current Id : {}'.format(id(self)))
+        print('Car Detail Info : {} {}'.format(self._company, self._details.get('price')))
+        
+    # Instance Method
+    def get_price(self):
+        return 'Before Car Price -&gt; company : {}, price : {}'.format(self._company, self._details.get('price'))
+
+    # Instance Method
+    def get_price_culc(self):
+        return 'After Car Price -&gt; company : {}, price : {}'.format(self._company, self._details.get('price') * Car.price_per_raise)
+
+
+    # Static Method
+    @staticmethod
+    def is_bmw(inst):
+        if inst._company == 'Bmw':
+            return 'OK! This car is {}.'.format(inst._company)
+        return 'Sorry. This car is not Bmw.'
+        
+        
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>car1 = Car('Bmw', {'color' : 'Black', 'horsepower': 270, 'price': 5000})
+car2 = Car('Audi', {'color' : 'Silver', 'horsepower': 300, 'price': 6000})
+</code></pre></div></div>
 
 <h3 id="class-method">
 <a class="anchor" href="#class-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class Method</h3>
