@@ -7,6 +7,7 @@ title: Python First Class Function
 ---
 
 Python Intermediate Programming
+[스쿨오브웹](https://schoolofweb.net/blog/posts/)
 
 ---
 
@@ -80,7 +81,9 @@ from inspect import signature
 sg = signature(var_func)
 
 print(sg)
+> (n)
 print(sg.parameters)
+> OrderedDict([('n', <Parameter "n">)])
 ```
 callable: 함수 생성 후 해당 함수가 method 형태로 호출이 가능한지 확인 할 수 있음   
 signature: 어떤 파라메터를 받고 좀 더 상세하게 확인 가능한 lib  
@@ -112,17 +115,84 @@ print(list(map(five, range(1,11))))
 ---
 
 ## 4.2. Closure
-자신의 영역 밖에서 호출된 함수의 변수값과 레퍼런스를 복사하고 저장한 뒤, 이 캡처한 값들에 액세스할 수 있게 도와줌  
-다른 함수의 지역변수를 그 함수가 종료된 이후에도 기억  
+동시성 제어  
+자신의 영역 밖에서 호출된 함수의 변수값과 레퍼런스를 복사하고 저장한 뒤, 이 후에도 값들에 액세스할 수 있게 도와줌  
+다른 함수의 지역변수를 그 함수가 종료된 이후에도 상태 기억  
 프리변수(free variable): 클로저가 만들어지는 당시의 값과 레퍼런스에 맵핑하여 주는 역할  
 
+ex) 결과 누적하는 함수들 (sum, reduce...)
+
 ### Closure 특징
-1. 서버 프로그래밍 -> 동시성(Concurrency)제어 -> 메모리 공간에 여러 자원이 접근 -> 교착상태(Dead Lock)  
-2. 메모리를 공유하지 않고 메시지 전달로 처리하기 위한 -> Erlang  
-3. 클로저는 공유하되 변경되지 않는(Immutable, Read Only) 적극적으로 사용 -> 함수형 프로그래밍  
-4. 클로저는 불변자료구조 및 atom, STM -> 멀티스레드(Coroutine) 프로그래밍에 강점  
+1. 메모리 공간에 여러 자원이 접근 시 교착상태(Dead Lock) -> 동시성(Concurrency)제어 필요  
+2. 하나의 Thread 안에서 메모리를 공유하지 않고 "메시지 전달"  
+3. "메시지 전달"로 처리하기 위한 공유하되 변경되지 않는 Immutable, Read Only 적극적으로 사용 (함수형 프로그래밍)  
+4. closure는 Immutable 자료구조, STM(stands for Software Transactional Memory) -> multi thread programming  
+5. Python에서는 Coroutine이란 개념을 이용해서 single thread로 병행성 제어  
 
 
+### Class vs Closure 비교
+
+```
+class Averager(): # class
+    def __init__(self):
+        self._series = []
+
+    def __call__(self, v):
+        self._series.append(v)
+        print('inner >>> {} / {}'.format(self._series, len(self._series)))
+        return sum(self._series) / len(self._series)
+
+averager_cls = Averager() # init
+print(averager_cls(15)) # call
+> inner >>> [15] / 1
+print(averager_cls(35))
+> inner >>> [15, 35] / 2
+print(averager_cls(40))
+> inner >>> [15, 35, 40] / 3
+```
+
+```
+def closure_ex1(): # closure
+    series = [] # Free variable
+    def averager(v):
+        series.append(v)
+        print('inner >>> {} / {}'.format(series, len(series)))
+        return sum(series) / len(series)
+    return averager # 함수 자체 리턴
+
+avg_closure1 = closure_ex1() # create closure
+print(avg_closure1) # closure 확인
+> <function closure_ex1.<locals>.averager at 0x000002142617EE50>
+
+print(avg_closure1(15)) # call
+> inner >>> [15] / 1
+print(avg_closure1(35))
+> inner >>> [15, 35] / 2
+print(avg_closure1(40))
+> inner >>> [15, 35, 40] / 3
+```
+
+### 함수 내부 확인  
+```
+print(dir(avg_closure1))
+> ['__annotations__', '__call__', '__class__', '__closure__', '__code__', '__defaults__', '__delattr__', 
+'__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__get__', '__getattribute__', '__globals__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__kwdefaults__', '__le__', '__lt__', '__module__', '__name__', '__ne__', '__new__', '__qualname__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__']
+
+print(dir(avg_closure1.__code__))
+> ['__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'co_argcount', 'co_cellvars', 'co_code', 'co_consts', 'co_filename', 'co_firstlineno', 'co_flags', 'co_freevars', 'co_kwonlyargcount', 'co_lnotab', 'co_name', 'co_names', 'co_nlocals', 'co_posonlyargcount', 'co_stacksize', 'co_varnames', 'replace']
+
+print(avg_closure1.__code__.co_freevars) # 위 리스트에서 co_freevars 확인
+> ('series',)
+
+print(dir(avg_closure1.__closure__[0]))
+> ['__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'cell_contents']
+
+print(avg_closure1.__closure__[0].cell_contents) # 위 리스트에서 실제값 확인을 위해 cell_contents 확인
+> [15, 35, 40]
+
+```
+
+### closure 실행 순서 확인  
 ```
 def outer_func(): # 1
     message = 'Hi' # 3
@@ -137,6 +207,7 @@ outer_func() # 2
 ```
 
 5에서 괄호를 지워면 Hi가 출력되지 않음  
+
 ```
 def outer_func(): # 1
     message = 'Hi' # 3
@@ -147,26 +218,28 @@ def outer_func(): # 1
     return inner_func # 5
 
 outer_func() # 2
+> <function outer_func.<locals>.inner_func at 0x00000214261B5280>
 ```
-inner_func을 실행하지 않고 함수 object를 return함  
+
+### nonlocal 변수 선언
 
 ```
-def outer_func(): # 1
-    message = 'Hi' # 3
+def outer_func():
+    cnt = 0 
+    def inner_func():
+        nonlocal cnt 
+        cnt = cnt + 1 # inner에서 cnt를 nonlocal선언 안하고 쓰면 여기서 error남 
+        print(cnt)
 
-    def inner_func(): # 4
-        print(message)  # 6
+    return inner_func
 
-    return inner_func # 5
-
-my_func = outer_func() # 2
-
-my_func() # 7
-my_func() # 8
-my_func() # 9
-> Hi
-> Hi
-> Hi
+func1 = outer_func()
+func1()
+> 1
+func1()
+> 2
+func1()
+> 3
 ```
 
 
@@ -188,5 +261,101 @@ my_func() # 9
 3. 디버깅 불편  
 
 
+### Decorator 사용 vs 미사용
+
+```
+def outer_function(msg): # 1
+    def inner_function(): # 5
+        print(msg) # 7
+
+    return inner_function # 6
+
+hi_func = outer_function('Hi') # 2
+bye_func = outer_function('Bye')
+
+hi_func() # 3
+> Hi
+bye_func()
+> Bye
+```
+
+```
+def decorator_function(original_function):
+    def wrapper_function(*msg):  #1
+        print('{} before calling function.'.format(original_function.__name__))
+        return original_function(*msg)  #2
+    return wrapper_function
+
+
+@decorator_function
+def display():
+    print('calling display function.')
+
+
+@decorator_function
+def display_info(msg):
+    print('calling display_info({}) function.'.format(msg))
+
+
+display()
+> display before calling function.
+> calling display function.
+
+display_info('Hi')
+> display_info before calling function.
+> calling display_info(Hi) function.
+display_info('Bye')
+> display_info before calling function.
+> calling display_info(Bye) function.
+```
+
+### Decorator 로깅 예제
+logging for debugging  
+
+```
+import time
+
+def perf_clock(func):
+    def perf_clocked(*args):
+        st = time.perf_counter() 
+        result = func(*args)
+        et = time.perf_counter() - st 
+        name = func.__name__
+        arg_str = ', '.join(repr(arg) for arg in args)
+        print('[%0.5fs] %s(%s) -> %r' % (et, name, arg_str, result)) 
+        return result 
+    return perf_clocked
+
+@perf_clock
+def time_func(seconds):
+    time.sleep(seconds)
+
+@perf_clock
+def sum_func(*numbers):
+    return sum(numbers)
+
+
+# no decorator
+none_deco1 = perf_clock(time_func)
+none_deco2 = perf_clock(sum_func)
+
+print(none_deco1)
+> <function perf_clock.<locals>.perf_clocked at 0x0000021426669280>
+print(none_deco1.__code__.co_freevars)
+> ('func',)
+
+none_deco1(1.5) # time_func
+> [1.50070s] time_func(1.5) -> None
+
+none_deco2(100, 150, 250, 300, 350) # sum_func
+> [0.00000s] sum_func(100, 150, 250, 300, 350) -> 1150
+
+
+# decorator
+time_func(1.5) 
+> [1.50811s] time_func(1.5) -> None
+sum_func(100, 150, 250, 300, 350)
+> [0.00001s] sum_func(100, 150, 250, 300, 350) -> 1150
+```
 
 ---
