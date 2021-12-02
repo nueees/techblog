@@ -333,8 +333,8 @@ def time_func(seconds):
 @perf_clock
 def sum_func(*numbers):
     return sum(numbers)
-
-
+```
+```
 # no decorator
 none_deco1 = perf_clock(time_func)
 none_deco2 = perf_clock(sum_func)
@@ -349,8 +349,8 @@ none_deco1(1.5) # time_func
 
 none_deco2(100, 150, 250, 300, 350) # sum_func
 > [0.00000s] sum_func(100, 150, 250, 300, 350) -> 1150
-
-
+```
+```
 # decorator
 time_func(1.5) 
 > [1.50811s] time_func(1.5) -> None
