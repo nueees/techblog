@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      8 min read
     
 </span></p>
 
@@ -135,7 +135,6 @@ window.onload = wrap_img;
 </li>
 <li class="toc-entry toc-h2"><a href="#54-futures">5.4. Futures</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#gil">GIL</a></li>
 <li class="toc-entry toc-h3"><a href="#map">map</a></li>
 <li class="toc-entry toc-h3"><a href="#wait-as_completed">wait, as_completed</a></li>
 </ul>
@@ -333,31 +332,44 @@ for chr, group in gen9:
 
 <h2 id="53-coroutine">
 <a class="anchor" href="#53-coroutine" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.3. Coroutine</h2>
+<p>동시성 프로그래밍을 위해 routine 실행 중 중지<br>
+coroutine: multi thread 코드는 thread간 deadlock, context switching, resource 소비 등을 신경써야 하며 bug 발생률이 높아짐<br>
+single thread로 동작하도록 만든게 Coroutine</p>
 
 <h3 id="yield">
 <a class="anchor" href="#yield" aria-hidden="true"><span class="octicon octicon-link"></span></a>yield</h3>
-<p>메인 &lt;-&gt; 서브</p>
+<p>main &lt;-&gt; sub<br>
+왼쪽(y)에 있으면 main-&gt;sub로 받는 것 오른쪽(x)에 있으면 sub-&gt;main으로 주는 것<br>
+ex) y = yield x</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from inspect import getgeneratorstate
-def coroutine2(x):
-    print('&gt;&gt;&gt; coroutine started : {}'.format(x))
-    y = yield x
-    print('&gt;&gt;&gt; coroutine received : {}'.format(y))
-    z = yield x + y
-    print('&gt;&gt;&gt; coroutine received : {}'.format(z))
 
-cr3 = coroutine2(10)
-
+def coroutine2(x): # sub
+    cnt = 1
+    print('&gt;&gt;&gt; coroutine started : {}, {}'.format(x,cnt))
+    y = yield x # main으로 x(10)전달 # 다음 실행시 main에서 y(20)받음
+    cnt += 1
+    print('&gt;&gt;&gt; coroutine y received : {}, {}'.format(y,cnt))
+    z = yield x - y # main으로 x-y(10-20) # 다음 실행시 main에서 z(30)받음
+    cnt += 1 
+    print('&gt;&gt;&gt; coroutine z received : {}, {}'.format(z,cnt))
+    
+# main
+cr3 = coroutine2(10) 
 print(getgeneratorstate(cr3))
 &gt; GEN_CREATED
-print(next(cr3))
-&gt; coroutine started : 10
+
+print(next(cr3)) # x 반환하므로
 &gt; 10
 print(getgeneratorstate(cr3))
 &gt; GEN_SUSPENDED
-print(cr3.send(15))
-&gt; coroutine received : 15
-&gt; 25
+
+print(cr3.send(20)) # x-y 반환하므로
+&gt; -10
+
+print(cr3.send(30)) #  error 
+&gt; coroutine received : 30, 3
+&gt; StopIteration error
 
 </code></pre></div></div>
 <hr>
@@ -365,14 +377,112 @@ print(cr3.send(15))
 <h2 id="54-futures">
 <a class="anchor" href="#54-futures" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.4. Futures</h2>
 
-<h3 id="gil">
-<a class="anchor" href="#gil" aria-hidden="true"><span class="octicon octicon-link"></span></a>GIL</h3>
-
 <h3 id="map">
 <a class="anchor" href="#map" aria-hidden="true"><span class="octicon octicon-link"></span></a>map</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import os
+import time
+from concurrent import futures
 
+WORK_LIST = [100000, 1000000, 10000000, 10000000]
+
+# concurrency control
+def sum_generator(n):
+    return sum(n for n in range(1, n+1))
+
+def main():
+    # Worker Count
+    worker = min(10, len(WORK_LIST))
+    # 시작 시간
+    start_tm = time.time()
+    # 결과 건수
+    # ProcessPoolExecutor
+    with futures.ThreadPoolExecutor() as excutor:
+        # map -&gt; 작업 순서 유지, 즉시 실행
+        result = excutor.map(sum_generator, WORK_LIST)
+    # 종료 시간
+    end_tm = time.time() - start_tm
+    # 출력 포멧
+    msg = '\n Result -&gt; {} Time : {:.2f}s'
+    # 최종 결과 출력
+    print(msg.format(list(result), end_tm))
+
+
+if __name__ == '__main__':
+    main()
+&gt; Result -&gt; [5000050000, 500000500000, 50000005000000, 50000005000000] Time : 4.53s
+</code></pre></div></div>
 <h3 id="wait-as_completed">
 <a class="anchor" href="#wait-as_completed" aria-hidden="true"><span class="octicon octicon-link"></span></a>wait, as_completed</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def sum_generator(n):
+    return sum(n for n in range(1, n+1))
+
+# wait
+# as_completed
+def main():
+    # Worker Count
+    worker = min(10, len(WORK_LIST))
+    
+    # 시작 시간
+    start_tm = time.time()
+    # Futures
+    futures_list = []
+
+    # 결과 건수
+    # ProcessPoolExecutor
+    with ThreadPoolExecutor() as excutor:
+        for work in WORK_LIST:
+            # future 반환
+            future = excutor.submit(sum_generator, work)
+            # 스케쥴링
+            futures_list.append(future)
+            # 스케쥴링 확인
+            print('Scheduled for {} : {}'.format(work, future))
+            # print()
+        
+        # wait 결과 출력
+        # result = wait(futures_list, timeout=7)
+        # # 성공
+        # print('Completed Tasks : ' + str(result.done))
+        # # 실패
+        # print('Pending ones after waiting for 7seconds : ' + str(result.not_done))
+        # # 결과 값 출력
+        # print([future.result() for future in result.done])
+        
+        # as_completed 결과 출력
+        for future in as_completed(futures_list):
+            result = future.result()
+            done = future.done()
+            cancelled = future.cancelled
+            
+            # future 결과 확인
+            print('Future Result : {}, Done : {}'.format(result, done))
+            print('Future Cancelled : {}'.format(cancelled))
+        
+    # 종료 시간
+    end_tm = time.time() - start_tm
+    # 출력 포멧
+    msg = '\n Time : {:.2f}s'
+    # 최종 결과 출력
+    print(msg.format(end_tm))
+
+if __name__ == '__main__':
+    main()
+
+&gt; Scheduled for 10000 : &lt;Future at 0x20268c4a280 state=finished returned int&gt;
+  Scheduled for 100000 : &lt;Future at 0x20268c4a400 state=pending&gt;
+  Scheduled for 1000000 : &lt;Future at 0x20268d7c1c0 state=running&gt;
+  Scheduled for 10000000 : &lt;Future at 0x20268d7c190 state=pending&gt;
+  Future Result : 5000050000, Done : True
+  Future Cancelled : &lt;bound method Future.cancelled of &lt;Future at 0x20268c4a400 state=finished returned int&gt;&gt;
+  Future Result : 50005000, Done : True
+  Future Cancelled : &lt;bound method Future.cancelled of &lt;Future at 0x20268c4a280 state=finished returned int&gt;&gt;
+  Future Result : 500000500000, Done : True
+  Future Cancelled : &lt;bound method Future.cancelled of &lt;Future at 0x20268d7c1c0 state=finished returned int&gt;&gt;
+  Future Result : 50000005000000, Done : True
+  Future Cancelled : &lt;bound method Future.cancelled of &lt;Future at 0x20268d7c190 state=finished returned int&gt;&gt;
+
+  Time : 2.10s
+</code></pre></div></div>
 
 <hr>
 
@@ -381,9 +491,147 @@ print(cr3.send(15))
 
 <h3 id="async">
 <a class="anchor" href="#async" aria-hidden="true"><span class="octicon octicon-link"></span></a>async</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import asyncio
+import timeit
+from urllib.request import urlopen
+from concurrent.futures import ThreadPoolExecutor
+import threading
+
+# 실행 시작 시간
+start = timeit.default_timer()
+# 서비스 방향이 비슷한 사이트로 실습 권장(예 : 게시판성 커뮤니티)
+urls = ['http://daum.net', 'https://naver.com', 'http://mlbpark.donga.com/', 'https://tistory.com', 'https://wemakeprice.com/']
+
+
+async def fetch(url, executor):
+    # 쓰레드명 출력
+    print('Thread Name :', threading.current_thread().getName(), 'Start', url)
+    # 실행
+    res = await loop.run_in_executor(executor, urlopen, url)
+    print('Thread Name :', threading.current_thread().getName(), 'Done', url)
+    # 결과 반환
+    return res.read()[0:5]
+
+async def main():
+    # 쓰레드 풀 생성
+    executor = ThreadPoolExecutor(max_workers=10)
+
+    # future 객체 모아서 gather에서 실행
+    futures = [
+        asyncio.ensure_future(fetch(url, executor)) for url in urls
+    ]
+    
+    # 결과 취합
+    rst = await asyncio.gather(*futures)
+
+    print()
+    print('Result : ', rst)
+
+if __name__ == '__main__':
+    # 루프 초기화
+    loop = asyncio.get_event_loop()
+    # 작업 완료 까지 대기
+    loop.run_until_complete(main())
+    # 수행 시간 계산
+    duration = timeit.default_timer() - start
+    # 총 실행 시간
+    print('Total Running Time : ', duration)
+&gt; Thread Name : MainThread Start http://daum.net
+    Thread Name : MainThread Start https://naver.com
+    Thread Name : MainThread Start http://mlbpark.donga.com/
+    Thread Name : MainThread Start https://tistory.com
+    Thread Name : MainThread Start https://wemakeprice.com/
+    Thread Name : MainThread Done http://mlbpark.donga.com/
+    Thread Name : MainThread Done https://naver.com
+    Thread Name : MainThread Done http://daum.net
+    Thread Name : MainThread Done https://tistory.com
+    Thread Name : MainThread Done https://wemakeprice.com/
+
+    Result :  [b'&lt;!DOC', b'\n&lt;!do', b'&lt;!DOC', b'\n\t&lt;!d', b'\x1f\x8b\x08\x00\x00']
+    Total Running Time :  6.3161305
+
+</code></pre></div></div>
 
 <h3 id="await">
 <a class="anchor" href="#await" aria-hidden="true"><span class="octicon octicon-link"></span></a>await</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import asyncio
+import timeit
+from urllib.request import urlopen
+from concurrent.futures import ThreadPoolExecutor
+import threading
+from bs4 import BeautifulSoup
+
+import sys
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
+sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
+
+# 실행 시작 시간
+start = timeit.default_timer()
+# 서비스 방향이 비슷한 사이트로 실습 권장(예 : 게시판성 커뮤니티)
+urls = ['http://daum.net', 'https://naver.com', 'http://mlbpark.donga.com/', 'https://tistory.com', 'https://www.inflearn.com/']
+
+
+async def fetch(url, executor):
+    # 쓰레드명 출력
+    print('Thread Name :', threading.current_thread().getName(), 'Start', url)
+    # 실행
+    res = await loop.run_in_executor(executor, urlopen, url)
+    
+    soup = BeautifulSoup(res.read(), 'html.parser')
+    
+    # 전체 페이지 소스 확인
+    # print(soup.prettify())
+    # 이 부분에서 BeautifulSoup Selector(선택자)를 활용해서 다양한 정보 가져오기 가능
+    # 현 예제에서는 페이지 타이틀 정보 수집
+    result_data = soup.title
+
+    print('Thread Name :', threading.current_thread().getName(), 'Done', url)
+    # 결과 반환
+    return result_data
+
+async def main():
+    # 쓰레드 풀 생성
+    executor = ThreadPoolExecutor(max_workers=10)
+
+    # future 객체 모아서 gather에서 실행
+    futures = [
+        asyncio.ensure_future(fetch(url, executor)) for url in urls
+    ]
+    
+    # 결과 취합
+    rst = await asyncio.gather(*futures)
+
+    print()
+    print('Result : ', rst)
+
+if __name__ == '__main__':
+    # 루프 초기화
+    loop = asyncio.get_event_loop()
+    # 작업 완료 까지 대기
+    loop.run_until_complete(main())
+    # 수행 시간 계산
+    duration = timeit.default_timer() - start
+    # 총 실행 시간
+    print('Total Running Time : ', duration)
+ 
+ &gt; Thread Name : MainThread Start http://daum.net
+    Thread Name : MainThread Start https://naver.com
+    Thread Name : MainThread Start http://mlbpark.donga.com/
+    Thread Name : MainThread Start https://tistory.com
+    Thread Name : MainThread Start https://www.inflearn.com/
+    Thread Name : MainThread Done http://mlbpark.donga.com/
+    Thread Name : MainThread Done https://www.inflearn.com/
+    Thread Name : MainThread Done https://naver.com
+    Thread Name : MainThread Done http://daum.net
+    Thread Name : MainThread Done https://tistory.com
+
+    Result :  [&lt;title&gt;Daum&lt;/title&gt;, &lt;title&gt;NAVER&lt;/title&gt;, &lt;title&gt;↗ 파크에 오면 즐겁다 MLBPARK&lt;/title&gt;, &lt;title&gt;TISTORY&lt;/title&gt;, &lt;title&gt;인프런 - 프로가 되는 온라인 클래스 | 온라인 강의 플랫폼&lt;/title&gt;]
+    Total Running Time :  6.4905200999999995
+ 
+ 
+</code></pre></div></div>
 
 <hr>
 
