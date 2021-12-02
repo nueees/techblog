@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      5 min read
     
 </span></p>
 
@@ -122,6 +122,10 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#42-closure">4.2. Closure</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#closure-특징">Closure 특징</a></li>
+<li class="toc-entry toc-h3"><a href="#class-vs-closure-비교">Class vs Closure 비교</a></li>
+<li class="toc-entry toc-h3"><a href="#함수-내부-확인">함수 내부 확인</a></li>
+<li class="toc-entry toc-h3"><a href="#closure-실행-순서-확인">closure 실행 순서 확인</a></li>
+<li class="toc-entry toc-h3"><a href="#nonlocal-변수-선언">nonlocal 변수 선언</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#43-decorator">4.3. Decorator</a>
@@ -132,9 +136,12 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h4"><a href="#단점">단점</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h3"><a href="#decorator-사용-vs-미사용">Decorator 사용 vs 미사용</a></li>
+<li class="toc-entry toc-h3"><a href="#decorator-로깅-예제">Decorator 로깅 예제</a></li>
 </ul>
 </li>
-</ul><p>Python Intermediate Programming</p>
+</ul><p>Python Intermediate Programming
+<a href="https://schoolofweb.net/blog/posts/">스쿨오브웹</a></p>
 
 <hr>
 
@@ -209,7 +216,9 @@ from inspect import signature
 sg = signature(var_func)
 
 print(sg)
+&gt; (n)
 print(sg.parameters)
+&gt; OrderedDict([('n', &lt;Parameter "n"&gt;)])
 </code></pre></div></div>
 <p>callable: 함수 생성 후 해당 함수가 method 형태로 호출이 가능한지 확인 할 수 있음 <br>
 signature: 어떤 파라메터를 받고 좀 더 상세하게 확인 가능한 lib</p>
@@ -241,19 +250,86 @@ print(list(map(five, range(1,11))))
 
 <h2 id="42-closure">
 <a class="anchor" href="#42-closure" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.2. Closure</h2>
-<p>자신의 영역 밖에서 호출된 함수의 변수값과 레퍼런스를 복사하고 저장한 뒤, 이 캡처한 값들에 액세스할 수 있게 도와줌<br>
-다른 함수의 지역변수를 그 함수가 종료된 이후에도 기억<br>
+<p>동시성 제어<br>
+자신의 영역 밖에서 호출된 함수의 변수값과 레퍼런스를 복사하고 저장한 뒤, 이 후에도 값들에 액세스할 수 있게 도와줌<br>
+다른 함수의 지역변수를 그 함수가 종료된 이후에도 상태 기억<br>
 프리변수(free variable): 클로저가 만들어지는 당시의 값과 레퍼런스에 맵핑하여 주는 역할</p>
+
+<p>ex) 결과 누적하는 함수들 (sum, reduce…)</p>
 
 <h3 id="closure-특징">
 <a class="anchor" href="#closure-%ED%8A%B9%EC%A7%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>Closure 특징</h3>
 <ol>
-  <li>서버 프로그래밍 -&gt; 동시성(Concurrency)제어 -&gt; 메모리 공간에 여러 자원이 접근 -&gt; 교착상태(Dead Lock)</li>
-  <li>메모리를 공유하지 않고 메시지 전달로 처리하기 위한 -&gt; Erlang</li>
-  <li>클로저는 공유하되 변경되지 않는(Immutable, Read Only) 적극적으로 사용 -&gt; 함수형 프로그래밍</li>
-  <li>클로저는 불변자료구조 및 atom, STM -&gt; 멀티스레드(Coroutine) 프로그래밍에 강점</li>
+  <li>메모리 공간에 여러 자원이 접근 시 교착상태(Dead Lock) -&gt; 동시성(Concurrency)제어 필요</li>
+  <li>하나의 Thread 안에서 메모리를 공유하지 않고 “메시지 전달”</li>
+  <li>“메시지 전달”로 처리하기 위한 공유하되 변경되지 않는 Immutable, Read Only 적극적으로 사용 (함수형 프로그래밍)</li>
+  <li>closure는 Immutable 자료구조, STM(stands for Software Transactional Memory) -&gt; multi thread programming</li>
+  <li>Python에서는 Coroutine이란 개념을 이용해서 single thread로 병행성 제어</li>
 </ol>
 
+<h3 id="class-vs-closure-비교">
+<a class="anchor" href="#class-vs-closure-%EB%B9%84%EA%B5%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class vs Closure 비교</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Averager(): # class
+    def __init__(self):
+        self._series = []
+
+    def __call__(self, v):
+        self._series.append(v)
+        print('inner &gt;&gt;&gt; {} / {}'.format(self._series, len(self._series)))
+        return sum(self._series) / len(self._series)
+
+averager_cls = Averager() # init
+print(averager_cls(15)) # call
+&gt; inner &gt;&gt;&gt; [15] / 1
+print(averager_cls(35))
+&gt; inner &gt;&gt;&gt; [15, 35] / 2
+print(averager_cls(40))
+&gt; inner &gt;&gt;&gt; [15, 35, 40] / 3
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def closure_ex1(): # closure
+    series = [] # Free variable
+    def averager(v):
+        series.append(v)
+        print('inner &gt;&gt;&gt; {} / {}'.format(series, len(series)))
+        return sum(series) / len(series)
+    return averager # 함수 자체 리턴
+
+avg_closure1 = closure_ex1() # create closure
+print(avg_closure1) # closure 확인
+&gt; &lt;function closure_ex1.&lt;locals&gt;.averager at 0x000002142617EE50&gt;
+
+print(avg_closure1(15)) # call
+&gt; inner &gt;&gt;&gt; [15] / 1
+print(avg_closure1(35))
+&gt; inner &gt;&gt;&gt; [15, 35] / 2
+print(avg_closure1(40))
+&gt; inner &gt;&gt;&gt; [15, 35, 40] / 3
+</code></pre></div></div>
+
+<h3 id="함수-내부-확인">
+<a class="anchor" href="#%ED%95%A8%EC%88%98-%EB%82%B4%EB%B6%80-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>함수 내부 확인</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(dir(avg_closure1))
+&gt; ['__annotations__', '__call__', '__class__', '__closure__', '__code__', '__defaults__', '__delattr__', 
+'__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__get__', '__getattribute__', '__globals__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__kwdefaults__', '__le__', '__lt__', '__module__', '__name__', '__ne__', '__new__', '__qualname__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__']
+
+print(dir(avg_closure1.__code__))
+&gt; ['__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'co_argcount', 'co_cellvars', 'co_code', 'co_consts', 'co_filename', 'co_firstlineno', 'co_flags', 'co_freevars', 'co_kwonlyargcount', 'co_lnotab', 'co_name', 'co_names', 'co_nlocals', 'co_posonlyargcount', 'co_stacksize', 'co_varnames', 'replace']
+
+print(avg_closure1.__code__.co_freevars) # 위 리스트에서 co_freevars 확인
+&gt; ('series',)
+
+print(dir(avg_closure1.__closure__[0]))
+&gt; ['__class__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'cell_contents']
+
+print(avg_closure1.__closure__[0].cell_contents) # 위 리스트에서 실제값 확인을 위해 cell_contents 확인
+&gt; [15, 35, 40]
+
+</code></pre></div></div>
+
+<h3 id="closure-실행-순서-확인">
+<a class="anchor" href="#closure-%EC%8B%A4%ED%96%89-%EC%88%9C%EC%84%9C-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>closure 실행 순서 확인</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def outer_func(): # 1
     message = 'Hi' # 3
 
@@ -267,6 +343,7 @@ outer_func() # 2
 </code></pre></div></div>
 
 <p>5에서 괄호를 지워면 Hi가 출력되지 않음</p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def outer_func(): # 1
     message = 'Hi' # 3
 
@@ -276,25 +353,28 @@ outer_func() # 2
     return inner_func # 5
 
 outer_func() # 2
+&gt; &lt;function outer_func.&lt;locals&gt;.inner_func at 0x00000214261B5280&gt;
 </code></pre></div></div>
-<p>inner_func을 실행하지 않고 함수 object를 return함</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def outer_func(): # 1
-    message = 'Hi' # 3
+<h3 id="nonlocal-변수-선언">
+<a class="anchor" href="#nonlocal-%EB%B3%80%EC%88%98-%EC%84%A0%EC%96%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>nonlocal 변수 선언</h3>
 
-    def inner_func(): # 4
-        print(message)  # 6
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def outer_func():
+    cnt = 0 
+    def inner_func():
+        nonlocal cnt 
+        cnt = cnt + 1 # inner에서 cnt를 nonlocal선언 안하고 쓰면 여기서 error남 
+        print(cnt)
 
-    return inner_func # 5
+    return inner_func
 
-my_func = outer_func() # 2
-
-my_func() # 7
-my_func() # 8
-my_func() # 9
-&gt; Hi
-&gt; Hi
-&gt; Hi
+func1 = outer_func()
+func1()
+&gt; 1
+func1()
+&gt; 2
+func1()
+&gt; 3
 </code></pre></div></div>
 
 <hr>
@@ -321,6 +401,102 @@ my_func() # 9
   <li>특정 기능에 한정된 함수는 -&gt; 단일 함수로 작성하는 것이 유리</li>
   <li>디버깅 불편</li>
 </ol>
+
+<h3 id="decorator-사용-vs-미사용">
+<a class="anchor" href="#decorator-%EC%82%AC%EC%9A%A9-vs-%EB%AF%B8%EC%82%AC%EC%9A%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decorator 사용 vs 미사용</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def outer_function(msg): # 1
+    def inner_function(): # 5
+        print(msg) # 7
+
+    return inner_function # 6
+
+hi_func = outer_function('Hi') # 2
+bye_func = outer_function('Bye')
+
+hi_func() # 3
+&gt; Hi
+bye_func()
+&gt; Bye
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def decorator_function(original_function):
+    def wrapper_function(*msg):  #1
+        print('{} before calling function.'.format(original_function.__name__))
+        return original_function(*msg)  #2
+    return wrapper_function
+
+
+@decorator_function
+def display():
+    print('calling display function.')
+
+
+@decorator_function
+def display_info(msg):
+    print('calling display_info({}) function.'.format(msg))
+
+
+display()
+&gt; display before calling function.
+&gt; calling display function.
+
+display_info('Hi')
+&gt; display_info before calling function.
+&gt; calling display_info(Hi) function.
+display_info('Bye')
+&gt; display_info before calling function.
+&gt; calling display_info(Bye) function.
+</code></pre></div></div>
+
+<h3 id="decorator-로깅-예제">
+<a class="anchor" href="#decorator-%EB%A1%9C%EA%B9%85-%EC%98%88%EC%A0%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decorator 로깅 예제</h3>
+<p>logging for debugging</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import time
+
+def perf_clock(func):
+    def perf_clocked(*args):
+        st = time.perf_counter() 
+        result = func(*args)
+        et = time.perf_counter() - st 
+        name = func.__name__
+        arg_str = ', '.join(repr(arg) for arg in args)
+        print('[%0.5fs] %s(%s) -&gt; %r' % (et, name, arg_str, result)) 
+        return result 
+    return perf_clocked
+
+@perf_clock
+def time_func(seconds):
+    time.sleep(seconds)
+
+@perf_clock
+def sum_func(*numbers):
+    return sum(numbers)
+
+
+# no decorator
+none_deco1 = perf_clock(time_func)
+none_deco2 = perf_clock(sum_func)
+
+print(none_deco1)
+&gt; &lt;function perf_clock.&lt;locals&gt;.perf_clocked at 0x0000021426669280&gt;
+print(none_deco1.__code__.co_freevars)
+&gt; ('func',)
+
+none_deco1(1.5) # time_func
+&gt; [1.50070s] time_func(1.5) -&gt; None
+
+none_deco2(100, 150, 250, 300, 350) # sum_func
+&gt; [0.00000s] sum_func(100, 150, 250, 300, 350) -&gt; 1150
+
+
+# decorator
+time_func(1.5) 
+&gt; [1.50811s] time_func(1.5) -&gt; None
+sum_func(100, 150, 250, 300, 350)
+&gt; [0.00001s] sum_func(100, 150, 250, 300, 350) -&gt; 1150
+</code></pre></div></div>
 
 <hr>
 
