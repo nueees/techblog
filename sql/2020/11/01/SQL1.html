@@ -158,6 +158,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#output-6">output:</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#19-max인-공동-1위들은-전체-출력-나머지는-공동-랭킹들은-제외">1.9. max인 공동 1위들은 전체 출력, 나머지는 공동 랭킹들은 제외</a></li>
 </ul><p>HackerRank</p>
 
 <hr>
@@ -610,6 +611,30 @@ where rank = 1
 ;
 </code></pre></div></div>
 
+<hr>
+<h2 id="19-max인-공동-1위들은-전체-출력-나머지는-공동-랭킹들은-제외">
+<a class="anchor" href="#19-max%EC%9D%B8-%EA%B3%B5%EB%8F%99-1%EC%9C%84%EB%93%A4%EC%9D%80-%EC%A0%84%EC%B2%B4-%EC%B6%9C%EB%A0%A5-%EB%82%98%EB%A8%B8%EC%A7%80%EB%8A%94-%EA%B3%B5%EB%8F%99-%EB%9E%AD%ED%82%B9%EB%93%A4%EC%9D%80-%EC%A0%9C%EC%99%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.9. max인 공동 1위들은 전체 출력, 나머지는 공동 랭킹들은 제외</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select c.hacker_id, h.name, count(c.challenge_id) as cnt
+from hackers h
+inner join challenges c
+  on h.hacker_id = c.hacker_id
+group by c.hacker_id, h.name
+having count(c.challenge_id) = (select max(tmp1.cnt)
+                from (select count(hacker_id) as cnt
+                       from challenges
+                     group by hacker_id
+                     order by hacker_id) tmp1)
+       or
+         count(c.challenge_id) in ( select cnt1
+        from( select hacker_id, count(challenge_id) as cnt1
+            from challenges
+            group by hacker_id)
+        group by cnt1
+        having count(cnt1) = 1)
+order by count(c.challenge_id) desc, c.hacker_id
+;
+</code></pre></div></div>
 
   </div><a class="u-url" href="/techblog/sql/2020/11/01/SQL1.html" hidden></a>
 </article>
