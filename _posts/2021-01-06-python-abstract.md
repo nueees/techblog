@@ -48,6 +48,7 @@ new_novel1.display()
   Author: Hangang
   Price: 12000
 new_novel1.get_amount()
+> How many books sold?
 > 1
 new_novel2=MyBook('Vegitarian','Hangang',14000)
 new_novel2.display()
@@ -55,5 +56,6 @@ new_novel2.display()
   Author: Hangang
   Price: 14000
 new_novel2.get_amount()
+> How many books sold?
 > 2
 ```
