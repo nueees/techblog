@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>비모수통계 (goodness-of-fit, gomogeneity, independence) | Cho’s Tech blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="비모수통계 (goodness-of-fit, gomogeneity, independence)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="7장" />
+<meta property="og:description" content="7장" />
+<link rel="canonical" href="https://nueees.github.io/techblog/statistics/python/2020/01/06/%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/statistics/python/2020/01/06/%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84.html" />
+<meta property="og:site_name" content="Cho’s Tech blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-06T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"7장","url":"https://nueees.github.io/techblog/statistics/python/2020/01/06/%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84.html","@type":"BlogPosting","headline":"비모수통계 (goodness-of-fit, gomogeneity, independence)","dateModified":"2020-01-06T00:00:00-06:00","datePublished":"2020-01-06T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/statistics/python/2020/01/06/%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/techblog/">Cho&#39;s Tech blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/techblog/about/">About Me</a><a class="page-link" href="/techblog/gitInfo/">gitInfo</a><a class="page-link" href="/techblog/search/">Search</a><a class="page-link" href="/techblog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">비모수통계 (goodness-of-fit, gomogeneity, independence)</h1><p class="page-description">7장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-06T00:00:00-06:00" itemprop="datePublished">
+        Jan 6, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/techblog/categories/#statistics">statistics</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/techblog/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#07_비모수통계">07_비모수통계</a></li>
+<li class="toc-entry toc-h1"><a href="#특징">특징</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#모수통계-vs-비모수통계">모수통계 vs 비모수통계</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#모수통계">모수통계</a></li>
+<li class="toc-entry toc-h3"><a href="#비모수통계">비모수통계</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#유형">유형</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#적합도">적합도</a></li>
+<li class="toc-entry toc-h3"><a href="#동질성">동질성</a></li>
+<li class="toc-entry toc-h3"><a href="#상관성">상관성</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#적합도-goodness-of-fit">적합도 goodness-of-fit</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#run-검정">RUN 검정</a></li>
+<li class="toc-entry toc-h3"><a href="#kolmogorov-smirnov-검정">Kolmogorov-Smirnov 검정</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#동질성-homogeneity">동질성 homogeneity</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#wilcoxon-signed-rank-test">Wilcoxon Signed-Rank Test</a></li>
+<li class="toc-entry toc-h3"><a href="#mann-whitney-u-검정">Mann-Whitney U 검정</a></li>
+<li class="toc-entry toc-h3"><a href="#kruskal-wallis-h-검정">Kruskal-Wallis H 검정</a></li>
+<li class="toc-entry toc-h3"><a href="#friedman-검정">Friedman 검정</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#상관성-독립성-independence">상관성 (독립성) independence</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#spearman-rank-correlation-서열상관-계수">Spearman Rank Correlation 서열상관 계수</a></li>
+<li class="toc-entry toc-h3"><a href="#kendall-서열상관-계수">kendall 서열상관 계수</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p><a href="http://www.kocw.or.kr/home/search/kemView.do?kemId=1215315">KOCW 통계학개론</a>
+<a href="https://www.statology.org/">python 예시</a></p>
+
+<hr>
+
+<h1 id="07_비모수통계">
+<a class="anchor" href="#07_%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>07_비모수통계</h1>
+
+<h1 id="특징">
+<a class="anchor" href="#%ED%8A%B9%EC%A7%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>특징</h1>
+
+<h2 id="모수통계-vs-비모수통계">
+<a class="anchor" href="#%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84-vs-%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>모수통계 vs 비모수통계</h2>
+
+<h3 id="모수통계">
+<a class="anchor" href="#%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>모수통계</h3>
+<p>모집단의 분포에 관해 특별한 가정을 세운 다음 통계적 추론을 시도하는 것을 말함<br>
+1) 추론의 대상이 모평균, 모비율, 모분산 등과 같은 모집단의 특성치, 즉 모수(parameter)라는 점<br>
+2) 추론방법이 비교적 엄격한 가정을 전제로 하고 있다는 점</p>
+
+<h3 id="비모수통계">
+<a class="anchor" href="#%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>비모수통계</h3>
+<p>1) 검정하고자 하는 가설이 모수와 관련된 것이 아닌 경우로서 적합도 검정이나 독립성 또는 동일성 검정, 표본의 무작위성 검정 등이 여기에 속함<br>
+2) 모집단의 분포가 명확하지 않아서 모수 통계방법을 사용하기 곤란할 때로서 모수통계의 대안으로 가정을 전제로 하지 않는 비모수 통계방법을 이용<br>
+3) 자료가 서열(rank)을 나타내는 순위자료이거나 순수한 범주적 자료일 경우 <br>
+4) 간편한 방법으로 짧은 시간 내에 검정결과를 알고자 하는 경우</p>
+
+<h2 id="유형">
+<a class="anchor" href="#%EC%9C%A0%ED%98%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>유형</h2>
+
+<h3 id="적합도">
+<a class="anchor" href="#%EC%A0%81%ED%95%A9%EB%8F%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>적합도</h3>
+<p>1) RUN 검정: 표본 배열이 무작위로 구성되어 있는지 검정<br>
+2) Kolmogorov-Smirnov 검정(one sample): 표본의 분포가 가정한 분포를 따르는지 검정</p>
+
+<h3 id="동질성">
+<a class="anchor" href="#%EB%8F%99%EC%A7%88%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>동질성</h3>
+<p>1) Wilcoxon Signed-Rank Test(부호 순위 검정): 두 paired 표본의 부호와 서열로 분포를 비교 (paired t-test)<br>
+2) Mann-Whitney U 검정: 두 독립표본이 같은 분포를 따르는지 비교 (independent t-test)<br>
+3) Kruskal-Wallis H 검정: 2 집단 이상의 독립표본 집단의 분포 비교 (one-way Anova)<br>
+4) Friedman 검정: 3 집단 이상의 paired 표본 집단의 분포 비교 (two-way Anova)</p>
+
+<h3 id="상관성">
+<a class="anchor" href="#%EC%83%81%EA%B4%80%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>상관성</h3>
+<p>1) spearman 서열상관 계수: 서열 또는 비율 척도 자료로 평가대상간의 일치성 검정<br>
+2) Kendall 서열상관 계수: 서열 또는 비율 척도 자료로 평가대상간의 일치성 검정</p>
+
+<!-- # 사회연결망 분석(SNA) -->
+
+<h2 id="적합도-goodness-of-fit">
+<a class="anchor" href="#%EC%A0%81%ED%95%A9%EB%8F%84-goodness-of-fit" aria-hidden="true"><span class="octicon octicon-link"></span></a>적합도 goodness-of-fit</h2>
+
+<h3 id="run-검정">
+<a class="anchor" href="#run-%EA%B2%80%EC%A0%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>RUN 검정</h3>
+<p>표본 배열이 무작위로 구성되어 있는지 검정 <br>
+hypothesis: H0 (null) is that The data was produced in a random manner <br>
+syntax: runstest_1samp(x, cutoff=’mean’ or ‘median’, correction=True) <br>
+result: z-test statistic, p-value</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">statsmodels.sandbox.stats.runs</span> <span class="kn">import</span> <span class="n">runstest_1samp</span> 
+
+<span class="c1">#create dataset
+</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">13</span><span class="p">]</span>
+
+<span class="c1">#Perform Runs test
+</span><span class="n">runstest_1samp</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">correction</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># p값 0.50233이므로 0.05보다 크므로 귀무가설 수용, z-test statistic: -0.67082임 
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(-0.6708203932499369, 0.5023349543605021)
+</code></pre></div></div>
+
+<h3 id="kolmogorov-smirnov-검정">
+<a class="anchor" href="#kolmogorov-smirnov-%EA%B2%80%EC%A0%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>Kolmogorov-Smirnov 검정</h3>
+<p>표본의 분포가 가정한 분포를 따르는지 검정 <br>
+hypothesis: H0 (null) is that The data come from a normal distribution  <br>
+syntax: one sample은 scipy.stats.kstest(), two sample은 scipy.stats.ks_2samp()<br>
+result: statistic, pvalue</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">seed</span>
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">poisson</span>
+
+<span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1">#generate dataset of 100 values that follow a Poisson distribution with mean=5
+</span><span class="n">data</span> <span class="o">=</span> <span class="n">poisson</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">kstest</span>
+
+<span class="c1">#perform Kolmogorov-Smirnov test
+</span><span class="n">kstest</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">'norm'</span><span class="p">)</span>
+
+<span class="c1"># 포아송 분포로 추출했고 p값 1.0908062873170218e-103이므로 귀무가설 기각
+</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>KstestResult(statistic=0.9072498680518208, pvalue=1.0908062873170218e-103)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">randn</span>
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">lognormal</span>
+
+<span class="c1">#generate two datasets
+</span><span class="n">data1</span> <span class="o">=</span> <span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="n">lognormal</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">ks_2samp</span>
+
+<span class="c1">#perform Kolmogorov-Smirnov test
+</span><span class="n">ks_2samp</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">)</span>
+
+<span class="c1"># standard normal이랑 lognormal로 추출했고, pvalue 4.417521386399011e-57이므로 귀무가설 기각
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>KstestResult(statistic=0.98, pvalue=4.395433779467016e-55)
+</code></pre></div></div>
+
+<h2 id="동질성-homogeneity">
+<a class="anchor" href="#%EB%8F%99%EC%A7%88%EC%84%B1-homogeneity" aria-hidden="true"><span class="octicon octicon-link"></span></a>동질성 homogeneity</h2>
+
+<h3 id="wilcoxon-signed-rank-test">
+<a class="anchor" href="#wilcoxon-signed-rank-test" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wilcoxon Signed-Rank Test</h3>
+<p>두 paired 표본의 부호와 서열로 분포를 비교 (paired t-test) <br>
+두 paired 표본의 차이를 나타내는 분포가 정규분포를 따르지 않을 때, 모평균의 차이가 있는지<br>
+hypothesis: H0 (null) is that there is a no difference in the data between the two groups<br>
+                        혹은  the mean data is equal between the two group<br>
+syntax: wilcoxon(x, y, alternative=’two-sided’, ‘less’ or ‘greater’)<br>
+result: t statistic, pvalue</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># mpg by new fuel treatment
+</span><span class="n">group1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>
+<span class="n">group2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">23</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="n">stats</span>
+
+<span class="c1">#perform the Wilcoxon-Signed Rank Test
+</span><span class="n">stats</span><span class="p">.</span><span class="n">wilcoxon</span><span class="p">(</span><span class="n">group1</span><span class="p">,</span> <span class="n">group2</span><span class="p">)</span>
+
+<span class="c1"># 양측검정으로 p값이 0.044이므로 mpg가 같다는 귀무가설 기각
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Users\Administrator\anaconda3\lib\site-packages\scipy\stats\morestats.py:2967: UserWarning: Exact p-value calculation does not work if there are ties. Switching to normal approximation.
+  warnings.warn("Exact p-value calculation does not work if there are "
+
+
+
+
+
+WilcoxonResult(statistic=10.5, pvalue=0.044065400736826854)
+</code></pre></div></div>
+
+<h3 id="mann-whitney-u-검정">
+<a class="anchor" href="#mann-whitney-u-%EA%B2%80%EC%A0%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mann-Whitney U 검정</h3>
+<p>두 독립표본이 같은 분포를 따르는지 비교 (independent t-test)<br>
+sample 크기가 30보다 작고, 표본분포가 정규분포를 따르지 않을 때, 두 독립표본의 차이가 있는지
+hypothesis: H0 (null) is that there is a no difference in the data between the two groups <br>
+syntax: mannwhitneyu(x, y, alternative=’two-sided’, ‘less’ or ‘greater’)<br>
+result: t statistic, pvalue</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># mpg by new fuel treatment
+</span><span class="n">group1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>
+<span class="n">group2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">23</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="n">stats</span>
+
+<span class="c1">#perform the Mann-Whitney U test
+</span><span class="n">stats</span><span class="p">.</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">group1</span><span class="p">,</span> <span class="n">group2</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="s">'two-sided'</span><span class="p">)</span>
+
+<span class="c1"># 양측검정으로 p값이 0.21138945901258455이므로 mpg가 같다는 귀무가설 기각
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>MannwhitneyuResult(statistic=50.0, pvalue=0.21138945901258455)
+</code></pre></div></div>
+
+<h3 id="kruskal-wallis-h-검정">
+<a class="anchor" href="#kruskal-wallis-h-%EA%B2%80%EC%A0%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>Kruskal-Wallis H 검정</h3>
+<p>2 집단 이상의 독립표본 집단의 분포 비교 (one-way Anova)<br>
+세 독립표본의 평균간에 차이가 있는지<br>
+hypothesis: H0 (null) is that the median is equal across all groups<br>
+syntax: stats.kruskal(a,b,c)
+result: statistic, pvalue</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># plant measurement
+</span><span class="n">group1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="n">group2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="n">group3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1">#perform Kruskal-Wallis Test 
+</span><span class="n">stats</span><span class="p">.</span><span class="n">kruskal</span><span class="p">(</span><span class="n">group1</span><span class="p">,</span> <span class="n">group2</span><span class="p">,</span> <span class="n">group3</span><span class="p">)</span>
+
+<span class="c1"># p값이 0.043114289703508814이므로 세 plant growth의 중앙값은 다르다
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>KruskalResult(statistic=6.287801578353988, pvalue=0.043114289703508814)
+</code></pre></div></div>
+
+<h3 id="friedman-검정">
+<a class="anchor" href="#friedman-%EA%B2%80%EC%A0%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>Friedman 검정</h3>
+<p>3 집단 이상의 paired 표본 집단의 분포 비교 (two-way Anova)<br>
+3 집단 이상의 평균이 통계적으로 유의미한 차이가 있는지<br>
+hypothesis: The mean for each population is equal
+syntax: stats.friedmanchisquare(a), b, c)
+result: statistic, pvalue</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># response times for patient on each of the three drugs
+</span><span class="n">group1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">group2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">group3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1">#perform Friedman Test
+</span><span class="n">stats</span><span class="p">.</span><span class="n">friedmanchisquare</span><span class="p">(</span><span class="n">group1</span><span class="p">,</span> <span class="n">group2</span><span class="p">,</span> <span class="n">group3</span><span class="p">)</span>
+
+<span class="c1"># p값이 0.0012612201221243594이므로 평균 반응시간이 다른다
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FriedmanchisquareResult(statistic=13.351351351351344, pvalue=0.0012612201221243594)
+</code></pre></div></div>
+
+<h2 id="상관성-독립성-independence">
+<a class="anchor" href="#%EC%83%81%EA%B4%80%EC%84%B1-%EB%8F%85%EB%A6%BD%EC%84%B1-independence" aria-hidden="true"><span class="octicon octicon-link"></span></a>상관성 (독립성) independence</h2>
+
+<p>서열 또는 비율 척도 자료로 평가대상간의 일치성 검정<br>
+ex) 값이 1,2,3,9999 여도 어차피 1,2,3,4 순위로 판단</p>
+
+<h3 id="spearman-rank-correlation-서열상관-계수">
+<a class="anchor" href="#spearman-rank-correlation-%EC%84%9C%EC%97%B4%EC%83%81%EA%B4%80-%EA%B3%84%EC%88%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spearman Rank Correlation 서열상관 계수</h3>
+<p>hypothesis: H0 (null) is that correlation coefficient is 0.
+syntax: 
+result: rho
+    -1: a perfect negative relationship between two variables<br>
+    0: no relationship between two variables<br>
+    1: a perfect positive relationship between two variables<br>
+, p-value</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># math, science exam score of 10 students
+</span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="c1">#create DataFrame
+</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">'student'</span><span class="p">:</span> <span class="p">[</span><span class="s">'A'</span><span class="p">,</span> <span class="s">'B'</span><span class="p">,</span> <span class="s">'C'</span><span class="p">,</span> <span class="s">'D'</span><span class="p">,</span> <span class="s">'E'</span><span class="p">,</span> <span class="s">'F'</span><span class="p">,</span> <span class="s">'G'</span><span class="p">,</span> <span class="s">'H'</span><span class="p">,</span> <span class="s">'I'</span><span class="p">,</span> <span class="s">'J'</span><span class="p">],</span>
+                   <span class="s">'math'</span><span class="p">:</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">86</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">83</span><span class="p">,</span> <span class="mi">85</span><span class="p">],</span>
+                   <span class="s">'science'</span><span class="p">:</span> <span class="p">[</span><span class="mi">90</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">86</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">83</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">75</span><span class="p">]})</span>
+
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">spearmanr</span>
+
+<span class="c1">#calculate Spearman Rank correlation and corresponding p-value
+</span><span class="n">rho</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'math'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s">'science'</span><span class="p">])</span>
+
+<span class="c1">#print Spearman rank correlation and p-value
+</span><span class="k">print</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
+
+<span class="c1"># -0.41818181818181815이므로 음의 상관관계 존재
+</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="c1"># p값이 0.22911284098281892이므로 그렇게 significant 하진 않음
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-0.41818181818181815
+0.22911284098281892
+</code></pre></div></div>
+
+<h3 id="kendall-서열상관-계수">
+<a class="anchor" href="#kendall-%EC%84%9C%EC%97%B4%EC%83%81%EA%B4%80-%EA%B3%84%EC%88%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>kendall 서열상관 계수</h3>
+<p><a href="https://www.geeksforgeeks.org/python-kendall-rank-correlation-coefficient/">kendall_서열상관계수</a>
+<a href="https://medium.com/@leejukyung/%EC%BC%84%EB%8B%AC%ED%83%80%EC%9A%B0-kendalltau-18fb90ba4e7">kendall_추가예제</a>
+spear만과 비교해서 표본이 적고, 동점이 많을 때에는 켄달 타우 계수 사용</p>
+
+<p>x1 &gt; x2 and y1 &gt; y2 or x1 &lt; x2 and y1 &lt; y2 -&gt; 일치
+x1 &gt; x2 and y1 &lt; y2 or x1 &lt; x2 and y1 &gt; y2 -&gt; 불일치
+일치</p>
+
+<p>hypothesis: H0 (null) is that correlation coefficient is 0.
+syntax: kendalltau(x, y)
+result: corr, p-value</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">kendalltau</span>
+  
+<span class="c1"># 권위주의적성격(X)과 지위추구성향(Y)
+</span><span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span> <span class="c1"># [x1, x2, x3, ...]
+</span><span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span> <span class="c1"># [y1, y2, y3, ...]
+</span>
+
+<span class="c1"># Calculating Kendall Rank correlation
+</span><span class="n">corr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">kendalltau</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Kendall Rank correlation: %.5f'</span> <span class="o">%</span> <span class="n">corr</span><span class="p">)</span>
+
+<span class="c1"># 0.0.69697이므로 X와 Y의 순위 상관은 비교적 높다고 판단
+</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Kendall Rank correlation: 0.69697
+</code></pre></div></div>
+
+
+  </div><a class="u-url" href="/techblog/statistics/python/2020/01/06/%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/techblog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/techblog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/techblog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A challenge-loving junior data engineer.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
