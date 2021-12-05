@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      6 min read
+      15 min read
     
 </span></p>
 
@@ -113,10 +113,9 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#07_비모수통계">07_비모수통계</a></li>
-<li class="toc-entry toc-h1"><a href="#특징">특징</a>
+<li class="toc-entry toc-h1"><a href="#07_비모수통계">07_비모수통계</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#모수통계-vs-비모수통계">모수통계 vs 비모수통계</a>
+<li class="toc-entry toc-h2"><a href="#모수통계-vs-비모수통계-특징">모수통계 vs 비모수통계 특징</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#모수통계">모수통계</a></li>
 <li class="toc-entry toc-h3"><a href="#비모수통계">비모수통계</a></li>
@@ -149,21 +148,24 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#kendall-서열상관-계수">kendall 서열상관 계수</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#연관성분석-association-analysis">연관성분석 Association analysis</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#특징">특징</a></li>
+<li class="toc-entry toc-h3"><a href="#transaction-데이터로-변환하기">Transaction 데이터로 변환하기</a></li>
+<li class="toc-entry toc-h3"><a href="#연관규칙association-rule-만들기">연관규칙(Association Rule) 만들기</a></li>
 </ul>
 </li>
-</ul><p><a href="http://www.kocw.or.kr/home/search/kemView.do?kemId=1215315">KOCW 통계학개론</a>
-<a href="https://www.statology.org/">python 예시</a></p>
+</ul>
+</li>
+</ul><p><a href="https://www.statology.org/">python 예시</a></p>
 
 <hr>
 
 <h1 id="07_비모수통계">
 <a class="anchor" href="#07_%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>07_비모수통계</h1>
 
-<h1 id="특징">
-<a class="anchor" href="#%ED%8A%B9%EC%A7%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>특징</h1>
-
-<h2 id="모수통계-vs-비모수통계">
-<a class="anchor" href="#%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84-vs-%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>모수통계 vs 비모수통계</h2>
+<h2 id="모수통계-vs-비모수통계-특징">
+<a class="anchor" href="#%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84-vs-%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84-%ED%8A%B9%EC%A7%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>모수통계 vs 비모수통계 특징</h2>
 
 <h3 id="모수통계">
 <a class="anchor" href="#%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>모수통계</h3>
@@ -448,6 +450,1513 @@ result: corr, p-value</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Kendall Rank correlation: 0.69697
 </code></pre></div></div>
+
+<hr>
+
+<h2 id="연관성분석-association-analysis">
+<a class="anchor" href="#%EC%97%B0%EA%B4%80%EC%84%B1%EB%B6%84%EC%84%9D-association-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>연관성분석 Association analysis</h2>
+<h3 id="특징">
+<a class="anchor" href="#%ED%8A%B9%EC%A7%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>특징</h3>
+<ul>
+  <li>어떤 상품이 함께 팔리는가를 분석함으로써 경향성을 파악</li>
+  <li>연관규칙(if-&gt;then)을 통해 <strong>A 제품을 구매하는 사람이 n% 확률로 B제품을 구매</strong>하는지 확인</li>
+  <li>연관성 규칙의 종류
+    <ul>
+      <li>행동 가능한 규칙: 룰의 의미가 이해되고 실행이 바로 가능한 정보
+ex) 물-라면, 기저귀-맥주</li>
+      <li>사소한 규칙: 이미 다 알고 있는 규칙으로 활용 관점은 낮지만 신뢰성 재확인 가능
+ex) 삼겹살-상추</li>
+      <li>설명 불가능한 규칙: 설명되지 않고 실제 행동을 취할 수 없는 규칙
+ex) 허리케인-&gt;딸기맛사탕</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="p">.</span><span class="n">warn</span><span class="p">(</span><span class="s">'once'</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_lotto</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'/content/drive/MyDrive/data/ADP/202109스터디/20210710/lotto.csv'</span><span class="p">)</span>
+<span class="n">df_lotto</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 859 entries, 0 to 858
+Data columns (total 7 columns):
+ #   Column   Non-Null Count  Dtype
+---  ------   --------------  -----
+ 0   time_id  859 non-null    int64
+ 1   num1     859 non-null    int64
+ 2   num2     859 non-null    int64
+ 3   num3     859 non-null    int64
+ 4   num4     859 non-null    int64
+ 5   num5     859 non-null    int64
+ 6   num6     859 non-null    int64
+dtypes: int64(7)
+memory usage: 47.1 KB
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_lotto</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time_id</th>
+      <th>num1</th>
+      <th>num2</th>
+      <th>num3</th>
+      <th>num4</th>
+      <th>num5</th>
+      <th>num6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>859</td>
+      <td>8</td>
+      <td>22</td>
+      <td>35</td>
+      <td>38</td>
+      <td>39</td>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>858</td>
+      <td>9</td>
+      <td>13</td>
+      <td>32</td>
+      <td>38</td>
+      <td>39</td>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>857</td>
+      <td>6</td>
+      <td>10</td>
+      <td>16</td>
+      <td>28</td>
+      <td>34</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>856</td>
+      <td>10</td>
+      <td>24</td>
+      <td>40</td>
+      <td>41</td>
+      <td>43</td>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>855</td>
+      <td>8</td>
+      <td>15</td>
+      <td>17</td>
+      <td>19</td>
+      <td>43</td>
+      <td>44</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="transaction-데이터로-변환하기">
+<a class="anchor" href="#transaction-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A1%9C-%EB%B3%80%ED%99%98%ED%95%98%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transaction 데이터로 변환하기</h3>
+<p>1) melt를 사용하는 방법 (ADP 제공 패키지에 없음)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## transaction data로 변환 후 가장 많이 등장한 상위 10개 번호를 막대그래프로 뽑아내고 이에 대해 설명
+</span><span class="n">melt</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">melt</span><span class="p">(</span><span class="n">df_lotto</span><span class="p">,</span> <span class="n">id_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s">'time_id'</span><span class="p">])</span>
+<span class="n">melt</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time_id</th>
+      <th>variable</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>859</td>
+      <td>num1</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>858</td>
+      <td>num1</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>857</td>
+      <td>num1</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>856</td>
+      <td>num1</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>855</td>
+      <td>num1</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pivot</span> <span class="o">=</span> <span class="n">melt</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'value'</span><span class="p">)[[</span><span class="s">'variable'</span><span class="p">]].</span><span class="n">count</span><span class="p">().</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'variable'</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)[:</span><span class="mi">10</span><span class="p">].</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1">#groupby시 variable에 count 값이 들어가고 index는 value인 pivot table
+</span><span class="n">pivot</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>value</th>
+      <th>variable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>34</td>
+      <td>134</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>40</td>
+      <td>126</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>27</td>
+      <td>126</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>43</td>
+      <td>125</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>20</td>
+      <td>124</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s">'value'</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s">'variable'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="n">pivot</span><span class="p">[</span><span class="s">'value'</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/techblog/images/post/bascket_analysis1.png" alt="bascket_analysis2"></p>
+
+<p>2) mlxtend를 사용하는 법(ADP 제공 패키지에 존재)</p>
+
+<p>http://rasbt.github.io/mlxtend/user_guide/preprocessing/TransactionEncoder/</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mlxtend.preprocessing</span> <span class="kn">import</span> <span class="n">TransactionEncoder</span>
+<span class="c1">## mlxtend는 list 속 list형식의 데이터를 One-hot encoding된 numpy array로 변환
+</span><span class="n">list_lotto</span> <span class="o">=</span> <span class="n">df_lotto</span><span class="p">[</span><span class="n">df_lotto</span><span class="p">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]].</span><span class="n">values</span><span class="p">.</span><span class="n">tolist</span><span class="p">()</span> <span class="c1">## num1~num5 column의 value가 row마다 list형식으로 출력, 2d array를 tolist()로 리스트변환
+</span><span class="n">te</span> <span class="o">=</span> <span class="n">TransactionEncoder</span><span class="p">()</span>
+<span class="n">te_ary</span> <span class="o">=</span> <span class="n">te</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">list_lotto</span><span class="p">).</span><span class="n">transform</span><span class="p">(</span><span class="n">list_lotto</span><span class="p">)</span> <span class="c1">##행:구매회차, 열: value(구매물품), 값: Boolean type 인 numpy 2d array
+</span><span class="n">te_lotto</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">te_ary</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">te</span><span class="p">.</span><span class="n">columns_</span><span class="p">)</span>
+
+<span class="n">te_lotto</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>11</th>
+      <th>12</th>
+      <th>13</th>
+      <th>14</th>
+      <th>15</th>
+      <th>16</th>
+      <th>17</th>
+      <th>18</th>
+      <th>19</th>
+      <th>20</th>
+      <th>21</th>
+      <th>22</th>
+      <th>23</th>
+      <th>24</th>
+      <th>25</th>
+      <th>26</th>
+      <th>27</th>
+      <th>28</th>
+      <th>29</th>
+      <th>30</th>
+      <th>31</th>
+      <th>32</th>
+      <th>33</th>
+      <th>34</th>
+      <th>35</th>
+      <th>36</th>
+      <th>37</th>
+      <th>38</th>
+      <th>39</th>
+      <th>40</th>
+      <th>41</th>
+      <th>42</th>
+      <th>43</th>
+      <th>44</th>
+      <th>45</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">freq_lotto</span> <span class="o">=</span> <span class="n">te_lotto</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">).</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span> <span class="c1">## axis=0이 column 기준으로 모든 row의 값을 더함, pd.Series로 return
+</span><span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">freq_lotto</span><span class="p">.</span><span class="n">index</span><span class="p">[:</span><span class="mi">10</span><span class="p">].</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">y</span> <span class="o">=</span> <span class="n">freq_lotto</span><span class="p">.</span><span class="n">values</span><span class="p">[:</span><span class="mi">10</span><span class="p">].</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">order</span> <span class="o">=</span> <span class="n">freq_lotto</span><span class="p">.</span><span class="n">index</span><span class="p">[:</span><span class="mi">10</span><span class="p">].</span><span class="n">tolist</span><span class="p">())</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/techblog/images/post/bascket_analysis2.png" alt="bascket_analysis2"></p>
+
+<h3 id="연관규칙association-rule-만들기">
+<a class="anchor" href="#%EC%97%B0%EA%B4%80%EA%B7%9C%EC%B9%99association-rule-%EB%A7%8C%EB%93%A4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>연관규칙(Association Rule) 만들기</h3>
+<ul>
+  <li>Apriori algorithm이 사용되는 예시
+    <ul>
+      <li>신용카드 사기를 당했을 때 주로 결제되는 내역 패턴</li>
+      <li>암 발생 시 빈번히 나타나는 DNA 패턴과 단백질 서열 검사</li>
+    </ul>
+  </li>
+  <li>빈도 평가 척도
+    <ul>
+      <li>지지도
+        <ul>
+          <li>support(X) = n(X) / N</li>
+          <li>support(X,Y) = n(X∩Y) / N</li>
+          <li>특정 아이템이 발생한 빈도</li>
+        </ul>
+      </li>
+      <li>신뢰도
+        <ul>
+          <li>confidence(X→Y) = n(X∩Y) / n(X)</li>
+          <li>아이템 X를 포함하는 거래 중 아이템 Y도 거래하는 비율</li>
+        </ul>
+      </li>
+      <li>향상도
+        <ul>
+          <li>lift(X→Y) = confidence(X→Y) / support(Y)</li>
+          <li>Y 구매가 이루어진 확률 대비 X를 샀을 때 Y도 같이 살 확률</li>
+          <li>lift가 1보다 클수록 +관계, 작을수록 -관계로 우연적 확률에서 멀어짐</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## 기출문제) 최소지지도 0.002, 신뢰도 0.8, 최소조합 항목 수 2, 최대조합 항목 수 6 으로 설정한 연관규칙을 향상도 기준으로 내림차순 정렬하여 상위 30개 규칙을 확인
+</span><span class="kn">from</span> <span class="nn">mlxtend.frequent_patterns</span> <span class="kn">import</span> <span class="n">association_rules</span><span class="p">,</span> <span class="n">apriori</span>
+<span class="n">freq_items</span> <span class="o">=</span> <span class="n">apriori</span><span class="p">(</span><span class="n">te_lotto</span><span class="p">,</span> <span class="n">min_support</span> <span class="o">=</span> <span class="mf">0.002</span><span class="p">,</span> <span class="n">max_len</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">use_colnames</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>  <span class="c1">## 이 두 개 조건밖에 지정이 안되는 듯?
+</span><span class="n">freq_items</span>  <span class="c1">## tuple 형태의 itemset - support(itemsets) 의 dataframe
+</span></code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>support</th>
+      <th>itemsets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.142026</td>
+      <td>(1)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.130384</td>
+      <td>(2)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.129220</td>
+      <td>(3)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.133877</td>
+      <td>(4)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.138533</td>
+      <td>(5)</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6358</th>
+      <td>0.002328</td>
+      <td>(40, 43, 13, 14, 26)</td>
+    </tr>
+    <tr>
+      <th>6359</th>
+      <td>0.002328</td>
+      <td>(14, 15, 18, 21, 26)</td>
+    </tr>
+    <tr>
+      <th>6360</th>
+      <td>0.002328</td>
+      <td>(40, 14, 27, 30, 31)</td>
+    </tr>
+    <tr>
+      <th>6361</th>
+      <td>0.002328</td>
+      <td>(34, 44, 15, 19, 21)</td>
+    </tr>
+    <tr>
+      <th>6362</th>
+      <td>0.002328</td>
+      <td>(36, 43, 16, 26, 31)</td>
+    </tr>
+  </tbody>
+</table>
+<p>6363 rows × 2 columns</p>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">freq_items</span><span class="p">[</span><span class="s">'length'</span><span class="p">]</span> <span class="o">=</span> <span class="n">freq_items</span><span class="p">[</span><span class="s">'itemsets'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1">## 조합항목 수 구하기
+</span>
+<span class="c1">## 규칙 생성하기
+</span><span class="n">rule1</span> <span class="o">=</span> <span class="n">association_rules</span><span class="p">(</span><span class="n">freq_items</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s">"confidence"</span><span class="p">,</span> <span class="n">min_threshold</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">)</span>  <span class="c1">## metric에 추가로 선택할 수 있는 leverage와 conviction은 뭔지 알아봐야 할 듯
+</span><span class="n">rule1</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="s">'confidence'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedents</th>
+      <th>consequents</th>
+      <th>antecedent support</th>
+      <th>consequent support</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+      <th>leverage</th>
+      <th>conviction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>(1, 3, 43)</td>
+      <td>(12)</td>
+      <td>0.002328</td>
+      <td>0.143190</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>6.983740</td>
+      <td>0.001995</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>(1, 3, 15)</td>
+      <td>(25)</td>
+      <td>0.002328</td>
+      <td>0.129220</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>7.738739</td>
+      <td>0.002027</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>464</th>
+      <td>(26, 22, 14)</td>
+      <td>(44)</td>
+      <td>0.002328</td>
+      <td>0.131548</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>7.601770</td>
+      <td>0.002022</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>465</th>
+      <td>(35, 22, 14)</td>
+      <td>(39)</td>
+      <td>0.003492</td>
+      <td>0.137369</td>
+      <td>0.003492</td>
+      <td>1.0</td>
+      <td>7.279661</td>
+      <td>0.003013</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>466</th>
+      <td>(14, 22, 39)</td>
+      <td>(35)</td>
+      <td>0.003492</td>
+      <td>0.123399</td>
+      <td>0.003492</td>
+      <td>1.0</td>
+      <td>8.103774</td>
+      <td>0.003061</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>236</th>
+      <td>(32, 18, 6)</td>
+      <td>(31)</td>
+      <td>0.002328</td>
+      <td>0.137369</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>7.279661</td>
+      <td>0.002008</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>237</th>
+      <td>(34, 6, 31)</td>
+      <td>(18)</td>
+      <td>0.002328</td>
+      <td>0.140861</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>7.099174</td>
+      <td>0.002000</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>238</th>
+      <td>(18, 43, 31)</td>
+      <td>(6)</td>
+      <td>0.002328</td>
+      <td>0.125728</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>7.953704</td>
+      <td>0.002036</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>239</th>
+      <td>(43, 6, 31)</td>
+      <td>(18)</td>
+      <td>0.002328</td>
+      <td>0.140861</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>7.099174</td>
+      <td>0.002000</td>
+      <td>inf</td>
+    </tr>
+    <tr>
+      <th>703</th>
+      <td>(16, 26, 31)</td>
+      <td>(43, 36)</td>
+      <td>0.002328</td>
+      <td>0.012806</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>78.090909</td>
+      <td>0.002298</td>
+      <td>inf</td>
+    </tr>
+  </tbody>
+</table>
+<p>704 rows × 9 columns</p>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## antecedents의 length를 새로운 데이터 column으로 빼서 그 값이 2와 6 사이인 데이터를 추출함
+</span><span class="n">rule1</span><span class="p">[</span><span class="s">'antecedents_len'</span><span class="p">]</span> <span class="o">=</span> <span class="n">rule1</span><span class="p">[</span><span class="s">'antecedents'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">rule1</span><span class="p">[(</span><span class="n">rule1</span><span class="p">[</span><span class="s">'antecedents_len'</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">rule1</span><span class="p">[</span><span class="s">'antecedents_len'</span><span class="p">]</span><span class="o">&lt;=</span><span class="mi">6</span><span class="p">)]</span>
+<span class="n">output</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedents</th>
+      <th>consequents</th>
+      <th>antecedent support</th>
+      <th>consequent support</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+      <th>leverage</th>
+      <th>conviction</th>
+      <th>antecedents_len</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>(1, 3, 43)</td>
+      <td>(12)</td>
+      <td>0.002328</td>
+      <td>0.143190</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>6.983740</td>
+      <td>0.001995</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>(1, 3, 15)</td>
+      <td>(25)</td>
+      <td>0.002328</td>
+      <td>0.129220</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>7.738739</td>
+      <td>0.002027</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>(25, 3, 15)</td>
+      <td>(1)</td>
+      <td>0.002328</td>
+      <td>0.142026</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>7.040984</td>
+      <td>0.001998</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>(25, 3, 20)</td>
+      <td>(1)</td>
+      <td>0.002328</td>
+      <td>0.142026</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>7.040984</td>
+      <td>0.001998</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>(29, 3, 37)</td>
+      <td>(1)</td>
+      <td>0.002328</td>
+      <td>0.142026</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>7.040984</td>
+      <td>0.001998</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>699</th>
+      <td>(16, 26, 43, 31)</td>
+      <td>(36)</td>
+      <td>0.002328</td>
+      <td>0.133877</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>7.469565</td>
+      <td>0.002017</td>
+      <td>inf</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>700</th>
+      <td>(16, 43, 36)</td>
+      <td>(26, 31)</td>
+      <td>0.002328</td>
+      <td>0.015134</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>66.076923</td>
+      <td>0.002293</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>701</th>
+      <td>(16, 26, 36)</td>
+      <td>(43, 31)</td>
+      <td>0.002328</td>
+      <td>0.018626</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>53.687500</td>
+      <td>0.002285</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>702</th>
+      <td>(16, 26, 43)</td>
+      <td>(36, 31)</td>
+      <td>0.002328</td>
+      <td>0.013970</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>71.583333</td>
+      <td>0.002296</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>703</th>
+      <td>(16, 26, 31)</td>
+      <td>(43, 36)</td>
+      <td>0.002328</td>
+      <td>0.012806</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>78.090909</td>
+      <td>0.002298</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>704 rows × 10 columns</p>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## 향상도 기준으로 내림차순 정리
+</span><span class="n">output</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="s">'lift'</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">output</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>antecedents</th>
+      <th>consequents</th>
+      <th>antecedent support</th>
+      <th>consequent support</th>
+      <th>support</th>
+      <th>confidence</th>
+      <th>lift</th>
+      <th>leverage</th>
+      <th>conviction</th>
+      <th>antecedents_len</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>703</th>
+      <td>(16, 26, 31)</td>
+      <td>(43, 36)</td>
+      <td>0.002328</td>
+      <td>0.012806</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>78.090909</td>
+      <td>0.002298</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>643</th>
+      <td>(24, 34, 22)</td>
+      <td>(31, 7)</td>
+      <td>0.002328</td>
+      <td>0.012806</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>78.090909</td>
+      <td>0.002298</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>642</th>
+      <td>(34, 31, 7)</td>
+      <td>(24, 22)</td>
+      <td>0.002328</td>
+      <td>0.012806</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>78.090909</td>
+      <td>0.002298</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>682</th>
+      <td>(26, 21, 14)</td>
+      <td>(18, 15)</td>
+      <td>0.002328</td>
+      <td>0.013970</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>71.583333</td>
+      <td>0.002296</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>652</th>
+      <td>(34, 10, 36)</td>
+      <td>(44, 22)</td>
+      <td>0.002328</td>
+      <td>0.013970</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>71.583333</td>
+      <td>0.002296</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>646</th>
+      <td>(24, 22, 31)</td>
+      <td>(34, 7)</td>
+      <td>0.002328</td>
+      <td>0.013970</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>71.583333</td>
+      <td>0.002296</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>666</th>
+      <td>(24, 20, 15)</td>
+      <td>(12, 30)</td>
+      <td>0.002328</td>
+      <td>0.013970</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>71.583333</td>
+      <td>0.002296</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>702</th>
+      <td>(16, 26, 43)</td>
+      <td>(36, 31)</td>
+      <td>0.002328</td>
+      <td>0.013970</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>71.583333</td>
+      <td>0.002296</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>700</th>
+      <td>(16, 43, 36)</td>
+      <td>(26, 31)</td>
+      <td>0.002328</td>
+      <td>0.015134</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>66.076923</td>
+      <td>0.002293</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>653</th>
+      <td>(34, 10, 22)</td>
+      <td>(36, 44)</td>
+      <td>0.002328</td>
+      <td>0.016298</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>61.357143</td>
+      <td>0.002290</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>658</th>
+      <td>(26, 11, 36)</td>
+      <td>(17, 21)</td>
+      <td>0.002328</td>
+      <td>0.016298</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>61.357143</td>
+      <td>0.002290</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>645</th>
+      <td>(24, 31, 7)</td>
+      <td>(34, 22)</td>
+      <td>0.002328</td>
+      <td>0.017462</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>57.266667</td>
+      <td>0.002288</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>676</th>
+      <td>(26, 43, 13)</td>
+      <td>(40, 14)</td>
+      <td>0.002328</td>
+      <td>0.017462</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>57.266667</td>
+      <td>0.002288</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>675</th>
+      <td>(40, 26, 13)</td>
+      <td>(43, 14)</td>
+      <td>0.002328</td>
+      <td>0.017462</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>57.266667</td>
+      <td>0.002288</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>636</th>
+      <td>(45, 6, 31)</td>
+      <td>(18, 38)</td>
+      <td>0.002328</td>
+      <td>0.017462</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>57.266667</td>
+      <td>0.002288</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>635</th>
+      <td>(18, 45, 6)</td>
+      <td>(38, 31)</td>
+      <td>0.002328</td>
+      <td>0.017462</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>57.266667</td>
+      <td>0.002288</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>664</th>
+      <td>(12, 20, 15)</td>
+      <td>(24, 30)</td>
+      <td>0.002328</td>
+      <td>0.017462</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>57.266667</td>
+      <td>0.002288</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>644</th>
+      <td>(31, 22, 7)</td>
+      <td>(24, 34)</td>
+      <td>0.002328</td>
+      <td>0.017462</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>57.266667</td>
+      <td>0.002288</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>701</th>
+      <td>(16, 26, 36)</td>
+      <td>(43, 31)</td>
+      <td>0.002328</td>
+      <td>0.018626</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>53.687500</td>
+      <td>0.002285</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>688</th>
+      <td>(40, 14, 30)</td>
+      <td>(27, 31)</td>
+      <td>0.002328</td>
+      <td>0.018626</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>53.687500</td>
+      <td>0.002285</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>665</th>
+      <td>(12, 30, 15)</td>
+      <td>(24, 20)</td>
+      <td>0.002328</td>
+      <td>0.020955</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>47.722222</td>
+      <td>0.002280</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>674</th>
+      <td>(40, 13, 14)</td>
+      <td>(26, 43)</td>
+      <td>0.002328</td>
+      <td>0.022119</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>45.210526</td>
+      <td>0.002277</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>694</th>
+      <td>(19, 44, 21)</td>
+      <td>(34, 15)</td>
+      <td>0.002328</td>
+      <td>0.024447</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>40.904762</td>
+      <td>0.002271</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>(40, 43, 13)</td>
+      <td>(26, 14)</td>
+      <td>0.002328</td>
+      <td>0.025611</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>39.045455</td>
+      <td>0.002269</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>667</th>
+      <td>(20, 30, 15)</td>
+      <td>(24, 12)</td>
+      <td>0.002328</td>
+      <td>0.027939</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>35.791667</td>
+      <td>0.002263</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>324</th>
+      <td>(17, 14, 33)</td>
+      <td>(9)</td>
+      <td>0.002328</td>
+      <td>0.103609</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>9.651685</td>
+      <td>0.002087</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>330</th>
+      <td>(18, 35, 23)</td>
+      <td>(9)</td>
+      <td>0.002328</td>
+      <td>0.103609</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>9.651685</td>
+      <td>0.002087</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>335</th>
+      <td>(32, 43, 38)</td>
+      <td>(9)</td>
+      <td>0.002328</td>
+      <td>0.103609</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>9.651685</td>
+      <td>0.002087</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>254</th>
+      <td>(28, 7, 23)</td>
+      <td>(9)</td>
+      <td>0.002328</td>
+      <td>0.103609</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>9.651685</td>
+      <td>0.002087</td>
+      <td>inf</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>639</th>
+      <td>(24, 34, 31, 7)</td>
+      <td>(22)</td>
+      <td>0.002328</td>
+      <td>0.107101</td>
+      <td>0.002328</td>
+      <td>1.0</td>
+      <td>9.336957</td>
+      <td>0.002079</td>
+      <td>inf</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
   </div><a class="u-url" href="/techblog/statistics/python/2020/01/06/%EB%B9%84%EB%AA%A8%EC%88%98%ED%86%B5%EA%B3%84.html" hidden></a>
