@@ -7,6 +7,7 @@ title: Kth number
 ---
 
 Python Algorithm Practice
+[진수와진법/최대공약수/최소공배수/소인수분해,재귀함수](https://youtu.be/t_Ezo4NksZY)
 
 ---
 
