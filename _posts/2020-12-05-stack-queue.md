@@ -7,6 +7,7 @@ title: Stack, Queue, Hash, Heap algorithm
 ---
 
 Python Algorithm Practice
+[stack/queue/deque](https://youtu.be/1aCzy4A7ToM)
 
 ---
 
