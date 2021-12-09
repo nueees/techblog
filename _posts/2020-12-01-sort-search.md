@@ -8,6 +8,8 @@ title: Basic Sort & Binary Search
 
 Python Algorithm Practice
 
+[select/bubble/quick/merge/radix](https://youtu.be/WSz7Ilr4xIk)
+
 ---
 
 ```
