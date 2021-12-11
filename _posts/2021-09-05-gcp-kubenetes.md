@@ -13,9 +13,9 @@ title: GCP Kubenetes
 
 ## 11.1. 환경 설치
 
-1-1) [google cloud sdk 설치](https://cloud.google.com/sdk/docs/install?hl=ko#windows)
-1-2) GCP에서 프로젝트 생성 후, Kubernetes Engine에서 클러스터 생성
-1-3) 윈도우 shell에서 gcloud 초기화 및 연동
+1-1) [google cloud sdk 설치](https://cloud.google.com/sdk/docs/install?hl=ko#windows)  
+1-2) GCP에서 프로젝트 생성 후, Kubernetes Engine에서 클러스터 생성  
+1-3) 윈도우 shell에서 gcloud 초기화 및 연동  
 ```
 PS C:\u01\kubetpl> gcloud init # 초기화
 Welcome! This command will take you through the configuration of gcloud.
