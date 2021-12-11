@@ -11,7 +11,7 @@ title: Kubernetes
 
 # 5.Container Cluster
 
-## 5.0. Kubernates 소개
+## 5.1. Kubernates 소개
 
 docker - 단일 시스템에서만 다수의 컨테이너 관리  
 \-> 다수의 시스템과 애프리케이션 설정을 쉽게 설정하고 유지보수할 수 있는 방식인 오케스트레이션(Ochestration)이 필요  
@@ -21,7 +21,7 @@ kubernates - docker, rtk 같은 Container의 Ochestration 도구
 **_다중 컨테이너 관리를 위한 docker-compose를 설치해야 함._**
 
 쿠버네티스는 클러스터 구성해서 오케스트레이션을 통해 컨테이너를 자동으로 관리, 2개 이상 시스템에서 관리 가능  
-관리 대상을 object라고 함 - pods(컨테이너 단위)와 controller(pods를 한번에 관리)로 구성(application workload)
+관리 대상을 object라고 함 - pods(컨테이너 논리적 구성 단위)와 controller(pods를 한번에 관리)로 구성(application workload)
 
 ### 사용 이유
 
@@ -125,7 +125,7 @@ cka 관리자 측(자체적으로 운영 관리 가능)
 
 ---
 
-### kubenates 설치
+### kubernetes 설치
 
 ```
 1.  패키지 및 git 설치
@@ -163,7 +163,7 @@ $ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/sta
 <br><br>
 ---
 
-## 5.1.Architecture
+## 5.2.Architecture
 
 ![]({{site.baseurl}}/images/post/docker_5_1.jpg)
 
@@ -247,6 +247,7 @@ stable 버전 : vX 형태의 안정화된 버전
 core group: apiVersion:\[version\]  
 core 이외 group: apiVersion: \[group\]/\[version\]
 
+<br><br>
 ---
 
 ## 5.3.Menifest
@@ -300,23 +301,60 @@ $ kubectl delete replicationcontrollers mytest-app
 $ kubectl delete service myweb-svc
 ```
 
+<br><br>
 ---
 
 # 6.Application Workload
 
 ## 6.1.Pods
+POD(파드) 는 쿠버네티스 애플리케이션의 기본 실행 단위 (만들고 배포할 수 있는 가장 작은 단위)  
+1 container = 1 application(1 pod)  
 
-도커에서 작업을 수행하기 위해 구동해야 하는 가장 작은 단위는 컨테이너 
-쿠버네티스 클러스터 내에서 애플리케이션 배포하며 동작하는 단위   
-1 컨테이너 = 1 애플리케이션  
-하나의 Pod는 하나의 node에서만 동작    
-동일한 Pod 의 모든 컨테이너는 동일한 리소스와 로컬 네트워크를 공유하여 머신이 분리되어 있어도 pod 내 컨테이너 간
-통신이 가능함  
-쿠버네티스 클러스터는 여러 개의 노드로 구성되며 각 노드는 컨테이너를 구동할 수 있도록 준비하고 있으나,  
-하나의 파드에 두개 이상의 컨테이너가 포함된 경우 각 컨테이너를 여러 노드에 분산시켜서 실행할 수는 없음.  
-1 pod 내 있는 컨테이너는 저장소, 네트워크 IP 등 공유
+### 특징  
+• 도커는 쿠버네티스 파드에서 사용되는 가장 대표적인 컨테이너 런타임이지만, 파드는 다른 컨테이너 런타임 역시 지원 (rtk, containerd)  
+• 파드당 컨테이너 비율은 대체로 1:1 이지만, 파드당 여러개의 컨테이너가 포함되는 경우도 있음  
+• 파드내의 컨테이너는 오로지 하나의 노드 내에만 존재 (노드를 걸쳐서 파드가 존재 하지 않음)  
+• 동일 파드 내의 컨테이너는 네트워킹 및 볼륨을 공유  
+• K8S에 있는 POD들은 단순하고, 공유 가능한 네트워크 Address 주소 값을 가진다 (flat Natwork)  
+• 각각의 POD은 각각의 IP주소 값을 가지고 있으며, 이 IP를 이용해서 통신 허용  
+plane에 정의된 kube-proxy로 IP를 가질 수 있음
+• NAT(Network Address Translation) gateway 같은 장비 없이- 마치 Local Area Network(LAN)처럼 통신이 가능  
+• POD 내의 여러개 Container 는 서로 다른 포트를 통해 서비스 해야함  
 
-1.  Pod 정의: YAML 파일 생성
+### 기본 명령어  
+
+```
+# 기본 pod 조회 명령어
+] kubectl get pods
+# 축약어 사용
+] kubectl get po
+# 상세 정보까지 출력
+] kubectl get po –o wide
+# 레이블 까지 출력
+] kubectl get po --show-labels
+
+# POD와 함께 Replication Controller 까지 생성 (Deprecate 될 예정)
+] kubectl run <POD-NAME> --image=<IMAGE-NAME> --port=<SERVICE-PORT> --generator=run/v1
+# POD만 생성
+] kubectl run <POD-NAME> --image=<IMAGE-NAME> --port=<SERVICE-PORT> --generator=run-pod/v1
+
+# 기본 pod 조회 명령어
+] kubectl get pod goapp-project-bcv5q -o yaml
+# 축약어 사용
+] kubectl create -f goapp.yaml
+# 상세 정보까지 출력
+] kubectl logs goapp-pod
+
+# POD와 함께 Replication Controller 까지 생성 (Deprecate 될 예정)
+] kubectl run <POD-NAME> --image=<IMAGE-NAME> --port=<SERVICE-PORT> --generator=run/v1
+# POD만 생성
+] kubectl run <POD-NAME> --image=<IMAGE-NAME> --port=<SERVICE-PORT> --generator=run-pod/v1
+
+```
+
+### 실습  
+
+1-1)  Pod 정의: YAML 파일 생성
 
 cat testapp-pod.yml
 
@@ -325,9 +363,9 @@ cat testapp-pod.yml
 기본적인 apiVersion, kind, metadata, spec 포함  
 \- 하이픈 기호는 리스트(List)를 의미
 
-2.  Pod 생성 및 확인
-3.  `$ kubectl create -f testapp-pod.yml $ kubectl get pods $ kubectl get pods testapp-pod -o yaml(-o json) $ kubectl discribe pods testapp-pod $ kubectl logs testapp-pod # 로그 확인 $ kubectl port-forward testapp-pod 8080:8080 # 포트포워딩 $ curl http://localhost:8080`
-4.  Label(레이블) 및 Selector(셀렉터)  
+1-2)  Pod 생성 및 확인
+1-3)  `$ kubectl create -f testapp-pod.yml $ kubectl get pods $ kubectl get pods testapp-pod -o yaml(-o json) $ kubectl discribe pods testapp-pod $ kubectl logs testapp-pod # 로그 확인 $ kubectl port-forward testapp-pod 8080:8080 # 포트포워딩 $ curl http://localhost:8080`
+1-4)  Label(레이블) 및 Selector(셀렉터)  
     Label: 쿠버네티스 클러스터의 모든 오브젝트에 키/값 쌍으로 이루어진 값을 설정하여 리소스 식별, 속성 지정 역할  
     네임스페이스 내 중복 불가  
     Label Selector: Label을 식별하고 검색함
@@ -337,16 +375,16 @@ cat testapp-pod-label.yml
 
 ![]({{site.baseurl}}/images/post/docker_6_1_2.jpg)
 
-4.  Anotation(어노테이션)  
+1-5)  Anotation(어노테이션)  
     오브젝트의 추가 정보를 기록하는 경우 사용하는 주석
-5.  `$ kubectl annotate pods testapp-pod devops-team/developer="nueees"`
-6.  Name Space(네임스페이스)  
+1-6)  `$ kubectl annotate pods testapp-pod devops-team/developer="nueees"`
+1-7)  Name Space(네임스페이스)  
     Name Space: 쿠버네티스 클러스터 내 오브젝트와 리소스를 용도와 목적에 따라 논리적으로 완전히 분리된 환경default: 기본 네임스페이스  
     kube-node-lease: 쿠버네티스 노드(마스터/노드)의 가용성 체크를 위한 네임스페이스  
     kube-public: 모든 사용자 접근가능  
     kube-system: 클러스터의 리소스가 배치되는 네임스페이스
-7.  `$ kubectl get namespaces`
-8.  Liveness Prove(라이브니스 프로브)  
+1-8)  `$ kubectl get namespaces`
+1-9)  Liveness Prove(라이브니스 프로브)  
     파드 상태가 정상적인지 주기적으로 모니터링 서비스
 
 -   HTTP GET Prove: 특정 경로에 HTTP GET 요청, HTTP 응답코드가 2XX/3XX인지 확인
@@ -360,6 +398,7 @@ cat testapp-pod-label.yml
     ```
     
 
+<br><br>
 ---
 
 ## 6.2.Controller
@@ -435,6 +474,7 @@ Pod이 스케줄 될 때 지속적으로 유지되는 식별자를 가질 수 �
 use case: 고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동 
 
 
+<br><br>
 ---
 
 # 7.Network - Service
@@ -509,6 +549,8 @@ cat testapp-svc-named-port.yml
 $ kubectl create -f testapp-rs-named-port.yml -f testapp-svc-named-port.yml
 ```
 
+<br><br>
+---
 ## 7.2. Service 탐색
 
 kubectl get 명령어로 IP 주소를 수동적으로 확인할 수 있지만 Object끼리 통신을 위한 방식 필요
@@ -550,6 +592,9 @@ $ kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool --generator=run-
 
 주소구성: <리소스(서비스) 이름>.<네임 스페이스>.<리소스 종류>.<클러스터 도메인>
 
+
+<br><br>
+---
 ## 7.3. Service 종류
 
 위의 내용은 내부 접근이고, 외부 접근 제공하는 서비스 구성 필요
@@ -578,6 +623,8 @@ $ kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool --generator=run-
 8.  `$ kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool --generator=run-pod/v1 --rm=true bash # 서비스 접근 테스트 $ nllookup testapp-svc-extname-gl`
 9.  `$ kubectl create -f testapp-svc-ext-externalname.yml # FQDN은 google이며 이에 대한 CNAME은 testapp-svc-extname-gl $ kubectl get services # ExternalName 서비스 확인`
 
+
+<br><br>
 ---
 
 
