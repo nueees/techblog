@@ -137,7 +137,7 @@ window.onload = wrap_img;
   <li>오랜 기간 사용할 경우 비용 부담 증가</li>
 </ul>
 
-<hr />
+<h2><br /><br /></h2>
 <h2 id="82-클라우드-서비스-분류">8.2. 클라우드 서비스 분류</h2>
 
 <h3 id="saas-software-as-a-service-서비스로서-소프트웨어-애플리케이션-서비스를-제공">SaaS (Software as a Service): 서비스로서 소프트웨어 애플리케이션 서비스를 제공</h3>
@@ -159,6 +159,7 @@ ex) Google APP Engine, OpenShift</p>
 
 <p>ex) 대부분 퍼블릭 클라우드 서비스 (AWS EC2, S3)</p>
 
+<h2 id="-1"><br /><br /></h2>
 <h2 id="83-클라우드-서비스-종류">8.3. 클라우드 서비스 종류</h2>
 
 <h3 id="private-cloud">Private Cloud</h3>
@@ -191,7 +192,7 @@ ex) Google APP Engine, OpenShift</p>
   <li>데이터의 중요도와 비즈니스 핵심 업무 여부에 따라 선택 가능</li>
 </ul>
 
-<hr />
+<h2 id="-2"><br /><br /></h2>
 <h1 id="9-microservice">9. Microservice</h1>
 
 <h2 id="91-microservice-이해-및-구축-방법론">9.1 Microservice 이해 및 구축 방법론</h2>
@@ -201,9 +202,12 @@ ex) Google APP Engine, OpenShift</p>
 <p>기존의 Monolithic 방식은 변화 대응이 어렵고, 새로운 기능 추가 및 업데이트가 어려움</p>
 <ul>
   <li>서비스마다 필요한 기술 적용 (기술 이기종성)</li>
-  <li>장애 격리가 쉽고 신뢰도가 높음</li>
   <li>resource 낭비 줄임 (부분 scale out)</li>
-  <li>deploy/rollback 시 발생하는 risk 감소 (Blue-Green deploy로 점진적 변경)</li>
+  <li>
+    <p>deploy/rollback 시 발생하는 risk 감소 (Blue-Green deploy로 점진적 변경)</p>
+  </li>
+  <li>Loosely Coupled: 장애 격리가 쉽고 신뢰도가 높음</li>
+  <li>High Cohesion: Bounded_Context<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>라는 확실한 경계가 있고 구체적인 책임을 나눔</li>
 </ul>
 
 <p><strong>※ 시스템이 복잡하지 않을 경우, MSA 방식에서 요구되는 요소들이 오히려 생산성을 떨어뜨림</strong><br />
@@ -216,7 +220,7 @@ ex) Google APP Engine, OpenShift</p>
   <li>비즈니스 개념에 따른 모델링<br />
 도메인 경계 정의, 기술보단 비즈니스 경계로, 서비스는 두고 DB 스키마부터 단계적 분리</li>
   <li>공통 자동화 문화 적용<br />
-테스트 자동화 (CI<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>/CD<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>) 및 Custom Image 환경 구축</li>
+테스트 자동화 (CI<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>/CD<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>) 및 Custom Image 환경 구축</li>
 </ul>
 
 <h4 id="blue-green-배포">Blue-Green 배포</h4>
@@ -224,12 +228,12 @@ ex) Google APP Engine, OpenShift</p>
 Blue: 이전 버전<br />
 Green: 신규 버전</p>
 
-<h4 id="canaria-배포">canaria 배포</h4>
+<h4 id="canaria-배포">Canaria 배포</h4>
 <p><img src="https://user-images.githubusercontent.com/83441376/139980171-e44febeb-1bee-4047-804d-79f8ebe2fd9e.png" alt="canary-deployment" /></p>
 
 <p><a href="https://harness.io/blog/blue-green-canary-deployment-strategies">배포관련 참고</a></p>
 
-<hr />
+<h2 id="-3"><br /><br /></h2>
 <h2 id="92-spring-cloud를-활용한-microservices-개발">9.2 Spring Cloud를 활용한 Microservices 개발</h2>
 
 <h3 id="spring-cloud">Spring Cloud</h3>
@@ -346,7 +350,7 @@ Config Server에 붙어 원격 속성 소스로 Spring 환경 초기화
 </ul>
 
 <p>6) Message Stream: RabbitMQ, Kafka<br />
-Spring cloud bus: 동적으로 config 변경을 적용하기 위한 MOM<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>을 구성한 MQ(Message Queue) Handler</p>
+Spring cloud bus: 동적으로 config 변경을 적용하기 위한 MOM<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup>을 구성한 MQ(Message Queue) Handler</p>
 
 <p>(1) MQ(Message Queue)에 Publisher(=config server)와 Subscriber(마이크로서비스)를 등록<br />
 (2) config 변경 정보를 MQ에 전송(Publish Message)<br />
@@ -354,20 +358,23 @@ Spring cloud bus: 동적으로 config 변경을 적용하기 위한 MOM<sup id="
 
 <p>7) Monitoring: Zipkin</p>
 
-<hr />
+<h2 id="-4"><br /><br /></h2>
 
 <hr />
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>자동화된 빌드 및 테스트가 수행된 후, 개발자가 코드 변경을 repository에 정기적으로 병합하는 개발 방식 <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>내부는 독립적으로 차단되고 외부와 연결하려면 interface를 통해서 소통 가능 <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p>코드 변경 사항을 repository에서 고객이 사용 가능한 production 환경까지 자동으로 release하는 개발 방식 <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>자동화된 빌드 및 테스트가 수행된 후, 개발자가 코드 변경을 repository에 정기적으로 병합하는 개발 방식 <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:3" role="doc-endnote">
-      <p>분산 시스템 환경에서 독립된 서비스 간에 비동기 방식으로 메세지를 전송/수신할 수 있게 도와주는 인프라 <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>코드 변경 사항을 repository에서 고객이 사용 가능한 production 환경까지 자동으로 release하는 개발 방식 <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>분산 시스템 환경에서 독립된 서비스 간에 비동기 방식으로 메세지를 전송/수신할 수 있게 도와주는 인프라 <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
