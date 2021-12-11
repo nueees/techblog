@@ -11,20 +11,41 @@ title: Kubernetes
 
 # 5.Container Cluster
 
-## 5.1.Kubernates 소개
+## 5.0. Kubernates 소개
 
 docker - 단일 시스템에서만 다수의 컨테이너 관리  
 \-> 다수의 시스템과 애프리케이션 설정을 쉽게 설정하고 유지보수할 수 있는 방식인 오케스트레이션(Ochestration)이 필요  
-kubernates - 구글에서 개발된 컨테이너 오케스트레이션 도구
+
+kubernates - docker, rtk 같은 Container의 Ochestration 도구  
 
 **_다중 컨테이너 관리를 위한 docker-compose를 설치해야 함._**
 
 쿠버네티스는 클러스터 구성해서 오케스트레이션을 통해 컨테이너를 자동으로 관리, 2개 이상 시스템에서 관리 가능  
 관리 대상을 object라고 함 - pods(컨테이너 단위)와 controller(pods를 한번에 관리)로 구성(application workload)
 
+### 사용 이유
+
+• 기민한 애플리케이션 생성과 배포: VM 이미지를 사용하는 것에 비해 컨테이너 이미지 생성이 보다 쉽고 효율적  
+• 지속적인 개발, 통합 및 배포: 안정적이고 주기적으로 컨테이너 이미지를 빌드해서 배포할 수 있고 (이미지의 불변성 덕에) 빠르고 쉽게 롤백할 수 있다  
+• 개발과 운영의 관심사 분리: 배포 시점이 아닌 빌드/릴리스 시점에 애플리케이션 컨테이너 이미지를 만들기 때문에, 애플리케이션이 인프라스트럭처에서 디커플된다  
+• 가시성은 OS 수준의 정보와 메트릭에 머무르지 않고, 애플리케이션의 헬스와 그 밖의 시그널을 볼 수 있다  
+• 개발, 테스팅 및 운영 환경에 걸친 일관성: 랩탑에서도 클라우드에서와 동일하게 구동된다  
+• 클라우드 및 OS 배포판 간 이식성: Ubuntu, RHEL, CoreOS, on-prem, Google Kubernetes Engine 및 다른 어디에서든 구동된다  
+• 애플리케이션 중심 관리: 가상 하드웨어의 OS에서 애플리케이션을 구동하는 수준에서 OS의 논리적인 자원을 사용하여 애플리케이션을 구동하는 수준으로 추상화 수준이 높아진다  
+• 느슨하게 커플되고, 분산되고, 유연하며, 자유로운 마이크로서비스: 애플리케이션은 단일 목적의 머신에서 모놀리식 스택으로 구동되지 않고 보다 작고 독립적인 단위로 쪼개져서 동적으로 배포되고 관리될 수 있다  
+• 자원 격리: 애플리케이션 성능을 예측할 수 있다  
+• 자원 사용량: high efficiency high density  
+
+클라우드 네이티브 구축 후에는 관리포인트를 줄이기 위해 managed service를 쓰는게 좋음  
+application 기능에 집중할 수 있도록 infra 영역을 추상화  
+
+deploy 시점이 아닌, build 시점에 jar 파일이나 source 코드를 생성하는게 아니고
+container 이미지를 아얘 새로 만드는 추세  
+
 ### 기능
 
 컨테이너 플랫폼, 마이크로서비스 플랫폼, 이식성있는 클라우드 플랫폼 제공  
+
 - Automatic Binpacking  
 - Storage Orchestration  
 - Secret & Configuration Management  
@@ -35,7 +56,37 @@ kubernates - 구글에서 개발된 컨테이너 오케스트레이션 도구
 - Automatic Rollbacks & Rollouts  
 
 
-CI/CD 파이프라인, 애플리케이션 레벨의 서비스, 로깅, 모니터링, 경고 솔루션 등을 제공하지 않음
+CI/CD 파이프라인, 애플리케이션 레벨의 서비스, 로깅, 모니터링, 경고 솔루션 등을 제공하지 않음  
+
+---
+
+### CNCF (Cloud Native Computing Foundation)
+CNCF에 인큐베이팅 되어 첫번째로 graduated한 kubernetes 프로젝트  
+
+밴더들이 클라우드 네이티브 후원하는 이유?  
+혼돈스러운 컨테이너와 관련된 다양한 기술적인 문제들을 오픈소스로 해결하는 하는 것을 목표  
+
+
+
+ckad 사용자 측 (자체적으로 운영 관리 가능)
+ckm 관리자 측
+
+
+#### Graduated & incubating projects
+
+
+#### Sandbox projects
+
+#### Archived projects
+
+#### 
+
+  
+
+
+
+
+
 
 ---
 
@@ -93,6 +144,7 @@ $ ansible-playbook -i inventory/mycluster/inventory.ini cluster.yml -b`
 $ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" $ curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" $ echo "$(<kubectl.sha256) kubectl" | sha256sum --check $ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl $ kubectl version --client`
 ```
 
+<br><br>
 ---
 
 ## 5.1.Architecture
