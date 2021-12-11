@@ -6,6 +6,7 @@ categories: [kubernetes]
 title: Microservice
 ---
 출처\_Building Cloud private native 전문가 양성과정 교재 + 추가 MSA 
+[kihoonkim blog](https://kihoonkim.github.io/2018/03/25/Microservices%20Architecture/first-msa-retro/)
 
 # 8. 클라우드 서비스 소개
 
@@ -94,13 +95,17 @@ ex) 대부분 퍼블릭 클라우드 서비스 (AWS EC2, S3)
 
 ### Microservice 특징  
 기존의 Monolithic 방식은 변화 대응이 어렵고, 새로운 기능 추가 및 업데이트가 어려움  
-- 서비스마다 필요한 기술 적용 (기술 이기종성)
-- resource 낭비 줄임 (부분 scale out)  
-- deploy/rollback 시 발생하는 risk 감소 (Blue-Green deploy로 점진적 변경)
 
 - Loosely Coupled: 장애 격리가 쉽고 신뢰도가 높음  
 - High Cohesion: Bounded_Context[^1]라는 확실한 경계가 있고 구체적인 책임을 나눔  
-  
+- Easy Deployment (배포용이성)
+- Autonomous (자율성)
+- Resilience (회복성)
+- Scaling (확장성)
+- Tech Heterogeneity (기술 이기종성): 서비스마다 필요한 기술 적용 
+- 
+- resource 낭비 줄임 (부분 scale out)  
+- deploy/rollback 시 발생하는 risk 감소 (Blue-Green deploy로 점진적 변경)
   
 __※ 시스템이 복잡하지 않을 경우, MSA 방식에서 요구되는 요소들이 오히려 생산성을 떨어뜨림__  
 소스코드를 여러 라이브러리로 나누어서 유틸 생성하고 재사용
@@ -111,8 +116,18 @@ __※ 시스템이 복잡하지 않을 경우, MSA 방식에서 요구되는 요
 
 - 비즈니스 개념에 따른 모델링  
 도메인 경계 정의, 기술보단 비즈니스 경계로, 서비스는 두고 DB 스키마부터 단계적 분리  
+
 - 공통 자동화 문화 적용  
 테스트 자동화 (CI[^2]/CD[^3]) 및 Custom Image 환경 구축  
+
+#### 서비스의 크기?
+Bounded Context 단위  
+하나의 Aggregate를 갖는 것이 좋음  
+그렇게 되려면 서비스가 굉장히 잘게 나눠져야 하고, 한 팀이 여러 서비스를 관리  
+-> 코드 repository가 많이 지고 각각의 빌드 파이프라인도 많이 진다. 
+-> 여러 서비스를 개발하기위해 IDE도 자주 스위칭을 해야 할 것이다. 
+우리는 크게 4,5 개 정도의 도메인을 식별했고, Rest URI 수준에서 분리
+(근본적인 목적은 여러팀이 Agile하게 일할 수 있도록 만드는 것)
 
 
 #### Blue-Green 배포
@@ -132,6 +147,10 @@ Green: 신규 버전
 <br><br>
 ---
 ## 9.2 Spring Cloud를 활용한 Microservices 개발
+
+### Deploying Microservices: Spring Cloud vs. Kubernetes
+![image](https://user-images.githubusercontent.com/83441376/145658868-23bba2c5-97a6-4232-9a3f-4aebc21fa15e.png)
+  
 
 ### Spring Cloud
 Spring Cloud는 Microservce Architecture 환경에서의 개발과 배포, 운영을 쉽게 구성할 수있도록 지원하는 Spring Boot 기반의 Framework  
