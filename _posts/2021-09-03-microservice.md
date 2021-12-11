@@ -28,6 +28,7 @@ title: Microservice
 -   오랜 기간 사용할 경우 비용 부담 증가  
 
 
+<br><br>
 ---
 ## 8.2. 클라우드 서비스 분류
 
@@ -50,6 +51,9 @@ Server, Storage, Network를 가상으로 만들어 사용자가 필요한 자원
 
 ex) 대부분 퍼블릭 클라우드 서비스 (AWS EC2, S3)
 
+
+<br><br>
+---
 ## 8.3. 클라우드 서비스 종류
 
 ### Private Cloud
@@ -81,6 +85,7 @@ ex) 대부분 퍼블릭 클라우드 서비스 (AWS EC2, S3)
 
 
 
+<br><br>
 ---
 # 9. Microservice
 
@@ -90,9 +95,12 @@ ex) 대부분 퍼블릭 클라우드 서비스 (AWS EC2, S3)
 ### Microservice 특징  
 기존의 Monolithic 방식은 변화 대응이 어렵고, 새로운 기능 추가 및 업데이트가 어려움  
 - 서비스마다 필요한 기술 적용 (기술 이기종성)
-- 장애 격리가 쉽고 신뢰도가 높음  
 - resource 낭비 줄임 (부분 scale out)  
 - deploy/rollback 시 발생하는 risk 감소 (Blue-Green deploy로 점진적 변경)
+
+- Loosely Coupled: 장애 격리가 쉽고 신뢰도가 높음  
+- High Cohesion: Bounded_Context[^1]라는 확실한 경계가 있고 구체적인 책임을 나눔  
+  
   
 __※ 시스템이 복잡하지 않을 경우, MSA 방식에서 요구되는 요소들이 오히려 생산성을 떨어뜨림__  
 소스코드를 여러 라이브러리로 나누어서 유틸 생성하고 재사용
@@ -104,7 +112,7 @@ __※ 시스템이 복잡하지 않을 경우, MSA 방식에서 요구되는 요
 - 비즈니스 개념에 따른 모델링  
 도메인 경계 정의, 기술보단 비즈니스 경계로, 서비스는 두고 DB 스키마부터 단계적 분리  
 - 공통 자동화 문화 적용  
-테스트 자동화 (CI[^1]/CD[^2]) 및 Custom Image 환경 구축  
+테스트 자동화 (CI[^2]/CD[^3]) 및 Custom Image 환경 구축  
 
 
 #### Blue-Green 배포
@@ -112,7 +120,7 @@ __※ 시스템이 복잡하지 않을 경우, MSA 방식에서 요구되는 요
 Blue: 이전 버전  
 Green: 신규 버전  
 
-#### canaria 배포
+#### Canaria 배포
 ![canary-deployment](https://user-images.githubusercontent.com/83441376/139980171-e44febeb-1bee-4047-804d-79f8ebe2fd9e.png)
 
 [배포관련 참고](https://harness.io/blog/blue-green-canary-deployment-strategies)
@@ -121,6 +129,7 @@ Green: 신규 버전
 
 
 
+<br><br>
 ---
 ## 9.2 Spring Cloud를 활용한 Microservices 개발
 
@@ -239,7 +248,7 @@ Config Server에 붙어 원격 속성 소스로 Spring 환경 초기화
 
 
 6) Message Stream: RabbitMQ, Kafka  
-Spring cloud bus: 동적으로 config 변경을 적용하기 위한 MOM[^3]을 구성한 MQ(Message Queue) Handler
+Spring cloud bus: 동적으로 config 변경을 적용하기 위한 MOM[^4]을 구성한 MQ(Message Queue) Handler
 
 (1) MQ(Message Queue)에 Publisher(=config server)와 Subscriber(마이크로서비스)를 등록  
 (2) config 변경 정보를 MQ에 전송(Publish Message)  
@@ -253,6 +262,7 @@ Spring cloud bus: 동적으로 config 변경을 적용하기 위한 MOM[^3]을 �
 
 
 
+<br><br>
 ---
 
 
@@ -263,9 +273,10 @@ Spring cloud bus: 동적으로 config 변경을 적용하기 위한 MOM[^3]을 �
 
 
 ---
-[^1]: 자동화된 빌드 및 테스트가 수행된 후, 개발자가 코드 변경을 repository에 정기적으로 병합하는 개발 방식
+[^1]: 내부는 독립적으로 차단되고 외부와 연결하려면 interface를 통해서 소통 가능
+[^2]: 자동화된 빌드 및 테스트가 수행된 후, 개발자가 코드 변경을 repository에 정기적으로 병합하는 개발 방식
 
-[^2]: 코드 변경 사항을 repository에서 고객이 사용 가능한 production 환경까지 자동으로 release하는 개발 방식
+[^3]: 코드 변경 사항을 repository에서 고객이 사용 가능한 production 환경까지 자동으로 release하는 개발 방식
 
-[^3]: 분산 시스템 환경에서 독립된 서비스 간에 비동기 방식으로 메세지를 전송/수신할 수 있게 도와주는 인프라
+[^4]: 분산 시스템 환경에서 독립된 서비스 간에 비동기 방식으로 메세지를 전송/수신할 수 있게 도와주는 인프라
 
