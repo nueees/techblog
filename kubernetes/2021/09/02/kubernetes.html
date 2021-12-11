@@ -169,8 +169,8 @@ container 이미지를 아얘 새로 만드는 추세</p>
 <p>밴더들이 클라우드 네이티브 후원하는 이유?<br />
 혼돈스러운 컨테이너와 관련된 다양한 기술적인 문제들을 오픈소스로 해결하는 하는 것을 목표</p>
 
-<p>ckad 사용자 측 (자체적으로 운영 관리 가능)
-ckm 관리자 측</p>
+<p>ckad 사용자 측<br />
+cka 관리자 측(자체적으로 운영 관리 가능)</p>
 
 <h4 id="graduated--incubating-projects">Graduated &amp; incubating projects</h4>
 
@@ -178,7 +178,29 @@ ckm 관리자 측</p>
 
 <h4 id="archived-projects">Archived projects</h4>
 
-<p>####</p>
+<h2><br /></h2>
+
+<h3 id="기본-구성단위">기본 구성단위</h3>
+<p><a href="https://platform9.com/blog/kubernetes-enterprise-chapter-2-kubernetes-architecture-concepts/">platform9 blog</a></p>
+
+<p><img src="https://user-images.githubusercontent.com/83441376/145669058-fa4c2505-574e-4827-936a-7045130486ca.png" alt="image" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/83441376/145669061-cf579bad-4982-4712-9c1f-690fac7be012.png" alt="image" /></p>
+
+<h4 id="1-control-plane">1) Control Plane</h4>
+<p>1-1) API 서버 : 쿠버네티스 오브젝트에 대한 데이터를 설정하고 검증. REST 서비스 제공<br />
+1-2) 스케줄러 : 클러스터의 노드에 파드를 배포 하는 역할. feasibility 계산 하여 배포<br />
+1-3) 컨트롤러 메니저 : 제어 루프를 이용해 설정된 상태를 지속적으로 유지하도록 함<br />
+1-4) <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/ha-topology/#stacked-etcd-topology">ETCD</a> : 클러스터 오브젝트의 데이터를 저장</p>
+
+<p><img src="https://user-images.githubusercontent.com/83441376/145669066-453d02b6-f1b2-4e0c-b114-e409224ab725.png" alt="image" /></p>
+
+<h4 id="2-nodes">2) Nodes</h4>
+<p>2-1) 컨테이너 런타임 : 컨테이너를 실행하는 엔진 (Docker, rtk 등)<br />
+2-2) Kubelet : API 서버와 통신하며 워커 노드의 컨테이너를 관리<br />
+2-3) kube-proxy : 애플리케이션의 구성 요소간에 네트워크 트래픽을 분산</p>
+
+<p><img src="https://user-images.githubusercontent.com/83441376/145669231-ba8555e0-1ac2-4df2-934a-1454f0b71c00.png" alt="image" /></p>
 
 <hr />
 
@@ -237,7 +259,7 @@ $ ansible-playbook -i inventory/mycluster/inventory.ini cluster.yml -b`
 $ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" $ curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" $ echo "$(&lt;kubectl.sha256) kubectl" | sha256sum --check $ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl $ kubectl version --client`
 </code></pre></div></div>
 
-<h2><br /><br /></h2>
+<h2 id="-1"><br /><br /></h2>
 
 <h2 id="51architecture">5.1.Architecture</h2>
 
