@@ -66,10 +66,8 @@ CNCF에 인큐베이팅 되어 첫번째로 graduated한 kubernetes 프로젝트
 밴더들이 클라우드 네이티브 후원하는 이유?  
 혼돈스러운 컨테이너와 관련된 다양한 기술적인 문제들을 오픈소스로 해결하는 하는 것을 목표  
 
-
-
-ckad 사용자 측 (자체적으로 운영 관리 가능)
-ckm 관리자 측
+ckad 사용자 측  
+cka 관리자 측(자체적으로 운영 관리 가능)  
 
 
 #### Graduated & incubating projects
@@ -79,12 +77,30 @@ ckm 관리자 측
 
 #### Archived projects
 
-#### 
+<br>
+---
 
-  
+### 기본 구성단위
+[platform9 blog](https://platform9.com/blog/kubernetes-enterprise-chapter-2-kubernetes-architecture-concepts/)  
 
+![image](https://user-images.githubusercontent.com/83441376/145669058-fa4c2505-574e-4827-936a-7045130486ca.png)  
 
+![image](https://user-images.githubusercontent.com/83441376/145669061-cf579bad-4982-4712-9c1f-690fac7be012.png)  
 
+#### 1) Control Plane  
+1-1) API 서버 : 쿠버네티스 오브젝트에 대한 데이터를 설정하고 검증. REST 서비스 제공  
+1-2) 스케줄러 : 클러스터의 노드에 파드를 배포 하는 역할. feasibility 계산 하여 배포  
+1-3) 컨트롤러 메니저 : 제어 루프를 이용해 설정된 상태를 지속적으로 유지하도록 함  
+1-4) [ETCD](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/ha-topology/#stacked-etcd-topology) : 클러스터 오브젝트의 데이터를 저장  
+
+![image](https://user-images.githubusercontent.com/83441376/145669066-453d02b6-f1b2-4e0c-b114-e409224ab725.png)  
+
+#### 2) Nodes  
+2-1) 컨테이너 런타임 : 컨테이너를 실행하는 엔진 (Docker, rtk 등)  
+2-2) Kubelet : API 서버와 통신하며 워커 노드의 컨테이너를 관리  
+2-3) kube-proxy : 애플리케이션의 구성 요소간에 네트워크 트래픽을 분산  
+
+![image](https://user-images.githubusercontent.com/83441376/145669231-ba8555e0-1ac2-4df2-934a-1454f0b71c00.png)  
 
 
 
