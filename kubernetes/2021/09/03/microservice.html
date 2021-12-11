@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      6 min read
+      7 min read
     
 </span></p>
 
@@ -109,7 +109,8 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>출처_Building Cloud private native 전문가 양성과정 교재 + 추가 MSA</p>
+    <p>출처_Building Cloud private native 전문가 양성과정 교재 + 추가 MSA 
+<a href="https://kihoonkim.github.io/2018/03/25/Microservices%20Architecture/first-msa-retro/">kihoonkim blog</a></p>
 
 <h1 id="8-클라우드-서비스-소개">8. 클라우드 서비스 소개</h1>
 
@@ -200,14 +201,18 @@ ex) Google APP Engine, OpenShift</p>
 
 <h3 id="microservice-특징">Microservice 특징</h3>
 <p>기존의 Monolithic 방식은 변화 대응이 어렵고, 새로운 기능 추가 및 업데이트가 어려움</p>
+
 <ul>
-  <li>서비스마다 필요한 기술 적용 (기술 이기종성)</li>
-  <li>resource 낭비 줄임 (부분 scale out)</li>
-  <li>
-    <p>deploy/rollback 시 발생하는 risk 감소 (Blue-Green deploy로 점진적 변경)</p>
-  </li>
   <li>Loosely Coupled: 장애 격리가 쉽고 신뢰도가 높음</li>
   <li>High Cohesion: Bounded_Context<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>라는 확실한 경계가 있고 구체적인 책임을 나눔</li>
+  <li>Easy Deployment (배포용이성)</li>
+  <li>Autonomous (자율성)</li>
+  <li>Resilience (회복성)</li>
+  <li>Scaling (확장성)</li>
+  <li>Tech Heterogeneity (기술 이기종성): 서비스마다 필요한 기술 적용</li>
+  <li></li>
+  <li>resource 낭비 줄임 (부분 scale out)</li>
+  <li>deploy/rollback 시 발생하는 risk 감소 (Blue-Green deploy로 점진적 변경)</li>
 </ul>
 
 <p><strong>※ 시스템이 복잡하지 않을 경우, MSA 방식에서 요구되는 요소들이 오히려 생산성을 떨어뜨림</strong><br />
@@ -217,11 +222,24 @@ ex) Google APP Engine, OpenShift</p>
 <h3 id="microservice-구성-전략">Microservice 구성 전략</h3>
 
 <ul>
-  <li>비즈니스 개념에 따른 모델링<br />
-도메인 경계 정의, 기술보단 비즈니스 경계로, 서비스는 두고 DB 스키마부터 단계적 분리</li>
-  <li>공통 자동화 문화 적용<br />
-테스트 자동화 (CI<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>/CD<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>) 및 Custom Image 환경 구축</li>
+  <li>
+    <p>비즈니스 개념에 따른 모델링<br />
+도메인 경계 정의, 기술보단 비즈니스 경계로, 서비스는 두고 DB 스키마부터 단계적 분리</p>
+  </li>
+  <li>
+    <p>공통 자동화 문화 적용<br />
+테스트 자동화 (CI<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>/CD<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>) 및 Custom Image 환경 구축</p>
+  </li>
 </ul>
+
+<h4 id="서비스의-크기">서비스의 크기?</h4>
+<p>Bounded Context 단위<br />
+하나의 Aggregate를 갖는 것이 좋음<br />
+그렇게 되려면 서비스가 굉장히 잘게 나눠져야 하고, 한 팀이 여러 서비스를 관리<br />
+-&gt; 코드 repository가 많이 지고 각각의 빌드 파이프라인도 많이 진다. 
+-&gt; 여러 서비스를 개발하기위해 IDE도 자주 스위칭을 해야 할 것이다. 
+우리는 크게 4,5 개 정도의 도메인을 식별했고, Rest URI 수준에서 분리
+(근본적인 목적은 여러팀이 Agile하게 일할 수 있도록 만드는 것)</p>
 
 <h4 id="blue-green-배포">Blue-Green 배포</h4>
 <p><img src="https://www.redhat.com/cms/managed-files/blue-green-deployment-model.gif" alt="blue-green-deployment" /><br />
@@ -235,6 +253,9 @@ Green: 신규 버전</p>
 
 <h2 id="-3"><br /><br /></h2>
 <h2 id="92-spring-cloud를-활용한-microservices-개발">9.2 Spring Cloud를 활용한 Microservices 개발</h2>
+
+<h3 id="deploying-microservices-spring-cloud-vs-kubernetes">Deploying Microservices: Spring Cloud vs. Kubernetes</h3>
+<p><img src="https://user-images.githubusercontent.com/83441376/145658868-23bba2c5-97a6-4232-9a3f-4aebc21fa15e.png" alt="image" /></p>
 
 <h3 id="spring-cloud">Spring Cloud</h3>
 <p>Spring Cloud는 Microservce Architecture 환경에서의 개발과 배포, 운영을 쉽게 구성할 수있도록 지원하는 Spring Boot 기반의 Framework<br />
