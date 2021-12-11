@@ -90,10 +90,10 @@
   
     
         ,"post8": {
-            "title": "Jenkins",
-            "content": "tacademy . . 1.1. CI CD . .",
-            "url": "https://nueees.github.io/techblog/jenkins/2021/09/04/jenkins.html",
-            "relUrl": "/jenkins/2021/09/04/jenkins.html",
+            "title": "Istio",
+            "content": "devopsstory blog . . 10.1. Service Mesh . — . 10.2. Istio . MSA 환경의 효율적인 DevOps를 위한 Istio Traffic management . — .",
+            "url": "https://nueees.github.io/techblog/kubernetes/2021/09/04/istio.html",
+            "relUrl": "/kubernetes/2021/09/04/istio.html",
             "date": " • Sep 4, 2021"
         }
         
