@@ -3,14 +3,14 @@ toc: true
 layout: post
 description: 8장
 categories: [statistics,python]
-title: Ensamble (RandomForest)
+title: RandomForest
 ---
 
 [yg's blog](https://yganalyst.github.io/ml/ML_chap6-3/)
 
 ---
 
-# 통계분석_4
+# 통계분석_4 - RandomForest
 
 ## Ensemble Methods
 가장 좋은 모델 하나만 사용하는게 아니라 몇가지 모델을 통한 예측기(분류 또는 회귀)를 연결하여 더 좋은 예측기를 만드는 방법  
@@ -234,7 +234,8 @@ bagging은 각 예측기가 학습하는 subset에 다양성을 증가시키므�
 - Low Bias, High Variance에 효과적
 - ex) GBM, XGBoost, LightGBM
 
-<br>
+
+<br><br>
 ---
 
 ## Random Forest
@@ -408,16 +409,8 @@ feature_series = feature_series.sort_values(ascending=False)
 sns.barplot(x= feature_series, y=feature_series.index)
 ```
 
-
-
-
-    <AxesSubplot:>
-
-
-
-
-    
-![png](2020-01-07-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D4_files/2020-01-07-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D4_17_1.png)
+<br><br>
+---
     
 
 
