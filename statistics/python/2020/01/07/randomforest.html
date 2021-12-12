@@ -4,19 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Ensamble (RandomForest) | Cho’s Tech blog</title>
+<title>RandomForest | Cho’s Tech blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Ensamble (RandomForest)" />
+<meta property="og:title" content="RandomForest" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="8장" />
 <meta property="og:description" content="8장" />
-<link rel="canonical" href="https://nueees.github.io/techblog/statistics/python/2020/01/07/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D4.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/statistics/python/2020/01/07/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D4.html" />
+<link rel="canonical" href="https://nueees.github.io/techblog/statistics/python/2020/01/07/randomforest.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/statistics/python/2020/01/07/randomforest.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-01-07T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"8장","url":"https://nueees.github.io/techblog/statistics/python/2020/01/07/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D4.html","@type":"BlogPosting","headline":"Ensamble (RandomForest)","dateModified":"2020-01-07T00:00:00-06:00","datePublished":"2020-01-07T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/statistics/python/2020/01/07/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D4.html"},"@context":"https://schema.org"}</script>
+{"description":"8장","url":"https://nueees.github.io/techblog/statistics/python/2020/01/07/randomforest.html","@type":"BlogPosting","headline":"RandomForest","dateModified":"2020-01-07T00:00:00-06:00","datePublished":"2020-01-07T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/statistics/python/2020/01/07/randomforest.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,7 +87,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Ensamble (RandomForest)</h1><p class="page-description">8장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-07T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">RandomForest</h1><p class="page-description">8장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-07T00:00:00-06:00" itemprop="datePublished">
         Jan 7, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -113,7 +113,7 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#통계분석_4">통계분석_4</a>
+<li class="toc-entry toc-h1"><a href="#통계분석_4---randomforest">통계분석_4 - RandomForest</a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#ensemble-methods">Ensemble Methods</a>
 <ul>
@@ -150,14 +150,15 @@ window.onload = wrap_img;
 </li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#-1"></a></li>
 </ul>
 </li>
 </ul><p><a href="https://yganalyst.github.io/ml/ML_chap6-3/">yg’s blog</a></p>
 
 <hr>
 
-<h1 id="통계분석_4">
-<a class="anchor" href="#%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D_4" aria-hidden="true"><span class="octicon octicon-link"></span></a>통계분석_4</h1>
+<h1 id="통계분석_4---randomforest">
+<a class="anchor" href="#%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D_4---randomforest" aria-hidden="true"><span class="octicon octicon-link"></span></a>통계분석_4 - RandomForest</h1>
 
 <h2 id="ensemble-methods">
 <a class="anchor" href="#ensemble-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ensemble Methods</h2>
@@ -390,7 +391,7 @@ bagging은 각 예측기가 학습하는 subset에 다양성을 증가시키므�
 </ul>
 
 <h2>
-<a class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
+<a class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
 </h2>
 
 <h2 id="random-forest">
@@ -558,10 +559,9 @@ Test data Pearson correlation: 0.94
 <span class="n">sns</span><span class="p">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span> <span class="n">feature_series</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_series</span><span class="p">.</span><span class="n">index</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:&gt;
-</code></pre></div></div>
-
-<p><img src="2020-01-07-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D4_files/2020-01-07-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D4_17_1.png" alt="png"></p>
+<h2 id="-1">
+<a class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 </code></pre></div></div>
@@ -576,7 +576,7 @@ Test data Pearson correlation: 0.94
   </ol>
 </div>
 
-  </div><a class="u-url" href="/techblog/statistics/python/2020/01/07/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D4.html" hidden></a>
+  </div><a class="u-url" href="/techblog/statistics/python/2020/01/07/randomforest.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
