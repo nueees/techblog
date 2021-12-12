@@ -9,7 +9,6 @@ title: GBM, XGBoost
 [yngie blog](https://yngie-c.github.io/machine%20learning/2021/03/21/gbm/)  
 [creatorjo blog](https://creatorjo.tistory.com/143)  
 
-
 ---
 
 # 통계분석_5 - GBM(Gradient Boosting Machine)
