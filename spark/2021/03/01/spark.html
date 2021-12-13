@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      5 min read
     
 </span></p>
 
@@ -110,48 +110,63 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#1-spark">1. Spark</a>
+<li class="toc-entry toc-h1"><a href="#1-spark-개요">1. Spark 개요</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#11-spark-개요">1.1. Spark 개요</a>
+<li class="toc-entry toc-h2"><a href="#11-spark-주요-용도">1.1. Spark 주요 용도</a></li>
+<li class="toc-entry toc-h2"><a href="#12-hadoop-vs-spark">1.2. Hadoop vs Spark</a></li>
+<li class="toc-entry toc-h2"><a href="#13-rdd-resilient-distributed-datasets">1.3. RDD (Resilient Distributed Datasets)</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#spark-주요-용도">Spark 주요 용도</a></li>
-<li class="toc-entry toc-h3"><a href="#hadoop-vs-spark">Hadoop vs Spark</a></li>
-<li class="toc-entry toc-h3"><a href="#rdd-resilient-distributed-datasets">RDD (Resilient Distributed Datasets)</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#rdd-vs-df-vs-datasetsql">RDD vs DF vs DataSet(SQL)</a></li>
-<li class="toc-entry toc-h4"><a href="#rdd-예시">RDD 예시</a></li>
-<li class="toc-entry toc-h4"><a href="#dataframe-예시">DataFrame 예시</a></li>
-<li class="toc-entry toc-h4"><a href="#dataset-예시">DataSet 예시</a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h3"><a href="#rdd-vs-df-vs-datasetsql">RDD vs DF vs DataSet(SQL)</a></li>
+<li class="toc-entry toc-h3"><a href="#rdd-예시">RDD 예시</a></li>
+<li class="toc-entry toc-h3"><a href="#dataframe-예시">DataFrame 예시</a></li>
+<li class="toc-entry toc-h3"><a href="#dataset-예시">DataSet 예시</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#"></a></li>
-<li class="toc-entry toc-h2"><a href="#12-spark-architecture">1.2. Spark Architecture</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#cluster-manager">Cluster Manager</a></li>
-<li class="toc-entry toc-h3"><a href="#driver-process">Driver Process</a></li>
-<li class="toc-entry toc-h3"><a href="#executors">Executors</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#operations">Operations</a></li>
-<li class="toc-entry toc-h4"><a href="#variables">Variables</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h3"><a href="#scheduling">Scheduling</a>
+<li class="toc-entry toc-h1"><a href="#2-spark-architecture">2. Spark Architecture</a>
 <ul>
-<li class="toc-entry toc-h4"><a href="#dag-directed-acyclic-graphs-scheduler">DAG (Directed Acyclic Graphs) Scheduler</a></li>
+<li class="toc-entry toc-h2"><a href="#21-cluster-manager">2.1. Cluster Manager</a></li>
+<li class="toc-entry toc-h2"><a href="#22-driver-process">2.2. Driver Process</a></li>
+<li class="toc-entry toc-h2"><a href="#23-executors">2.3. Executors</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#operations">Operations</a></li>
+<li class="toc-entry toc-h3"><a href="#variables">Variables</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#24-scheduling">2.4. Scheduling</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#dag-directed-acyclic-graphs-scheduler">DAG (Directed Acyclic Graphs) Scheduler</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#-1"></a></li>
-<li class="toc-entry toc-h2"><a href="#13-spark-sql--dataframe">1.3. Spark SQL &amp; DataFrame</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#3-spark-sql--dataframe">3. Spark SQL &amp; DataFrame</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#31-pandas-df-vs-spark-df">3.1. Pandas DF vs Spark DF</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#기본">기본</a></li>
+<li class="toc-entry toc-h3"><a href="#변환">변환</a></li>
+<li class="toc-entry toc-h3"><a href="#정렬">정렬</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#-2"></a></li>
-<li class="toc-entry toc-h2"><a href="#14-mllib-classification">1.4. MLlib Classification</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#4-mllib-classification">4. MLlib Classification</a>
+<ul>
 <li class="toc-entry toc-h2"><a href="#-3"></a></li>
-<li class="toc-entry toc-h2"><a href="#15-mllib-regression">1.5. MLlib Regression</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#5-mllib-regression">5. MLlib Regression</a>
+<ul>
 <li class="toc-entry toc-h2"><a href="#-4"></a></li>
-<li class="toc-entry toc-h2"><a href="#16-use-case">1.6. Use Case</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#6-use-case">6. Use Case</a>
+<ul>
 <li class="toc-entry toc-h2"><a href="#-5"></a></li>
 </ul>
 </li>
@@ -159,16 +174,14 @@ window.onload = wrap_img;
 
 <hr>
 
-<h1 id="1-spark">
-<a class="anchor" href="#1-spark" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Spark</h1>
+<h1 id="1-spark-개요">
+<a class="anchor" href="#1-spark-%EA%B0%9C%EC%9A%94" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Spark 개요</h1>
 
-<h2 id="11-spark-개요">
-<a class="anchor" href="#11-spark-%EA%B0%9C%EC%9A%94" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. Spark 개요</h2>
 <p>Unified Computing Engine and a Set of Libraries for Parallel Data Processing on Computer Clusters<br>
 대량 데이터 처리를 위한 클러스터 자원으로 데이터를 분산 병렬 처리</p>
 
-<h3 id="spark-주요-용도">
-<a class="anchor" href="#spark-%EC%A3%BC%EC%9A%94-%EC%9A%A9%EB%8F%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spark 주요 용도</h3>
+<h2 id="11-spark-주요-용도">
+<a class="anchor" href="#11-spark-%EC%A3%BC%EC%9A%94-%EC%9A%A9%EB%8F%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. Spark 주요 용도</h2>
 <ul>
   <li>Spark SQL (Batch processing): big &amp; complex, processing massive data, higher latencies</li>
   <li>Spark Streaming (Real time analytics): relatively simple and generally independent, one at a time processing, sub-second latency</li>
@@ -178,9 +191,9 @@ window.onload = wrap_img;
 
 <p><em>spark streaming의 경우 개발하기는 어렵지 않으나, 운영(debugging)이 어려움</em></p>
 
-<h3 id="hadoop-vs-spark">
-<a class="anchor" href="#hadoop-vs-spark" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hadoop vs Spark</h3>
-<p>Hadoop의 MPP (Massive Parallel Processing)을 기반으로 자원 대용량 처리하고<br>
+<h2 id="12-hadoop-vs-spark">
+<a class="anchor" href="#12-hadoop-vs-spark" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Hadoop vs Spark</h2>
+<p>Hadoop의 MPP<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> (Massive Parallel Processing)을 기반으로 자원 대용량 처리하고<br>
 기존 Hadoop의 MapReduce에서 disk I/O 부하가 심했던 부분을 memory에서 빠르게 작업</p>
 
 <ul>
@@ -189,8 +202,8 @@ window.onload = wrap_img;
   <li>In-memory write으로 Map Reduce 작업을 최적화</li>
 </ul>
 
-<h3 id="rdd-resilient-distributed-datasets">
-<a class="anchor" href="#rdd-resilient-distributed-datasets" aria-hidden="true"><span class="octicon octicon-link"></span></a>RDD (Resilient Distributed Datasets)</h3>
+<h2 id="13-rdd-resilient-distributed-datasets">
+<a class="anchor" href="#13-rdd-resilient-distributed-datasets" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. RDD (Resilient Distributed Datasets)</h2>
 <p>Immutable distributed collection of your data, partitioned across nodes in your cluster</p>
 <ul>
   <li>분산 병렬 처리를 위한 데이터를 추상화</li>
@@ -198,8 +211,8 @@ window.onload = wrap_img;
   <li>클러스터 내의 서로 다른 노드에 저장하고 읽음</li>
 </ul>
 
-<h4 id="rdd-vs-df-vs-datasetsql">
-<a class="anchor" href="#rdd-vs-df-vs-datasetsql" aria-hidden="true"><span class="octicon octicon-link"></span></a>RDD vs DF vs DataSet(SQL)</h4>
+<h3 id="rdd-vs-df-vs-datasetsql">
+<a class="anchor" href="#rdd-vs-df-vs-datasetsql" aria-hidden="true"><span class="octicon octicon-link"></span></a>RDD vs DF vs DataSet(SQL)</h3>
 <p><a href="https://loustler.io/data_eng/spark-rdd-dataframe-and-dataset/">출처_loustler 블로그</a></p>
 <table>
   <tbody>
@@ -314,8 +327,8 @@ window.onload = wrap_img;
   </tbody>
 </table>
 
-<h4 id="rdd-예시">
-<a class="anchor" href="#rdd-%EC%98%88%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>RDD 예시</h4>
+<h3 id="rdd-예시">
+<a class="anchor" href="#rdd-%EC%98%88%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>RDD 예시</h3>
 
 <p>low level interface, Data Containers<br>
 각기 다른 프로세스 요소들을 추상화한 같은 형태</p>
@@ -337,8 +350,8 @@ data.map(lambda x: (x[0], [int(x[1]), 1]))
     .collect()
 </code></pre></div></div>
 
-<h4 id="dataframe-예시">
-<a class="anchor" href="#dataframe-%EC%98%88%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>DataFrame 예시</h4>
+<h3 id="dataframe-예시">
+<a class="anchor" href="#dataframe-%EC%98%88%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>DataFrame 예시</h3>
 <p>코드가 직관적이고 schema를 가지는 interface</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sqlCtx.table("people")
@@ -347,8 +360,8 @@ data.map(lambda x: (x[0], [int(x[1]), 1]))
     .collect()
 </code></pre></div></div>
 
-<h4 id="dataset-예시">
-<a class="anchor" href="#dataset-%EC%98%88%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>DataSet 예시</h4>
+<h3 id="dataset-예시">
+<a class="anchor" href="#dataset-%EC%98%88%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>DataSet 예시</h3>
 <p>SQL로 수행 가능</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT name, avg(age) 
@@ -360,29 +373,29 @@ GROUP BY name
 <a class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
 </h2>
 
-<h2 id="12-spark-architecture">
-<a class="anchor" href="#12-spark-architecture" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Spark Architecture</h2>
+<h1 id="2-spark-architecture">
+<a class="anchor" href="#2-spark-architecture" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Spark Architecture</h1>
 <p><img src="/techblog/images/post/spark-cluster-overview.png" alt=""></p>
 
 <p>executor 개수와 resource 할당</p>
 
-<h3 id="cluster-manager">
-<a class="anchor" href="#cluster-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster Manager</h3>
+<h2 id="21-cluster-manager">
+<a class="anchor" href="#21-cluster-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. Cluster Manager</h2>
 <p>worker와 executors 사이에 자원을 중계해주는 역할<br>
 resource를 효율적으로 분배</p>
 
 <p>ex) Spark StandAlone(cluster X), (Hadoop)Yarn, Mesos, Kubernetes</p>
 
-<h3 id="driver-process">
-<a class="anchor" href="#driver-process" aria-hidden="true"><span class="octicon octicon-link"></span></a>Driver Process</h3>
+<h2 id="22-driver-process">
+<a class="anchor" href="#22-driver-process" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.2. Driver Process</h2>
 <p>SparkContext를 생성하고 RDD를 만들고 operation을 실행하는 프로세스</p>
 
 <p>Spark-submit을 하면,<br>
 Spark Driver가 Cluster Manager로부터 Executor 실행을 위한 리소스를 요청<br>
 Spark Context는 작업 내용을 task 단위로 분할하여 Executor로 보냄</p>
 
-<h3 id="executors">
-<a class="anchor" href="#executors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Executors</h3>
+<h2 id="23-executors">
+<a class="anchor" href="#23-executors" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. Executors</h2>
 <p>주어진 작업의 개별 task들을 실행하는 작업 실행하고 결과 return</p>
 
 <p>1) 애플리케이션을 구성하는 작업들을 실행하여 driver에 그 결과를 return<br>
@@ -392,16 +405,16 @@ Spark Context는 작업 내용을 task 단위로 분할하여 Executor로 보냄
 
 <p>End to End: csv file read(<strong>narrow</strong>) -&gt; DataFrame sort(<strong>wide</strong>) -&gt; Array</p>
 
-<h4 id="operations">
-<a class="anchor" href="#operations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Operations</h4>
+<h3 id="operations">
+<a class="anchor" href="#operations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Operations</h3>
 <p>1) Transformations: map, filter, groupBy, join
 lazy operation으로 즉시 실행하는 단계가 아님</p>
 
 <p>2) Actions: count, collect, save
 실제로 실행후 driver로 결과 return</p>
 
-<h4 id="variables">
-<a class="anchor" href="#variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Variables</h4>
+<h3 id="variables">
+<a class="anchor" href="#variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Variables</h3>
 <ul>
   <li>Accumulator: aggregate multiple values as it progresses</li>
   <li>Broadcast: large read-only variable shared across tasks, operations, large lookup tables</li>
@@ -409,46 +422,89 @@ lazy operation으로 즉시 실행하는 단계가 아님</p>
 
 <p><em>디버깅이나 검증용으로 쓰고, 스파크 스트리밍에서는 accumulator, broadcast 지양 (GC문제..)</em></p>
 
-<h3 id="scheduling">
-<a class="anchor" href="#scheduling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scheduling</h3>
+<h2 id="24-scheduling">
+<a class="anchor" href="#24-scheduling" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. Scheduling</h2>
 
 <p><img src="/techblog/images/post/DAG%20scheduler.jpeg" alt=""></p>
 
-<h4 id="dag-directed-acyclic-graphs-scheduler">
-<a class="anchor" href="#dag-directed-acyclic-graphs-scheduler" aria-hidden="true"><span class="octicon octicon-link"></span></a>DAG (Directed Acyclic Graphs) Scheduler</h4>
+<h3 id="dag-directed-acyclic-graphs-scheduler">
+<a class="anchor" href="#dag-directed-acyclic-graphs-scheduler" aria-hidden="true"><span class="octicon octicon-link"></span></a>DAG (Directed Acyclic Graphs) Scheduler</h3>
 
 <h2 id="-1">
 <a class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
 </h2>
 
-<h2 id="13-spark-sql--dataframe">
-<a class="anchor" href="#13-spark-sql--dataframe" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Spark SQL &amp; DataFrame</h2>
+<h1 id="3-spark-sql--dataframe">
+<a class="anchor" href="#3-spark-sql--dataframe" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Spark SQL &amp; DataFrame</h1>
+
+<h2 id="31-pandas-df-vs-spark-df">
+<a class="anchor" href="#31-pandas-df-vs-spark-df" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. Pandas DF vs Spark DF</h2>
+
+<p>Pandas DF: 병렬 cpu X 단일 서버 memory로만 처리<br>
+numpy의 ndarray 기반으로 2차원 데이터 분석용</p>
+
+<p>Spark DF: SQL 연산 지원 (df.select(‘col1’), df.groupBy(‘col1’).count(), df.withColumns(‘col1’))<br>
+immutable하게 df.drop(‘col1’) 시에 새로운 df 반환 (inplace 옵션 없음)<br>
+컬럼 지정 혹은 리스트 출력 시 대괄호 연산자 [] 사용 X</p>
+
+<h3 id="기본">
+<a class="anchor" href="#%EA%B8%B0%EB%B3%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>기본</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select gender from tab
+-&gt;  spark_df.select(‘gender’) 
+
+select * from tab where gender = ‘F’
+-&gt;  spark_df.filter(spark_df[‘gender’] == ‘F’) 
+
+update set age=age + 10 from tab
+-&gt;  spark_df.withColumns(‘age’, col(‘age’)+10) 
+
+select gender, count(*) from tab group by gender
+-&gt;  spark_df.groupBy(‘gender’).count() 
+
+</code></pre></div></div>
+
+<h3 id="변환">
+<a class="anchor" href="#%EB%B3%80%ED%99%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>변환</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spark_df = spark.createDataFrame(pandas_df) # spark to pandas
+pandas_df = spark_df.select(‘*’).toPandas() # pandas to spark
+</code></pre></div></div>
+
+<h3 id="정렬">
+<a class="anchor" href="#%EC%A0%95%EB%A0%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>정렬</h3>
 
 <h2 id="-2">
 <a class="anchor" href="#-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
 </h2>
 
-<h2 id="14-mllib-classification">
-<a class="anchor" href="#14-mllib-classification" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.4. MLlib Classification</h2>
+<h1 id="4-mllib-classification">
+<a class="anchor" href="#4-mllib-classification" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. MLlib Classification</h1>
 
 <h2 id="-3">
 <a class="anchor" href="#-3" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
 </h2>
 
-<h2 id="15-mllib-regression">
-<a class="anchor" href="#15-mllib-regression" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.5. MLlib Regression</h2>
+<h1 id="5-mllib-regression">
+<a class="anchor" href="#5-mllib-regression" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. MLlib Regression</h1>
 
 <h2 id="-4">
 <a class="anchor" href="#-4" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
 </h2>
 
-<h2 id="16-use-case">
-<a class="anchor" href="#16-use-case" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.6. Use Case</h2>
+<h1 id="6-use-case">
+<a class="anchor" href="#6-use-case" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Use Case</h1>
 
 <h2 id="-5">
 <a class="anchor" href="#-5" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
 </h2>
 
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>DW workload를 처리하기 위해 자주 사용 &lt;-&gt;SMP (Symmetric Multi processor) <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+  </ol>
+</div>
 
   </div><a class="u-url" href="/techblog/spark/2021/03/01/spark.html" hidden></a>
 </article>
