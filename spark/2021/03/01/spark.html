@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Spark | Cho’s Tech blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Spark" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="section1" />
+<meta property="og:description" content="section1" />
+<link rel="canonical" href="https://nueees.github.io/techblog/spark/2021/03/01/spark.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/spark/2021/03/01/spark.html" />
+<meta property="og:site_name" content="Cho’s Tech blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-01T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"section1","url":"https://nueees.github.io/techblog/spark/2021/03/01/spark.html","@type":"BlogPosting","headline":"Spark","dateModified":"2021-03-01T00:00:00-06:00","datePublished":"2021-03-01T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/spark/2021/03/01/spark.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/techblog/">Cho&#39;s Tech blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/techblog/about/">About Me</a><a class="page-link" href="/techblog/gitInfo/">gitInfo</a><a class="page-link" href="/techblog/search/">Search</a><a class="page-link" href="/techblog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Spark</h1><p class="page-description">section1</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-01T00:00:00-06:00" itemprop="datePublished">
+        Mar 1, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/techblog/categories/#spark">spark</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1-spark">1. Spark</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#11-spark-개요">1.1. Spark 개요</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#spark-주요-용도">Spark 주요 용도</a></li>
+<li class="toc-entry toc-h3"><a href="#hadoop-vs-spark">Hadoop vs Spark</a></li>
+<li class="toc-entry toc-h3"><a href="#rdd-resilient-distributed-datasets">RDD (Resilient Distributed Datasets)</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#rdd-vs-df-vs-datasetsql">RDD vs DF vs DataSet(SQL)</a></li>
+<li class="toc-entry toc-h4"><a href="#rdd-예시">RDD 예시</a></li>
+<li class="toc-entry toc-h4"><a href="#dataframe-예시">DataFrame 예시</a></li>
+<li class="toc-entry toc-h4"><a href="#dataset-예시">DataSet 예시</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#"></a></li>
+<li class="toc-entry toc-h2"><a href="#12-spark-architecture">1.2. Spark Architecture</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#cluster-manager">Cluster Manager</a></li>
+<li class="toc-entry toc-h3"><a href="#driver-process">Driver Process</a></li>
+<li class="toc-entry toc-h3"><a href="#executors">Executors</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#operations">Operations</a></li>
+<li class="toc-entry toc-h4"><a href="#variables">Variables</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#scheduling">Scheduling</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#dag-directed-acyclic-graphs-scheduler">DAG (Directed Acyclic Graphs) Scheduler</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#-1"></a></li>
+<li class="toc-entry toc-h2"><a href="#13-spark-sql--dataframe">1.3. Spark SQL &amp; DataFrame</a></li>
+<li class="toc-entry toc-h2"><a href="#-2"></a></li>
+<li class="toc-entry toc-h2"><a href="#14-mllib-classification">1.4. MLlib Classification</a></li>
+<li class="toc-entry toc-h2"><a href="#-3"></a></li>
+<li class="toc-entry toc-h2"><a href="#15-mllib-regression">1.5. MLlib Regression</a></li>
+<li class="toc-entry toc-h2"><a href="#-4"></a></li>
+<li class="toc-entry toc-h2"><a href="#16-use-case">1.6. Use Case</a></li>
+<li class="toc-entry toc-h2"><a href="#-5"></a></li>
+</ul>
+</li>
+</ul><p>📎 <a href="https://spark.apache.org/docs/latest/api/python/index.html">Spark User Guide</a>, Spark The Definitive Guide</p>
+
+<hr>
+
+<h1 id="1-spark">
+<a class="anchor" href="#1-spark" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Spark</h1>
+
+<h2 id="11-spark-개요">
+<a class="anchor" href="#11-spark-%EA%B0%9C%EC%9A%94" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. Spark 개요</h2>
+<p>Unified Computing Engine and a Set of Libraries for Parallel Data Processing on Computer Clusters<br>
+대량 데이터 처리를 위한 클러스터 자원으로 데이터를 분산 병렬 처리</p>
+
+<h3 id="spark-주요-용도">
+<a class="anchor" href="#spark-%EC%A3%BC%EC%9A%94-%EC%9A%A9%EB%8F%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spark 주요 용도</h3>
+<ul>
+  <li>Spark SQL (Batch processing): big &amp; complex, processing massive data, higher latencies</li>
+  <li>Spark Streaming (Real time analytics): relatively simple and generally independent, one at a time processing, sub-second latency</li>
+  <li>MLlib (Machine learning)</li>
+  <li>GraphX (Graph processing)</li>
+</ul>
+
+<p><em>spark streaming의 경우 개발하기는 어렵지 않으나, 운영(debugging)이 어려움</em></p>
+
+<h3 id="hadoop-vs-spark">
+<a class="anchor" href="#hadoop-vs-spark" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hadoop vs Spark</h3>
+<p>Hadoop의 MPP (Massive Parallel Processing)을 기반으로 자원 대용량 처리하고<br>
+기존 Hadoop의 MapReduce에서 disk I/O 부하가 심했던 부분을 memory에서 빠르게 작업</p>
+
+<ul>
+  <li>RDD -&gt; DataFrame -&gt; SQL 데이터 처리 추상화</li>
+  <li>DAG 기반의 실행 최적화</li>
+  <li>In-memory write으로 Map Reduce 작업을 최적화</li>
+</ul>
+
+<h3 id="rdd-resilient-distributed-datasets">
+<a class="anchor" href="#rdd-resilient-distributed-datasets" aria-hidden="true"><span class="octicon octicon-link"></span></a>RDD (Resilient Distributed Datasets)</h3>
+<p>Immutable distributed collection of your data, partitioned across nodes in your cluster</p>
+<ul>
+  <li>분산 병렬 처리를 위한 데이터를 추상화</li>
+  <li>Immutable 데이터 집합</li>
+  <li>클러스터 내의 서로 다른 노드에 저장하고 읽음</li>
+</ul>
+
+<h4 id="rdd-vs-df-vs-datasetsql">
+<a class="anchor" href="#rdd-vs-df-vs-datasetsql" aria-hidden="true"><span class="octicon octicon-link"></span></a>RDD vs DF vs DataSet(SQL)</h4>
+<p><a href="https://loustler.io/data_eng/spark-rdd-dataframe-and-dataset/">출처_loustler 블로그</a></p>
+<table>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td><strong>RDD</strong></td>
+      <td><strong>Data Frame</strong></td>
+      <td><strong>DataSet</strong></td>
+    </tr>
+    <tr>
+      <td>Release</td>
+      <td><code class="language-plaintext highlighter-rouge">1.0</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1.3</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1.6</code></td>
+    </tr>
+    <tr>
+      <td>Data Representation</td>
+      <td>Java나 Scala object</td>
+      <td>
+<em>column</em>의 이름이 있는 organized된 분산 컬렉션. RDB 테이블과 유사</td>
+      <td>
+<strong>Data Frame</strong>의 확장. type-safe, oop interface 제공, Catalyst query optimizer 의 성능 이점, off heap storage 메커니즘 제공</td>
+    </tr>
+    <tr>
+      <td>Data Format</td>
+      <td>비정형/정형데이터의 쉽고 효율적인 처리. <strong>Data Frame</strong>과 <strong>DataSet</strong>처럼 스키마를 유추하지 않음</td>
+      <td>비정형/반정형 데이터에서만 동작. <em>column name</em>을 가진 형태로 <strong>Spark</strong>가 스키마를 관리</td>
+      <td>
+<strong>DataFrame</strong>과 같이 정형/반정형 데이터의 쉽고 효율적인 처리. <em>row</em>의 JVM object 형태나 <em>row object collection</em> 형태로 표현. <strong>encoder</strong>를 통해 테이블 형태로 표현</td>
+    </tr>
+    <tr>
+      <td>Data Source API</td>
+      <td>어떤 데이터소스든 사용가능</td>
+      <td>
+<strong>AVRO</strong>, <strong>CSV</strong>, <strong>TSV</strong>, <strong>JSON</strong>, <strong>HDFS</strong>, <strong>HIVE Table</strong>, <strong>RDB</strong> 등의 데이터 소스가 가능</td>
+      <td>어떤 데이터소스도 가능</td>
+    </tr>
+    <tr>
+      <td>immutablility, interoperability</td>
+      <td>
+<strong>RDD</strong>는 기본적으로 불변. <strong>RDD</strong>가 표형식일경우 <code class="language-plaintext highlighter-rouge">RDD.toDF</code>로 <strong>DataFrame</strong>으로 변경가능</td>
+      <td>
+<strong>DataFrame</strong>으로 변환하고 나면 domain object를 재생성할 수 없음. <code class="language-plaintext highlighter-rouge">RDD.toDF</code>를 할경우 원래 형태의 <code class="language-plaintext highlighter-rouge">RDD</code>로 돌아올 수 없다는 것</td>
+      <td>
+<strong>DataFrame</strong>의 확장버전으로 <strong>RDD</strong>와 <strong>DataFrame</strong>을 <strong>DataSet</strong>로 변환할 수 있음</td>
+    </tr>
+    <tr>
+      <td>compile time type safety</td>
+      <td>친숙한 OOP 스타일과 compile-time typesafey 제공</td>
+      <td>
+<strong>DataFrame</strong>에 존재하지 않는 <em>column</em>에 접근하려고 하면 compile-time typesafe를 보장하지 않음. run-time에서만 확인가능</td>
+      <td>compile-time safe 지원</td>
+    </tr>
+    <tr>
+      <td>Optimization</td>
+      <td>Optimization engine이 없음. 개발자가 최적화해야 됨</td>
+      <td>Catalyst Optimizer가 있음. 이를 이용해서 최적화 진행</td>
+      <td>쿼리 계획 최적화를 위해 <strong>DataFrame</strong>의 Catalyst optimization이 있음</td>
+    </tr>
+    <tr>
+      <td>Serialization</td>
+      <td>Java Serization 사용</td>
+      <td>Off Heap storage를 사용(InMemory)하여 binary format으로. Schema를 알고 있기 때문에 가능. Tungsten 실행 백엔드를 가지고 있어서 메모리를 명시적으로 관리하고 동적으로 bytecode를 만듬</td>
+      <td>
+<strong>Encoder</strong>가 있기 때문에 Spark 내부의 Tungsten binary format 사용</td>
+    </tr>
+    <tr>
+      <td>GC(Garbage Collection)</td>
+      <td>각 Object의 생성과 파괴로 인한 GC의 overhead가 있음</td>
+      <td>각 <em>row</em>의 개별 Object를 구성할 때 GC 코스트 방지</td>
+      <td>Serialization때문에 GC가 OBject를 파괴할 필요가 없음. <em>off heap data serialization</em>을 사용함</td>
+    </tr>
+    <tr>
+      <td>Efficiency / Memory use</td>
+      <td>Java와 Scala object에서 개별적으로 Serialization을 하면 효율성이 저하됨</td>
+      <td>Serialization에 <code class="language-plaintext highlighter-rouge">off heap memory</code>를 사용하면 overhead가 줄어듬.</td>
+      <td>Serializaed data에 대한 작업을 수행하고 메모리 사용성을 개선할 수 있음</td>
+    </tr>
+    <tr>
+      <td>Lazy Evaluation</td>
+      <td>기본적으로 lazy Evaluation. <strong>Transformation</strong>의 경우 이것을 실행했다는 것만 기억하고 <strong>Action</strong>이 <strong>Driver Program</strong>에 결과를 보낼 필요가 있을 때만 계산</td>
+      <td>Lazy Evaluation. <strong>Action</strong>이 나타날 때만 동작함</td>
+      <td>
+<strong>RDD</strong>나 <strong>DataFrame</strong>과 같음</td>
+    </tr>
+    <tr>
+      <td>Language Support</td>
+      <td>Java, Scala, Python, R</td>
+      <td>
+<strong>RDD</strong>와 같음</td>
+      <td>Scala와 Java. Spark 2.1.1 기준</td>
+    </tr>
+    <tr>
+      <td>Schema Projection</td>
+      <td>명시적으로 사용됨. 스키마 정의가 필요함</td>
+      <td>데이터 소스로부터 스키마를 검색하고 수행함. Hive의 경우 Hive Meta store, DB의 경우 DB Engine.</td>
+      <td>Spark SQL Engine을 사용하여 자동 탐색</td>
+    </tr>
+    <tr>
+      <td>Aggregation</td>
+      <td>느림</td>
+      <td>대규모 데이터 셋에 대한 집계 통계를 작성하기 때문에 빠르게 분석함</td>
+      <td>빠름</td>
+    </tr>
+    <tr>
+      <td>Use-cases</td>
+      <td>low-level 작업이 필요하거나 추상화가 필요한 경우에 사용</td>
+      <td>high-level 작업이 필요하거나 정형/반정형 등 많은 케이스</td>
+      <td>
+<strong>DataFrame</strong>과 동일</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="rdd-예시">
+<a class="anchor" href="#rdd-%EC%98%88%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>RDD 예시</h4>
+
+<p>low level interface, Data Containers<br>
+각기 다른 프로세스 요소들을 추상화한 같은 형태</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Hadoop에서 읽은 RDD
+path = hdfs://...   
+
+# Filtered된 RDD
+func = contains(...)   
+
+# Mapped된 RDD
+func = split(...)   
+</code></pre></div></div>
+<p>Fault되면 Loss된 데이터 이전부터 다시 계산</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data = sc.textFile(...).split("\t")
+data.map(lambda x: (x[0], [int(x[1]), 1]))
+    .reduceByKey(lambda x, y: [x[0] + y[0], x[1] + y[1]])
+    .map(lambda x: [x[0], x[1][0] / x[1][1]])
+    .collect()
+</code></pre></div></div>
+
+<h4 id="dataframe-예시">
+<a class="anchor" href="#dataframe-%EC%98%88%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>DataFrame 예시</h4>
+<p>코드가 직관적이고 schema를 가지는 interface</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sqlCtx.table("people")
+    .groupBy("name")
+    .agg("name", avg("age"))
+    .collect()
+</code></pre></div></div>
+
+<h4 id="dataset-예시">
+<a class="anchor" href="#dataset-%EC%98%88%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>DataSet 예시</h4>
+<p>SQL로 수행 가능</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT name, avg(age) 
+FROM people 
+GROUP BY name
+</code></pre></div></div>
+
+<h2>
+<a class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
+
+<h2 id="12-spark-architecture">
+<a class="anchor" href="#12-spark-architecture" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.2. Spark Architecture</h2>
+<p><img src="/techblog/images/post/spark-cluster-overview.png" alt=""></p>
+
+<p>executor 개수와 resource 할당</p>
+
+<h3 id="cluster-manager">
+<a class="anchor" href="#cluster-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster Manager</h3>
+<p>worker와 executors 사이에 자원을 중계해주는 역할<br>
+resource를 효율적으로 분배</p>
+
+<p>ex) Spark StandAlone(cluster X), (Hadoop)Yarn, Mesos, Kubernetes</p>
+
+<h3 id="driver-process">
+<a class="anchor" href="#driver-process" aria-hidden="true"><span class="octicon octicon-link"></span></a>Driver Process</h3>
+<p>SparkContext를 생성하고 RDD를 만들고 operation을 실행하는 프로세스</p>
+
+<p>Spark-submit을 하면,<br>
+Spark Driver가 Cluster Manager로부터 Executor 실행을 위한 리소스를 요청<br>
+Spark Context는 작업 내용을 task 단위로 분할하여 Executor로 보냄</p>
+
+<h3 id="executors">
+<a class="anchor" href="#executors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Executors</h3>
+<p>주어진 작업의 개별 task들을 실행하는 작업 실행하고 결과 return</p>
+
+<p>1) 애플리케이션을 구성하는 작업들을 실행하여 driver에 그 결과를 return<br>
+2) 각 executor 안에 존재하는 <strong>block manager</strong>라는 서비스를 통해 사용자 프로그램에서 캐시하는 RDD를 저장하기 위한 메모리 저장소를 제공</p>
+
+<p>Python,R Process &lt;-&gt; JVM(Spark session) -&gt; Executors</p>
+
+<p>End to End: csv file read(<strong>narrow</strong>) -&gt; DataFrame sort(<strong>wide</strong>) -&gt; Array</p>
+
+<h4 id="operations">
+<a class="anchor" href="#operations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Operations</h4>
+<p>1) Transformations: map, filter, groupBy, join
+lazy operation으로 즉시 실행하는 단계가 아님</p>
+
+<p>2) Actions: count, collect, save
+실제로 실행후 driver로 결과 return</p>
+
+<h4 id="variables">
+<a class="anchor" href="#variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Variables</h4>
+<ul>
+  <li>Accumulator: aggregate multiple values as it progresses</li>
+  <li>Broadcast: large read-only variable shared across tasks, operations, large lookup tables</li>
+</ul>
+
+<p><em>디버깅이나 검증용으로 쓰고, 스파크 스트리밍에서는 accumulator, broadcast 지양 (GC문제..)</em></p>
+
+<h3 id="scheduling">
+<a class="anchor" href="#scheduling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scheduling</h3>
+
+<p><img src="/techblog/images/post/DAG%20scheduler.jpeg" alt=""></p>
+
+<h4 id="dag-directed-acyclic-graphs-scheduler">
+<a class="anchor" href="#dag-directed-acyclic-graphs-scheduler" aria-hidden="true"><span class="octicon octicon-link"></span></a>DAG (Directed Acyclic Graphs) Scheduler</h4>
+
+<h2 id="-1">
+<a class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
+
+<h2 id="13-spark-sql--dataframe">
+<a class="anchor" href="#13-spark-sql--dataframe" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. Spark SQL &amp; DataFrame</h2>
+
+<h2 id="-2">
+<a class="anchor" href="#-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
+
+<h2 id="14-mllib-classification">
+<a class="anchor" href="#14-mllib-classification" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.4. MLlib Classification</h2>
+
+<h2 id="-3">
+<a class="anchor" href="#-3" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
+
+<h2 id="15-mllib-regression">
+<a class="anchor" href="#15-mllib-regression" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.5. MLlib Regression</h2>
+
+<h2 id="-4">
+<a class="anchor" href="#-4" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
+
+<h2 id="16-use-case">
+<a class="anchor" href="#16-use-case" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.6. Use Case</h2>
+
+<h2 id="-5">
+<a class="anchor" href="#-5" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
+
+
+  </div><a class="u-url" href="/techblog/spark/2021/03/01/spark.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/techblog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/techblog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/techblog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A challenge-loving junior data engineer.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
