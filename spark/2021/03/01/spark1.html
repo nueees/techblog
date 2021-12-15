@@ -8,15 +8,15 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Spark" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="section1" />
-<meta property="og:description" content="section1" />
-<link rel="canonical" href="https://nueees.github.io/techblog/spark/2021/03/01/spark.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/spark/2021/03/01/spark.html" />
+<meta name="description" content="section1-3" />
+<meta property="og:description" content="section1-3" />
+<link rel="canonical" href="https://nueees.github.io/techblog/spark/2021/03/01/spark1.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/spark/2021/03/01/spark1.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-03-01T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"section1","url":"https://nueees.github.io/techblog/spark/2021/03/01/spark.html","@type":"BlogPosting","headline":"Spark","dateModified":"2021-03-01T00:00:00-06:00","datePublished":"2021-03-01T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/spark/2021/03/01/spark.html"},"@context":"https://schema.org"}</script>
+{"description":"section1-3","url":"https://nueees.github.io/techblog/spark/2021/03/01/spark1.html","@type":"BlogPosting","headline":"Spark","dateModified":"2021-03-01T00:00:00-06:00","datePublished":"2021-03-01T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/spark/2021/03/01/spark1.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,13 +87,13 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Spark</h1><p class="page-description">section1</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-01T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Spark</h1><p class="page-description">section1-3</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-01T00:00:00-06:00" itemprop="datePublished">
         Mar 1, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      9 min read
     
 </span></p>
 
@@ -143,31 +143,45 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#-1"></a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#3-spark-sql--dataframe">3. Spark SQL &amp; DataFrame</a>
+<li class="toc-entry toc-h1"><a href="#3-pyspark">3. PySpark</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#31-pandas-df-vs-spark-df">3.1. Pandas DF vs Spark DF</a>
+<li class="toc-entry toc-h3"><a href="#pandas-vs-pyspark">Pandas vs PySpark</a></li>
+<li class="toc-entry toc-h3"><a href="#pandas">Pandas:</a></li>
+<li class="toc-entry toc-h3"><a href="#pyspark">PySpark:</a></li>
+<li class="toc-entry toc-h2"><a href="#31-creating-the-spark-session-and-context">3.1. Creating the spark session and context</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#기본">기본</a></li>
-<li class="toc-entry toc-h3"><a href="#변환">변환</a></li>
-<li class="toc-entry toc-h3"><a href="#정렬">정렬</a></li>
+<li class="toc-entry toc-h3"><a href="#session-생성">Session 생성</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#32-load-a-data-file-into-a-dataframe">3.2. Load a data file into a DataFrame</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#file-읽기">File 읽기</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#pyspark_df--pdread_csvhttpswwwkagglecomtitanic_traincsv-headerinfer">pyspark_df = pd.read_csv(‘https://www.kaggle.com/…/titanic_train.csv’, header=’infer’)</a></li>
+<li class="toc-entry toc-h1"><a href="#databricks-fs에서는-read부터-sparkread_csv-함수-읽지-않으면-filenotfounderror남">databricks FS에서는 read부터 spark.read_csv 함수 읽지 않으면 FileNotFoundError남</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#읽은-df-확인">읽은 df 확인</a></li>
+<li class="toc-entry toc-h2"><a href="#33-view-the-data-schema-of-a-dataframe">3.3. View the data schema of a DataFrame</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#pandas-df로-변경">pandas DF로 변경</a></li>
+<li class="toc-entry toc-h3"><a href="#spark-df로-변경">spark DF로 변경</a></li>
+<li class="toc-entry toc-h3"><a href="#schema-확인">Schema 확인</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#34-perform-basic-data-manipulation">3.4. Perform basic data manipulation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#select">Select</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#35-aggregate-data-in-a-dataframe">3.5. Aggregate data in a DataFrame</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#group-by">Group by</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#-2"></a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#4-mllib-classification">4. MLlib Classification</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#-3"></a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#5-mllib-regression">5. MLlib Regression</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#-4"></a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#6-use-case">6. Use Case</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#-5"></a></li>
 </ul>
 </li>
 </ul><p>📎 <a href="https://spark.apache.org/docs/latest/api/python/index.html">Spark User Guide</a>, Spark The Definitive Guide</p>
@@ -434,22 +448,21 @@ lazy operation으로 즉시 실행하는 단계가 아님</p>
 <a class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
 </h2>
 
-<h1 id="3-spark-sql--dataframe">
-<a class="anchor" href="#3-spark-sql--dataframe" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Spark SQL &amp; DataFrame</h1>
+<h1 id="3-pyspark">
+<a class="anchor" href="#3-pyspark" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. PySpark</h1>
 
-<h2 id="31-pandas-df-vs-spark-df">
-<a class="anchor" href="#31-pandas-df-vs-spark-df" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. Pandas DF vs Spark DF</h2>
+<h3 id="pandas-vs-pyspark">
+<a class="anchor" href="#pandas-vs-pyspark" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pandas vs PySpark</h3>
 
-<p>Pandas DF: 병렬 cpu X 단일 서버 memory로만 처리<br>
-numpy의 ndarray 기반으로 2차원 데이터 분석용</p>
+<h3 id="pandas">
+<a class="anchor" href="#pandas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pandas:</h3>
+<p>단일 서버 memory로만 처리<br>
+ numpy의 ndarray 기반으로 2차원 데이터 분석용</p>
 
-<p>Spark DF: SQL 연산 지원 (df.select(‘col1’), df.groupBy(‘col1’).count(), df.withColumns(‘col1’))<br>
-immutable하게 df.drop(‘col1’) 시에 새로운 df 반환 (inplace 옵션 없음)<br>
-컬럼 지정 혹은 리스트 출력 시 대괄호 연산자 [] 사용 X</p>
-
-<h3 id="기본">
-<a class="anchor" href="#%EA%B8%B0%EB%B3%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>기본</h3>
-
+<h3 id="pyspark">
+<a class="anchor" href="#pyspark" aria-hidden="true"><span class="octicon octicon-link"></span></a>PySpark:</h3>
+<p>병렬 CPU로 처리<br>
+ SQL 연산 지원</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select gender from tab
 -&gt;  spark_df.select(‘gender’) 
 
@@ -463,39 +476,463 @@ select gender, count(*) from tab group by gender
 -&gt;  spark_df.groupBy(‘gender’).count() 
 
 </code></pre></div></div>
+<p>immutable하게 df.drop(‘col1’) 시에 새로운 df 반환 (inplace 옵션 없음)<br>
+ 컬럼 지정 혹은 리스트 출력 시 대괄호 연산자 [] 사용 X</p>
 
-<h3 id="변환">
-<a class="anchor" href="#%EB%B3%80%ED%99%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>변환</h3>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spark_df = spark.createDataFrame(pandas_df) # spark to pandas
-pandas_df = spark_df.select(‘*’).toPandas() # pandas to spark
+<h2 id="31-creating-the-spark-session-and-context">
+<a class="anchor" href="#31-creating-the-spark-session-and-context" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. Creating the spark session and context</h2>
+
+<h3 id="session-생성">
+<a class="anchor" href="#session-%EC%83%9D%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Session 생성</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">PySpark</span> <span class="kn">import</span> <span class="n">SparkContext</span><span class="p">,</span> <span class="n">SparkConf</span>
+<span class="kn">from</span> <span class="nn">PySpark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="c1"># Creating a spark context class
+</span><span class="n">sc</span> <span class="o">=</span> <span class="n">SparkContext</span><span class="p">()</span>
+
+<span class="c1"># Creating a spark session
+</span><span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="p">.</span><span class="n">builder</span> \
+    <span class="p">.</span><span class="n">appName</span><span class="p">(</span><span class="s">"Python Spark DataFrames basic example"</span><span class="p">)</span> \
+    <span class="p">.</span><span class="n">config</span><span class="p">(</span><span class="s">"spark.some.config.option"</span><span class="p">,</span> <span class="s">"some-value"</span><span class="p">)</span> \
+    <span class="p">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+ 
+<span class="n">spark</span>
 </code></pre></div></div>
 
-<h3 id="정렬">
-<a class="anchor" href="#%EC%A0%95%EB%A0%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>정렬</h3>
+<p><br>
+    &lt;div&gt;
+        &lt;p&gt;<b>SparkSession - in-memory</b>&lt;/p&gt;</p>
+
+<div>
+    <p><b>SparkContext</b></p>
+
+    <p><a href="http://karthiks-mbp.attlocal.net:4041">Spark UI</a></p>
+
+    <dl>
+      <dt>Version</dt>
+        <dd><code>v3.1.1</code></dd>
+      <dt>Master</dt>
+        <dd><code>local[*]</code></dd>
+      <dt>AppName</dt>
+        <dd><code>PySpark-shell</code></dd>
+    </dl>
+</div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/div&gt;
+</code></pre></div></div>
+
+<p><br>
+<em>DataBricks에서는 따로 session 생성 안해도 spark치면 떠있는 SparkUI 확인 가능</em></p>
+
+<h2 id="32-load-a-data-file-into-a-dataframe">
+<a class="anchor" href="#32-load-a-data-file-into-a-dataframe" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. Load a data file into a DataFrame</h2>
+
+<h3 id="file-읽기">
+<a class="anchor" href="#file-%EC%9D%BD%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>File 읽기</h3>
+<ul>
+  <li>spark.read.csv<br>
+```
+    <h1 id="pyspark_df--pdread_csvhttpswwwkagglecomtitanic_traincsv-headerinfer">
+<a class="anchor" href="#pyspark_df--pdread_csvhttpswwwkagglecomtitanic_traincsv-headerinfer" aria-hidden="true"><span class="octicon octicon-link"></span></a>pyspark_df = pd.read_csv(‘https://www.kaggle.com/…/titanic_train.csv’, header=’infer’)</h1>
+    <h1 id="databricks-fs에서는-read부터-sparkread_csv-함수-읽지-않으면-filenotfounderror남">
+<a class="anchor" href="#databricks-fs%EC%97%90%EC%84%9C%EB%8A%94-read%EB%B6%80%ED%84%B0-sparkread_csv-%ED%95%A8%EC%88%98-%EC%9D%BD%EC%A7%80-%EC%95%8A%EC%9C%BC%EB%A9%B4-filenotfounderror%EB%82%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>databricks FS에서는 read부터 spark.read_csv 함수 읽지 않으면 FileNotFoundError남</h1>
+    <p>pyspark_df = spark.read.csv(‘/FileStore/tables/titanic_train.csv’, header=True, inferSchema=True)</p>
+  </li>
+</ul>
+
+<p>pyspark_df.head() # pyspark.sql.types.Row 타입으로 리스트 형태로 출력</p>
+<blockquote>
+  <p>Out[17]: Row(PassengerId=1, Survived=0, Pclass=3, Name=’Braund, Mr. Owen Harris’, Sex=’male’, Age=22.0, SibSp=1, Parch=0, Ticket=’A/5 21171’, Fare=7.25, Cabin=None, Embarked=’S’)
+```</p>
+</blockquote>
+
+<h3 id="읽은-df-확인">
+<a class="anchor" href="#%EC%9D%BD%EC%9D%80-df-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>읽은 df 확인</h3>
+<ul>
+  <li>show</li>
+  <li>display</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pyspark_df.limit(10).show()
+&gt; +-----------+--------+------+--------------------+------+----+-----+-----+----------------+-------+-----+--------+
+  |PassengerId|Survived|Pclass|                Name|   Sex| Age|SibSp|Parch|          Ticket|   Fare|Cabin|Embarked|
+  +-----------+--------+------+--------------------+------+----+-----+-----+----------------+-------+-----+--------+
+  |          1|       0|     3|Braund, Mr. Owen ...|  male|22.0|    1|    0|       A/5 21171|   7.25| null|       S|
+  |          2|       1|     1|Cumings, Mrs. Joh...|female|38.0|    1|    0|        PC 17599|71.2833|  C85|       C|
+  |          3|       1|     3|Heikkinen, Miss. ...|female|26.0|    0|    0|STON/O2. 3101282|  7.925| null|       S|
+  |          4|       1|     1|Futrelle, Mrs. Ja...|female|35.0|    1|    0|          113803|   53.1| C123|       S|
+  |          5|       0|     3|Allen, Mr. Willia...|  male|35.0|    0|    0|          373450|   8.05| null|       S|
+  |          6|       0|     3|    Moran, Mr. James|  male|null|    0|    0|          330877| 8.4583| null|       Q|
+  |          7|       0|     1|McCarthy, Mr. Tim...|  male|54.0|    0|    0|           17463|51.8625|  E46|       S|
+  |          8|       0|     3|Palsson, Master. ...|  male| 2.0|    3|    1|          349909| 21.075| null|       S|
+  |          9|       1|     3|Johnson, Mrs. Osc...|female|27.0|    0|    2|          347742|11.1333| null|       S|
+  |         10|       1|     2|Nasser, Mrs. Nich...|female|14.0|    1|    0|          237736|30.0708| null|       C|
+  +-----------+--------+------+--------------------+------+----+-----+-----+----------------+-------+-----+--------+
+
+display(pyspark_df.limit(10))
+</code></pre></div></div>
+<p><br></p>
+<style scoped="">
+  .table-result-container {
+    max-height: 300px;
+    overflow: auto;
+  }
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 5px;
+  }
+  th {
+    text-align: left;
+  }
+</style>
+<div class="table-result-container"><table class="table-result">
+<thead style="background-color: white"><tr>
+<th>PassengerId</th>
+<th>Survived</th>
+<th>Pclass</th>
+<th>Name</th>
+<th>Sex</th>
+<th>Age</th>
+<th>SibSp</th>
+<th>Parch</th>
+<th>Ticket</th>
+<th>Fare</th>
+<th>Cabin</th>
+<th>Embarked</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>Braund, Mr. Owen Harris</td>
+<td>male</td>
+<td>22.0</td>
+<td>1</td>
+<td>0</td>
+<td>A/5 21171</td>
+<td>7.25</td>
+<td>null</td>
+<td>S</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>Cumings, Mrs. John Bradley (Florence Briggs Thayer)</td>
+<td>female</td>
+<td>38.0</td>
+<td>1</td>
+<td>0</td>
+<td>PC 17599</td>
+<td>71.2833</td>
+<td>C85</td>
+<td>C</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>Heikkinen, Miss. Laina</td>
+<td>female</td>
+<td>26.0</td>
+<td>0</td>
+<td>0</td>
+<td>STON/O2. 3101282</td>
+<td>7.925</td>
+<td>null</td>
+<td>S</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+<td>female</td>
+<td>35.0</td>
+<td>1</td>
+<td>0</td>
+<td>113803</td>
+<td>53.1</td>
+<td>C123</td>
+<td>S</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0</td>
+<td>3</td>
+<td>Allen, Mr. William Henry</td>
+<td>male</td>
+<td>35.0</td>
+<td>0</td>
+<td>0</td>
+<td>373450</td>
+<td>8.05</td>
+<td>null</td>
+<td>S</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0</td>
+<td>3</td>
+<td>Moran, Mr. James</td>
+<td>male</td>
+<td>null</td>
+<td>0</td>
+<td>0</td>
+<td>330877</td>
+<td>8.4583</td>
+<td>null</td>
+<td>Q</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0</td>
+<td>1</td>
+<td>McCarthy, Mr. Timothy J</td>
+<td>male</td>
+<td>54.0</td>
+<td>0</td>
+<td>0</td>
+<td>17463</td>
+<td>51.8625</td>
+<td>E46</td>
+<td>S</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0</td>
+<td>3</td>
+<td>Palsson, Master. Gosta Leonard</td>
+<td>male</td>
+<td>2.0</td>
+<td>3</td>
+<td>1</td>
+<td>349909</td>
+<td>21.075</td>
+<td>null</td>
+<td>S</td>
+</tr>
+<tr>
+<td>9</td>
+<td>1</td>
+<td>3</td>
+<td>Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)</td>
+<td>female</td>
+<td>27.0</td>
+<td>0</td>
+<td>2</td>
+<td>347742</td>
+<td>11.1333</td>
+<td>null</td>
+<td>S</td>
+</tr>
+<tr>
+<td>10</td>
+<td>1</td>
+<td>2</td>
+<td>Nasser, Mrs. Nicholas (Adele Achem)</td>
+<td>female</td>
+<td>14.0</td>
+<td>1</td>
+<td>0</td>
+<td>237736</td>
+<td>30.0708</td>
+<td>null</td>
+<td>C</td>
+</tr>
+</tbody>
+</table></div>
+<p><br></p>
+
+<h2 id="33-view-the-data-schema-of-a-dataframe">
+<a class="anchor" href="#33-view-the-data-schema-of-a-dataframe" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.3. View the data schema of a DataFrame</h2>
+
+<h3 id="pandas-df로-변경">
+<a class="anchor" href="#pandas-df%EB%A1%9C-%EB%B3%80%EA%B2%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>pandas DF로 변경</h3>
+
+<ul>
+  <li>toPandas</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pd_df = pyspark_df.select('*').toPandas()
+
+pd_df.head() # 기존 pandas처럼 read 
+&gt;   &lt;class 'pandas.core.frame.DataFrame'&gt;
+       PassengerId  Survived  Pclass  ...     Fare Cabin  Embarked
+    0            1         0       3  ...   7.2500  None         S
+    1            2         1       1  ...  71.2833   C85         C
+    2            3         1       3  ...   7.9250  None         S
+    3            4         1       1  ...  53.1000  C123         S
+    4            5         0       3  ...   8.0500  None         S
+    5            6         0       3  ...   8.4583  None         Q
+    6            7         0       1  ...  51.8625   E46         S
+    7            8         0       3  ...  21.0750  None         S
+    8            9         1       3  ...  11.1333  None         S
+    9           10         1       2  ...  30.0708  None         C
+    
+    [10 rows x 12 columns]
+    
+</code></pre></div></div>
+
+<h3 id="spark-df로-변경">
+<a class="anchor" href="#spark-df%EB%A1%9C-%EB%B3%80%EA%B2%BD" aria-hidden="true"><span class="octicon octicon-link"></span></a>spark DF로 변경</h3>
+<ul>
+  <li>spark.createDataFrame</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pd_df = pd.read_csv('https://www.kaggle.com/.../mtcars.csv')
+sdf = spark.createDataFrame(pd_df) 
+</code></pre></div></div>
+
+<h3 id="schema-확인">
+<a class="anchor" href="#schema-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Schema 확인</h3>
+<p>pd: info</p>
+<ul>
+  <li>printSchema<br>
+```
+pd_df.info()
+    <blockquote>
+      <p>RangeIndex: 891 entries, 0 to 890
+Data columns (total 12 columns):
+ #   Column       Non-Null Count  Dtype<br>
+—  ——       ————–  —–<br>
+ 0   PassengerId  891 non-null    int32<br>
+ 1   Survived     891 non-null    int32<br>
+ 2   Pclass       891 non-null    int32<br>
+ 3   Name         891 non-null    object 
+ 4   Sex          891 non-null    object 
+ 5   Age          714 non-null    float64
+ 6   SibSp        891 non-null    int32<br>
+ 7   Parch        891 non-null    int32<br>
+ 8   Ticket       891 non-null    object 
+ 9   Fare         891 non-null    float64
+ 10  Cabin        204 non-null    object 
+ 11  Embarked     889 non-null    object 
+dtypes: float64(2), int32(5), object(5)</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p>sdf.printSchema()</p>
+<blockquote>
+  <p>root
+  |– Unnamed: 0: string (nullable = true)
+  |– mpg: double (nullable = true)
+  |– cyl: long (nullable = true)
+  |– disp: double (nullable = true)
+  |– hp: long (nullable = true)
+  |– drat: double (nullable = true)
+  |– wt: double (nullable = true)
+  |– qsec: double (nullable = true)
+  |– vs: long (nullable = true)
+  |– am: long (nullable = true)
+  |– gear: long (nullable = true)
+  |– carb: long (nullable = true)
+```</p>
+</blockquote>
+
+<h2 id="34-perform-basic-data-manipulation">
+<a class="anchor" href="#34-perform-basic-data-manipulation" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.4. Perform basic data manipulation</h2>
+
+<h3 id="select">
+<a class="anchor" href="#select" aria-hidden="true"><span class="octicon octicon-link"></span></a>Select</h3>
+
+<ul>
+  <li>show
+    <div class="language-plaintext highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>sdf.show(5)
+&gt; +-----------------+----+---+-----+---+----+-----+-----+---+---+----+----+
+ |       Unnamed: 0| mpg|cyl| disp| hp|drat|   wt| qsec| vs| am|gear|carb|
+ +-----------------+----+---+-----+---+----+-----+-----+---+---+----+----+
+ |        Mazda RX4|21.0|  6|160.0|110| 3.9| 2.62|16.46|  0|  1|   4|   4|
+ |    Mazda RX4 Wag|21.0|  6|160.0|110| 3.9|2.875|17.02|  0|  1|   4|   4|
+ |       Datsun 710|22.8|  4|108.0| 93|3.85| 2.32|18.61|  1|  1|   4|   1|
+ |   Hornet 4 Drive|21.4|  6|258.0|110|3.08|3.215|19.44|  1|  0|   3|   1|
+ |Hornet Sportabout|18.7|  8|360.0|175|3.15| 3.44|17.02|  0|  0|   3|   2|
+ +-----------------+----+---+-----+---+----+-----+-----+---+---+----+----+
+</code></pre></div>    </div>
+  </li>
+  <li>filter<br>
+```
+sdf.filter(sdf[‘mpg’] &lt; 18).show(5)
+    <blockquote>
+      <p>+———–+—-+—+—–+—+—-+—-+—–+—+—+—-+—-+
+ | Unnamed: 0| mpg|cyl| disp| hp|drat|  wt| qsec| vs| am|gear|carb|
+ +———–+—-+—+—–+—+—-+—-+—–+—+—+—-+—-+
+ | Duster 360|14.3|  8|360.0|245|3.21|3.57|15.84|  0|  0|   3|   4|
+ |  Merc 280C|17.8|  6|167.6|123|3.92|3.44| 18.9|  1|  0|   4|   4|
+ | Merc 450SE|16.4|  8|275.8|180|3.07|4.07| 17.4|  0|  0|   3|   3|
+ | Merc 450SL|17.3|  8|275.8|180|3.07|3.73| 17.6|  0|  0|   3|   3|
+ |Merc 450SLC|15.2|  8|275.8|180|3.07|3.78| 18.0|  0|  0|   3|   3|
+ +———–+—-+—+—–+—+—-+—-+—–+—+—+—-+—-+</p>
+    </blockquote>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+### Update
+* withColumn  
+</code></pre></div></div>
+<p>sdf.withColumn(‘wtTon’, sdf[‘wt’] * 0.45).show(5)</p>
+<blockquote>
+  <p>+—————–+—-+—+—–+—+—-+—–+—–+—+—+—-+—-+——-+
+ |       Unnamed: 0| mpg|cyl| disp| hp|drat|   wt| qsec| vs| am|gear|carb|  wtTon|
+ +—————–+—-+—+—–+—+—-+—–+—–+—+—+—-+—-+——-+
+ |        Mazda RX4|21.0|  6|160.0|110| 3.9| 2.62|16.46|  0|  1|   4|   4|  1.179|
+ |    Mazda RX4 Wag|21.0|  6|160.0|110| 3.9|2.875|17.02|  0|  1|   4|   4|1.29375|
+ |       Datsun 710|22.8|  4|108.0| 93|3.85| 2.32|18.61|  1|  1|   4|   1|  1.044|
+ |   Hornet 4 Drive|21.4|  6|258.0|110|3.08|3.215|19.44|  1|  0|   3|   1|1.44675|
+ |Hornet Sportabout|18.7|  8|360.0|175|3.15| 3.44|17.02|  0|  0|   3|   2|  1.548|
+ +—————–+—-+—+—–+—+—-+—–+—–+—+—+—-+—-+——-+</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+### Case When
+
+* col  
+* when  
+* count  
+* isnan  
+
+</code></pre></div></div>
+<p>from pyspark.sql.functions import count, isnan, when, col</p>
+
+<p>titanic_sdf.select([count(when(isnan(c) | col(c).isNull(), c)).alias(c) for c in titanic_sdf.columns]).show()</p>
+<blockquote>
+  <p>+———–+——–+——+—-+—+—+—–+—–+——+—-+—–+——–+
+ |PassengerId|Survived|Pclass|Name|Sex|Age|SibSp|Parch|Ticket|Fare|Cabin|Embarked|
+ +———–+——–+——+—-+—+—+—–+—–+——+—-+—–+——–+
+ |          0|       0|     0|   0|  0|177|    0|    0|     0|   0|  687|       2|
+ +———–+——–+——+—-+—+—+—–+—–+——+—-+—–+——–+
+```</p>
+</blockquote>
+
+<h2 id="35-aggregate-data-in-a-dataframe">
+<a class="anchor" href="#35-aggregate-data-in-a-dataframe" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.5. Aggregate data in a DataFrame</h2>
+
+<h3 id="group-by">
+<a class="anchor" href="#group-by" aria-hidden="true"><span class="octicon octicon-link"></span></a>Group by</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sdf.groupby(['cyl'])\
+.agg({"wt": "AVG"})\
+.show(5)
+&gt;+---+------------------+
+ |cyl|           avg(wt)|
+ +---+------------------+
+ |  6| 3.117142857142857|
+ |  8|3.9992142857142854|
+ |  4| 2.285727272727273|
+ +---+------------------+
+</code></pre></div></div>
 
 <h2 id="-2">
 <a class="anchor" href="#-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
-</h2>
-
-<h1 id="4-mllib-classification">
-<a class="anchor" href="#4-mllib-classification" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. MLlib Classification</h1>
-
-<h2 id="-3">
-<a class="anchor" href="#-3" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
-</h2>
-
-<h1 id="5-mllib-regression">
-<a class="anchor" href="#5-mllib-regression" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. MLlib Regression</h1>
-
-<h2 id="-4">
-<a class="anchor" href="#-4" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
-</h2>
-
-<h1 id="6-use-case">
-<a class="anchor" href="#6-use-case" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Use Case</h1>
-
-<h2 id="-5">
-<a class="anchor" href="#-5" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
 </h2>
 
 <div class="footnotes" role="doc-endnotes">
@@ -506,7 +943,7 @@ pandas_df = spark_df.select(‘*’).toPandas() # pandas to spark
   </ol>
 </div>
 
-  </div><a class="u-url" href="/techblog/spark/2021/03/01/spark.html" hidden></a>
+  </div><a class="u-url" href="/techblog/spark/2021/03/01/spark1.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
