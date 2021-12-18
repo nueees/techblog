@@ -156,14 +156,9 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#32-load-a-data-file-into-a-dataframe">3.2. Load a data file into a DataFrame</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#file-읽기">File 읽기</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#pyspark_df--pdread_csvhttpswwwkagglecomtitanic_traincsv-headerinfer">pyspark_df = pd.read_csv(‘https://www.kaggle.com/…/titanic_train.csv’, header=’infer’)</a></li>
-<li class="toc-entry toc-h1"><a href="#databricks-fs에서는-read부터-sparkread_csv-함수-읽지-않으면-filenotfounderror남">databricks FS에서는 read부터 spark.read_csv 함수 읽지 않으면 FileNotFoundError남</a>
-<ul>
 <li class="toc-entry toc-h3"><a href="#읽은-df-확인">읽은 df 확인</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#33-view-the-data-schema-of-a-dataframe">3.3. View the data schema of a DataFrame</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#pandas-df로-변경">pandas DF로 변경</a></li>
@@ -532,22 +527,18 @@ select gender, count(*) from tab group by gender
 
 <h3 id="file-읽기">
 <a class="anchor" href="#file-%EC%9D%BD%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>File 읽기</h3>
+
 <ul>
-  <li>spark.read.csv<br>
-```
-    <h1 id="pyspark_df--pdread_csvhttpswwwkagglecomtitanic_traincsv-headerinfer">
-<a class="anchor" href="#pyspark_df--pdread_csvhttpswwwkagglecomtitanic_traincsv-headerinfer" aria-hidden="true"><span class="octicon octicon-link"></span></a>pyspark_df = pd.read_csv(‘https://www.kaggle.com/…/titanic_train.csv’, header=’infer’)</h1>
-    <h1 id="databricks-fs에서는-read부터-sparkread_csv-함수-읽지-않으면-filenotfounderror남">
-<a class="anchor" href="#databricks-fs%EC%97%90%EC%84%9C%EB%8A%94-read%EB%B6%80%ED%84%B0-sparkread_csv-%ED%95%A8%EC%88%98-%EC%9D%BD%EC%A7%80-%EC%95%8A%EC%9C%BC%EB%A9%B4-filenotfounderror%EB%82%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>databricks FS에서는 read부터 spark.read_csv 함수 읽지 않으면 FileNotFoundError남</h1>
-    <p>pyspark_df = spark.read.csv(‘/FileStore/tables/titanic_train.csv’, header=True, inferSchema=True)</p>
-  </li>
+  <li>spark.read.csv</li>
 </ul>
 
-<p>pyspark_df.head() # pyspark.sql.types.Row 타입으로 리스트 형태로 출력</p>
-<blockquote>
-  <p>Out[17]: Row(PassengerId=1, Survived=0, Pclass=3, Name=’Braund, Mr. Owen Harris’, Sex=’male’, Age=22.0, SibSp=1, Parch=0, Ticket=’A/5 21171’, Fare=7.25, Cabin=None, Embarked=’S’)
-```</p>
-</blockquote>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># pyspark_df = pd.read_csv('https://www.kaggle.com/.../titanic_train.csv', header='infer')  
+# databricks FS에서는 read부터 spark.read_csv 함수 읽지 않으면 FileNotFoundError남
+</span><span class="n">pyspark_df</span> <span class="o">=</span> <span class="n">spark</span><span class="p">.</span><span class="n">read</span><span class="p">.</span><span class="n">csv</span><span class="p">(</span><span class="s">'/FileStore/tables/titanic_train.csv'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">pyspark_df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span> <span class="c1"># pyspark.sql.types.Row 타입으로 리스트 형태로 출력
+</span><span class="o">&gt;</span> <span class="n">Out</span><span class="p">[</span><span class="mi">17</span><span class="p">]:</span> <span class="n">Row</span><span class="p">(</span><span class="n">PassengerId</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">Survived</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">Pclass</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">Name</span><span class="o">=</span><span class="s">'Braund, Mr. Owen Harris'</span><span class="p">,</span> <span class="n">Sex</span><span class="o">=</span><span class="s">'male'</span><span class="p">,</span> <span class="n">Age</span><span class="o">=</span><span class="mf">22.0</span><span class="p">,</span> <span class="n">SibSp</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">Parch</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">Ticket</span><span class="o">=</span><span class="s">'A/5 21171'</span><span class="p">,</span> <span class="n">Fare</span><span class="o">=</span><span class="mf">7.25</span><span class="p">,</span> <span class="n">Cabin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Embarked</span><span class="o">=</span><span class="s">'S'</span><span class="p">)</span>
+</code></pre></div></div>
 
 <h3 id="읽은-df-확인">
 <a class="anchor" href="#%EC%9D%BD%EC%9D%80-df-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>읽은 df 확인</h3>
