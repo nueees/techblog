@@ -271,10 +271,12 @@ metallb_protocol: “layer2”</li>
 
 <p>] vim inventory/mycluster/group_vars/k8s-cluster/k8s-cluster.yml
 kube_proxy_strict_arp: true</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3.  플레이북 실행
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+3.  플레이북 실행  
 </code></pre></div></div>
 <p>] ansible-playbook -i inventory/mycluster/inventory.ini cluster.yml -b</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4.  kubectl 설치
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+4.  kubectl 설치  
 </code></pre></div></div>
 <p>] curl -LO “https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl” 
 ] curl -LO “https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256” 
