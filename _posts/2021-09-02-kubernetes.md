@@ -108,41 +108,56 @@ cka 관리자 측(자체적으로 운영 관리 가능)
 
 ### 사전 설치
 
-1.  choco 패키지 관리도구 설치
-2.  `$ Set-ExecutionPolicy Bypass -Scope Process -Force; \[System.Net.ServicePointManager\]::SecurityProtocol = \[System.Net.ServicePointManager\]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('[https://community.chocolatey.org/install.ps1'](https://community.chocolatey.org/install.ps1')))`
-3.  vagrant 설치혹은 vagrant.exe 파일 다운로드 후 설치 가능
-4.  `$ choco install vagrant`
-5.  하이퍼바이저 설치  
+1. choco 패키지 관리도구 설치  
+```
+] Set-ExecutionPolicy Bypass -Scope Process -Force; \[System.Net.ServicePointManager\]::SecurityProtocol = \[System.Net.ServicePointManager\]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('[https://community.chocolatey.org/install.ps1'](https://community.chocolatey.org/install.ps1')))
+```
+2.  vagrant 설치혹은 vagrant.exe 파일 다운로드 후 설치 가능  
+```
+] choco install vagrant
+```
+3.  하이퍼바이저 설치  
     virtualbox 설치 (확장팩)
-6.  vagrant 명령어로 구성요소 설치  
+4.  vagrant 명령어로 구성요소 설치  
     vagrant plugin install vagrant-hostmanager  
     vagrant plugin install vagrant-disksize  
     확인: vagrant plugin list윈도우의 경우 직접 작성하면 확장자이름이 자동설정될 수 있으니 주의
-7.  `$ vagrant box add ubuntu\/bionic64 $ vagrant up => Vagrantfile 이 있는 곳에서 실행`
-8.  가상머신에 쿠버네티스 배포  
-    ssh 설정
-9.  `$ ssh-keygen $ ssh-copy-id node1 (노드 모두 입력) localhost 도 설정`
+```
+] vagrant box add ubuntu\/bionic64 
+] vagrant up => Vagrantfile 이 있는 곳에서 실행
+```
+5. 가상머신에 쿠버네티스 배포  
+ssh 설정
+```
+] ssh-keygen 
+] ssh-copy-id node1 (노드 모두 입력) localhost 도 설정
+```
 
 ---
 
 ### kubernetes 설치
 
-```
 1.  패키지 및 git 설치
-
-$ sudo apt update $ sudo apt upgrade -y $ sudo apt install -y python3 python3-pip git $ git clone --single-branch --branch release-2.14 https://github.com/kubernetes-sigs/kubespray.git $ cd kubespray/ $ sudo pip3 install -r requirements.txt`
-
+```
+] sudo apt update 
+] sudo apt upgrade -y 
+] sudo apt install -y python3 python3-pip git 
+] git clone --single-branch --branch release-2.14 https://github.com/kubernetes-sigs/kubespray.git 
+] cd kubespray/ 
+] sudo pip3 install -r requirements.txt
+```
 2.  인벤토리 수정
+```
+] cp -rfp inventory/sample/ inventory/mycluster 
+] vim inventory/mycluster/inventory.ini [all] node1 ansible_host=192.168.56.21 ip=192.168.56.21 node2 ansible_host=192.168.56.22 ip=192.168.56.22 node3 ansible_host=192.168.56.23 ip=192.168.56.23 controll-plane ansible_host=192.168.56.11 ip=192.168.56.11 [all:vars] ansible_python_interpreter=/usr/bin/python3 [kube-master] controll-plane [etcd] controll-plane [kube-node] node2 node3 node1 [calico-rr] [k8s-cluster:children] kube-master kube-node calico-rr`
 
-$ cp -rfp inventory/sample/ inventory/mycluster $ vim inventory/mycluster/inventory.ini [all] node1 ansible_host=192.168.56.21 ip=192.168.56.21 node2 ansible_host=192.168.56.22 ip=192.168.56.22 node3 ansible_host=192.168.56.23 ip=192.168.56.23 controll-plane ansible_host=192.168.56.11 ip=192.168.56.11 [all:vars] ansible_python_interpreter=/usr/bin/python3 [kube-master] controll-plane [etcd] controll-plane [kube-node] node2 node3 node1 [calico-rr] [k8s-cluster:children] kube-master kube-node calico-rr`
-
-$ sudo vim /etc/hosts
+] sudo vim /etc/hosts
 192.168.56.11   controll-plane.example.com controll-plane
 192.168.56.21   node1.example.com node1
 192.168.56.22   node2.example.com node2
 192.168.56.23   node3.example.com node3
 
-$ vim inventory/mycluster/group_vars/k8s-cluster/addons.yml
+] vim inventory/mycluster/group_vars/k8s-cluster/addons.yml
 metrics_server_enabled: true
 ingress_nginx_enabled: true
 metallb_enabled: true
@@ -150,14 +165,20 @@ metallb_ip_range:
   - "192.168.56.50-192.168.56.99"
 metallb_protocol: "layer2"
 
-$ vim inventory/mycluster/group_vars/k8s-cluster/k8s-cluster.yml
+] vim inventory/mycluster/group_vars/k8s-cluster/k8s-cluster.yml
 kube_proxy_strict_arp: true
-
+```
 3.  플레이북 실행
-$ ansible-playbook -i inventory/mycluster/inventory.ini cluster.yml -b`
-
+```
+] ansible-playbook -i inventory/mycluster/inventory.ini cluster.yml -b
+```
 4.  kubectl 설치
-$ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" $ curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" $ echo "$(<kubectl.sha256) kubectl" | sha256sum --check $ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl $ kubectl version --client`
+```
+] curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" 
+] curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" 
+] echo "$(<kubectl.sha256) kubectl" | sha256sum --check 
+] sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl 
+] kubectl version --client
 ```
 
 <br><br>
@@ -265,40 +286,40 @@ core 이외 group: apiVersion: \[group\]/\[version\]
 재사용성이 떨어져 개발 환경에서 테스트 시, 일회성 작업일 경우 사용
 
 ```
-$ kubectl run nginx --image nginx
+] kubectl run nginx --image nginx
 ```
 
 2) Imperative object configuration(명령형 오브젝트 구성)  
 yaml, json 포맷으로 파일을 작성하여 kubectl은 작성된 파일을 참고하여 실행
 
 ```
-$ kubectl create -f nginx.yaml
+] kubectl create -f nginx.yaml
 ```
 
 3) Declarative object configuration(선언형 오브젝트 구성)  
 특정 디렉토리에 오브젝트 파일을 배치하고 작성된 파일을 참고하여 오브젝트 관리
 
 ```
-$ kubectl diff -f configs/
-$ kubectl apply -f configs/
+] kubectl diff -f configs/
+] kubectl apply -f configs/
 ```
 
 ## Running App with Imperative commands 예시
 
 ```
-$ kubectl run mytest-app --image=<ACCOUNT>/myweb --port=8080 --generator=run/v1 # 레플리케이션 컨트롤러(pod) 생성
-$ kubectl get pods
-$ kubectl get replicationcontrollers
-$ kubectl expose replicationcontroller mytest-app --type=LoadBalancer --name myweb-svc # 서비스 생성
-$ kubectl get services
-$ curl http://192.168.56.11:31289
-$ kubectl scale replicationcontroller mytest-app --replicas=3
-$ kubectl get pods
-$ kubectl get replicationcontrollers
-$ curl http://192.168.56.11:31289 
-$ kubectl get all
-$ kubectl delete replicationcontrollers mytest-app
-$ kubectl delete service myweb-svc
+] kubectl run mytest-app --image=<ACCOUNT>/myweb --port=8080 --generator=run/v1 # 레플리케이션 컨트롤러(pod) 생성
+] kubectl get pods
+] kubectl get replicationcontrollers
+] kubectl expose replicationcontroller mytest-app --type=LoadBalancer --name myweb-svc # 서비스 생성
+] kubectl get services
+] curl http://192.168.56.11:31289
+] kubectl scale replicationcontroller mytest-app --replicas=3
+] kubectl get pods
+] kubectl get replicationcontrollers
+] curl http://192.168.56.11:31289 
+] kubectl get all
+] kubectl delete replicationcontrollers mytest-app
+] kubectl delete service myweb-svc
 ```
 
 <br><br>
@@ -842,15 +863,15 @@ cat testapp-svc.yml
 ![]({{site.baseurl}}/images/post/docker_7_1_1.jpg)   
 
 ```
-$ kubectl create -f testapp-svc.yml
-$ kubectl get services # 진입점인 서비스
-$ kubectl get endpoints testapp-svc # 엔드포인트 -> 레플리카셋 컨트롤러의 파드
+] kubectl create -f testapp-svc.yml
+] kubectl get services # 진입점인 서비스
+] kubectl get endpoints testapp-svc # 엔드포인트 -> 레플리카셋 컨트롤러의 파드
 ```
 
 엔드포인트: 최종 목적지인 파드의 주소 및 포트 정보
 
 ```
-$ kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool # 서비스 접근 테스트
+] kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool # 서비스 접근 테스트
 ```
 
 ### Session Affinity: 클라이언트가 특정 파드(웹서비스) 요청 시 이전에 처리된 파드로 동일하게 전달하여 처리
@@ -861,7 +882,7 @@ cat testapp-svc-ses-aff.yml
 ![]({{site.baseurl}}/images/post/docker_7_1_2.jpg)   
 
 ```
-$ kubectl create -f testapp-svc-ses-aff.yml
+] kubectl create -f testapp-svc-ses-aff.yml
 ```
 
 ### Configuring Service Multi-Port
@@ -874,7 +895,7 @@ cat testapp-svc-multiport.yml
 ![]({{site.baseurl}}/images/post/docker_7_1_3.jpg)   
 
 ```
-$ kubectl create -f testapp-svc-multiport.yml
+] kubectl create -f testapp-svc-multiport.yml
 ```
 
 ### Configuring Service by named-port
@@ -893,7 +914,7 @@ cat testapp-svc-named-port.yml
 ![]({{site.baseurl}}/images/post/docker_7_1_5.jpg)  
 
 ```
-$ kubectl create -f testapp-rs-named-port.yml -f testapp-svc-named-port.yml
+] kubectl create -f testapp-rs-named-port.yml -f testapp-svc-named-port.yml
 ```
 
 <br><br>
@@ -913,14 +934,14 @@ kube-systme 네임스페이스에서 쿠버네티스에 등록된 구성요소 �
 1) DNS 관련 리소스 확인
 
 ```
-$ kubectl get all -n kube-system -l k8s-app=kube-dns
+] kubectl get all -n kube-system -l k8s-app=kube-dns
 ```
 
 2) 파드 내부 DNS 설정 확인  
 이름 기반의 주소로 네트워크에 접근하기 위해서 DNS 설정 필요
 
 ```
-$ kubectl exec testapp-rs-m65m4 -- cat /etc/resolv.conf # 위의 coredns 서비스 IP와 다름
+] kubectl exec testapp-rs-m65m4 -- cat /etc/resolv.conf # 위의 coredns 서비스 IP와 다름
 ```
 
 각 파드의 DNS로 등록되어 있는 위 IP(169.254.0.0/16 형식)는 IPv4 주소형식에서 'Link Local Address'이며, 유효한 IP 주소가 아님  
@@ -931,10 +952,10 @@ DaemonSet 형태로 쿠버네티스의 각 노드마다 DNS 캐시 기능을 하
 ### Pod <-> NodeLocal DNSCache <-> iptables <-> coreDNS
 
 ```
-$ kubectl get daemonsets.apps -l k8s-app=kube-dns -n kube-system # 각 노드별 데몬셋 컨트롤러 확인
-$ kubectl get pods -l k8s-app=kube-dns -n kube-system | grep -A 2 Args # node local dns 확인
+] kubectl get daemonsets.apps -l k8s-app=kube-dns -n kube-system # 각 노드별 데몬셋 컨트롤러 확인
+] kubectl get pods -l k8s-app=kube-dns -n kube-system | grep -A 2 Args # node local dns 확인
 
-$ kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool --generator=run-pod/v1 --rm=true bash # 서비스 접근 테스트
+] kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool --generator=run-pod/v1 --rm=true bash # 서비스 접근 테스트
 ```
 
 주소구성: <리소스(서비스) 이름>.<네임 스페이스>.<리소스 종류>.<클러스터 도메인>
@@ -965,7 +986,7 @@ cat testapp-svc-ext-nodeport.yml
 ![]({{site.baseurl}}/images/post/docker_7_3_1.jpg)  
 
 ```
-]kubectl create -f testapp-svc-ext-nodeport.yml # 해당 노드에서 사용할 포트 31111로 지정 
+] kubectl create -f testapp-svc-ext-nodeport.yml # 해당 노드에서 사용할 포트 31111로 지정 
 ] kubectl get endpoints testapp-svc-ext-np # 서비스의 엔드포인트 확인 (Pod의 8080 포트로 Redirection 됨) 
 ] kubectl get nodes -o wide # 각 노드의 IP 확인
 ```
