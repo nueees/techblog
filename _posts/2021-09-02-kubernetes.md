@@ -137,7 +137,8 @@ ssh 설정
 
 ### kubernetes 설치
 
-1.  패키지 및 git 설치  
+1. 패키지 및 git 설치  
+
 ```
 ] sudo apt update 
 ] sudo apt upgrade -y 
@@ -147,10 +148,23 @@ ssh 설정
 ] sudo pip3 install -r requirements.txt
 ```
 
-2.  인벤토리 수정  
-```
+2. 인벤토리 수정  
+
+```shell
 ] cp -rfp inventory/sample/ inventory/mycluster 
-] vim inventory/mycluster/inventory.ini [all] node1 ansible_host=192.168.56.21 ip=192.168.56.21 node2 ansible_host=192.168.56.22 ip=192.168.56.22 node3 ansible_host=192.168.56.23 ip=192.168.56.23 controll-plane ansible_host=192.168.56.11 ip=192.168.56.11 [all:vars] ansible_python_interpreter=/usr/bin/python3 [kube-master] controll-plane [etcd] controll-plane [kube-node] node2 node3 node1 [calico-rr] [k8s-cluster:children] kube-master kube-node calico-rr
+] vim inventory/mycluster/inventory.ini 
+[all] 
+node1 ansible_host=192.168.56.21 ip=192.168.56.21 
+node2 ansible_host=192.168.56.22 ip=192.168.56.22 
+node3 ansible_host=192.168.56.23 ip=192.168.56.23 
+controll-plane ansible_host=192.168.56.11 ip=192.168.56.11 
+[all:vars] ansible_python_interpreter=/usr/bin/python3 
+[kube-master] controll-plane 
+[etcd] controll-plane 
+[kube-node] node2 node3 node1 
+[calico-rr] 
+[k8s-cluster:children] 
+kube-master kube-node calico-rr
 
 ] sudo vim /etc/hosts
 192.168.56.11   controll-plane.example.com controll-plane
