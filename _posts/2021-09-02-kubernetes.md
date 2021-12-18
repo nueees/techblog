@@ -137,7 +137,7 @@ ssh 설정
 
 ### kubernetes 설치
 
-1.  패키지 및 git 설치
+1.  패키지 및 git 설치  
 ```
 ] sudo apt update 
 ] sudo apt upgrade -y 
@@ -146,10 +146,10 @@ ssh 설정
 ] cd kubespray/ 
 ] sudo pip3 install -r requirements.txt
 ```
-2.  인벤토리 수정
+2.  인벤토리 수정  
 ```
 ] cp -rfp inventory/sample/ inventory/mycluster 
-] vim inventory/mycluster/inventory.ini [all] node1 ansible_host=192.168.56.21 ip=192.168.56.21 node2 ansible_host=192.168.56.22 ip=192.168.56.22 node3 ansible_host=192.168.56.23 ip=192.168.56.23 controll-plane ansible_host=192.168.56.11 ip=192.168.56.11 [all:vars] ansible_python_interpreter=/usr/bin/python3 [kube-master] controll-plane [etcd] controll-plane [kube-node] node2 node3 node1 [calico-rr] [k8s-cluster:children] kube-master kube-node calico-rr`
+] vim inventory/mycluster/inventory.ini [all] node1 ansible_host=192.168.56.21 ip=192.168.56.21 node2 ansible_host=192.168.56.22 ip=192.168.56.22 node3 ansible_host=192.168.56.23 ip=192.168.56.23 controll-plane ansible_host=192.168.56.11 ip=192.168.56.11 [all:vars] ansible_python_interpreter=/usr/bin/python3 [kube-master] controll-plane [etcd] controll-plane [kube-node] node2 node3 node1 [calico-rr] [k8s-cluster:children] kube-master kube-node calico-rr
 
 ] sudo vim /etc/hosts
 192.168.56.11   controll-plane.example.com controll-plane
@@ -342,19 +342,6 @@ plane에 정의된 kube-proxy로 IP를 가질 수 있음
 • NAT(Network Address Translation) gateway 같은 장비 없이- 마치 Local Area Network(LAN)처럼 통신이 가능  
 • POD 내의 여러개 Container 는 서로 다른 포트를 통해 서비스 해야함  
 
-### Pod 기본 
-
-```
-kubectl get po # PODs
-kubectl get svc # Service
-kubectl get rc # Replication Controller
-kubectl get deploy # Deployment
-kubectl get ns # Namespace
-kubectl get no # Node
-kubectl get cm # Configmap
-kubectl get pv # PersistentVolumns
-
-```
 
 
 ### Pod 정의 (YAML 파일 생성)  
@@ -772,9 +759,9 @@ use case:
 
 
 ### Deployment  
-stateless Application 배포 시 사용  
-Applicaion은 컨테이너 집합인 Pod 단위로 배포  
-사용자의 기대상태(Desired state)를 유지하도록 하는 controller  
+Pod 와 ReplicaSet 에 대한 선언적 업데이트 제공하며, 배포에 대한 세분화된 기능 제공  
+Deployment 에 Desired state를 기술하면, Deployment Controller는 현재 상태에서 Desired state로 비율을 조정  
+ 
 ReplicaSet에 대한 Update 담당  
 1) Liveness Probe: 응답 체크  
 2) Readlness Probe: 서비스 가능 상태 체크  
@@ -838,8 +825,29 @@ scale out
 
 ```
 ] kubectl edit deployment.v1.apps/nginx-deployment
-] kubectl scale deploy nginx-deployment
+] kubectl scale deploy nginx-deployment --replicas=5
+deployment.apps/nginx-deployment scaled
 ```
+
+image update & rollback   
+```
+] kubectl --record deployment.apps/nginx-deployment set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1 # 또는 ( kubectl set image deployment/nginx-deployment nginx=nginx:1.9.1 --record )
+deployment.apps/nginx-deployment image updated
+] kubectl rollout undo deployment.v1.apps/nginx-deployment --to-revision=2
+deployment.apps/nginx-deployment rolled back
+```
+
+revision 이력확인  
+```
+] kubectl rollout history deployment/nginx-deployment
+deployment.apps/nginx-deployment
+REVISION  CHANGE-CAUSE
+3         kubectl.exe set image deployment/nginx-deployment nginx=nginx:1.9.2 --record=true
+4         kubectl.exe set image deployment.v1.apps/nginx-deployment nginx=nginx:1.7.9 --record=true
+5         kubectl.exe deployment.apps/nginx-deployment set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1 --record=true
+```
+
+
 
 
 <br><br>
