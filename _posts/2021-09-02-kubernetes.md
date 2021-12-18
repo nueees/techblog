@@ -399,7 +399,7 @@ spec:
 ] kubectl annotate pods testapp-pod devops-team/developer="nueees"
 ```
 
-![]({{site.baseurl}}/images/post/docker_6_1_2.jpg)
+![]({{site.baseurl}}/images/post/docker_6_1_2-label.jpg)
 
 
 ### Anotation(어노테이션)  
