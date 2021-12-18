@@ -321,21 +321,17 @@ plane에 정의된 kube-proxy로 IP를 가질 수 있음
 • NAT(Network Address Translation) gateway 같은 장비 없이- 마치 Local Area Network(LAN)처럼 통신이 가능  
 • POD 내의 여러개 Container 는 서로 다른 포트를 통해 서비스 해야함  
 
-### Pod 생성 조회  
+### Pod 기본 
 
 ```
-# 기본 pod 조회 명령어
-] kubectl get pods
-] kubectl get po
-# 상세 정보까지 출력
-] kubectl get po –o wide
-# 레이블 까지 출력
-] kubectl get po --show-labels
-
-# POD와 함께 Replication Controller 까지 생성 (Deprecate 될 예정)
-] kubectl run <POD-NAME> --image=<IMAGE-NAME> --port=<SERVICE-PORT> --generator=run/v1
-# POD만 생성
-] kubectl run <POD-NAME> --image=<IMAGE-NAME> --port=<SERVICE-PORT> --generator=run-pod/v1
+kubectl get po # PODs
+kubectl get svc # Service
+kubectl get rc # Replication Controller
+kubectl get deploy # Deployment
+kubectl get ns # Namespace
+kubectl get no # Node
+kubectl get cm # Configmap
+kubectl get pv # PersistentVolumns
 
 ```
 
@@ -394,9 +390,32 @@ spec:
       protocol: TCP
 ```
 
-레이블 추가 및 수정
+pod 레이블 추가, 삭제 및 필터링  
 ```
-] kubectl annotate pods testapp-pod devops-team/developer="nueees"
+] kubectl label pod goapp-pod app="app1" tier="frontend"
+pod/goapp-pod labeled
+
+] kubectl get po --show-labels
+NAME         READY   STATUS    RESTARTS   AGE     LABELS
+goapp-pod    1/1     Running   0          5m19s   app=app1,domain=pay,env=prod,tier=frontend
+goapp-pod2   1/1     Running   0          2m54s   domain=pay,env=dev
+
+] kubectl get po -l 'env in (prod,stage), tier in (frontend)'
+NAME        READY   STATUS    RESTARTS   AGE
+goapp-pod   1/1     Running   0          7m56s
+
+] kubectl label pod goapp-pod app- tier-                     
+pod/goapp-pod labeled
+```
+
+node 레이블 추가 및 필터링 
+```
+] kubectl label node gke-myk8s-cluster-default-pool-68423958-ss8l gpu=true
+node/gke-myk8s-cluster-default-pool-68423958-ss8l labeled
+
+] kubectl get no -l gpu=true
+NAME                                           STATUS   ROLES    AGE     VERSION
+gke-myk8s-cluster-default-pool-68423958-ss8l   Ready    <none>   6d23h   v1.21.5-gke.1302
 ```
 
 ![]({{site.baseurl}}/images/post/docker_6_1_2-label.jpg)
@@ -410,7 +429,21 @@ Key/Value 쌍으로 라벨과 유사 하지만 셀렉터로 선택 불가능
 ex) 객체를 만든 사람이름을 기록하면 공동 작업 시에 훨씬 쉽게 작업  
 
 ```
-] kubectl annotate pods testapp-pod devops-team/developer="nueees"
+] kubectl annotate pod goapp-pod  make-by="nueees" team="se"
+pod/goapp-pod annotated
+
+] kubectl describe po goapp-pod
+Name:         goapp-pod
+Namespace:    default
+Priority:     0
+Node:         gke-myk8s-cluster-default-pool-68423958-w4rq/10.178.0.2
+Start Time:   Sat, 18 Dec 2021 10:56:00 +0900
+Labels:       domain=pay
+              env=prod
+Annotations:  make-by: nueees
+              team: se
+
+...
 ```
 
 ### Name Space(네임스페이스)  
@@ -419,9 +452,27 @@ kube-node-lease: 쿠버네티스 노드(마스터/노드)의 가용성 체크를
 kube-public: 모든 사용자 접근가능  
 kube-system: 클러스터의 리소스가 배치되는 네임스페이스
 
+
+first_ns.yaml  
 ```
-] kubectl get namespaces
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: first-namespace
 ```
+
+```
+] kubectl create -f .\namespace\pod-node.yaml -n first-namespace
+pod/nodeapp-pod1 created
+
+] kubectl get po -n first-namespace
+NAME           READY   STATUS    RESTARTS   AGE
+nodeapp-pod1   1/1     Running   0          12s
+PS C:\u01\kubetpl> apiVersion: v1
+
+```
+
+
 
 ### Liveness Prove(라이브니스 프로브)  
 파드 상태가 정상적인지 주기적으로 모니터링 서비스  
@@ -431,86 +482,343 @@ kube-system: 클러스터의 리소스가 배치되는 네임스페이스
 
 cat testapp-pod-liveness.yml  
 
-![]({{site.baseurl}}/images/post/docker_6_1_3.jpg)    
 ```
-] kubectl create -f testapp-pod-liveness.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testapp-pod-liveness
+spec:
+  containers:
+  - image: <ACCOUNT>/myweb
+    name: testapp-container
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+    livenessProbe:
+        httpGet:
+            path: /
+            port: 8080
 ```
     
 
 <br><br>
 ---
 
-## 6.2.Controller
 
+## 6.2.Controller
 사용자가 의도한 상태로 유지 해 주는 기능
 
-### Deployment
-stateless Application 배포 시 사용  
-Applicaion은 컨테이너 집합인 Pod 단위로 배포  
-사용자의 기대상태(Desired state)를 유지하도록 하는 controller  
- - Liveness Probe: 응답 체크
- - Readlness Probe: 서비스 가능 상태 체크
-ReplicaSet에 대한 Update 담당  
 
-use case:
-- 신규 ReplicaSet을 생성하여 Pod를 새로운 버전으로 점진적 교체 수행 (Rolling Update)
-- Application configuration 분리 (Decoupling): Config Map
+
+### Replication Controller  
+
+- Replication Controller는 POD가 사라지게 되면 대체 할 POD 생성  
+- Pod Template 은 언제든지 수정 가능  
+- Pod 수정 시점이 아니라 새로운 Pod 가 생성 되는 시점에 적용 됨  
+
+spec에 replicas과 selector를 명시  
+
+```
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx-rc
+spec:
+  replicas: 3
+  selector:
+    app: nginx
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        tier: forntend
+        app: nginx
+        env: prod
+        priority: high
+    spec:
+      containers:
+      - name: nginx-container
+        image: nueees/nginx
+        ports:
+        - containerPort: 8080
+```
+
+```
+] kubectl get rc
+NAME       DESIRED   CURRENT   READY   AGE
+nginx-rc   3         3         3       2m27s
+
+] kubectl get rc -o wide
+NAME       DESIRED   CURRENT   READY   AGE     CONTAINERS        IMAGES         SELECTOR
+nginx-rc   3         3         3       2m48s   nginx-container   nueees/nginx   app=nginx
+
+] kubectl get po
+NAME             READY   STATUS    RESTARTS   AGE
+nginx-rc-klrmt   1/1     Running   0          32s
+nginx-rc-km8vn   1/1     Running   0          32s
+nginx-rc-rqg4q   1/1     Running   0          32s
+```
+
+rqg4q 삭제 후 gsk7x 재생성 확인  
+
+```
+] kubectl delete pod nginx-rc-rqg4q
+pod "nginx-rc-rqg4q" deleted
+
+] kubectl get pod
+NAME             READY   STATUS    RESTARTS   AGE
+nginx-rc-gsk7x   1/1     Running   0          14s
+nginx-rc-klrmt   1/1     Running   0          3m58s
+nginx-rc-km8vn   1/1     Running   0          3m58s
+```
+
+app label 변경  
+nginx -> nginx-new
+새로운 dmnv2가 생기면서 app=nginx은 3개로 유지됨  
+```
+] kubectl get pod --show-labels
+NAME             READY   STATUS    RESTARTS   AGE     LABELS
+nginx-rc-gsk7x   1/1     Running   0          4m49s   app=nginx,env=prod,priority=high,tier=forntend
+nginx-rc-klrmt   1/1     Running   0          8m33s   app=nginx,env=prod,priority=high,tier=forntend
+nginx-rc-km8vn   1/1     Running   0          8m33s   app=nginx,env=prod,priority=high,tier=forntend
+
+] kubectl label pod nginx-rc-gsk7x app=nginx-new
+pod/nginx-rc-gsk7x labeled
+
+NAME             READY   STATUS              RESTARTS   AGE     LABELS
+nginx-rc-dmnv2   0/1     ContainerCreating   0          3s      app=nginx,env=prod,priority=high,tier=forntend
+nginx-rc-gsk7x   1/1     Running             0          6m48s   app=nginx-new,env=prod,priority=high,tier=forntend
+nginx-rc-klrmt   1/1     Running             0          10m     app=nginx,env=prod,priority=high,tier=forntend
+nginx-rc-km8vn   1/1     Running             0          10m     app=nginx,env=prod,priority=high,tier=forntend
+```
+
+scale up (3->5)
+
+```
+] kubectl scale rc nginx-rc --replicas=5
+replicationcontroller/nginx-rc scaled
+
+NAME             READY   STATUS    RESTARTS   AGE
+nginx-rc-7889w   1/1     Running   0          14s
+nginx-rc-d4rlh   1/1     Running   0          14s
+nginx-rc-dmnv2   1/1     Running   0          4m52s
+nginx-rc-klrmt   1/1     Running   0          15m
+nginx-rc-km8vn   1/1     Running   0          15m
+```
+
 
 
 ### ReplicaSet (레플리카셋)
-
 사용자가 요구하는 복제본 개수만큼 Pod를 복제하고 관리하는 기능  
-주로 Deployment 의 spec 으로 정의하는 것을 권장함   
-관리해야 하는 pod을 식별하기 위한 selector, 유지해야 하는 pod의 개수, pod template 포함  
 
--   Pod의 다중 레이블 조건 지원
--   Pod에 설정된 레이블의 키 조재 여부 조건 선택 가능
-
-cat testapp-rs.yml
-
-
-![]({{site.baseurl}}/images/post/docker_6_2_1.jpg)   
-
-```
-$ kubectl create -f testapp-rs.yml
-$ kubectl get replicasets.apps
-```
+- 기존 Replication Controller 서로 다른 라벨을 가진 pod 관리 안됨  
+- 일반적으로 ReplicaSet을 직접 생성 하기 보다 **Deployment** 를 이용해서 생성함  
+- Replication Controller 와 동일하게 동작 하지만 다양한 표현식(match~)을 통해 POD를 선택 가능  
+- 관리해야 하는 pod을 식별하기 위한 selector, 유지해야 하는 pod의 개수, pod template 포함  
+1) matchExpressions: Pod에 설정된 레이블의 키 조재 여부 조건 선택 가능   
+2) matchLabels: Pod의 다중 레이블 조건 지원  
+   
 
 cat testapp-rs-exp.yml
 
+```
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend
+  labels:
+    app: guestbook
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: frontend
+    matchExpressions:
+      - {key: env, operator: In, values: [prod]}
+      - {key: priority, operator: NotIn, values: [low]}
+  template:
+    metadata:
+      labels:
+        tier: frontend
+        env: prod
+        priority: high
+    spec:
+      containers:
+      - name: php-redis
+        image: gcr.io/google_samples/gb-frontend:v3
+``` 
 
-![]({{site.baseurl}}/images/post/docker_6_2_2.jpg)   
 
 ```
-$ kubectl create -f testapp-rs-exp.yml
-$ kubectl get replicasets.apps -o wide
+] kubectl get po,rs -o wide
+NAME                 READY   STATUS              RESTARTS   AGE   IP       NODE                                           NOMINATED NODE   READINESS GATES
+pod/frontend-6ghjd   0/1     ContainerCreating   0          3s    <none>   gke-myk8s-cluster-default-pool-68423958-x85v   <none>           <none>
+pod/frontend-cl5b2   0/1     ContainerCreating   0          3s    <none>   gke-myk8s-cluster-default-pool-68423958-w4rq   <none>           <none>
+pod/frontend-vx6jg   0/1     ContainerCreating   0          3s    <none>   gke-myk8s-cluster-default-pool-68423958-ss8l   <none>           <none>
+
+NAME                       DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES                                 SELECTOR
+replicaset.apps/frontend   3         3         0       3s    php-redis    gcr.io/google_samples/gb-frontend:v3   env in (prod),priority notin (low),tier=frontend
 ```
+
+```
+# POD 까지 삭제
+] kubectl delete rs frontend
+# POD 는 남기고 삭제
+] kubectl delete rs frontend --cascade=orphan
+replicaset.apps "frontend" deleted
+
+NAME                 READY   STATUS    RESTARTS   AGE     IP           NODE                                           NOMINATED NODE   READINESS GATES
+pod/frontend-6ghjd   1/1     Running   0          7m35s   10.48.2.14   gke-myk8s-cluster-default-pool-68423958-x85v   <none>           <none>
+pod/frontend-cl5b2   1/1     Running   0          7m35s   10.48.0.24   gke-myk8s-cluster-default-pool-68423958-w4rq   <none>           <none>
+pod/frontend-vx6jg   1/1     Running   0          7m35s   10.48.1.13   gke-myk8s-cluster-default-pool-68423958-ss8l   <none>           <none>
+```
+
+
+
 
 ### DaemonSet (데몬셋)
+쿠버네티스 클러스터는 부하 분산, 이중화를 통한 장애 대응 목적 등을 위하여 최소 하나 이상의 노드로 구성되므로 
+다수의 노드를 사용할 경우 필요에 따라 **각 노드별로 특정 목적을 수행하는 파드를 한 개씩** 배치하여야 하는 경우 사용  
 
-쿠버네티스 클러스터는 부하 분산, 이중화를 통한 장애 대응 목적 등을 위하여 최소 하나 이상의 노드로 구성되므로  
-다수의 노드를 사용할 경우 필요에 따라 _각 노드별\*로 특정 목적을 수행하는 \*파드를 한 개씩_ 배치하여야 하는 경우 발생
 
-**레플리카셋과 비슷하지만 복제본을 지정하지 않음**
+- RC,RS 는 특정 노드에 특정 개수의 Pod 를 실행 하지만, 데몬셋은 라벨로 지정된 각각의 노드에 하나씩 정확하게 실행  
+- 시스템 수준의 작업을 수행하는 인프라 관련 Pod나 모든 노드에서 로그를 수집 및 리소스 모니터링을 담당하는 Pod의 용도로 수행  
+- 당연히 RC,RS 와는 다르게 노드가 다운 되더라도 다른 노드에 복제본 Pod를 생성 하지 않음  
+
 
 cat testapp-ds.yml
 
-
-![]({{site.baseurl}}/images/post/docker_6_2_3.jpg)   
-  
-nodeSelector에 Pod가 배포될 노드 선택
+```
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nodeapp-on-ssd
+spec:
+  selector:
+    matchLabels:
+      app: nodeapp-pod
+  template:
+    metadata:
+      labels:
+        app: nodeapp-pod
+    spec:
+      nodeSelector:
+        disk: ssd
+      containers:
+      - name: nodeapp-container
+        image: nueees/nodeapp
 
 ```
-$ kubectl create -f testapp-ds.yml
-$ kubectl get replicasets.apps -o wide
-$ kubectl label nodes kube-node1 node=development # node에 label지정
-$ kubectl label nodes kube-node1 --show-label
+
+nodeSelector에 Pod가 배포될 노드 선택  
+
+```
+] kubectl create -f testapp-ds.yml
+
+] kubectl get po # 안 보임
+No resources found in default namespace.
+
+] kubectl get ds
+NAME             DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE 
+nodeapp-on-ssd   0         0         0       0            0           disk=ssd        6s 
+
+] kubectl get no # 노드 확인
+NAME                                           STATUS   ROLES    AGE    VERSION
+gke-myk8s-cluster-default-pool-68423958-ss8l   Ready    <none>   7d4h   v1.21.5-gke.1302  
+gke-myk8s-cluster-default-pool-68423958-w4rq   Ready    <none>   7d4h   v1.21.5-gke.1302  
+gke-myk8s-cluster-default-pool-68423958-x85v   Ready    <none>   7d4h   v1.21.5-gke.1302
+
+```
+
+68423958-ss8l 노드에 ds에 명시된 disk ssd인 라벨 생성  
+
+```
+] kubectl label node gke-myk8s-cluster-default-pool-68423958-ss8l  disk=ssd
+node/gke-myk8s-cluster-default-pool-68423958-ss8l labeled
+
+] kubectl get po
+NAME                   READY   STATUS              RESTARTS   AGE
+nodeapp-on-ssd-54pnq   0/1     ContainerCreating   0          13s
+
 ```
 
 
 ### StatefulSet
-Pod이 스케줄 될 때 지속적으로 유지되는 식별자를 가질 수 있도록 관리하는 object
-use case: 고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동 
+Pod이 스케줄 될 때 **지속적으로 유지**되는 식별자를 가질 수 있도록 관리하는 object  
+use case:  
+고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동  
+
+
+### Deployment  
+stateless Application 배포 시 사용  
+Applicaion은 컨테이너 집합인 Pod 단위로 배포  
+사용자의 기대상태(Desired state)를 유지하도록 하는 controller  
+ReplicaSet에 대한 Update 담당  
+1) Liveness Probe: 응답 체크  
+2) Readlness Probe: 서비스 가능 상태 체크  
+
+- Deployment는 Pod 와 ReplicaSet 에 대한 선언적 업데이트 제공하며, 배포에 대한 세분화된 기능 제공
+- Deployment 에 의도하는 상태를 기술하면, Deployment Controller는 현재 상태에서 의도하는 상태로 비율을 조정함
+- Pod 에 대한 롤링 업데이트 및 롤백 기능 제공
+
+use case:  
+신규 ReplicaSet을 생성하여 Pod를 새로운 버전으로 점진적 교체 수행 (Rolling Update) 
+spec.strategy.type==RollingUpdate (default)이면 파드를 롤링 업데이트 방식  
+spec.strategy.type==Recreate 이면 새 파드가 생성되기 전에 kill  
+
+Application configuration 분리 (Decoupling): Config Map  
+
+셀렉터는 다른 컨트롤러(다른 디플로이먼트와 스테이트풀 셋 포함)와 겹치지 않아야 함  
+만약 다중 컨트롤러가 겹치는 셀렉터를 가지는 경우 해당 컨트롤러의 충돌  
+Deployment 로 배포 후에는 ReplicaSet 을 직접 관리 하지 않고 deployment 통해서 제어  
+
+cat testapp-dp.yml
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+          - containerPort: 80
+
+```
+
+```
+] kubectl get pod,rs,deploy
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/nginx-deployment-5d59d67564-5fgmh   1/1     Running   0          69s
+pod/nginx-deployment-5d59d67564-b7cz7   1/1     Running   0          69s
+pod/nginx-deployment-5d59d67564-lwszv   1/1     Running   0          69s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-deployment-5d59d67564   3         3         3       69s
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-deployment   3/3     3            3           69s
+```
+
+scale out  
+
+```
+] kubectl edit deployment.v1.apps/nginx-deployment
+] kubectl scale deploy nginx-deployment
+```
 
 
 <br><br>
@@ -646,22 +954,42 @@ $ kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool --generator=run-
 
 ### ExternalName: 외부에서 접근하기 위한 서비스 유형이 아닌, CNAME 매핑을 통해 특정 FQDN과 통신을 위한 기능
 
-1.  외부 접근용 레플리카셋 생성 및 확인
-2.  `$ kubectl create -f testapp-rs.yml $ kubectl get replicasets.apps $ kubectl get pods`
-3.  NodePort 서비스 생성  
-    cat testapp-svc-ext-nodeport.yml  
+1. 외부 접근용 레플리카셋 생성 및 확인
+```
+] kubectl create -f testapp-rs.yml 
+] kubectl get replicasets.apps 
+] kubectl get pods
+```
+2.  NodePort 서비스 생성  
+cat testapp-svc-ext-nodeport.yml   
 ![]({{site.baseurl}}/images/post/docker_7_3_1.jpg)  
-4.  `$ kubectl create -f testapp-svc-ext-nodeport.yml # 해당 노드에서 사용할 포트 31111로 지정 $ kubectl get endpoints testapp-svc-ext-np # 서비스의 엔드포인트 확인 (Pod의 8080 포트로 Redirection 됨) $ kubectl get nodes -o wide # 각 노드의 IP 확인`
-5.  LoadBalancer 서비스 생성  
-    cat testapp-svc-ext-loadbalancer.yml  
-![]({{site.baseurl}}/images/post/docker_7_3_2.jpg)  
-6.  `$ kubectl create -f testapp-svc-ext-loadbalancer.yml # 해당 노드에서 사용할 포트는 정의하지 않음 $ kubectl get services # LoadBalancer 서비스 확인`
-7.  ExternalName 서비스 생성  
-    cat testapp-svc-ext-externalname.yml  
-![]({{site.baseurl}}/images/post/docker_7_3_3.jpg)  
-8.  `$ kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool --generator=run-pod/v1 --rm=true bash # 서비스 접근 테스트 $ nllookup testapp-svc-extname-gl`
-9.  `$ kubectl create -f testapp-svc-ext-externalname.yml # FQDN은 google이며 이에 대한 CNAME은 testapp-svc-extname-gl $ kubectl get services # ExternalName 서비스 확인`
 
+```
+]kubectl create -f testapp-svc-ext-nodeport.yml # 해당 노드에서 사용할 포트 31111로 지정 
+] kubectl get endpoints testapp-svc-ext-np # 서비스의 엔드포인트 확인 (Pod의 8080 포트로 Redirection 됨) 
+] kubectl get nodes -o wide # 각 노드의 IP 확인
+```
+
+3.  LoadBalancer 서비스 생성  
+cat testapp-svc-ext-loadbalancer.yml   
+![]({{site.baseurl}}/images/post/docker_7_3_2.jpg)  
+
+```
+] kubectl create -f testapp-svc-ext-loadbalancer.yml # 해당 노드에서 사용할 포트는 정의하지 않음 
+] kubectl get services # LoadBalancer 서비스 확인
+```
+
+4.  ExternalName 서비스 생성  
+cat testapp-svc-ext-externalname.yml   
+![]({{site.baseurl}}/images/post/docker_7_3_3.jpg)  
+```
+] kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool --generator=run-pod/v1 --rm=true bash # 서비스 접근 테스트 
+] nllookup testapp-svc-extname-gl
+```
+```
+] kubectl create -f testapp-svc-ext-externalname.yml # FQDN은 google이며 이에 대한 CNAME은 testapp-svc-extname-gl 
+] kubectl get services # ExternalName 서비스 확인
+```
 
 <br><br>
 ---
