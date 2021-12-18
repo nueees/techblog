@@ -316,17 +316,16 @@ POD(파드) 는 쿠버네티스 애플리케이션의 기본 실행 단위 (만�
 • 파드내의 컨테이너는 오로지 하나의 노드 내에만 존재 (노드를 걸쳐서 파드가 존재 하지 않음)  
 • 동일 파드 내의 컨테이너는 네트워킹 및 볼륨을 공유  
 • K8S에 있는 POD들은 단순하고, 공유 가능한 네트워크 Address 주소 값을 가진다 (flat Natwork)  
-• 각각의 POD은 각각의 IP주소 값을 가지고 있으며, 이 IP를 이용해서 통신 허용  
+• 각각의 POD은 **각각의 IP주소 값**을 가지고 있으며, 이 IP를 이용해서 통신 허용  
 plane에 정의된 kube-proxy로 IP를 가질 수 있음
 • NAT(Network Address Translation) gateway 같은 장비 없이- 마치 Local Area Network(LAN)처럼 통신이 가능  
 • POD 내의 여러개 Container 는 서로 다른 포트를 통해 서비스 해야함  
 
-### 기본 명령어  
+### Pod 생성 조회  
 
 ```
 # 기본 pod 조회 명령어
 ] kubectl get pods
-# 축약어 사용
 ] kubectl get po
 # 상세 정보까지 출력
 ] kubectl get po –o wide
@@ -338,64 +337,104 @@ plane에 정의된 kube-proxy로 IP를 가질 수 있음
 # POD만 생성
 ] kubectl run <POD-NAME> --image=<IMAGE-NAME> --port=<SERVICE-PORT> --generator=run-pod/v1
 
-# 기본 pod 조회 명령어
-] kubectl get pod goapp-project-bcv5q -o yaml
-# 축약어 사용
-] kubectl create -f goapp.yaml
-# 상세 정보까지 출력
-] kubectl logs goapp-pod
-
-# POD와 함께 Replication Controller 까지 생성 (Deprecate 될 예정)
-] kubectl run <POD-NAME> --image=<IMAGE-NAME> --port=<SERVICE-PORT> --generator=run/v1
-# POD만 생성
-] kubectl run <POD-NAME> --image=<IMAGE-NAME> --port=<SERVICE-PORT> --generator=run-pod/v1
-
 ```
 
-### 실습  
 
-1-1)  Pod 정의: YAML 파일 생성
+### Pod 정의 (YAML 파일 생성)  
 
-cat testapp-pod.yml
+cat testapp-pod.yml  
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testapp-pod
+spec:
+  containers:
+  - image: <ACCOUNT>/myweb
+    name: testapp-container
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+```
+_하이픈(\-) 기호는 리스트(List)를 의미_  
 
-![]({{site.baseurl}}/images/post/docker_6_1_1.jpg)
-  
-기본적인 apiVersion, kind, metadata, spec 포함  
-\- 하이픈 기호는 리스트(List)를 의미
 
-1-2)  Pod 생성 및 확인
-1-3)  `$ kubectl create -f testapp-pod.yml $ kubectl get pods $ kubectl get pods testapp-pod -o yaml(-o json) $ kubectl discribe pods testapp-pod $ kubectl logs testapp-pod # 로그 확인 $ kubectl port-forward testapp-pod 8080:8080 # 포트포워딩 $ curl http://localhost:8080`
-1-4)  Label(레이블) 및 Selector(셀렉터)  
-    Label: 쿠버네티스 클러스터의 모든 오브젝트에 키/값 쌍으로 이루어진 값을 설정하여 리소스 식별, 속성 지정 역할  
+### Pod 생성 및 확인  
+
+```
+] kubectl create -f testapp-pod.yml 
+] kubectl get pods 
+] kubectl get pods testapp-pod -o yaml(-o json) 
+] kubectl discribe pods testapp-pod 
+] kubectl logs testapp-pod # 로그 확인 
+] kubectl port-forward testapp-pod 8080:8080 # 포트포워딩 
+] curl http://localhost:8080
+```
+
+### Label(레이블) 및 Selector(셀렉터)  
+Label: 쿠버네티스 클러스터의 모든 오브젝트에 키/값 쌍으로 이루어진 값을 설정하여 리소스 식별, 속성 지정 역할  
     네임스페이스 내 중복 불가  
-    Label Selector: Label을 식별하고 검색함
+Label Selector: Label을 식별하고 검색함
 
 cat testapp-pod-label.yml
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testapp-pod-label
+  labels:
+    env: dev
+    tier: frontend
+spec:
+  containers:
+  - image: <ACCOUNT>/myweb
+    name: testapp-container
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+```
 
+레이블 추가 및 수정
+```
+] kubectl annotate pods testapp-pod devops-team/developer="nueees"
+```
 
 ![]({{site.baseurl}}/images/post/docker_6_1_2.jpg)
 
-1-5)  Anotation(어노테이션)  
-    오브젝트의 추가 정보를 기록하는 경우 사용하는 주석
-1-6)  `$ kubectl annotate pods testapp-pod devops-team/developer="nueees"`
-1-7)  Name Space(네임스페이스)  
-    Name Space: 쿠버네티스 클러스터 내 오브젝트와 리소스를 용도와 목적에 따라 논리적으로 완전히 분리된 환경default: 기본 네임스페이스  
-    kube-node-lease: 쿠버네티스 노드(마스터/노드)의 가용성 체크를 위한 네임스페이스  
-    kube-public: 모든 사용자 접근가능  
-    kube-system: 클러스터의 리소스가 배치되는 네임스페이스
-1-8)  `$ kubectl get namespaces`
-1-9)  Liveness Prove(라이브니스 프로브)  
-    파드 상태가 정상적인지 주기적으로 모니터링 서비스
 
--   HTTP GET Prove: 특정 경로에 HTTP GET 요청, HTTP 응답코드가 2XX/3XX인지 확인
--   TCP Socket Prove: 특정 TCP port 연결 시도
--   Exec Prove: 컨테이너 내부의 바이너리(명령)를 실행하고 종료 코드 확인  
-    cat testapp-pod-liveness.yml  
+### Anotation(어노테이션)  
+Key/Value 쌍으로 라벨과 유사 하지만 셀렉터로 선택 불가능  
+라벨보다 훨씬더 많은 정보를 담을 수 있음  
+주로 주석을 사용해서 쿠버네티스 객체에 상세한 설명을 추가하여 다른 사람이 알아보기 쉽게 하는
+용도  
+ex) 객체를 만든 사람이름을 기록하면 공동 작업 시에 훨씬 쉽게 작업  
+
+```
+] kubectl annotate pods testapp-pod devops-team/developer="nueees"
+```
+
+### Name Space(네임스페이스)  
+Name Space: 쿠버네티스 클러스터 내 오브젝트와 리소스를 용도와 목적에 따라 논리적으로 완전히 분리된 환경default: 기본 네임스페이스  
+kube-node-lease: 쿠버네티스 노드(마스터/노드)의 가용성 체크를 위한 네임스페이스  
+kube-public: 모든 사용자 접근가능  
+kube-system: 클러스터의 리소스가 배치되는 네임스페이스
+
+```
+] kubectl get namespaces
+```
+
+### Liveness Prove(라이브니스 프로브)  
+파드 상태가 정상적인지 주기적으로 모니터링 서비스  
+- HTTP GET Prove: 특정 경로에 HTTP GET 요청, HTTP 응답코드가 2XX/3XX인지 확인  
+- TCP Socket Prove: 특정 TCP port 연결 시도  
+- Exec Prove: 컨테이너 내부의 바이너리(명령)를 실행하고 종료 코드 확인  
+
+cat testapp-pod-liveness.yml  
 
 ![]({{site.baseurl}}/images/post/docker_6_1_3.jpg)    
-    ```
-    $ kubectl create -f testapp-pod-liveness.yml
-    ```
+```
+] kubectl create -f testapp-pod-liveness.yml
+```
     
 
 <br><br>
