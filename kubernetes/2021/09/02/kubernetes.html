@@ -247,10 +247,10 @@ ssh 설정
 ] sudo pip3 install -r requirements.txt
 </code></pre></div>    </div>
   </li>
-  <li>인벤토리 수정
+  <li>인벤토리 수정<br />
 ```
 ] cp -rfp inventory/sample/ inventory/mycluster 
-] vim inventory/mycluster/inventory.ini [all] node1 ansible_host=192.168.56.21 ip=192.168.56.21 node2 ansible_host=192.168.56.22 ip=192.168.56.22 node3 ansible_host=192.168.56.23 ip=192.168.56.23 controll-plane ansible_host=192.168.56.11 ip=192.168.56.11 [all:vars] ansible_python_interpreter=/usr/bin/python3 [kube-master] controll-plane [etcd] controll-plane [kube-node] node2 node3 node1 [calico-rr] [k8s-cluster:children] kube-master kube-node calico-rr`</li>
+] vim inventory/mycluster/inventory.ini [all] node1 ansible_host=192.168.56.21 ip=192.168.56.21 node2 ansible_host=192.168.56.22 ip=192.168.56.22 node3 ansible_host=192.168.56.23 ip=192.168.56.23 controll-plane ansible_host=192.168.56.11 ip=192.168.56.11 [all:vars] ansible_python_interpreter=/usr/bin/python3 [kube-master] controll-plane [etcd] controll-plane [kube-node] node2 node3 node1 [calico-rr] [k8s-cluster:children] kube-master kube-node calico-rr</li>
 </ol>
 
 <p>] sudo vim /etc/hosts
@@ -439,19 +439,7 @@ plane에 정의된 kube-proxy로 IP를 가질 수 있음
 • NAT(Network Address Translation) gateway 같은 장비 없이- 마치 Local Area Network(LAN)처럼 통신이 가능  
 • POD 내의 여러개 Container 는 서로 다른 포트를 통해 서비스 해야함  
 
-### Pod 기본 
 
-</code></pre></div></div>
-<p>kubectl get po # PODs
-kubectl get svc # Service
-kubectl get rc # Replication Controller
-kubectl get deploy # Deployment
-kubectl get ns # Namespace
-kubectl get no # Node
-kubectl get cm # Configmap
-kubectl get pv # PersistentVolumns</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
 ### Pod 정의 (YAML 파일 생성)  
 
@@ -841,10 +829,10 @@ use case:<br />
 고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동</p>
 
 <h3 id="deployment">Deployment</h3>
-<p>stateless Application 배포 시 사용<br />
-Applicaion은 컨테이너 집합인 Pod 단위로 배포<br />
-사용자의 기대상태(Desired state)를 유지하도록 하는 controller<br />
-ReplicaSet에 대한 Update 담당<br />
+<p>Pod 와 ReplicaSet 에 대한 선언적 업데이트 제공하며, 배포에 대한 세분화된 기능 제공<br />
+Deployment 에 Desired state를 기술하면, Deployment Controller는 현재 상태에서 Desired state로 비율을 조정</p>
+
+<p>ReplicaSet에 대한 Update 담당<br />
 1) Liveness Probe: 응답 체크<br />
 2) Readlness Probe: 서비스 가능 상태 체크</p>
 
@@ -906,7 +894,24 @@ deployment.apps/nginx-deployment   3/3     3            3           69s
 <p>scale out</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl edit deployment.v1.apps/nginx-deployment
-] kubectl scale deploy nginx-deployment
+] kubectl scale deploy nginx-deployment --replicas=5
+deployment.apps/nginx-deployment scaled
+</code></pre></div></div>
+
+<p>image update &amp; rollback</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl --record deployment.apps/nginx-deployment set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1 # 또는 ( kubectl set image deployment/nginx-deployment nginx=nginx:1.9.1 --record )
+deployment.apps/nginx-deployment image updated
+] kubectl rollout undo deployment.v1.apps/nginx-deployment --to-revision=2
+deployment.apps/nginx-deployment rolled back
+</code></pre></div></div>
+
+<p>revision 이력확인</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl rollout history deployment/nginx-deployment
+deployment.apps/nginx-deployment
+REVISION  CHANGE-CAUSE
+3         kubectl.exe set image deployment/nginx-deployment nginx=nginx:1.9.2 --record=true
+4         kubectl.exe set image deployment.v1.apps/nginx-deployment nginx=nginx:1.7.9 --record=true
+5         kubectl.exe deployment.apps/nginx-deployment set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1 --record=true
 </code></pre></div></div>
 
 <h2 id="-2"><br /><br /></h2>
