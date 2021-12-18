@@ -14,7 +14,7 @@ title: Kubernetes
 ## 5.1. Kubernates 소개
 
 docker - 단일 시스템에서만 다수의 컨테이너 관리  
-\-> 다수의 시스템과 애프리케이션 설정을 쉽게 설정하고 유지보수할 수 있는 방식인 오케스트레이션(Ochestration)이 필요  
+-> 다수의 시스템과 애프리케이션 설정을 쉽게 설정하고 유지보수할 수 있는 방식인 오케스트레이션(Ochestration)이 필요  
 
 kubernates - docker, rtk 같은 Container의 Ochestration 도구  
 
@@ -146,6 +146,7 @@ ssh 설정
 ] cd kubespray/ 
 ] sudo pip3 install -r requirements.txt
 ```
+
 2.  인벤토리 수정  
 ```
 ] cp -rfp inventory/sample/ inventory/mycluster 
@@ -168,11 +169,13 @@ metallb_protocol: "layer2"
 ] vim inventory/mycluster/group_vars/k8s-cluster/k8s-cluster.yml
 kube_proxy_strict_arp: true
 ```
-3.  플레이북 실행
+
+3.  플레이북 실행  
 ```
 ] ansible-playbook -i inventory/mycluster/inventory.ini cluster.yml -b
 ```
-4.  kubectl 설치
+
+4.  kubectl 설치  
 ```
 ] curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" 
 ] curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" 
