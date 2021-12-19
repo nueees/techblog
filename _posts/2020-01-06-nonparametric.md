@@ -3,14 +3,15 @@ toc: true
 layout: post
 description: 7장
 categories: [statistics,python]
-title: 비모수통계 (goodness-of-fit, gomogeneity, independence)
+title: Nonparametric statistics
 ---
 
 [python 예시](https://www.statology.org/)
 
 ---
 
-# 07_비모수통계
+# 07_비모수통계 (goodness-of-fit, gomogeneity, independence)
+Nonparametric statistics  
 
 ## 모수통계 vs 비모수통계 특징
 
