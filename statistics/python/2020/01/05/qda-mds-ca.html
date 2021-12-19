@@ -4,19 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>통계분석3 (QDA, MDS, CA) | Cho’s Tech blog</title>
+<title>QDA, MDS, CA | Cho’s Tech blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="통계분석3 (QDA, MDS, CA)" />
+<meta property="og:title" content="QDA, MDS, CA" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="6장" />
 <meta property="og:description" content="6장" />
-<link rel="canonical" href="https://nueees.github.io/techblog/statistics/python/2020/01/05/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/statistics/python/2020/01/05/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3.html" />
+<link rel="canonical" href="https://nueees.github.io/techblog/statistics/python/2020/01/05/qda-mds-ca.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/statistics/python/2020/01/05/qda-mds-ca.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-01-05T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"6장","url":"https://nueees.github.io/techblog/statistics/python/2020/01/05/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3.html","@type":"BlogPosting","headline":"통계분석3 (QDA, MDS, CA)","dateModified":"2020-01-05T00:00:00-06:00","datePublished":"2020-01-05T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/statistics/python/2020/01/05/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3.html"},"@context":"https://schema.org"}</script>
+{"description":"6장","url":"https://nueees.github.io/techblog/statistics/python/2020/01/05/qda-mds-ca.html","@type":"BlogPosting","headline":"QDA, MDS, CA","dateModified":"2020-01-05T00:00:00-06:00","datePublished":"2020-01-05T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/statistics/python/2020/01/05/qda-mds-ca.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,13 +87,13 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">통계분석3 (QDA, MDS, CA)</h1><p class="page-description">6장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-05T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">QDA, MDS, CA</h1><p class="page-description">6장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-05T00:00:00-06:00" itemprop="datePublished">
         Jan 5, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      12 min read
+      11 min read
     
 </span></p>
 
@@ -113,11 +113,12 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#06_통계분석_3">06_통계분석_3</a></li>
+<li class="toc-entry toc-h1"><a href="#06_통계분석_3-qda-mds-ca">06_통계분석_3 (QDA, MDS, CA)</a></li>
 <li class="toc-entry toc-h1"><a href="#판별분석-qdaquadratic-discriminant-analysis">판별분석 QDA(Quadratic Discriminant Analysis)</a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#lda-linear-discriminant-analysis">LDA (Linear Discriminant Analysis)</a></li>
 <li class="toc-entry toc-h2"><a href="#qda-quadratic-discriminant-analysis">QDA (Quadratic Discriminant Analysis)</a></li>
+<li class="toc-entry toc-h2"><a href="#"></a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#multidimensional-scaling-mds-다차원척도법">MultiDimensional Scaling (MDS) 다차원척도법</a>
@@ -125,6 +126,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#종류">종류</a></li>
 <li class="toc-entry toc-h2"><a href="#계량적구간척도-비율척도">계량적(구간척도, 비율척도)</a></li>
 <li class="toc-entry toc-h2"><a href="#non-metric-mds-다차원척도법-비계량적순서척도">non-metric MDS: 다차원척도법 비계량적(순서척도)</a></li>
+<li class="toc-entry toc-h2"><a href="#-1"></a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#ca-correspondence-analysis---대응분석">CA (Correspondence Analysis) - 대응분석</a>
@@ -158,17 +160,18 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#ca-두-변수가-가지고-있는-범주들-사이의-관계를-찾을-때-두-개-이상의-범주-군-사이의-상관성을-분석하는-기법">CA: 두 변수가 가지고 있는 범주들 사이의 관계를 찾을 때, 두 개 이상의 범주 군 사이의 상관성을 분석하는 기법</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#-2"></a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#시계열-분석---fbprophet">시계열 분석 - fbprophet</a></li>
 <li class="toc-entry toc-h1"><a href="#연관성-분석--장바구니분석">연관성 분석 = 장바구니분석</a></li>
 <li class="toc-entry toc-h1"><a href="#요인분석">요인분석</a></li>
-</ul><!-- [kaggle/GREG HAMEL/Hypothesis Testing](https://www.kaggle.com/hamelg/python-for-data-24-hypothesis-testing) -->
+</ul><p><a href="https://techblog-history-younghunjo1.tistory.com/174">younghunjo1 blog</a>
+<a href="https://cmdlinetips.com/2020/12/canonical-correlation-analysis-in-python/">Python and R Tips</a></p>
 
 <hr>
 
-<h1 id="06_통계분석_3">
-<a class="anchor" href="#06_%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D_3" aria-hidden="true"><span class="octicon octicon-link"></span></a>06_통계분석_3</h1>
+<h1 id="06_통계분석_3-qda-mds-ca">
+<a class="anchor" href="#06_%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D_3-qda-mds-ca" aria-hidden="true"><span class="octicon octicon-link"></span></a>06_통계분석_3 (QDA, MDS, CA)</h1>
 
 <h1 id="판별분석-qdaquadratic-discriminant-analysis">
 <a class="anchor" href="#%ED%8C%90%EB%B3%84%EB%B6%84%EC%84%9D-qdaquadratic-discriminant-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>판별분석 QDA(Quadratic Discriminant Analysis)</h1>
@@ -342,6 +345,10 @@ window.onload = wrap_img;
 </code></pre></div></div>
 
 <p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_8_0.png" alt="png"></p>
+
+<h2>
+<a class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
 
 <h1 id="multidimensional-scaling-mds-다차원척도법">
 <a class="anchor" href="#multidimensional-scaling-mds-%EB%8B%A4%EC%B0%A8%EC%9B%90%EC%B2%99%EB%8F%84%EB%B2%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>MultiDimensional Scaling (MDS) 다차원척도법</h1>
@@ -568,12 +575,15 @@ Text(0.5, 1.0, 'MDS')
 
 <p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_22_2.png" alt="png"></p>
 
+<h2 id="-1">
+<a class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
+
 <h1 id="ca-correspondence-analysis---대응분석">
 <a class="anchor" href="#ca-correspondence-analysis---%EB%8C%80%EC%9D%91%EB%B6%84%EC%84%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>CA (Correspondence Analysis) - 대응분석</h1>
 
 <h2 id="차원-축소-기법">
 <a class="anchor" href="#%EC%B0%A8%EC%9B%90-%EC%B6%95%EC%86%8C-%EA%B8%B0%EB%B2%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>차원 축소 기법</h2>
-<p><a href="https://techblog-history-younghunjo1.tistory.com/174">출처</a></p>
 
 <h3 id="1-feature-extraction">
 <a class="anchor" href="#1-feature-extraction" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Feature Extraction</h3>
@@ -633,8 +643,6 @@ X = df[[‘bill_length_mm’,’bill_depth_mm’]] <br>
 Y = df[[‘flipper_length_mm’,’body_mass_g’]]<br>
 chi-squared test로는 X와 Y의 독립성 검정을 실시하고, 두 group간에는 상당히 연관 관계가 있다고 판단까지<br>
 CA로는 X와 Y의 group내에서 어떤식으로 연관관계가 있는지 판단</p>
-
-<p><a href="https://cmdlinetips.com/2020/12/canonical-correlation-analysis-in-python/">example코드출처</a></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
@@ -805,227 +813,9 @@ Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdo
 
 <p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_30_2.png" alt="png"></p>
 
-<h1 id="시계열-분석---fbprophet">
-<a class="anchor" href="#%EC%8B%9C%EA%B3%84%EC%97%B4-%EB%B6%84%EC%84%9D---fbprophet" aria-hidden="true"><span class="octicon octicon-link"></span></a>시계열 분석 - fbprophet</h1>
-<ul>
-  <li>prophet은 페이스북에서 개발한 시계열 예측 패키지다. ARIMA와 같은 확률론적이고 이론적인 모형이 아니라 몇가지 경험적 규칙(heuristic rule)을 사용하는 단순 회귀모형이지만 단기적 예측에서는 큰 문제 없이 사용할 수 있다.</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
-
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://raw.githubusercontent.com/facebook/prophet/master/examples/example_wp_log_peyton_manning.csv"</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="n">df</span><span class="p">.</span><span class="n">tail</span><span class="p">()</span>
-</code></pre></div></div>
-
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>ds</th>
-      <th>y</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2900</th>
-      <td>2016-01-16</td>
-      <td>7.817223</td>
-    </tr>
-    <tr>
-      <th>2901</th>
-      <td>2016-01-17</td>
-      <td>9.273878</td>
-    </tr>
-    <tr>
-      <th>2902</th>
-      <td>2016-01-18</td>
-      <td>10.333775</td>
-    </tr>
-    <tr>
-      <th>2903</th>
-      <td>2016-01-19</td>
-      <td>9.125871</td>
-    </tr>
-    <tr>
-      <th>2904</th>
-      <td>2016-01-20</td>
-      <td>8.891374</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">fbprophet</span> <span class="kn">import</span> <span class="n">Prophet</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">Prophet</span><span class="p">()</span>
-<span class="n">m</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INFO:numexpr.utils:NumExpr defaulting to 4 threads.
-INFO:fbprophet:Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
-
-
-
-
-
-&lt;fbprophet.forecaster.Prophet at 0x1ec2c8e2308&gt;
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">future</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">make_future_dataframe</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">365</span><span class="p">)</span>
-<span class="n">future</span><span class="p">.</span><span class="n">tail</span><span class="p">()</span>
-</code></pre></div></div>
-
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>ds</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>3265</th>
-      <td>2017-01-15</td>
-    </tr>
-    <tr>
-      <th>3266</th>
-      <td>2017-01-16</td>
-    </tr>
-    <tr>
-      <th>3267</th>
-      <td>2017-01-17</td>
-    </tr>
-    <tr>
-      <th>3268</th>
-      <td>2017-01-18</td>
-    </tr>
-    <tr>
-      <th>3269</th>
-      <td>2017-01-19</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<ul>
-  <li>yhat이 예측값</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">forecast</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
-<span class="n">forecast</span><span class="p">[[</span><span class="s">'ds'</span><span class="p">,</span> <span class="s">'yhat'</span><span class="p">,</span> <span class="s">'yhat_lower'</span><span class="p">,</span> <span class="s">'yhat_upper'</span><span class="p">]].</span><span class="n">tail</span><span class="p">()</span>
-</code></pre></div></div>
-
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>ds</th>
-      <th>yhat</th>
-      <th>yhat_lower</th>
-      <th>yhat_upper</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>3265</th>
-      <td>2017-01-15</td>
-      <td>8.203217</td>
-      <td>7.465164</td>
-      <td>8.969418</td>
-    </tr>
-    <tr>
-      <th>3266</th>
-      <td>2017-01-16</td>
-      <td>8.528203</td>
-      <td>7.758541</td>
-      <td>9.264207</td>
-    </tr>
-    <tr>
-      <th>3267</th>
-      <td>2017-01-17</td>
-      <td>8.315601</td>
-      <td>7.668485</td>
-      <td>9.087909</td>
-    </tr>
-    <tr>
-      <th>3268</th>
-      <td>2017-01-18</td>
-      <td>8.148207</td>
-      <td>7.397069</td>
-      <td>8.896107</td>
-    </tr>
-    <tr>
-      <th>3269</th>
-      <td>2017-01-19</td>
-      <td>8.160103</td>
-      <td>7.498117</td>
-      <td>8.846597</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig1</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">forecast</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_37_0.png" alt="png"></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig2</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">plot_components</span><span class="p">(</span><span class="n">forecast</span><span class="p">)</span>
-
-</code></pre></div></div>
-
-<p><img src="2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_files/2020-01-05-%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3_38_0.png" alt="png"></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-</code></pre></div></div>
+<h2 id="-2">
+<a class="anchor" href="#-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
 
 <h1 id="연관성-분석--장바구니분석">
 <a class="anchor" href="#%EC%97%B0%EA%B4%80%EC%84%B1-%EB%B6%84%EC%84%9D--%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%EB%B6%84%EC%84%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>연관성 분석 = 장바구니분석</h1>
@@ -1235,7 +1025,7 @@ INFO:fbprophet:Disabling daily seasonality. Run prophet with daily_seasonality=T
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ...
 </span></code></pre></div></div>
 
-  </div><a class="u-url" href="/techblog/statistics/python/2020/01/05/%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D3.html" hidden></a>
+  </div><a class="u-url" href="/techblog/statistics/python/2020/01/05/qda-mds-ca.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
