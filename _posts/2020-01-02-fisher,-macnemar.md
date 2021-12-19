@@ -3,8 +3,12 @@ toc: true
 layout: post
 description: 5장
 categories: [statistics,python]
-title: 기본통계2 (Fisher, Macnemar)
+title: Fisher, Macnemar
 ---
+
+[hongl blog](https://hongl.tistory.com/105)
+[alex blog](https://alex-blog.tistory.com/entry/데이터-분석을-위한-통계분석카이스퀘어-검정-feat-python)
+[mansoostat blog](https://mansoostat.tistory.com/39)
 
 ---
 
@@ -88,11 +92,11 @@ print("오즈비 : ", round(odds,3),'\n''p-value : ', round(pvalue,3 ))
     
 
 결과해석 : p-value가 0.103으로 귀무가설을 채택한다. 즉, 약의 효과가 없었다고 볼 수 있다(약의 유효성 확인x)
-<br>
 
+<br><br>
 ---
 
-# 3. 맥네마의 검정
+# 3. Macnemar 검정
 
 짝지어진 자료(paired data, 같은 대상자로부터 두 번 측정한 자료)에서는 그룹 간 값들이 종속적임(독립x)<br>
 따라서, 그룹 간 비율을 비교하려면 카이제곱 검정보단 맥네마 검정을 해야함<br>
@@ -188,10 +192,6 @@ print('stat : ', round(result2.statistic,3),'\n''p-value : ', round(result2.pval
 
 결과해석 : p-value가 0.009로 귀무가설을 기각한다. 즉, 투약 전후의 발작 발생 비율이 유의하다.
 
-__참고 사이트__<br>
-1) https://hongl.tistory.com/105 <br>
-2) https://alex-blog.tistory.com/entry/데이터-분석을-위한-통계분석카이스퀘어-검정-feat-python  
-3) https://www.statsmodels.org/dev/generated/statsmodels.stats.contingency_tables.mcnemar.html<br>
-4) https://mansoostat.tistory.com/39
+
 
 ---
