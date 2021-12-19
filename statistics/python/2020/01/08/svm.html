@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>SVM | Cho’s Tech blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="SVM" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="11장" />
+<meta property="og:description" content="11장" />
+<link rel="canonical" href="https://nueees.github.io/techblog/statistics/python/2020/01/08/svm.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/statistics/python/2020/01/08/svm.html" />
+<meta property="og:site_name" content="Cho’s Tech blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-08T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"11장","url":"https://nueees.github.io/techblog/statistics/python/2020/01/08/svm.html","@type":"BlogPosting","headline":"SVM","dateModified":"2020-01-08T00:00:00-06:00","datePublished":"2020-01-08T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/statistics/python/2020/01/08/svm.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/techblog/">Cho&#39;s Tech blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/techblog/about/">About Me</a><a class="page-link" href="/techblog/gitInfo/">gitInfo</a><a class="page-link" href="/techblog/search/">Search</a><a class="page-link" href="/techblog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">SVM</h1><p class="page-description">11장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-08T00:00:00-06:00" itemprop="datePublished">
+        Jan 8, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      9 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/techblog/categories/#statistics">statistics</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/techblog/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#통계분석_7---svm-support-vector-machine">통계분석_7 - SVM (Support Vector Machine)</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#svm-특징">SVM 특징</a></li>
+<li class="toc-entry toc-h2"><a href="#svc-vs-linearsvc">SVC vs LinearSVC</a></li>
+<li class="toc-entry toc-h2"><a href="#서포트-벡터-머신svm">서포트 벡터 머신(SVM)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#svc-in-sklearn">SVC in sklearn</a></li>
+<li class="toc-entry toc-h3"><a href="#kernel-파라미터">Kernel 파라미터</a></li>
+<li class="toc-entry toc-h3"><a href="#모델-속성">모델 속성</a></li>
+<li class="toc-entry toc-h3"><a href="#예시">예시</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#선형-서포트-벡터-머신linearsvm">선형 서포트 벡터 머신(LinearSVM)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#linearsvc-in-sklearn">LinearSVC in sklearn</a></li>
+<li class="toc-entry toc-h3"><a href="#매개변수--ccost">매개변수 : C(Cost)</a></li>
+<li class="toc-entry toc-h3"><a href="#다중-클래스-분류">다중 클래스 분류</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#커널-서포트-벡터-머신svm">커널 서포트 벡터 머신(SVM)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#매개변수--c와-gamma">매개변수 : C와 gamma</a></li>
+<li class="toc-entry toc-h3"><a href="#유방암-데이터셋-분류하기rbf커널-svm">유방암 데이터셋 분류하기(RBF커널 SVM)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p><a href="https://bskyvision.com/163">bskyvision blog</a>
+<a href="https://datascienceschool.net/">datascienceschool</a></p>
+
+<hr>
+
+<h1 id="통계분석_7---svm-support-vector-machine">
+<a class="anchor" href="#%ED%86%B5%EA%B3%84%EB%B6%84%EC%84%9D_7---svm-support-vector-machine" aria-hidden="true"><span class="octicon octicon-link"></span></a>통계분석_7 - SVM (Support Vector Machine)</h1>
+
+<ul>
+  <li>분류(SVC 사용), 회귀(SVR 사용)<br>
+</li>
+</ul>
+
+<p>※ 아래 내용 정리는 SVC 기준</p>
+
+<ul>
+  <li>하이퍼파라미터 : 매개변수 C와 gamma. grid search</li>
+  <li>매개변수들이 SVM 내에서 어떤 역할을 하는지 의미를 알고 grid search를 진행한다면 좀 더 빠르게 적합한 매개변수값들을 찾아낼 수 있음<br>
+</li>
+  <li>grid search : 매개변수들의 여러 조합들을 테스트해서 가장 좋은 성능을 내는 매개변수를 찾아내는 것</li>
+</ul>
+
+<h2 id="svm-특징">
+<a class="anchor" href="#svm-%ED%8A%B9%EC%A7%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>SVM 특징</h2>
+
+<p>커널 서포트 벡터 머신은 강력한 모델이며 다양한 데이터셋에서 잘 작동합니다.<br>
+SVM은 데이터의 특성이 몇 개 안 되더라도 복잡한 결정 경계를 만들 수 있습니다. <br>
+저차원과 고차원의 데이터(즉 특성이 적을 때와 많을 때)에 모두 잘 작동하지만 <strong>샘플이 많을 때는 잘 맞지 않습니다.</strong> <br>
+10,000개의 샘플 정도면 SVM 모델이 잘 작동하겠지만 100,000개 이상의 데이터셋에서는 속도와 메모리 관점에서 도전적인 과제입니다.<br></p>
+
+<p>SVM의 또 하나의 단점은 <strong>데이터 전처리와 매개변수 설정에 신경을 많이 써야 한다</strong>는 점입니다.<br>
+그래서 요즘엔 사람들 대부분이 <strong>랜덤 포레스트나 그래디언트 부스팅 같은 
+(전처리가 거의 또는 전혀 필요 없는) 트리 기반 모델을 애플리케이션에 많이 사용</strong>합니다.<br>
+더군다나 SVM 모델은 <strong>분석하기도 어렵</strong>습니다.<br>
+예측이 어떻게 결정되었는지 이해하기 어렵고 비전문가에게 모델을 설명하기가 난해합니다.<br>
+하지만 <strong>모든 특성이 비슷한 단위이고(예를 들면 모든 값이 픽셀의 컬러 강도) 스케일이 비슷하면 SVM을 시도해볼 만합니다.</strong><br></p>
+
+<h2 id="svc-vs-linearsvc">
+<a class="anchor" href="#svc-vs-linearsvc" aria-hidden="true"><span class="octicon octicon-link"></span></a>SVC vs LinearSVC</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LinearSVC는 SVC보다 많은 샘플 데이터에서 선호된다고 언급되어 있고,&lt;br&gt;
+실제로 샘플의 수가 충분히 크지 않으면, 특징이 아무리 많더라도 SVC를 사용하는 것이 좋은 것으로 확인됨&lt;br&gt;
+그런데 충분히 크다의 의미가...... 샘플 569개, 특징 30개에서 LinearSVC가 빠르고, 샘플165개, 특징16603개에서 SVC가 빠른건......&lt;br&gt;&lt;br&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>SVC(support vector classifier) class의 파라미터 : kernel(kernel 지정), C(슬랙변수 가중치(slack variable weight)를 선택)<br>
+</li>
+</ul>
+
+<h2 id="서포트-벡터-머신svm">
+<a class="anchor" href="#%EC%84%9C%ED%8F%AC%ED%8A%B8-%EB%B2%A1%ED%84%B0-%EB%A8%B8%EC%8B%A0svm" aria-hidden="true"><span class="octicon octicon-link"></span></a>서포트 벡터 머신(SVM)</h2>
+
+<h3 id="svc-in-sklearn">
+<a class="anchor" href="#svc-in-sklearn" aria-hidden="true"><span class="octicon octicon-link"></span></a>SVC in sklearn</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gamma 매개변수의 기본값은 'auto'이며 이 값의 의미는 특성 개수의 역수. 즉 1/X_train.shape[1]&lt;br&gt;
+predict_proba 함수를 가지고 있지만, 모델 생성시 probalility=True를 설정하지 않으면 사용할 수 없음&lt;br&gt;
+    import numpy as np
+    X = np.array([[-1, -1],
+                  [-2, -1],
+                  [ 1,  1],
+                  [ 2,  1]])
+    y = np.array([0, 0, 1, 1])
+    from sklearn.svm import SVC
+    model = SVC(kernel='rbf', probability=True)
+    model.fit(X,y)
+    prob = model.predict_proba([[-0.8, -1]])
+    print('Prob[0]: %.3f' % prob[0][0])
+    print('Prob[1]: %.3f' % prob[0][1])
+</code></pre></div></div>
+
+<h3 id="kernel-파라미터">
+<a class="anchor" href="#kernel-%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>Kernel 파라미터<br>
+</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kernel = "linear" : 선형 SVM. k(x1,x2)=xT1x2&lt;br&gt;
+kernel = "poly" : 다항 커널(Polynomial Kernel). k(x1,x2)=(γ(xT1x2)+θ)d&lt;br&gt;
+kernel = "rbf" 또는 kernel = None : RBF(Radial Basis Function) 또는 가우시안 커널(Gaussian Kernel). k(x1,x2)=exp(−γ||x1−x2||2)&lt;br&gt;
+kernel = "sigmoid" : 시그모이드 커널(Sigmoid Kernel). k(x1,x2)=tanh(γ(xT1x2)+θ)&lt;br&gt;
+※ γ(gamma), θ(coef0), d(degree)&lt;br&gt;
+※ RBF커널이 가장 많이 사용됨&lt;br&gt;&lt;br&gt;
+</code></pre></div></div>
+
+<h3 id="모델-속성">
+<a class="anchor" href="#%EB%AA%A8%EB%8D%B8-%EC%86%8D%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>모델 속성<br>
+</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>n_support_: 각 클래스의 서포트의 개수&lt;br&gt;
+support_: 각 클래스의 서포트의 인덱스&lt;br&gt;
+support_vectors_: 각 클래스의 서포트의 x 값. x+와 x−&lt;br&gt;
+coef_: w 벡터&lt;br&gt;
+intercept_: −w0&lt;br&gt;
+dual_coef_: 각 원소가 ai⋅yi로 이루어진 벡터, 서포트 벡터&lt;br&gt;&lt;br&gt;
+</code></pre></div></div>
+
+<h3 id="예시">
+<a class="anchor" href="#%EC%98%88%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>예시<br>
+</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.svm import SVC&lt;br&gt;
+model = SVC(kernel='linear', C=1e10).fit(X, y)&lt;br&gt;
+model.n_support_&lt;br&gt;
+</code></pre></div></div>
+
+<h2 id="선형-서포트-벡터-머신linearsvm">
+<a class="anchor" href="#%EC%84%A0%ED%98%95-%EC%84%9C%ED%8F%AC%ED%8A%B8-%EB%B2%A1%ED%84%B0-%EB%A8%B8%EC%8B%A0linearsvm" aria-hidden="true"><span class="octicon octicon-link"></span></a>선형 서포트 벡터 머신(LinearSVM)</h2>
+
+<p><img src="https://user-images.githubusercontent.com/83441376/146660487-b3a2ee3a-277a-4606-98b0-59ce0ea3dae2.png" alt="image"></p>
+<ul>
+  <li>데이터를 선형으로 분리하는 최적의 선형 결정 경계를 찾는 알고리즘</li>
+  <li>클래스가 다른 데이터들을 <strong>가장 큰 마진(margin)으로 분리</strong>해내는 <strong>선 또는 면(결정 경계)을 찾아내</strong>는 것</li>
+</ul>
+
+<h3 id="linearsvc-in-sklearn">
+<a class="anchor" href="#linearsvc-in-sklearn" aria-hidden="true"><span class="octicon octicon-link"></span></a>LinearSVC in sklearn</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SVC에서 kernel='linear'인 분류 모델&lt;br&gt;
+손실함수 default는 제곱 힌지(squared hinge), C의 default는 1.0&lt;br&gt;
+선형 계산에 특화되어 있어 SVC를 이용하는 것보다 더 효율적인 성능을 보여줌&lt;br&gt;
+predict_proba를 전혀 제공하지 않음&lt;br&gt;
+SVC 또는 다른 분류 모델처럼 각 클래스에 대한 확률값(prob)을 얻으려면 사용자가 소스코드를 구현해야함&lt;br&gt;
+그마저도 이진분류에서만 가능하므로 레이블이 3개 이상인 경우, LinearSVC보단 SVC를 사용하고 probability=True 옵션 주는 것을 추천&lt;br&gt;
+</code></pre></div></div>
+
+<h3 id="매개변수--ccost">
+<a class="anchor" href="#%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98--ccost" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>매개변수 : C(Cost)</strong><br>
+</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>**이상치(outlier)**들이 있을 경우 데이터들을 선형적으로 완벽하게 분리하는 것은 불가능함&lt;br&gt;
+이를 해결하기 위해 약간의 오류를 허용하는 전략이 만들어졌고, 이와 관련된 파라미터가 C임&lt;br&gt;
+C는 **얼마나 많은 데이터 샘플이 다른 클래스에 놓이는 것을 허용하는지**를 결정함(L2 규제의 강도를 결정)&lt;br&gt;
+C가 **작을수록 많이 허용**하고, 클수록 규제가 감소하여 적게 허용함&lt;br&gt;
+C가 **너무 낮으면 과소적합**될 가능성이 커지고, C가 너무 높으면 과대적합될 가능성이 커짐&lt;br&gt;
+C의 유무에 따라 **없으면 hard-margin SVM**, 있으면 soft-margin SVM으로 나뉨&lt;br&gt;
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import pandas as pd
+import numpy as np
+
+# 시각화
+import matplotlib.pyplot as plt
+%matplotlib inline
+import seaborn as sns
+sns.set_style("whitegrid")
+
+# 그래프 한글폰트 깨짐 방지
+#path="c:/Windows/Fonts/malgun.ttf"
+path="C:/Users/BOBO/Documents/Python/malgun.ttf"
+from matplotlib import font_manager, rc
+#help(matplotlib.font_manager)
+font_name = font_manager.FontProperties(fname=path).get_name()
+plt.rc('font', family=font_name)
+#plt.rc('font', family='Malgun Gothic')
+
+import mglearn            ## pip install mglearn
+
+# 데이터셋 만들기
+# forge 데이터셋 : 두개의 특성을 가진 데이터셋으로 인위적으로 만든 이진 분류 데이터셋
+X, y = mglearn.datasets.make_forge()
+
+# 산점도 그리기
+mglearn.discrete_scatter(X[:, 0], X[:, 1], y)
+plt.legend(["클래스 0", "클래스 1"], loc=4)
+plt.xlabel("첫 번째 특성")
+plt.ylabel("두 번째 특성")
+print("X.shape: {}".format(X.shape))
+&gt; X.shape: (26, 2)
+
+# from sklearn.datasets import make_blobs
+# X, y = make_blobs(n_samples=50, centers=2, cluster_std=0.5, random_state=4)
+# y = 2 * y - 1
+
+# plt.scatter(X[y == -1, 0], X[y == -1, 1], marker='o', label="-1 클래스")
+# plt.scatter(X[y == +1, 0], X[y == +1, 1], marker='x', label="+1 클래스")
+# plt.xlabel("x1")
+# plt.ylabel("x2")
+# plt.legend()
+# plt.title("학습용 데이터")
+# plt.show()
+
+</code></pre></div></div>
+
+<p><img src="/techblog/images/post/svm1.png" alt="svm1"></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.linear_model import LogisticRegression
+from sklearn.svm import LinearSVC
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 3))
+
+for model, ax in zip([LinearSVC(), LogisticRegression()], axes):
+    clf = model.fit(X, y)
+    mglearn.plots.plot_2d_separator(clf, X, fill=False, eps=0.5, ax=ax, alpha=.7)
+    mglearn.discrete_scatter(X[:, 0], X[:, 1], y, ax=ax)
+    ax.set_title("{}".format(clf.__class__.__name__))
+    ax.set_xlabel("특성 0")
+    ax.set_ylabel("특성 1")
+axes[0].legend()
+</code></pre></div></div>
+
+<p><img src="/techblog/images/post/svm2.png" alt="svm2"></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 매개변수 C에 따른 결정 경계
+mglearn.plots.plot_linear_svc_regularization()
+
+# C가 커질수록 현재 데이터는 더 잘 분류하였으나 과대 적합 가능성
+</code></pre></div></div>
+
+<p><img src="/techblog/images/post/svm3.png" alt="svm3"></p>
+
+<h3 id="다중-클래스-분류">
+<a class="anchor" href="#%EB%8B%A4%EC%A4%91-%ED%81%B4%EB%9E%98%EC%8A%A4-%EB%B6%84%EB%A5%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>다중 클래스 분류</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.datasets import make_blobs
+
+X, y = make_blobs(random_state=42)
+mglearn.discrete_scatter(X[:, 0], X[:, 1], y)
+plt.xlabel("특성 0")
+plt.ylabel("특성 1")
+plt.legend(["클래스 0", "클래스 1", "클래스 2"])
+</code></pre></div></div>
+
+<p><img src="/techblog/images/post/svm4.png" alt="svm4"></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># LinearSVC fit
+linear_svm = LinearSVC().fit(X, y)
+print("계수 배열의 크기: ", linear_svm.coef_.shape)
+print("절편 배열의 크기: ", linear_svm.intercept_.shape)
+&gt; 계수 배열의 크기:  (3, 2)
+  절편 배열의 크기:  (3,)
+  
+  
+# 세 개의 이진 분류기가 만드는 경계를 시각화
+mglearn.discrete_scatter(X[:, 0], X[:, 1], y)
+line = np.linspace(-15, 15)
+for coef, intercept, color in zip(linear_svm.coef_, linear_svm.intercept_,
+                                  mglearn.cm3.colors):
+    plt.plot(line, -(line * coef[0] + intercept) / coef[1], c=color)
+    plt.ylim(-10, 15)
+    plt.xlim(-10, 8)
+plt.xlabel("특성 0")
+plt.ylabel("특성 1")
+plt.legend(['클래스 0', '클래스 1', '클래스 2', '클래스 0 경계', '클래스 1 경계',
+            '클래스 2 경계'], loc=(1.01, 0.3))
+            
+</code></pre></div></div>
+<p><img src="/techblog/images/post/svm5.png" alt="svm5"></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 2차원 평면의 모든 포인트에 대한 예측 결과
+mglearn.plots.plot_2d_classification(linear_svm, X, fill=True, alpha=.7)
+mglearn.discrete_scatter(X[:, 0], X[:, 1], y)
+line = np.linspace(-15, 15)
+for coef, intercept, color in zip(linear_svm.coef_, linear_svm.intercept_,
+                                  mglearn.cm3.colors):
+    plt.plot(line, -(line * coef[0] + intercept) / coef[1], c=color)
+plt.legend(['클래스 0', '클래스 1', '클래스 2', '클래스 0 경계', '클래스 1 경계',
+            '클래스 2 경계'], loc=(1.01, 0.3))
+plt.xlabel("특성 0")
+plt.ylabel("특성 1")
+</code></pre></div></div>
+<p><img src="/techblog/images/post/svm6.png" alt="svm6"></p>
+
+<h2 id="커널-서포트-벡터-머신svm">
+<a class="anchor" href="#%EC%BB%A4%EB%84%90-%EC%84%9C%ED%8F%AC%ED%8A%B8-%EB%B2%A1%ED%84%B0-%EB%A8%B8%EC%8B%A0svm" aria-hidden="true"><span class="octicon octicon-link"></span></a>커널 서포트 벡터 머신(SVM)</h2>
+<ul>
+  <li>SVM은 선형 SVM이든 RBF 커널 SVM이든 항상 선형으로 데이터를 분류하는 것이 기본적인 전략</li>
+  <li>입력 데이터에서 단순한 초평면(hyperplane)으로 정의되지 않는 더 복잡한 모델을 만들 수 있도록 확장한 것</li>
+  <li>커널 기법은 주어진 데이터를 고차원 특징 공간으로 사상해주는 것으로, 고차원 공간에 사상되고 나면 원래의 차원에서는 보이지 않던 선형으로 분류 가능</li>
+  <li>비선형 결정 경계</li>
+</ul>
+
+<h3 id="매개변수--c와-gamma">
+<a class="anchor" href="#%EB%A7%A4%EA%B0%9C%EB%B3%80%EC%88%98--c%EC%99%80-gamma" aria-hidden="true"><span class="octicon octicon-link"></span></a>매개변수 : C와 gamma</h3>
+<ul>
+  <li>C<br>
+  선형 모델에서 사용한 것과 비슷한 규제 매개변수<br>
+  각 포인트의 중요도(dual_coef_ 값)을 제한함<br>
+</li>
+  <li>gamma<br>
+  하나의 훈련 샘플이 미치는 영향의 범위를 결정<br>
+  작은 값은 넓은 영역을 의미하며 큰 값일 경우 영향이 미치는 범위가 제한적<br>
+  가우시안 커널의 반경이 클수록 훈련 샘플의 영향 범위도 커짐<br>
+</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.svm import SVC
+import mglearn            ## pip install mglearn
+
+# 데이터셋 만들기
+# forge 데이터셋 : 두개의 특성을 가진 데이터셋으로 인위적으로 만든 이진 분류 데이터셋
+X, y = mglearn.datasets.make_forge()
+
+svm = SVC(kernel='rbf', C=10, gamma=0.1).fit(X, y)
+mglearn.plots.plot_2d_separator(svm, X, eps=.5)
+mglearn.discrete_scatter(X[:, 0], X[:, 1], y)
+
+# 서포트 벡터
+sv = svm.support_vectors_
+
+# dual_coef_의 부호에 의해 서포트 벡터의 클래스 레이블이 결정됩니다.
+sv_labels = svm.dual_coef_.ravel() &gt; 0
+mglearn.discrete_scatter(sv[:, 0], sv[:, 1], sv_labels, s=15, markeredgewidth=3)
+plt.xlabel("특성 0")
+plt.ylabel("특성 1")
+</code></pre></div></div>
+
+<p><img src="/techblog/images/post/svm7.png" alt="svm7"></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 매개변수 gamma 튜닝
+fig, axes = plt.subplots(3, 3, figsize=(15, 10))
+
+for ax, C in zip(axes, [-1, 0, 3]):
+    for a, gamma in zip(ax, range(-1, 2)):
+        mglearn.plots.plot_svm(log_C=C, log_gamma=gamma, ax=a)
+
+axes[0, 0].legend(["클래스 0", "클래스 1", "클래스 0 서포트 벡터", "클래스 1 서포트 벡터"],
+                  ncol=4, loc=(.9, 1.2))
+
+# 오른쪽으로 갈수록 gamma 증가시키고 아래로 갈수록 C 증가시킴
+# gamma가 클수록 복잡한 모델을 만듦
+# C가 클수록 현재 데이터를 정확하게 분류
+</code></pre></div></div>
+<p><img src="/techblog/images/post/svm8.png" alt="svm8"></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X, y = make_blobs(centers=4, random_state=8)
+y = y % 2
+
+mglearn.discrete_scatter(X[:, 0], X[:, 1], y)
+plt.xlabel("특성 0")
+plt.ylabel("특성 1")
+
+# 선형SVM으로 만든 결정 경계(맞지않음)
+from sklearn.svm import LinearSVC
+linear_svm = LinearSVC().fit(X, y)
+
+mglearn.plots.plot_2d_separator(linear_svm, X)
+mglearn.discrete_scatter(X[:, 0], X[:, 1], y)
+plt.xlabel("특성 0")
+plt.ylabel("특성 1")
+
+</code></pre></div></div>
+
+<p><img src="/techblog/images/post/svm9.png" alt="svm9"></p>
+
+<h3 id="유방암-데이터셋-분류하기rbf커널-svm">
+<a class="anchor" href="#%EC%9C%A0%EB%B0%A9%EC%95%94-%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%85%8B-%EB%B6%84%EB%A5%98%ED%95%98%EA%B8%B0rbf%EC%BB%A4%EB%84%90-svm" aria-hidden="true"><span class="octicon octicon-link"></span></a>유방암 데이터셋 분류하기(RBF커널 SVM)</h3>
+<ul>
+  <li>유방암 종양의 임상 데이터를 기록해놓은 위스콘신 유방암Wisconsin Breast Cancer 데이터셋</li>
+  <li>각 종양은 양성benign(해롭지 않은 종양)과 악성malignant(암 종양)으로 레이블되어 있고, 조직 데이터를 기반으로 종양이 악성인지를 예측할 수 있도록 학습하는 것이 과제</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.datasets import load_breast_cancer
+ from sklearn.model_selection import train_test_split
+ 
+cancer = load_breast_cancer()
+print("cancer.keys(): \n{}".format(cancer.keys()))
+print("유방암 데이터의 형태: {}".format(cancer.data.shape))
+print("클래스별 샘플 개수:\n{}".format(
+      {n: v for n, v in zip(cancer.target_names, np.bincount(cancer.target))}))
+print("특성 이름:\n{}".format(cancer.feature_names))
+&gt; cancer.keys(): 
+dict_keys(['data', 'target', 'target_names', 'DESCR', 'feature_names', 'filename'])
+&gt; 유방암 데이터의 형태: (569, 30)
+&gt; 클래스별 샘플 개수:
+{'malignant': 212, 'benign': 357}
+&gt; 특성 이름:
+['mean radius' 'mean texture' 'mean perimeter' 'mean area'
+ 'mean smoothness' 'mean compactness' 'mean concavity'
+ 'mean concave points' 'mean symmetry' 'mean fractal dimension'
+ 'radius error' 'texture error' 'perimeter error' 'area error'
+ 'smoothness error' 'compactness error' 'concavity error'
+ 'concave points error' 'symmetry error' 'fractal dimension error'
+ 'worst radius' 'worst texture' 'worst perimeter' 'worst area'
+ 'worst smoothness' 'worst compactness' 'worst concavity'
+ 'worst concave points' 'worst symmetry' 'worst fractal dimension']
+ 
+
+X_train, X_test, y_train, y_test = train_test_split(
+    cancer.data, cancer.target, stratify=cancer.target, random_state=0, test_size=0.25)
+
+#default : C=1, kernel='rbf', gamme='auto'(1/n_features)
+svc = SVC(random_state=0)
+svc.fit(X_train, y_train)
+
+print("훈련 세트 정확도: {:.2f}".format(svc.score(X_train, y_train)))
+print("테스트 세트 정확도: {:.2f}".format(svc.score(X_test, y_test)))
+&gt; 훈련 세트 정확도: 0.90
+&gt; 테스트 세트 정확도: 0.94
+
+# SVM은 잘 작동하는 편이지만 매개변수 설정과 데이터 스케일에 매우 민감
+# 특히 입력 특성의 범위가 비슷해야 합니다. 각 특성의 최솟값과 최댓값을 로그 스케일로 나타내보겠습니다
+plt.boxplot(x_train)
+plt.yscale('symlog') # y축 로그 스케일
+plt.xlabel('특성 목록', size =15)
+plt.ylabel('특성 크기', size =15)
+plt.show()
+# 특성의 크기가 매우 다름 -&gt; SVM은 영향을 크게 받음 -&gt; 전처리(MinMaxScaler) 필요
+</code></pre></div></div>
+
+<p><img src="/techblog/images/post/svm10.png" alt="svm10"></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 전처리(MinMaxScaler)
+
+# X_train에서 특성별 최솟값 계산
+min_on_training = X_train.min(axis=0)
+# X_train에서 특성별 (최댓값 - 최솟값) 범위 계산
+range_on_training = (X_train - min_on_training).max(axis=0)
+
+# X_train에 최솟값을 빼고 범위로 나누면 각 특성에 대해 최솟값은 0, 최대값은 1
+X_train_scaled = (X_train - min_on_training) / range_on_training
+print("특성별 최소 값\n{}".format(X_train_scaled.min(axis=0)))
+print("특성별 최대 값\n {}".format(X_train_scaled.max(axis=0)))
+&gt; 특성별 최소 값
+[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0. 0. 0. 0. 0. 0.]
+&gt; 특성별 최대 값
+ [1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.
+ 1. 1. 1. 1. 1. 1.]
+
+# X_test에도 같은 작업을 적용(X_train에서 계산한 최솟값과 범위를 사용)
+X_test_scaled = (X_test - min_on_training) / range_on_training
+
+svc = SVC()
+svc.fit(X_train_scaled, y_train)
+
+print("훈련 세트 정확도: {:.3f}".format(
+    svc.score(X_train_scaled, y_train)))
+print("테스트 세트 정확도: {:.3f}".format(svc.score(X_test_scaled, y_test)))
+&gt; 훈련 세트 정확도: 0.984
+&gt; 테스트 세트 정확도: 0.972
+
+
+# 매개변수 튜닝(C값 증가)
+svc = SVC(C=1000)
+svc.fit(X_train_scaled, y_train)
+
+print("훈련 세트 정확도: {:.3f}".format(svc.score(X_train_scaled, y_train)))
+print("테스트 세트 정확도: {:.3f}".format(svc.score(X_test_scaled, y_test)))
+&gt; 훈련 세트 정확도: 1.000
+&gt; 테스트 세트 정확도: 0.958
+
+</code></pre></div></div>
+
+<hr>
+
+
+  </div><a class="u-url" href="/techblog/statistics/python/2020/01/08/svm.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/techblog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/techblog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/techblog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A challenge-loving junior data engineer.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/nueees" title="nueees"><svg class="svg-icon grey"><use xlink:href="/techblog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
