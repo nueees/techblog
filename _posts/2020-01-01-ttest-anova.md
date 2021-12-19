@@ -3,7 +3,7 @@ toc: true
 layout: post
 description: 5장
 categories: [statistics,python]
-title: 기본통계1 (CDA, T-Test, ANOVA)
+title: CDA, T-Test, ANOVA
 ---
 
 [kaggle/GREG HAMEL/Hypothesis Testing](https://www.kaggle.com/hamelg/python-for-data-24-hypothesis-testing)
