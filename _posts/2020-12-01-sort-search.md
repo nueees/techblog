@@ -187,8 +187,8 @@ def traversal(num):
     if num > 7: return
     else:
         traversal(num*2)
-        print(num, end=' ')
         traversal(num*2+1)
+        print(num, end=' ')
 traversal(1)
 ```
 
