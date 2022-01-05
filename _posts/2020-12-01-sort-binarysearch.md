@@ -193,5 +193,81 @@ traversal(1)
 ```
 
 
+## 1.8. Binary Search 
+input: 7  
+3  
+5  
+2  
+1  
+4  
+6  
+7  
+
 ```
+class Node:
+    def __init__(self,data):
+        self.right=self.left=None
+        self.data = data
+        print(f"{data} node created")
+class Solution:
+    def insert(self,root,data):
+        if root==None:
+            return Node(data)
+        else:
+            print(f'data:{data}, root.data:{root.data}')
+            if data<=root.data:
+                cur=self.insert(root.left,data)
+                root.left=cur
+            else:
+                cur=self.insert(root.right,data)
+                root.right=cur
+        return root
+
+    def getHeight(self,root):
+        
+        if root == None:
+            return -1
+        else:
+            
+            return 1 + max(self.getHeight(root.left), self.getHeight(root.right))
+           
+T=int(input())
+myTree=Solution()
+root=None
+for i in range(T):
+    data=int(input())
+    root=myTree.insert(root,data)
+height=myTree.getHeight(root)
+# print(height) # tree 높이 구하기
+
+> 결과
+3 node created
+
+data:5, root.data:3
+5 node created
+
+data:2, root.data:3
+2 node created
+
+data:1, root.data:3
+data:1, root.data:2
+1 node created
+
+data:4, root.data:3
+data:4, root.data:5
+4 node created
+
+data:6, root.data:3
+data:6, root.data:5
+6 node created
+
+data:7, root.data:3
+data:7, root.data:5
+data:7, root.data:6
+7 node created
+
+```
+
+
+
 
