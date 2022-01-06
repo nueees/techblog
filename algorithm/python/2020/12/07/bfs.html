@@ -113,6 +113,7 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#bfs">BFS</a></li>
 <li class="toc-entry toc-h2"><a href="#71-최대점수-구하기-dfs">7.1. 최대점수 구하기 (DFS)</a></li>
 <li class="toc-entry toc-h2"><a href="#72">7.2.</a></li>
 <li class="toc-entry toc-h2"><a href="#73">7.3.</a></li>
@@ -133,6 +134,58 @@ window.onload = wrap_img;
 </ul><p>Python Algorithm Practice</p>
 
 <hr>
+
+<h2 id="bfs">
+<a class="anchor" href="#bfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>BFS</h2>
+
+<p><img src="https://user-images.githubusercontent.com/83441376/148342028-2c971735-b729-4b3e-abde-72a0144bf4c1.png" alt="image"></p>
+
+<p>input: 6<br>
+3<br>
+5<br>
+4<br>
+7<br>
+2<br>
+1</p>
+
+<p>output: 3 2 5 1 4 7<br>
+(data value of each node in the tree’s level-order traversal)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+class Node:
+    def __init__(self,data):
+        self.right=self.left=None
+        self.data = data
+class Solution:
+    def insert(self,root,data):
+        if root==None:
+            return Node(data)
+        else:
+            if data&lt;=root.data:
+                cur=self.insert(root.left,data)
+                root.left=cur
+            else:
+                cur=self.insert(root.right,data)
+                root.right=cur
+        return root
+    def levelOrder(self,root):
+        q = [ root ]
+        
+        for current in q:    
+            if current:
+                print(current.data, end=' ')
+
+                q.append(current.left)
+                q.append(current.right)
+
+T=int(input())
+myTree=Solution()
+root=None
+for i in range(T):
+    data=int(input())
+    root=myTree.insert(root,data)
+myTree.levelOrder(root)
+</code></pre></div></div>
 
 <h2 id="71-최대점수-구하기-dfs">
 <a class="anchor" href="#71-%EC%B5%9C%EB%8C%80%EC%A0%90%EC%88%98-%EA%B5%AC%ED%95%98%EA%B8%B0-dfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.1. 최대점수 구하기 (DFS)</h2>
