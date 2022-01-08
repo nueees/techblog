@@ -865,14 +865,18 @@ REVISION  CHANGE-CAUSE
 ```
 
 
-
+#### 현재 네임스페이스 모든 리소스 삭제
+```
+] kubectl delete all --all
+```
 
 <br><br>
 ---
 
-# 7.Network - Service
+# 7. Network - Service
 
 ## 7.1. Service 생성
+K8s 특성상 노드 또는 Pod에 장애가 발생할 경우 Pod 가 다른 노드 및 다른 IP 로 실행 -> 정적 라우팅으로 해결 안됨  
 
 ### Service: 쿠버네티스 시스템에서 같은 애플리케이션을 실행하도록 구성된 컨트롤러에 의해 생성된 Pod 그룹에 단일 네트워크 진입점 제공
 
@@ -884,8 +888,19 @@ REVISION  CHANGE-CAUSE
 
 cat testapp-svc.yml
 
+```
+apiVersion: v1
+kind: Service
+metadata:
+    name: testapp-svc
+spec:
+    ports: 
+        -port: 80 # 서비스 포트
+        targetPort: 8080 # pod의 포트
+    selector:
+        app: testapp-rs # pod 레이블 셀렉터
+```
 
-![]({{site.baseurl}}/images/post/docker_7_1_1.jpg)   
 
 ```
 ] kubectl create -f testapp-svc.yml
@@ -903,8 +918,19 @@ cat testapp-svc.yml
 
 cat testapp-svc-ses-aff.yml
 
-
-![]({{site.baseurl}}/images/post/docker_7_1_2.jpg)   
+```
+apiVersion: v1
+kind: Service
+metadata:
+    name: testapp-svc-ses-aff
+spec:
+    sessionAffinity: ClientIP
+    ports: 
+        -port: 80 # 서비스 포트
+        targetPort: 8080 # pod의 포트
+    selector:
+        app: testapp-rs # pod 레이블 셀렉터
+```
 
 ```
 ] kubectl create -f testapp-svc-ses-aff.yml
@@ -916,11 +942,24 @@ Pod는 하나 이상의 컨테이너로 구성되어 있어서, 각 컨테이너
 
 cat testapp-svc-multiport.yml
 
-
-![]({{site.baseurl}}/images/post/docker_7_1_3.jpg)   
-
 ```
-] kubectl create -f testapp-svc-multiport.yml
+apiVersion: v1
+kind: Service
+metadata:
+    name: testapp-svc-mp
+spec:
+    ports: 
+    - name: testapp-http
+      port: 80 # 서비스 포트
+      targetPort: 8080 # pod의 포트
+    - name: testapp-https
+      port: 443 # 서비스 포트
+      targetPort: 8443 # pod의 포트
+    selector:
+        app: testapp-rs # pod 레이블 셀렉터
+```
+```
+] kubectl create -f testapp-svc-mp.yml
 ```
 
 ### Configuring Service by named-port
@@ -930,13 +969,45 @@ cat testapp-svc-multiport.yml
 cat testapp-rs-named-port.yml
 
 
-![]({{site.baseurl}}/images/post/docker_7_1_4.jpg)   
+```
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: testapp-rs-nport
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: testapp-rs-nport
+  template:
+    metadata:
+      labels:
+        app: testapp-rs-nport
+    spec:
+      containers:
+      - name: testapp
+        image: <ACCOUNT>/myweb
+        ports:
+        - name: testapp-http
+          containerPort: 8080
+``` 
 
   
 cat testapp-svc-named-port.yml
 
-
-![]({{site.baseurl}}/images/post/docker_7_1_5.jpg)  
+```
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: testapp-svc-nport
+spec:
+  ports:
+  - name: testapp-http
+    port: 80
+    targetPort: testapp-http
+  selector:
+    app: testapp-rs-nport
+``` 
 
 ```
 ] kubectl create -f testapp-rs-named-port.yml -f testapp-svc-named-port.yml
@@ -953,7 +1024,7 @@ kubectl get 명령어로 IP 주소를 수동적으로 확인할 수 있지만 Ob
 
 ### DNS를 이용한 Service 탐색
 
-kube-systme 네임스페이스에서 쿠버네티스에 등록된 구성요소 확인 가능  
+kube-system 네임스페이스에서 쿠버네티스에 등록된 구성요소 확인 가능  
 그중 _k8s-app=kube-dns_ 레이블 옵션을 통해 DNS 관련 파드 확인
 
 1) DNS 관련 리소스 확인
@@ -992,13 +1063,19 @@ DaemonSet 형태로 쿠버네티스의 각 노드마다 DNS 캐시 기능을 하
 
 위의 내용은 내부 접근이고, 외부 접근 제공하는 서비스 구성 필요
 
-### ClusterIP: 클러스터 내부용 진입점 제공
+### ClusterIP: 클러스터 내부용 진입점 제공  
 
-### NodePort: 쿠버네티스 각 노드(호스트)의 포트를 외부 접근용으로 할당
+### NodePort: 쿠버네티스 각 노드(호스트)의 포트를 외부 접근용으로 할당  
+노드의 특정 포트를 할당 및 개방 하여 서비스(ClusterIP) 와 연동함  
+노드의 포트 할당 범위가 (30000 ~ 32767 : --service-node-port-range) 로 제한됨 (장비나 VM의 IP 혹은 포트 변경 발생시 대응 어려움)  
+특정 노드로 접속하더라도 ClusterIP 로 연동 되기 때문에 로드밸런싱 됨  
 
-### LoadBalancer: NodePort의 확장판으로, 외부 로드밸러서로 접근하면 서비스를 통해 파드로 Redirection
+### LoadBalancer: NodePort의 확장판으로, 외부 로드밸런서로 접근하면 서비스를 통해 파드로 Redirection  
 
-### ExternalName: 외부에서 접근하기 위한 서비스 유형이 아닌, CNAME 매핑을 통해 특정 FQDN과 통신을 위한 기능
+### ExternalName: 외부에서 접근하기 위한 서비스 유형이 아닌, CNAME 매핑을 통해 특정 FQDN과 통신을 위한 기능  
+
+### Ingress:  
+
 
 1. 외부 접근용 레플리카셋 생성 및 확인
 ```
@@ -1008,7 +1085,20 @@ DaemonSet 형태로 쿠버네티스의 각 노드마다 DNS 캐시 기능을 하
 ```
 2.  NodePort 서비스 생성  
 cat testapp-svc-ext-nodeport.yml   
-![]({{site.baseurl}}/images/post/docker_7_3_1.jpg)  
+```
+apiVersion: v1
+kind: Service
+metadata:
+    name: testapp-svc
+spec:
+    type: NodePort
+    ports: 
+      - port: 80 # 서비스 포트
+        targetPort: 8080 # pod의 포트
+        nodePort: 31111 # 
+    selector:
+        app: testapp-rs # pod 레이블 셀렉터
+```
 
 ```
 ] kubectl create -f testapp-svc-ext-nodeport.yml # 해당 노드에서 사용할 포트 31111로 지정 
@@ -1018,7 +1108,19 @@ cat testapp-svc-ext-nodeport.yml
 
 3.  LoadBalancer 서비스 생성  
 cat testapp-svc-ext-loadbalancer.yml   
-![]({{site.baseurl}}/images/post/docker_7_3_2.jpg)  
+```
+apiVersion: v1
+kind: Service
+metadata:
+    name: testapp-svc-ext-lb
+spec:
+    type: LoadBalancer
+    ports: 
+      - port: 80 # 서비스 포트
+        targetPort: 8080 # pod의 포트
+    selector:
+        app: testapp-rs # pod 레이블 셀렉터
+```
 
 ```
 ] kubectl create -f testapp-svc-ext-loadbalancer.yml # 해당 노드에서 사용할 포트는 정의하지 않음 
@@ -1027,7 +1129,17 @@ cat testapp-svc-ext-loadbalancer.yml
 
 4.  ExternalName 서비스 생성  
 cat testapp-svc-ext-externalname.yml   
-![]({{site.baseurl}}/images/post/docker_7_3_3.jpg)  
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+    name: testapp-svc-extname-gl
+spec:
+    type: ExternalName
+    externalName: www.google.com
+```
+
 ```
 ] kubectl run nettool -it --image=\<ACCOUNT\>/network-multitool --generator=run-pod/v1 --rm=true bash # 서비스 접근 테스트 
 ] nllookup testapp-svc-extname-gl
@@ -1039,5 +1151,226 @@ cat testapp-svc-ext-externalname.yml
 
 <br><br>
 ---
+
+# 8. Storage - Volumes
+
+- Pod에서 실제 데이터가 있는 디렉토리를 보존 하기 위해 사용  
+- Pod의 일부로 정의 되며, Pod 와 라이프사이클을 같이함  
+- 독립적인 쿠버네티스 오브젝트가 아니며 스스로 생성 하거나 삭제할 수 없다(kind 가 없다)  
+- 마운트(mount)를 통해서만 사용 할 수 있다  
+- 실제 호스트 에서는 /var/lib/kubelet/pods/PODUID/volumes/ 위치에서 볼륨 확인 가능  
+
+## 8.1. 일반 Volume
+- emptyDir: 데이터를 저장하는데 사용, 비어있는 단순한 디렉토리  
+
+containers 내 volumeMounts과 volumes 내 emptyDir로 정의  
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortune-deployment
+  labels:
+    app: fortune
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fortune
+  template:
+    metadata:
+      labels:
+        app: fortune
+    spec:
+      containers:
+      - image: nueees/fortune
+        name: html-generator
+        volumeMounts:
+        - name: html
+          mountPath: /var/htdocs
+      - image: nginx:alpine
+        name: web-server
+        volumeMounts: # 설정된 볼륨 마운트
+        - name: html
+          mountPath: /usr/share/nginx/html
+          readOnly: true
+        ports:
+          - containerPort: 80
+            protocol: TCP
+      volumes: # 볼륨 설정
+      - name: html
+        emptyDir: {}
+```
+
+- hostPath: 노드의 파일 시스템에서 Pod의 디렉토리로 마운트 하는 데 사용  
+• 노드의 파일시스템에 있는 특정 파일 또는 디렉토리를 가지는 볼륨  
+• Pod는 삭제 되도 Host볼륨은 삭제 되지 않음  
+• Pod를 재 시작 해도 동일한 노드에 스케줄 되어야 이전 데이타 를 볼 수 있음  
+• 일반적인 목적의 Pod의 경우에 사용 하는 것이 좋지 않음  
+
+- gitRepo: Git 리포지토리를 Checkout 해서 초기화 하는 볼륨    
+• Git 리포지토리를 복제해 만들어지는 emptyDir 볼륨  
+• 웹애플리케이션의 정적 컨텐츠를 제공하는 볼륨으로 사용함  
+
+containers 내 volumeMounts과 volumes 내 gitRepo로 정의  
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitvolume-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: web-server
+        volumeMounts: # 설정된 볼륨 마운트
+        - name: html
+          mountPath: /usr/share/nginx/html
+          readOnly: true
+        ports:
+          - containerPort: 80
+            protocol: TCP
+      volumes: # 볼륨 설정
+      - name: html
+        gitRepo:
+          repository: https://github.com/nueees/k8s-test.git
+          revision: master
+          directory: .
+```
+
+- nfs: Pod에 마운트된 네트워크 파일 시스템  
+
+
+- gcePersistentDisk(구글), awsEElastic-BlockStore(아마존), azureDisk(애저)  
+
+containers 내 volumeMounts과 volumes 내 gcePersistentDisk 등으로 정의  
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mongodb
+spec:
+  volumes: # 볼륨 설정
+  - name: mongodb-data
+    gcePersistentDisk: # 구글 persistentDisk 
+      pdName: mongodb
+      fsType: ext4
+  containers:
+  - image: mongo
+    name:  mongodb
+    volumeMounts: # 설정된 볼륨 마운트
+    -  name: mongodb-data
+       mountPath: /data/db
+    ports:
+    - containerPort: 27017
+      protocol: TCP
+```
+
+- 그 외 cinder,cephfs,iscsi,flocker,quobyte,glusterfs 등  
+
+
+
+<br><br>
+---
+
+## 8.2. Volume 공유 관리
+일반적인 애플리케이션 컨테이너가 로그를 기록하고, 또 다른 컨테이너는 로그를 읽어서 로그 서버로 전송
+
+### PersistentVolume  
+
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+   name: mongodb-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  gcePersistentDisk:
+   pdName: mongodb
+   fsType: ext4
+```
+### PersistentVolumeClaim  
+
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pvc
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: ""
+```
+
+
+### Pod으로 생성 시
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mongodb
+spec:
+  containers:
+  - image: mongo
+    name: mongodb
+    volumeMounts:
+    - name: mongodb-data
+      mountPath: /data/db
+    ports:
+    - containerPort: 27017
+      protocol: TCP
+  volumes:
+  - name: mongodb-data
+    persistentVolumeClaim:
+      claimName: mongodb-pvc
+```
+
+
+<br><br>
+---
+## 8.3. 특수 Volume
+- configMap: 설정파일 및 환경 변수 보관 하는 볼륨
+- secret: 기밀 유지가 필요한 설정 파일 이나 환경 변수 보관 하는 볼륨
+
+### ConfigMap and Secreet
+• ConfigMap 및 Secret 는 Key Value 쌍으로 데이터를 저장 하는 점에서는 동일
+• ConfigMap은 일반적인 USE CASES
+    • 환경 변수 및 파라매터 전달
+    • Container 내부에서 사용되는 명령어 및 매개 변수
+    • 어플리케이션이 사용하는 읽기 전용 파일
+    • ConfigMap을 읽어서 K8s API를 이용해 Pod 내부에서 수행되는 코드 작성 할때
+    • Secret은 패스워드 및 인증서 와 같은 중요정보 보관용으로 사용 (BASE 64 인코딩, 암호화 X)
+• Immutable ConfigMaps
+    • Application 오류로 인한 원하지 않는 업데이트로 부터 보호
+    • 대규모 클러스터에서 성능개선 : kube-apiserver의 부하를 획기적으로 줄임. ConfigMap 을 감시 하지 않기 때문에
+
+
+
+
+
+
+
+<br><br>
+---
+
 
 
