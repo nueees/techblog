@@ -1,29 +1,31 @@
 ---
 toc: false
 layout: post
-description: 5장-7장
+description: 5장-8장
 categories: [kubernetes]
 title: Kubernetes
 ---
 
-출처\_Building Cloud private native 전문가 양성과정 교재
+[dangtong76 blog](https://dangtong76.github.io/kubernetes/)
+
+---
 
 
-# 5.Container Cluster
+# 5. Container Cluster
 
-## 5.1. Kubernates 소개
+## 5.1. Kubernetes 소개
 
 docker - 단일 시스템에서만 다수의 컨테이너 관리  
 -> 다수의 시스템과 애프리케이션 설정을 쉽게 설정하고 유지보수할 수 있는 방식인 오케스트레이션(Ochestration)이 필요  
 
-kubernates - docker, rtk 같은 Container의 Ochestration 도구  
+kubernetes - docker, rtk 같은 Container의 Ochestration 도구  
 
 **_다중 컨테이너 관리를 위한 docker-compose를 설치해야 함._**
 
 쿠버네티스는 클러스터 구성해서 오케스트레이션을 통해 컨테이너를 자동으로 관리, 2개 이상 시스템에서 관리 가능  
 관리 대상을 object라고 함 - pods(컨테이너 논리적 구성 단위)와 controller(pods를 한번에 관리)로 구성(application workload)
 
-### 사용 이유
+### Kubernetes 사용 이유  
 
 • 기민한 애플리케이션 생성과 배포: VM 이미지를 사용하는 것에 비해 컨테이너 이미지 생성이 보다 쉽고 효율적  
 • 지속적인 개발, 통합 및 배포: 안정적이고 주기적으로 컨테이너 이미지를 빌드해서 배포할 수 있고 (이미지의 불변성 덕에) 빠르고 쉽게 롤백할 수 있다  
@@ -42,7 +44,7 @@ application 기능에 집중할 수 있도록 infra 영역을 추상화
 deploy 시점이 아닌, build 시점에 jar 파일이나 source 코드를 생성하는게 아니고
 container 이미지를 아얘 새로 만드는 추세  
 
-### 기능
+### Kubernetes 기능  
 
 컨테이너 플랫폼, 마이크로서비스 플랫폼, 이식성있는 클라우드 플랫폼 제공  
 
@@ -60,34 +62,28 @@ CI/CD 파이프라인, 애플리케이션 레벨의 서비스, 로깅, 모니터
 
 ---
 
-### CNCF (Cloud Native Computing Foundation)
+### CNCF (Cloud Native Computing Foundation)  
 CNCF에 인큐베이팅 되어 첫번째로 graduated한 kubernetes 프로젝트  
 
 밴더들이 클라우드 네이티브 후원하는 이유?  
 혼돈스러운 컨테이너와 관련된 다양한 기술적인 문제들을 오픈소스로 해결하는 하는 것을 목표  
 
-ckad 사용자 측  
-cka 관리자 측(자체적으로 운영 관리 가능)  
+ckad 사용자 측, cka 관리자 측(자체적으로 운영 관리 가능)  
+#### Graduated & incubating projects  
+#### Sandbox projects  
+#### Archived projects  
 
-
-#### Graduated & incubating projects
-
-
-#### Sandbox projects
-
-#### Archived projects
-
-<br>
+      
 ---
 
-### 기본 구성단위
+## 5.2. Kubernetes 기본 구성단위  
 [platform9 blog](https://platform9.com/blog/kubernetes-enterprise-chapter-2-kubernetes-architecture-concepts/)  
 
 ![image](https://user-images.githubusercontent.com/83441376/145669058-fa4c2505-574e-4827-936a-7045130486ca.png)  
 
 ![image](https://user-images.githubusercontent.com/83441376/145669061-cf579bad-4982-4712-9c1f-690fac7be012.png)  
 
-#### 1) Control Plane  
+### 1) Control Plane  
 1-1) API 서버 : 쿠버네티스 오브젝트에 대한 데이터를 설정하고 검증. REST 서비스 제공  
 1-2) 스케줄러 : 클러스터의 노드에 파드를 배포 하는 역할. feasibility 계산 하여 배포  
 1-3) 컨트롤러 메니저 : 제어 루프를 이용해 설정된 상태를 지속적으로 유지하도록 함  
@@ -95,7 +91,7 @@ cka 관리자 측(자체적으로 운영 관리 가능)
 
 ![image](https://user-images.githubusercontent.com/83441376/145669066-453d02b6-f1b2-4e0c-b114-e409224ab725.png)  
 
-#### 2) Nodes  
+### 2) Nodes  
 2-1) 컨테이너 런타임 : 컨테이너를 실행하는 엔진 (Docker, rtk 등)  
 2-2) Kubelet : API 서버와 통신하며 워커 노드의 컨테이너를 관리  
 2-3) kube-proxy : 애플리케이션의 구성 요소간에 네트워크 트래픽을 분산  
@@ -106,19 +102,19 @@ cka 관리자 측(자체적으로 운영 관리 가능)
 
 ---
 
-### 사전 설치
+## 5.3. k8s 사전 설치
 
-1. choco 패키지 관리도구 설치  
+### 1) choco 패키지 관리도구 설치  
 ```
 ] Set-ExecutionPolicy Bypass -Scope Process -Force; \[System.Net.ServicePointManager\]::SecurityProtocol = \[System.Net.ServicePointManager\]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('[https://community.chocolatey.org/install.ps1'](https://community.chocolatey.org/install.ps1')))
 ```
-2.  vagrant 설치혹은 vagrant.exe 파일 다운로드 후 설치 가능  
+### 2)  vagrant 설치혹은 vagrant.exe 파일 다운로드 후 설치 가능  
 ```
 ] choco install vagrant
 ```
-3.  하이퍼바이저 설치  
+### 3)  하이퍼바이저 설치  
     virtualbox 설치 (확장팩)
-4.  vagrant 명령어로 구성요소 설치  
+### 4)  vagrant 명령어로 구성요소 설치  
     vagrant plugin install vagrant-hostmanager  
     vagrant plugin install vagrant-disksize  
     확인: vagrant plugin list윈도우의 경우 직접 작성하면 확장자이름이 자동설정될 수 있으니 주의
@@ -126,7 +122,7 @@ cka 관리자 측(자체적으로 운영 관리 가능)
 ] vagrant box add ubuntu\/bionic64 
 ] vagrant up => Vagrantfile 이 있는 곳에서 실행
 ```
-5. 가상머신에 쿠버네티스 배포  
+### 5) 가상머신에 쿠버네티스 배포  
 ssh 설정
 ```
 ] ssh-keygen 
@@ -135,9 +131,9 @@ ssh 설정
 
 ---
 
-### kubernetes 설치
+## 5.4. k8s 설치
 
-1. 패키지 및 git 설치  
+### 1) 관련 패키지(python) 및 git 설치  
 
 ```
 ] sudo apt update 
@@ -148,7 +144,7 @@ ssh 설정
 ] sudo pip3 install -r requirements.txt
 ```
 
-2. 인벤토리 수정  
+### 2) 인벤토리 수정  
 
 ```shell
 ] cp -rfp inventory/sample/ inventory/mycluster 
@@ -184,12 +180,12 @@ metallb_protocol: "layer2"
 kube_proxy_strict_arp: true
 ```
 
-3.  플레이북 실행  
+### 3) 플레이북 실행  
 ```
 ] ansible-playbook -i inventory/mycluster/inventory.ini cluster.yml -b
 ```
 
-4.  kubectl 설치  
+### 4) kubectl 설치  
 ```
 ] curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" 
 ] curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" 
@@ -201,9 +197,9 @@ kube_proxy_strict_arp: true
 <br><br>
 ---
 
-## 5.2.Architecture
+## 5.5. k8s Architecture
 
-![]({{site.baseurl}}/images/post/docker_5_1.jpg)
+![]({{site.baseurl}}/images/post/docker_5_1.jpg)  
 
 kube-api-server를 통해서 대부분의 작업을 함  
 kube-controller-manager : on-premise 환경에서 각 리소스 관리  
@@ -285,19 +281,12 @@ stable 버전 : vX 형태의 안정화된 버전
 core group: apiVersion:\[version\]  
 core 이외 group: apiVersion: \[group\]/\[version\]
 
+
 <br><br>
 ---
 
-## 5.3.Menifest
 
-| 필드 | 설명 |
-| :-: | :-- |
-| apiVersion | object를 생성하기 위한 API 버전을 지정 |
-| kind | object 종류 |
-| metadata | name, label, namespace 등 기본정보 |
-| spec | object 세부 상태 |
-
-## Managing Object
+### Managing Object
 
 1) Imperative commands(명령형 커맨드)  
 재사용성이 떨어져 개발 환경에서 테스트 시, 일회성 작업일 경우 사용
@@ -321,7 +310,7 @@ yaml, json 포맷으로 파일을 작성하여 kubectl은 작성된 파일을 �
 ] kubectl apply -f configs/
 ```
 
-## Running App with Imperative commands 예시
+### Running App with Imperative commands 예시
 
 ```
 ] kubectl run mytest-app --image=<ACCOUNT>/myweb --port=8080 --generator=run/v1 # 레플리케이션 컨트롤러(pod) 생성
@@ -342,13 +331,27 @@ yaml, json 포맷으로 파일을 작성하여 kubectl은 작성된 파일을 �
 <br><br>
 ---
 
-# 6.Application Workload
 
-## 6.1.Pods
-POD(파드) 는 쿠버네티스 애플리케이션의 기본 실행 단위 (만들고 배포할 수 있는 가장 작은 단위)  
+## 5.6. Dockerfile Manifest (명세)
+
+| 필드 | 설명 |
+| :-: | :-- |
+| apiVersion | object를 생성하기 위한 API 버전을 지정 |
+| kind | object 종류 |
+| metadata | name, label, namespace 등 기본정보 |
+| spec | object 세부 상태 |
+
+
+<br><br>
+---
+
+# 6. Application Workload
+
+## 6.1. Pods
+POD(파드)는 쿠버네티스 애플리케이션의 기본 실행 단위 (만들고 배포할 수 있는 가장 작은 단위)  
 1 container = 1 application(1 pod)  
 
-### 특징  
+### Pods 특징  
 • 도커는 쿠버네티스 파드에서 사용되는 가장 대표적인 컨테이너 런타임이지만, 파드는 다른 컨테이너 런타임 역시 지원 (rtk, containerd)  
 • 파드당 컨테이너 비율은 대체로 1:1 이지만, 파드당 여러개의 컨테이너가 포함되는 경우도 있음  
 • 파드내의 컨테이너는 오로지 하나의 노드 내에만 존재 (노드를 걸쳐서 파드가 존재 하지 않음)  
@@ -392,10 +395,20 @@ _하이픈(\-) 기호는 리스트(List)를 의미_
 ] curl http://localhost:8080
 ```
 
-### Label(레이블) 및 Selector(셀렉터)  
-Label: 쿠버네티스 클러스터의 모든 오브젝트에 키/값 쌍으로 이루어진 값을 설정하여 리소스 식별, 속성 지정 역할  
-    네임스페이스 내 중복 불가  
-Label Selector: Label을 식별하고 검색함
+---
+## 6.2. Label(라벨) 
+
+#### Label: 쿠버네티스 클러스터의 모든 오브젝트에 키/값 쌍으로 이루어진 값을 설정하여 리소스 식별, 속성 지정 역할  
+• 라벨은 Pod뿐 아니라 쿠버네티스의 모든 리소스를 구성하는 간단하고 강력한 기능  
+• 리소스에 부여 하는 임의의 Key/Valye 쌍  
+• 라벨 셀렉터를 사용해 리소스를 선택할 때 사용  
+• 일반적으로 리소스를 만들 때 부여 하지만, 만들어진 후에도 라벨을 추가 하거나 변경 가능  
+• 한 네임스페이스 내 중복 불가  
+
+#### Label Selector: Label을 식별하고 검색함  
+
+
+#### Pod에 Label 생성
 
 cat testapp-pod-label.yml
 ```
@@ -415,7 +428,7 @@ spec:
       protocol: TCP
 ```
 
-pod 레이블 추가, 삭제 및 필터링  
+#### pod 라벨 추가, 삭제 및 필터링  
 ```
 ] kubectl label pod goapp-pod app="app1" tier="frontend"
 pod/goapp-pod labeled
@@ -433,7 +446,7 @@ goapp-pod   1/1     Running   0          7m56s
 pod/goapp-pod labeled
 ```
 
-node 레이블 추가 및 필터링 
+#### node 라벨 추가 및 필터링 
 ```
 ] kubectl label node gke-myk8s-cluster-default-pool-68423958-ss8l gpu=true
 node/gke-myk8s-cluster-default-pool-68423958-ss8l labeled
@@ -445,13 +458,63 @@ gke-myk8s-cluster-default-pool-68423958-ss8l   Ready    <none>   6d23h   v1.21.5
 
 ![]({{site.baseurl}}/images/post/docker_6_1_2-label.jpg)
 
+### label 활용  
 
-### Anotation(어노테이션)  
-Key/Value 쌍으로 라벨과 유사 하지만 셀렉터로 선택 불가능  
-라벨보다 훨씬더 많은 정보를 담을 수 있음  
-주로 주석을 사용해서 쿠버네티스 객체에 상세한 설명을 추가하여 다른 사람이 알아보기 쉽게 하는
-용도  
-ex) 객체를 만든 사람이름을 기록하면 공동 작업 시에 훨씬 쉽게 작업  
+#### 기능과 배포 구분  
+• app(application)은 Pod가 속한 application 도메인, 기능 혹은 마이크로 서비스 지정(ui, account service, product catalog, shopping cart, order service...)  
+• rel(release)은 Pod에서 실행 중인 애플리케이션의 배포 버전(canary, beta, stable...)    
+• app과 rel을 추가 하면서 Pod 들을 2가지 차원으로 구성  
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+    name: shopapp-pod
+    labels:
+        app: shopping cart
+        env: prod
+        creation_method: manual
+spec:
+    containers:
+    - name: shopapp-container
+        image: busybox
+        command: ['sh', '-c', 'echo shopping cart app container && sleep 3600']
+```
+
+#### 스케줄링  
+• k8s에서는 어떤 노드로 Pod가 스케줄 될지 알 수 없음  
+• 라벨을 이용해서 특정 노드로 스케줄링 가능  
+• GPU 유무, 메모리(High-Memmory), SSD 유무 를 노드의 라벨에 적용  
+• ex) SSD 가 있는 노드에 Pod 스케줄링 등  
+
+```
+] kubectl label node cart.shoping.com ssd=true # 한 노드에 라벨 추가
+```
+```
+apiVersion: v1
+kind: Pod
+metadata:
+    name: shopapp-pod
+    labels:
+        app: shopping cart
+        env: prod
+        creation_method: manual
+spec:
+    nodeSelector: # 노드셀렉터에서 ssd 있는 것으로 명시
+        ssd: "true"
+    containers:
+    - name: shopapp-container
+        image: busybox
+    
+```
+
+---
+## 6.3. Anotation(어노테이션)
+
+• Key/Value 쌍으로 라벨과 유사 하지만 셀렉터로 선택 불가능  
+• 라벨보다 훨씬더 많은 정보를 담을 수 있음  
+• 주로 주석을 사용해서 쿠버네티스 객체에 상세한 설명을 추가하여 다른 사람이 알아보기 쉽게 하는 용도  
+• ex) 객체를 만든 사람이름을 기록하면 공동 작업 시에 훨씬 쉽게 작업  
 
 ```
 ] kubectl annotate pod goapp-pod  make-by="nueees" team="se"
@@ -471,12 +534,27 @@ Annotations:  make-by: nueees
 ...
 ```
 
-### Name Space(네임스페이스)  
-Name Space: 쿠버네티스 클러스터 내 오브젝트와 리소스를 용도와 목적에 따라 논리적으로 완전히 분리된 환경default: 기본 네임스페이스  
+---
+## 6.4. Name Space(네임스페이스)
+
+#### Name Space: 쿠버네티스 클러스터 내 오브젝트와 리소스를 용도와 목적에 따라 논리적으로 완전히 분리된 환경  
+• k8s의 객체 이름의 범위를 제공하는 것  
+• 동일한 리소스 이름을 여러 네임스페이스에서 여러 번 사용 가능(개발 / 검증/ 운영 에서 동일한 리소스 명 사용)  
+• 멀티-테넌트 환경으로 분리하는 효과  
+
+### Name Space 종류
+default: 기본 네임스페이스  
 kube-node-lease: 쿠버네티스 노드(마스터/노드)의 가용성 체크를 위한 네임스페이스  
 kube-public: 모든 사용자 접근가능  
-kube-system: 클러스터의 리소스가 배치되는 네임스페이스
+kube-system: 클러스터의 리소스가 배치되는 네임스페이스  
 
+
+#### Name Space 생성 및 조회
+
+```
+] kubectl get ns
+] kubectl get pod –namespace(혹은 -n) kube-system
+```
 
 first_ns.yaml  
 ```
@@ -498,12 +576,31 @@ PS C:\u01\kubetpl> apiVersion: v1
 ```
 
 
+---
+## 6.5. Liveness Probe(라이브니스 프로브)  
+파드 상태가 정상적인지 주기적으로 모니터링 서비스(컨테이너의 Health Check)  
+Health Check가 실패할 경우 컨테이너를 다시 시작  
 
-### Liveness Prove(라이브니스 프로브)  
-파드 상태가 정상적인지 주기적으로 모니터링 서비스  
-- HTTP GET Prove: 특정 경로에 HTTP GET 요청, HTTP 응답코드가 2XX/3XX인지 확인  
-- TCP Socket Prove: 특정 TCP port 연결 시도  
+### Probe 종류
+- HTTP GET Prove: 지정된 IP/PORT에 HTTP GET 요청, HTTP 응답코드가 2XX/3XX인지 확인  
+- TCP Socket Prove: 지정된 IP/PORT에 TCP port 연결 시도  
 - Exec Prove: 컨테이너 내부의 바이너리(명령)를 실행하고 종료 코드 확인  
+
+### Probe 옵션
+- initialDelaySeconds: pod 가 시작되고 최초의 liveness probe가 수행되기 까지 대기시간  
+- periodSeconds: probe가 수행 되는 간격  
+- timeoutSeconds: 지정된 시간 안에 응답을 반환 해야 성공으로 간주  
+- successThreshold: probe가 실패한 이후에 지정된 횟수 만큼 성공 할 경우 성공으로 간주  
+- failureThreshold: probe가 지정한 개수 만큼 연속으로 실패하는 재가동 함  
+- 
+### httpGet 옵션
+- host: 접속할 호스트명, httpHeaders에 설정 해도 무방 (기본 pod ip)  
+- scheme: 접속 방법 선택 (HTTP 또는 HTTPS)  
+- path: HTTP 서버 접속 경로  
+- httpHeaders: request 의 커스텀 헤더  
+- port: 접속할 컨테이너의 포트 넘버 또는 이름 (1~ 65536 사이값)  
+
+#### livenessProbe 생성 및 조회  
 
 cat testapp-pod-liveness.yml  
 
@@ -519,7 +616,7 @@ spec:
     ports:
     - containerPort: 8080
       protocol: TCP
-    livenessProbe:
+    livenessProbe: # 설정 값 명시
         httpGet:
             path: /
             port: 8080
@@ -530,18 +627,19 @@ spec:
 ---
 
 
-## 6.2.Controller
-사용자가 의도한 상태로 유지 해 주는 기능
-
-
-
-### Replication Controller  
+## 6.6. Replication Controller  
+노드 장애 발생 시 사용자가 의도한 상태로 유지 해 주는 기능  
 
 - Replication Controller는 POD가 사라지게 되면 대체 할 POD 생성  
-- Pod Template 은 언제든지 수정 가능  
 - Pod 수정 시점이 아니라 새로운 Pod 가 생성 되는 시점에 적용 됨  
+- Pod Template 은 언제든지 수정 가능  
+- Label selector 변경되면 POD가 Replication Controller 범위 벗어남  
 
-spec에 replicas과 selector를 명시  
+### Replication Controller 구성  
+- replicas: 실행해야 하는 POD의 원하는 수를 지정하는 복제본수
+- selector: Replication Controller 범위에 있는 Pod를 결정하는 라벨 셀렉터를 사용함
+- template: 새로운 POD 복제본을 만들때 사용해야 하는 POD Template
+
 
 ```
 apiVersion: v1
@@ -549,10 +647,10 @@ kind: ReplicationController
 metadata:
   name: nginx-rc
 spec:
-  replicas: 3
-  selector:
+  replicas: 3  # 복제본수 명시
+  selector:  # RC 범위 지정할 대상 명시
     app: nginx
-  template:
+  template: # 복제본 정보 및 spec 명시
     metadata:
       name: nginx-pod
       labels:
@@ -632,11 +730,11 @@ nginx-rc-km8vn   1/1     Running   0          15m
 ```
 
 
-
-### ReplicaSet (레플리카셋)
+---
+## 6.7. ReplicaSet (레플리카셋)
 사용자가 요구하는 복제본 개수만큼 Pod를 복제하고 관리하는 기능  
+기존 Replication Controller 서로 다른 라벨을 가진 pod 관리 안되므로 RC 대체를 위해 사용  
 
-- 기존 Replication Controller 서로 다른 라벨을 가진 pod 관리 안됨  
 - 일반적으로 ReplicaSet을 직접 생성 하기 보다 **Deployment** 를 이용해서 생성함  
 - Replication Controller 와 동일하게 동작 하지만 다양한 표현식(match~)을 통해 POD를 선택 가능  
 - 관리해야 하는 pod을 식별하기 위한 selector, 유지해야 하는 pod의 개수, pod template 포함  
@@ -701,10 +799,9 @@ pod/frontend-vx6jg   1/1     Running   0          7m35s   10.48.1.13   gke-myk8s
 
 
 
-
-### DaemonSet (데몬셋)
-쿠버네티스 클러스터는 부하 분산, 이중화를 통한 장애 대응 목적 등을 위하여 최소 하나 이상의 노드로 구성되므로 
-다수의 노드를 사용할 경우 필요에 따라 **각 노드별로 특정 목적을 수행하는 파드를 한 개씩** 배치하여야 하는 경우 사용  
+---
+## 6.8. DaemonSet (데몬셋)
+쿠버네티스 클러스터는 부하 분산, 이중화를 통한 장애 대응 목적 등을 위하여 최소 하나 이상의 노드로 구성되므로 다수의 노드를 사용할 경우 필요에 따라 **각 노드별로 특정 목적을 수행하는 파드를 한 개씩** 배치하여야 하는 경우 사용  
 
 
 - RC,RS 는 특정 노드에 특정 개수의 Pod 를 실행 하지만, 데몬셋은 라벨로 지정된 각각의 노드에 하나씩 정확하게 실행  
@@ -768,17 +865,13 @@ nodeapp-on-ssd-54pnq   0/1     ContainerCreating   0          13s
 
 ```
 
-
-### StatefulSet
-Pod이 스케줄 될 때 **지속적으로 유지**되는 식별자를 가질 수 있도록 관리하는 object  
-use case:  
-고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동  
-
-
-### Deployment  
+<br><br>
+---
+## 6.9. Deployment  
 Pod 와 ReplicaSet 에 대한 선언적 업데이트 제공하며, 배포에 대한 세분화된 기능 제공  
 Deployment 에 Desired state를 기술하면, Deployment Controller는 현재 상태에서 Desired state로 비율을 조정  
  
+### Deployment 기능  
 ReplicaSet에 대한 Update 담당  
 1) Liveness Probe: 응답 체크  
 2) Readlness Probe: 서비스 가능 상태 체크  
@@ -787,8 +880,8 @@ ReplicaSet에 대한 Update 담당
 - Deployment 에 의도하는 상태를 기술하면, Deployment Controller는 현재 상태에서 의도하는 상태로 비율을 조정함
 - Pod 에 대한 롤링 업데이트 및 롤백 기능 제공
 
-use case:  
-신규 ReplicaSet을 생성하여 Pod를 새로운 버전으로 점진적 교체 수행 (Rolling Update) 
+### Deployment use case  
+신규 ReplicaSet을 생성하여 Pod를 새로운 버전으로 점진적 교체 수행 (Rolling Update)  
 spec.strategy.type==RollingUpdate (default)이면 파드를 롤링 업데이트 방식  
 spec.strategy.type==Recreate 이면 새 파드가 생성되기 전에 kill  
 
@@ -797,6 +890,8 @@ Application configuration 분리 (Decoupling): Config Map
 셀렉터는 다른 컨트롤러(다른 디플로이먼트와 스테이트풀 셋 포함)와 겹치지 않아야 함  
 만약 다중 컨트롤러가 겹치는 셀렉터를 가지는 경우 해당 컨트롤러의 충돌  
 Deployment 로 배포 후에는 ReplicaSet 을 직접 관리 하지 않고 deployment 통해서 제어  
+
+### Deployment 생성 및 조회  
 
 cat testapp-dp.yml
 ```
@@ -864,6 +959,19 @@ REVISION  CHANGE-CAUSE
 5         kubectl.exe deployment.apps/nginx-deployment set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1 --record=true
 ```
 
+
+
+<br><br>
+---
+## 6.10. StatefulSet
+Pod이 스케줄 될 때 **지속적으로 유지**되는 식별자를 가질 수 있도록 관리하는 object  
+use case:  
+고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동  
+
+
+
+
+---
 
 #### 현재 네임스페이스 모든 리소스 삭제
 ```
@@ -1348,20 +1456,20 @@ spec:
 <br><br>
 ---
 ## 8.3. 특수 Volume
-- configMap: 설정파일 및 환경 변수 보관 하는 볼륨
-- secret: 기밀 유지가 필요한 설정 파일 이나 환경 변수 보관 하는 볼륨
+- configMap: 설정파일 및 환경 변수 보관 하는 볼륨  
+- secret: 기밀 유지가 필요한 설정 파일 이나 환경 변수 보관 하는 볼륨  
 
-### ConfigMap and Secreet
-• ConfigMap 및 Secret 는 Key Value 쌍으로 데이터를 저장 하는 점에서는 동일
-• ConfigMap은 일반적인 USE CASES
-    • 환경 변수 및 파라매터 전달
-    • Container 내부에서 사용되는 명령어 및 매개 변수
-    • 어플리케이션이 사용하는 읽기 전용 파일
-    • ConfigMap을 읽어서 K8s API를 이용해 Pod 내부에서 수행되는 코드 작성 할때
-    • Secret은 패스워드 및 인증서 와 같은 중요정보 보관용으로 사용 (BASE 64 인코딩, 암호화 X)
-• Immutable ConfigMaps
-    • Application 오류로 인한 원하지 않는 업데이트로 부터 보호
-    • 대규모 클러스터에서 성능개선 : kube-apiserver의 부하를 획기적으로 줄임. ConfigMap 을 감시 하지 않기 때문에
+### ConfigMap and Secret
+• ConfigMap 및 Secret 는 Key Value 쌍으로 데이터를 저장 하는 점에서는 동일  
+• ConfigMap은 일반적인 USE CASES  
+    • 환경 변수 및 파라매터 전달  
+    • Container 내부에서 사용되는 명령어 및 매개 변수  
+    • 어플리케이션이 사용하는 읽기 전용 파일  
+    • ConfigMap을 읽어서 K8s API를 이용해 Pod 내부에서 수행되는 코드 작성 할때  
+    • Secret은 패스워드 및 인증서 와 같은 중요정보 보관용으로 사용 (BASE 64 인코딩, 암호화 X)  
+• Immutable ConfigMaps  
+    • Application 오류로 인한 원하지 않는 업데이트로 부터 보호  
+    • 대규모 클러스터에서 성능개선 : kube-apiserver의 부하를 획기적으로 줄임. ConfigMap 을 감시 하지 않기 때문에  
 
 
 
