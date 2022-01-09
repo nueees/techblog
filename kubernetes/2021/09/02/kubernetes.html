@@ -8,15 +8,15 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Kubernetes" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="5장-7장" />
-<meta property="og:description" content="5장-7장" />
+<meta name="description" content="5장-8장" />
+<meta property="og:description" content="5장-8장" />
 <link rel="canonical" href="https://nueees.github.io/techblog/kubernetes/2021/09/02/kubernetes.html" />
 <meta property="og:url" content="https://nueees.github.io/techblog/kubernetes/2021/09/02/kubernetes.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-09-02T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"5장-7장","url":"https://nueees.github.io/techblog/kubernetes/2021/09/02/kubernetes.html","@type":"BlogPosting","headline":"Kubernetes","dateModified":"2021-09-02T00:00:00-05:00","datePublished":"2021-09-02T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/kubernetes/2021/09/02/kubernetes.html"},"@context":"https://schema.org"}</script>
+{"description":"5장-8장","url":"https://nueees.github.io/techblog/kubernetes/2021/09/02/kubernetes.html","@type":"BlogPosting","headline":"Kubernetes","dateModified":"2021-09-02T00:00:00-05:00","datePublished":"2021-09-02T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/kubernetes/2021/09/02/kubernetes.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,13 +87,13 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Kubernetes</h1><p class="page-description">5장-7장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-09-02T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Kubernetes</h1><p class="page-description">5장-8장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-09-02T00:00:00-05:00" itemprop="datePublished">
         Sep 2, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      23 min read
+      26 min read
     
 </span></p>
 
@@ -109,23 +109,25 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>출처_Building Cloud private native 전문가 양성과정 교재</p>
+    <p><a href="https://dangtong76.github.io/kubernetes/">dangtong76 blog</a></p>
 
-<h1 id="5container-cluster">5.Container Cluster</h1>
+<hr />
 
-<h2 id="51-kubernates-소개">5.1. Kubernates 소개</h2>
+<h1 id="5-container-cluster">5. Container Cluster</h1>
+
+<h2 id="51-kubernetes-소개">5.1. Kubernetes 소개</h2>
 
 <p>docker - 단일 시스템에서만 다수의 컨테이너 관리<br />
 -&gt; 다수의 시스템과 애프리케이션 설정을 쉽게 설정하고 유지보수할 수 있는 방식인 오케스트레이션(Ochestration)이 필요</p>
 
-<p>kubernates - docker, rtk 같은 Container의 Ochestration 도구</p>
+<p>kubernetes - docker, rtk 같은 Container의 Ochestration 도구</p>
 
 <p><strong><em>다중 컨테이너 관리를 위한 docker-compose를 설치해야 함.</em></strong></p>
 
 <p>쿠버네티스는 클러스터 구성해서 오케스트레이션을 통해 컨테이너를 자동으로 관리, 2개 이상 시스템에서 관리 가능<br />
 관리 대상을 object라고 함 - pods(컨테이너 논리적 구성 단위)와 controller(pods를 한번에 관리)로 구성(application workload)</p>
 
-<h3 id="사용-이유">사용 이유</h3>
+<h3 id="kubernetes-사용-이유">Kubernetes 사용 이유</h3>
 
 <p>• 기민한 애플리케이션 생성과 배포: VM 이미지를 사용하는 것에 비해 컨테이너 이미지 생성이 보다 쉽고 효율적<br />
 • 지속적인 개발, 통합 및 배포: 안정적이고 주기적으로 컨테이너 이미지를 빌드해서 배포할 수 있고 (이미지의 불변성 덕에) 빠르고 쉽게 롤백할 수 있다<br />
@@ -144,7 +146,7 @@ application 기능에 집중할 수 있도록 infra 영역을 추상화</p>
 <p>deploy 시점이 아닌, build 시점에 jar 파일이나 source 코드를 생성하는게 아니고
 container 이미지를 아얘 새로 만드는 추세</p>
 
-<h3 id="기능">기능</h3>
+<h3 id="kubernetes-기능">Kubernetes 기능</h3>
 
 <p>컨테이너 플랫폼, 마이크로서비스 플랫폼, 이식성있는 클라우드 플랫폼 제공</p>
 
@@ -169,25 +171,21 @@ container 이미지를 아얘 새로 만드는 추세</p>
 <p>밴더들이 클라우드 네이티브 후원하는 이유?<br />
 혼돈스러운 컨테이너와 관련된 다양한 기술적인 문제들을 오픈소스로 해결하는 하는 것을 목표</p>
 
-<p>ckad 사용자 측<br />
-cka 관리자 측(자체적으로 운영 관리 가능)</p>
-
+<p>ckad 사용자 측, cka 관리자 측(자체적으로 운영 관리 가능)</p>
 <h4 id="graduated--incubating-projects">Graduated &amp; incubating projects</h4>
-
 <h4 id="sandbox-projects">Sandbox projects</h4>
-
 <h4 id="archived-projects">Archived projects</h4>
 
-<h2><br /></h2>
+<hr />
 
-<h3 id="기본-구성단위">기본 구성단위</h3>
+<h2 id="52-kubernetes-기본-구성단위">5.2. Kubernetes 기본 구성단위</h2>
 <p><a href="https://platform9.com/blog/kubernetes-enterprise-chapter-2-kubernetes-architecture-concepts/">platform9 blog</a></p>
 
 <p><img src="https://user-images.githubusercontent.com/83441376/145669058-fa4c2505-574e-4827-936a-7045130486ca.png" alt="image" /></p>
 
 <p><img src="https://user-images.githubusercontent.com/83441376/145669061-cf579bad-4982-4712-9c1f-690fac7be012.png" alt="image" /></p>
 
-<h4 id="1-control-plane">1) Control Plane</h4>
+<h3 id="1-control-plane">1) Control Plane</h3>
 <p>1-1) API 서버 : 쿠버네티스 오브젝트에 대한 데이터를 설정하고 검증. REST 서비스 제공<br />
 1-2) 스케줄러 : 클러스터의 노드에 파드를 배포 하는 역할. feasibility 계산 하여 배포<br />
 1-3) 컨트롤러 메니저 : 제어 루프를 이용해 설정된 상태를 지속적으로 유지하도록 함<br />
@@ -195,7 +193,7 @@ cka 관리자 측(자체적으로 운영 관리 가능)</p>
 
 <p><img src="https://user-images.githubusercontent.com/83441376/145669066-453d02b6-f1b2-4e0c-b114-e409224ab725.png" alt="image" /></p>
 
-<h4 id="2-nodes">2) Nodes</h4>
+<h3 id="2-nodes">2) Nodes</h3>
 <p>2-1) 컨테이너 런타임 : 컨테이너를 실행하는 엔진 (Docker, rtk 등)<br />
 2-2) Kubelet : API 서버와 통신하며 워커 노드의 컨테이너를 관리<br />
 2-3) kube-proxy : 애플리케이션의 구성 요소간에 네트워크 트래픽을 분산</p>
@@ -204,42 +202,26 @@ cka 관리자 측(자체적으로 운영 관리 가능)</p>
 
 <hr />
 
-<h3 id="사전-설치">사전 설치</h3>
+<h2 id="53-k8s-사전-설치">5.3. k8s 사전 설치</h2>
 
-<ol>
-  <li>choco 패키지 관리도구 설치
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] Set-ExecutionPolicy Bypass -Scope Process -Force; \[System.Net.ServicePointManager\]::SecurityProtocol = \[System.Net.ServicePointManager\]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('[https://community.chocolatey.org/install.ps1'](https://community.chocolatey.org/install.ps1')))
-</code></pre></div>    </div>
-  </li>
-  <li>vagrant 설치혹은 vagrant.exe 파일 다운로드 후 설치 가능
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] choco install vagrant
-</code></pre></div>    </div>
-  </li>
-  <li>하이퍼바이저 설치<br />
-virtualbox 설치 (확장팩)</li>
-  <li>vagrant 명령어로 구성요소 설치<br />
-vagrant plugin install vagrant-hostmanager<br />
-vagrant plugin install vagrant-disksize<br />
-확인: vagrant plugin list윈도우의 경우 직접 작성하면 확장자이름이 자동설정될 수 있으니 주의
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] vagrant box add ubuntu\/bionic64 
-] vagrant up =&gt; Vagrantfile 이 있는 곳에서 실행
-</code></pre></div>    </div>
-  </li>
-  <li>가상머신에 쿠버네티스 배포<br />
-ssh 설정
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] ssh-keygen 
-] ssh-copy-id node1 (노드 모두 입력) localhost 도 설정
-</code></pre></div>    </div>
-  </li>
-</ol>
+<h3 id="1-choco-패키지-관리도구-설치">1) choco 패키지 관리도구 설치</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] Set-ExecutionPolicy Bypass -Scope Process -Force; \[System.Net.ServicePointManager\]::SecurityProtocol = \[System.Net.ServicePointManager\]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('[https://community.chocolatey.org/install.ps1'](https://community.chocolatey.org/install.ps1')))
+</code></pre></div></div>
+<h3 id="2--vagrant-설치혹은-vagrantexe-파일-다운로드-후-설치-가능">2)  vagrant 설치혹은 vagrant.exe 파일 다운로드 후 설치 가능</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] choco install vagrant
+</code></pre></div></div>
+<h3 id="3--하이퍼바이저-설치">3)  하이퍼바이저 설치</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>virtualbox 설치 (확장팩) ### 4)  vagrant 명령어로 구성요소 설치  
+vagrant plugin install vagrant-hostmanager  
+vagrant plugin install vagrant-disksize  
+확인: vagrant plugin list윈도우의 경우 직접 작성하면 확장자이름이 자동설정될 수 있으니 주의 ``` ] vagrant box add ubuntu\/bionic64  ] vagrant up =&gt; Vagrantfile 이 있는 곳에서 실행 ``` ### 5) 가상머신에 쿠버네티스 배포   ssh 설정 ``` ] ssh-keygen  ] ssh-copy-id node1 (노드 모두 입력) localhost 도 설정 ```
+</code></pre></div></div>
 
 <hr />
 
-<h3 id="kubernetes-설치">kubernetes 설치</h3>
+<h2 id="54-k8s-설치">5.4. k8s 설치</h2>
 
-<ol>
-  <li>패키지 및 git 설치</li>
-</ol>
+<h3 id="1-관련-패키지python-및-git-설치">1) 관련 패키지(python) 및 git 설치</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] sudo apt update 
 ] sudo apt upgrade -y 
@@ -249,9 +231,7 @@ ssh 설정
 ] sudo pip3 install -r requirements.txt
 </code></pre></div></div>
 
-<ol>
-  <li>인벤토리 수정</li>
-</ol>
+<h3 id="2-인벤토리-수정">2) 인벤토리 수정</h3>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">]</span> <span class="nb">cp</span> <span class="nt">-rfp</span> inventory/sample/ inventory/mycluster 
 <span class="o">]</span> vim inventory/mycluster/inventory.ini 
@@ -286,24 +266,21 @@ metallb_protocol: <span class="s2">"layer2"</span>
 kube_proxy_strict_arp: <span class="nb">true</span>
 </code></pre></div></div>
 
-<ol>
-  <li>플레이북 실행
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] ansible-playbook -i inventory/mycluster/inventory.ini cluster.yml -b
-</code></pre></div>    </div>
-  </li>
-  <li>kubectl 설치
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" 
+<h3 id="3-플레이북-실행">3) 플레이북 실행</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] ansible-playbook -i inventory/mycluster/inventory.ini cluster.yml -b
+</code></pre></div></div>
+
+<h3 id="4-kubectl-설치">4) kubectl 설치</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" 
 ] curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" 
 ] echo "$(&lt;kubectl.sha256) kubectl" | sha256sum --check 
 ] sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl 
 ] kubectl version --client
-</code></pre></div>    </div>
-  </li>
-</ol>
+</code></pre></div></div>
 
-<h2 id="-1"><br /><br /></h2>
+<h2><br /><br /></h2>
 
-<h2 id="52architecture">5.2.Architecture</h2>
+<h2 id="55-k8s-architecture">5.5. k8s Architecture</h2>
 
 <p><img src="/techblog/images/post/docker_5_1.jpg" alt="" /></p>
 
@@ -413,9 +390,49 @@ stable 버전 : vX 형태의 안정화된 버전</p>
 core group: apiVersion:[version]<br />
 core 이외 group: apiVersion: [group]/[version]</p>
 
+<h2 id="-1"><br /><br /></h2>
+
+<h3 id="managing-object">Managing Object</h3>
+
+<p>1) Imperative commands(명령형 커맨드)<br />
+재사용성이 떨어져 개발 환경에서 테스트 시, 일회성 작업일 경우 사용</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl run nginx --image nginx
+</code></pre></div></div>
+
+<p>2) Imperative object configuration(명령형 오브젝트 구성)<br />
+yaml, json 포맷으로 파일을 작성하여 kubectl은 작성된 파일을 참고하여 실행</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl create -f nginx.yaml
+</code></pre></div></div>
+
+<p>3) Declarative object configuration(선언형 오브젝트 구성)<br />
+특정 디렉토리에 오브젝트 파일을 배치하고 작성된 파일을 참고하여 오브젝트 관리</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl diff -f configs/
+] kubectl apply -f configs/
+</code></pre></div></div>
+
+<h3 id="running-app-with-imperative-commands-예시">Running App with Imperative commands 예시</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl run mytest-app --image=&lt;ACCOUNT&gt;/myweb --port=8080 --generator=run/v1 # 레플리케이션 컨트롤러(pod) 생성
+] kubectl get pods
+] kubectl get replicationcontrollers
+] kubectl expose replicationcontroller mytest-app --type=LoadBalancer --name myweb-svc # 서비스 생성
+] kubectl get services
+] curl http://192.168.56.11:31289
+] kubectl scale replicationcontroller mytest-app --replicas=3
+] kubectl get pods
+] kubectl get replicationcontrollers
+] curl http://192.168.56.11:31289 
+] kubectl get all
+] kubectl delete replicationcontrollers mytest-app
+] kubectl delete service myweb-svc
+</code></pre></div></div>
+
 <h2 id="-2"><br /><br /></h2>
 
-<h2 id="53menifest">5.3.Menifest</h2>
+<h2 id="56-dockerfile-manifest-명세">5.6. Dockerfile Manifest (명세)</h2>
 
 <table>
   <thead>
@@ -444,53 +461,15 @@ core 이외 group: apiVersion: [group]/[version]</p>
   </tbody>
 </table>
 
-<h2 id="managing-object">Managing Object</h2>
-
-<p>1) Imperative commands(명령형 커맨드)<br />
-재사용성이 떨어져 개발 환경에서 테스트 시, 일회성 작업일 경우 사용</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl run nginx --image nginx
-</code></pre></div></div>
-
-<p>2) Imperative object configuration(명령형 오브젝트 구성)<br />
-yaml, json 포맷으로 파일을 작성하여 kubectl은 작성된 파일을 참고하여 실행</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl create -f nginx.yaml
-</code></pre></div></div>
-
-<p>3) Declarative object configuration(선언형 오브젝트 구성)<br />
-특정 디렉토리에 오브젝트 파일을 배치하고 작성된 파일을 참고하여 오브젝트 관리</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl diff -f configs/
-] kubectl apply -f configs/
-</code></pre></div></div>
-
-<h2 id="running-app-with-imperative-commands-예시">Running App with Imperative commands 예시</h2>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl run mytest-app --image=&lt;ACCOUNT&gt;/myweb --port=8080 --generator=run/v1 # 레플리케이션 컨트롤러(pod) 생성
-] kubectl get pods
-] kubectl get replicationcontrollers
-] kubectl expose replicationcontroller mytest-app --type=LoadBalancer --name myweb-svc # 서비스 생성
-] kubectl get services
-] curl http://192.168.56.11:31289
-] kubectl scale replicationcontroller mytest-app --replicas=3
-] kubectl get pods
-] kubectl get replicationcontrollers
-] curl http://192.168.56.11:31289 
-] kubectl get all
-] kubectl delete replicationcontrollers mytest-app
-] kubectl delete service myweb-svc
-</code></pre></div></div>
-
 <h2 id="-3"><br /><br /></h2>
 
-<h1 id="6application-workload">6.Application Workload</h1>
+<h1 id="6-application-workload">6. Application Workload</h1>
 
-<h2 id="61pods">6.1.Pods</h2>
-<p>POD(파드) 는 쿠버네티스 애플리케이션의 기본 실행 단위 (만들고 배포할 수 있는 가장 작은 단위)<br />
+<h2 id="61-pods">6.1. Pods</h2>
+<p>POD(파드)는 쿠버네티스 애플리케이션의 기본 실행 단위 (만들고 배포할 수 있는 가장 작은 단위)<br />
 1 container = 1 application(1 pod)</p>
 
-<h3 id="특징">특징</h3>
+<h3 id="pods-특징">Pods 특징</h3>
 <p>• 도커는 쿠버네티스 파드에서 사용되는 가장 대표적인 컨테이너 런타임이지만, 파드는 다른 컨테이너 런타임 역시 지원 (rtk, containerd)<br />
 • 파드당 컨테이너 비율은 대체로 1:1 이지만, 파드당 여러개의 컨테이너가 포함되는 경우도 있음<br />
 • 파드내의 컨테이너는 오로지 하나의 노드 내에만 존재 (노드를 걸쳐서 파드가 존재 하지 않음)<br />
@@ -529,10 +508,19 @@ spec:
 ] curl http://localhost:8080
 </code></pre></div></div>
 
-<h3 id="label레이블-및-selector셀렉터">Label(레이블) 및 Selector(셀렉터)</h3>
-<p>Label: 쿠버네티스 클러스터의 모든 오브젝트에 키/값 쌍으로 이루어진 값을 설정하여 리소스 식별, 속성 지정 역할<br />
-    네임스페이스 내 중복 불가<br />
-Label Selector: Label을 식별하고 검색함</p>
+<hr />
+<h2 id="62-label라벨">6.2. Label(라벨)</h2>
+
+<h4 id="label-쿠버네티스-클러스터의-모든-오브젝트에-키값-쌍으로-이루어진-값을-설정하여-리소스-식별-속성-지정-역할">Label: 쿠버네티스 클러스터의 모든 오브젝트에 키/값 쌍으로 이루어진 값을 설정하여 리소스 식별, 속성 지정 역할</h4>
+<p>• 라벨은 Pod뿐 아니라 쿠버네티스의 모든 리소스를 구성하는 간단하고 강력한 기능<br />
+• 리소스에 부여 하는 임의의 Key/Valye 쌍<br />
+• 라벨 셀렉터를 사용해 리소스를 선택할 때 사용<br />
+• 일반적으로 리소스를 만들 때 부여 하지만, 만들어진 후에도 라벨을 추가 하거나 변경 가능<br />
+• 한 네임스페이스 내 중복 불가</p>
+
+<h4 id="label-selector-label을-식별하고-검색함">Label Selector: Label을 식별하고 검색함</h4>
+
+<h4 id="pod에-label-생성">Pod에 Label 생성</h4>
 
 <p>cat testapp-pod-label.yml</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apiVersion: v1
@@ -551,7 +539,7 @@ spec:
       protocol: TCP
 </code></pre></div></div>
 
-<p>pod 레이블 추가, 삭제 및 필터링</p>
+<h4 id="pod-라벨-추가-삭제-및-필터링">pod 라벨 추가, 삭제 및 필터링</h4>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl label pod goapp-pod app="app1" tier="frontend"
 pod/goapp-pod labeled
 
@@ -568,7 +556,7 @@ goapp-pod   1/1     Running   0          7m56s
 pod/goapp-pod labeled
 </code></pre></div></div>
 
-<p>node 레이블 추가 및 필터링</p>
+<h4 id="node-라벨-추가-및-필터링">node 라벨 추가 및 필터링</h4>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl label node gke-myk8s-cluster-default-pool-68423958-ss8l gpu=true
 node/gke-myk8s-cluster-default-pool-68423958-ss8l labeled
 
@@ -579,12 +567,60 @@ gke-myk8s-cluster-default-pool-68423958-ss8l   Ready    &lt;none&gt;   6d23h   v
 
 <p><img src="/techblog/images/post/docker_6_1_2-label.jpg" alt="" /></p>
 
-<h3 id="anotation어노테이션">Anotation(어노테이션)</h3>
-<p>Key/Value 쌍으로 라벨과 유사 하지만 셀렉터로 선택 불가능<br />
-라벨보다 훨씬더 많은 정보를 담을 수 있음<br />
-주로 주석을 사용해서 쿠버네티스 객체에 상세한 설명을 추가하여 다른 사람이 알아보기 쉽게 하는
-용도<br />
-ex) 객체를 만든 사람이름을 기록하면 공동 작업 시에 훨씬 쉽게 작업</p>
+<h3 id="label-활용">label 활용</h3>
+
+<h4 id="기능과-배포-구분">기능과 배포 구분</h4>
+<p>• app(application)은 Pod가 속한 application 도메인, 기능 혹은 마이크로 서비스 지정(ui, account service, product catalog, shopping cart, order service…)<br />
+• rel(release)은 Pod에서 실행 중인 애플리케이션의 배포 버전(canary, beta, stable…)  <br />
+• app과 rel을 추가 하면서 Pod 들을 2가지 차원으로 구성</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apiVersion: v1
+kind: Pod
+metadata:
+    name: shopapp-pod
+    labels:
+        app: shopping cart
+        env: prod
+        creation_method: manual
+spec:
+    containers:
+    - name: shopapp-container
+        image: busybox
+        command: ['sh', '-c', 'echo shopping cart app container &amp;&amp; sleep 3600']
+</code></pre></div></div>
+
+<h4 id="스케줄링">스케줄링</h4>
+<p>• k8s에서는 어떤 노드로 Pod가 스케줄 될지 알 수 없음<br />
+• 라벨을 이용해서 특정 노드로 스케줄링 가능<br />
+• GPU 유무, 메모리(High-Memmory), SSD 유무 를 노드의 라벨에 적용<br />
+• ex) SSD 가 있는 노드에 Pod 스케줄링 등</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl label node cart.shoping.com ssd=true # 한 노드에 라벨 추가
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apiVersion: v1
+kind: Pod
+metadata:
+    name: shopapp-pod
+    labels:
+        app: shopping cart
+        env: prod
+        creation_method: manual
+spec:
+    nodeSelector: # 노드셀렉터에서 ssd 있는 것으로 명시
+        ssd: "true"
+    containers:
+    - name: shopapp-container
+        image: busybox
+    
+</code></pre></div></div>
+
+<hr />
+<h2 id="63-anotation어노테이션">6.3. Anotation(어노테이션)</h2>
+
+<p>• Key/Value 쌍으로 라벨과 유사 하지만 셀렉터로 선택 불가능<br />
+• 라벨보다 훨씬더 많은 정보를 담을 수 있음<br />
+• 주로 주석을 사용해서 쿠버네티스 객체에 상세한 설명을 추가하여 다른 사람이 알아보기 쉽게 하는 용도<br />
+• ex) 객체를 만든 사람이름을 기록하면 공동 작업 시에 훨씬 쉽게 작업</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl annotate pod goapp-pod  make-by="nueees" team="se"
 pod/goapp-pod annotated
@@ -603,11 +639,25 @@ Annotations:  make-by: nueees
 ...
 </code></pre></div></div>
 
-<h3 id="name-space네임스페이스">Name Space(네임스페이스)</h3>
-<p>Name Space: 쿠버네티스 클러스터 내 오브젝트와 리소스를 용도와 목적에 따라 논리적으로 완전히 분리된 환경default: 기본 네임스페이스<br />
+<hr />
+<h2 id="64-name-space네임스페이스">6.4. Name Space(네임스페이스)</h2>
+
+<h4 id="name-space-쿠버네티스-클러스터-내-오브젝트와-리소스를-용도와-목적에-따라-논리적으로-완전히-분리된-환경">Name Space: 쿠버네티스 클러스터 내 오브젝트와 리소스를 용도와 목적에 따라 논리적으로 완전히 분리된 환경</h4>
+<p>• k8s의 객체 이름의 범위를 제공하는 것<br />
+• 동일한 리소스 이름을 여러 네임스페이스에서 여러 번 사용 가능(개발 / 검증/ 운영 에서 동일한 리소스 명 사용)<br />
+• 멀티-테넌트 환경으로 분리하는 효과</p>
+
+<h3 id="name-space-종류">Name Space 종류</h3>
+<p>default: 기본 네임스페이스<br />
 kube-node-lease: 쿠버네티스 노드(마스터/노드)의 가용성 체크를 위한 네임스페이스<br />
 kube-public: 모든 사용자 접근가능<br />
 kube-system: 클러스터의 리소스가 배치되는 네임스페이스</p>
+
+<h4 id="name-space-생성-및-조회">Name Space 생성 및 조회</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl get ns
+] kubectl get pod –namespace(혹은 -n) kube-system
+</code></pre></div></div>
 
 <p>first_ns.yaml</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apiVersion: v1
@@ -626,13 +676,36 @@ PS C:\u01\kubetpl&gt; apiVersion: v1
 
 </code></pre></div></div>
 
-<h3 id="liveness-prove라이브니스-프로브">Liveness Prove(라이브니스 프로브)</h3>
-<p>파드 상태가 정상적인지 주기적으로 모니터링 서비스</p>
+<hr />
+<h2 id="65-liveness-probe라이브니스-프로브">6.5. Liveness Probe(라이브니스 프로브)</h2>
+<p>파드 상태가 정상적인지 주기적으로 모니터링 서비스(컨테이너의 Health Check)<br />
+Health Check가 실패할 경우 컨테이너를 다시 시작</p>
+
+<h3 id="probe-종류">Probe 종류</h3>
 <ul>
-  <li>HTTP GET Prove: 특정 경로에 HTTP GET 요청, HTTP 응답코드가 2XX/3XX인지 확인</li>
-  <li>TCP Socket Prove: 특정 TCP port 연결 시도</li>
+  <li>HTTP GET Prove: 지정된 IP/PORT에 HTTP GET 요청, HTTP 응답코드가 2XX/3XX인지 확인</li>
+  <li>TCP Socket Prove: 지정된 IP/PORT에 TCP port 연결 시도</li>
   <li>Exec Prove: 컨테이너 내부의 바이너리(명령)를 실행하고 종료 코드 확인</li>
 </ul>
+
+<h3 id="probe-옵션">Probe 옵션</h3>
+<ul>
+  <li>initialDelaySeconds: pod 가 시작되고 최초의 liveness probe가 수행되기 까지 대기시간</li>
+  <li>periodSeconds: probe가 수행 되는 간격</li>
+  <li>timeoutSeconds: 지정된 시간 안에 응답을 반환 해야 성공으로 간주</li>
+  <li>successThreshold: probe가 실패한 이후에 지정된 횟수 만큼 성공 할 경우 성공으로 간주</li>
+  <li>failureThreshold: probe가 지정한 개수 만큼 연속으로 실패하는 재가동 함</li>
+  <li>
+    <h3 id="httpget-옵션">httpGet 옵션</h3>
+  </li>
+  <li>host: 접속할 호스트명, httpHeaders에 설정 해도 무방 (기본 pod ip)</li>
+  <li>scheme: 접속 방법 선택 (HTTP 또는 HTTPS)</li>
+  <li>path: HTTP 서버 접속 경로</li>
+  <li>httpHeaders: request 의 커스텀 헤더</li>
+  <li>port: 접속할 컨테이너의 포트 넘버 또는 이름 (1~ 65536 사이값)</li>
+</ul>
+
+<h4 id="livenessprobe-생성-및-조회">livenessProbe 생성 및 조회</h4>
 
 <p>cat testapp-pod-liveness.yml</p>
 
@@ -647,7 +720,7 @@ spec:
     ports:
     - containerPort: 8080
       protocol: TCP
-    livenessProbe:
+    livenessProbe: # 설정 값 명시
         httpGet:
             path: /
             port: 8080
@@ -655,28 +728,32 @@ spec:
 
 <h2 id="-4"><br /><br /></h2>
 
-<h2 id="62controller">6.2.Controller</h2>
-<p>사용자가 의도한 상태로 유지 해 주는 기능</p>
-
-<h3 id="replication-controller">Replication Controller</h3>
+<h2 id="66-replication-controller">6.6. Replication Controller</h2>
+<p>노드 장애 발생 시 사용자가 의도한 상태로 유지 해 주는 기능</p>
 
 <ul>
   <li>Replication Controller는 POD가 사라지게 되면 대체 할 POD 생성</li>
-  <li>Pod Template 은 언제든지 수정 가능</li>
   <li>Pod 수정 시점이 아니라 새로운 Pod 가 생성 되는 시점에 적용 됨</li>
+  <li>Pod Template 은 언제든지 수정 가능</li>
+  <li>Label selector 변경되면 POD가 Replication Controller 범위 벗어남</li>
 </ul>
 
-<p>spec에 replicas과 selector를 명시</p>
+<h3 id="replication-controller-구성">Replication Controller 구성</h3>
+<ul>
+  <li>replicas: 실행해야 하는 POD의 원하는 수를 지정하는 복제본수</li>
+  <li>selector: Replication Controller 범위에 있는 Pod를 결정하는 라벨 셀렉터를 사용함</li>
+  <li>template: 새로운 POD 복제본을 만들때 사용해야 하는 POD Template</li>
+</ul>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apiVersion: v1
 kind: ReplicationController
 metadata:
   name: nginx-rc
 spec:
-  replicas: 3
-  selector:
+  replicas: 3  # 복제본수 명시
+  selector:  # RC 범위 지정할 대상 명시
     app: nginx
-  template:
+  template: # 복제본 정보 및 spec 명시
     metadata:
       name: nginx-pod
       labels:
@@ -751,11 +828,12 @@ nginx-rc-klrmt   1/1     Running   0          15m
 nginx-rc-km8vn   1/1     Running   0          15m
 </code></pre></div></div>
 
-<h3 id="replicaset-레플리카셋">ReplicaSet (레플리카셋)</h3>
-<p>사용자가 요구하는 복제본 개수만큼 Pod를 복제하고 관리하는 기능</p>
+<hr />
+<h2 id="67-replicaset-레플리카셋">6.7. ReplicaSet (레플리카셋)</h2>
+<p>사용자가 요구하는 복제본 개수만큼 Pod를 복제하고 관리하는 기능<br />
+기존 Replication Controller 서로 다른 라벨을 가진 pod 관리 안되므로 RC 대체를 위해 사용</p>
 
 <ul>
-  <li>기존 Replication Controller 서로 다른 라벨을 가진 pod 관리 안됨</li>
   <li>일반적으로 ReplicaSet을 직접 생성 하기 보다 <strong>Deployment</strong> 를 이용해서 생성함</li>
   <li>Replication Controller 와 동일하게 동작 하지만 다양한 표현식(match~)을 통해 POD를 선택 가능</li>
   <li>관리해야 하는 pod을 식별하기 위한 selector, 유지해야 하는 pod의 개수, pod template 포함<br />
@@ -814,9 +892,9 @@ pod/frontend-cl5b2   1/1     Running   0          7m35s   10.48.0.24   gke-myk8s
 pod/frontend-vx6jg   1/1     Running   0          7m35s   10.48.1.13   gke-myk8s-cluster-default-pool-68423958-ss8l   &lt;none&gt;           &lt;none&gt;
 </code></pre></div></div>
 
-<h3 id="daemonset-데몬셋">DaemonSet (데몬셋)</h3>
-<p>쿠버네티스 클러스터는 부하 분산, 이중화를 통한 장애 대응 목적 등을 위하여 최소 하나 이상의 노드로 구성되므로 
-다수의 노드를 사용할 경우 필요에 따라 <strong>각 노드별로 특정 목적을 수행하는 파드를 한 개씩</strong> 배치하여야 하는 경우 사용</p>
+<hr />
+<h2 id="68-daemonset-데몬셋">6.8. DaemonSet (데몬셋)</h2>
+<p>쿠버네티스 클러스터는 부하 분산, 이중화를 통한 장애 대응 목적 등을 위하여 최소 하나 이상의 노드로 구성되므로 다수의 노드를 사용할 경우 필요에 따라 <strong>각 노드별로 특정 목적을 수행하는 파드를 한 개씩</strong> 배치하여야 하는 경우 사용</p>
 
 <ul>
   <li>RC,RS 는 특정 노드에 특정 개수의 Pod 를 실행 하지만, 데몬셋은 라벨로 지정된 각각의 노드에 하나씩 정확하게 실행</li>
@@ -877,15 +955,12 @@ nodeapp-on-ssd-54pnq   0/1     ContainerCreating   0          13s
 
 </code></pre></div></div>
 
-<h3 id="statefulset">StatefulSet</h3>
-<p>Pod이 스케줄 될 때 <strong>지속적으로 유지</strong>되는 식별자를 가질 수 있도록 관리하는 object<br />
-use case:<br />
-고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동</p>
-
-<h3 id="deployment">Deployment</h3>
+<h2 id="-5"><br /><br /></h2>
+<h2 id="69-deployment">6.9. Deployment</h2>
 <p>Pod 와 ReplicaSet 에 대한 선언적 업데이트 제공하며, 배포에 대한 세분화된 기능 제공<br />
 Deployment 에 Desired state를 기술하면, Deployment Controller는 현재 상태에서 Desired state로 비율을 조정</p>
 
+<h3 id="deployment-기능">Deployment 기능</h3>
 <p>ReplicaSet에 대한 Update 담당<br />
 1) Liveness Probe: 응답 체크<br />
 2) Readlness Probe: 서비스 가능 상태 체크</p>
@@ -896,8 +971,8 @@ Deployment 에 Desired state를 기술하면, Deployment Controller는 현재 �
   <li>Pod 에 대한 롤링 업데이트 및 롤백 기능 제공</li>
 </ul>
 
-<p>use case:<br />
-신규 ReplicaSet을 생성하여 Pod를 새로운 버전으로 점진적 교체 수행 (Rolling Update) 
+<h3 id="deployment-use-case">Deployment use case</h3>
+<p>신규 ReplicaSet을 생성하여 Pod를 새로운 버전으로 점진적 교체 수행 (Rolling Update)<br />
 spec.strategy.type==RollingUpdate (default)이면 파드를 롤링 업데이트 방식<br />
 spec.strategy.type==Recreate 이면 새 파드가 생성되기 전에 kill</p>
 
@@ -906,6 +981,8 @@ spec.strategy.type==Recreate 이면 새 파드가 생성되기 전에 kill</p>
 <p>셀렉터는 다른 컨트롤러(다른 디플로이먼트와 스테이트풀 셋 포함)와 겹치지 않아야 함<br />
 만약 다중 컨트롤러가 겹치는 셀렉터를 가지는 경우 해당 컨트롤러의 충돌<br />
 Deployment 로 배포 후에는 ReplicaSet 을 직접 관리 하지 않고 deployment 통해서 제어</p>
+
+<h3 id="deployment-생성-및-조회">Deployment 생성 및 조회</h3>
 
 <p>cat testapp-dp.yml</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apiVersion: apps/v1
@@ -968,11 +1045,19 @@ REVISION  CHANGE-CAUSE
 5         kubectl.exe deployment.apps/nginx-deployment set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1 --record=true
 </code></pre></div></div>
 
+<h2 id="-6"><br /><br /></h2>
+<h2 id="610-statefulset">6.10. StatefulSet</h2>
+<p>Pod이 스케줄 될 때 <strong>지속적으로 유지</strong>되는 식별자를 가질 수 있도록 관리하는 object<br />
+use case:<br />
+고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동</p>
+
+<hr />
+
 <h4 id="현재-네임스페이스-모든-리소스-삭제">현재 네임스페이스 모든 리소스 삭제</h4>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl delete all --all
 </code></pre></div></div>
 
-<h2 id="-5"><br /><br /></h2>
+<h2 id="-7"><br /><br /></h2>
 
 <h1 id="7-network---service">7. Network - Service</h1>
 
@@ -1103,7 +1188,7 @@ spec:
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl create -f testapp-rs-named-port.yml -f testapp-svc-named-port.yml
 </code></pre></div></div>
 
-<h2 id="-6"><br /><br /></h2>
+<h2 id="-8"><br /><br /></h2>
 <h2 id="72-service-탐색">7.2. Service 탐색</h2>
 
 <p>kubectl get 명령어로 IP 주소를 수동적으로 확인할 수 있지만 Object끼리 통신을 위한 방식 필요</p>
@@ -1144,7 +1229,7 @@ DaemonSet 형태로 쿠버네티스의 각 노드마다 DNS 캐시 기능을 하
 
 <p>주소구성: &lt;리소스(서비스) 이름&gt;.<네임 스페이스="">.<리소스 종류="">.<클러스터 도메인=""></클러스터></리소스></네임></p>
 
-<h2 id="-7"><br /><br /></h2>
+<h2 id="-9"><br /><br /></h2>
 <h2 id="73-service-종류">7.3. Service 종류</h2>
 
 <p>위의 내용은 내부 접근이고, 외부 접근 제공하는 서비스 구성 필요</p>
@@ -1241,7 +1326,7 @@ spec:
 ] kubectl get services # ExternalName 서비스 확인
 </code></pre></div></div>
 
-<h2 id="-8"><br /><br /></h2>
+<h2 id="-10"><br /><br /></h2>
 
 <h1 id="8-storage---volumes">8. Storage - Volumes</h1>
 
@@ -1380,7 +1465,7 @@ spec:
   <li>그 외 cinder,cephfs,iscsi,flocker,quobyte,glusterfs 등</li>
 </ul>
 
-<h2 id="-9"><br /><br /></h2>
+<h2 id="-11"><br /><br /></h2>
 
 <h2 id="82-volume-공유-관리">8.2. Volume 공유 관리</h2>
 <p>일반적인 애플리케이션 컨테이너가 로그를 기록하고, 또 다른 컨테이너는 로그를 읽어서 로그 서버로 전송</p>
@@ -1439,26 +1524,26 @@ spec:
       claimName: mongodb-pvc
 </code></pre></div></div>
 
-<h2 id="-10"><br /><br /></h2>
+<h2 id="-12"><br /><br /></h2>
 <h2 id="83-특수-volume">8.3. 특수 Volume</h2>
 <ul>
   <li>configMap: 설정파일 및 환경 변수 보관 하는 볼륨</li>
   <li>secret: 기밀 유지가 필요한 설정 파일 이나 환경 변수 보관 하는 볼륨</li>
 </ul>
 
-<h3 id="configmap-and-secreet">ConfigMap and Secreet</h3>
-<p>• ConfigMap 및 Secret 는 Key Value 쌍으로 데이터를 저장 하는 점에서는 동일
-• ConfigMap은 일반적인 USE CASES
-    • 환경 변수 및 파라매터 전달
-    • Container 내부에서 사용되는 명령어 및 매개 변수
-    • 어플리케이션이 사용하는 읽기 전용 파일
-    • ConfigMap을 읽어서 K8s API를 이용해 Pod 내부에서 수행되는 코드 작성 할때
-    • Secret은 패스워드 및 인증서 와 같은 중요정보 보관용으로 사용 (BASE 64 인코딩, 암호화 X)
-• Immutable ConfigMaps
-    • Application 오류로 인한 원하지 않는 업데이트로 부터 보호
+<h3 id="configmap-and-secret">ConfigMap and Secret</h3>
+<p>• ConfigMap 및 Secret 는 Key Value 쌍으로 데이터를 저장 하는 점에서는 동일<br />
+• ConfigMap은 일반적인 USE CASES<br />
+    • 환경 변수 및 파라매터 전달<br />
+    • Container 내부에서 사용되는 명령어 및 매개 변수<br />
+    • 어플리케이션이 사용하는 읽기 전용 파일<br />
+    • ConfigMap을 읽어서 K8s API를 이용해 Pod 내부에서 수행되는 코드 작성 할때<br />
+    • Secret은 패스워드 및 인증서 와 같은 중요정보 보관용으로 사용 (BASE 64 인코딩, 암호화 X)<br />
+• Immutable ConfigMaps<br />
+    • Application 오류로 인한 원하지 않는 업데이트로 부터 보호<br />
     • 대규모 클러스터에서 성능개선 : kube-apiserver의 부하를 획기적으로 줄임. ConfigMap 을 감시 하지 않기 때문에</p>
 
-<h2 id="-11"><br /><br /></h2>
+<h2 id="-13"><br /><br /></h2>
 
 
   </div><a class="u-url" href="/techblog/kubernetes/2021/09/02/kubernetes.html" hidden></a>
