@@ -109,33 +109,32 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>출처_Building Cloud private native 전문가 양성과정 교재
+    <p><a href="https://dangtong76.github.io/kubernetes/">dangtong76 blog</a>
 <a href="http://cloudrain21.com/examination-of-docker-protocol-registry">cloudrain21 blog</a></p>
 
 <hr />
 
-<h1 id="1docker-container">1.Docker Container</h1>
+<h1 id="1-docker-container">1. Docker Container</h1>
 
-<h2 id="container--virtualization">Container &amp; Virtualization</h2>
+<h2 id="11-container--virtualization">1.1. Container &amp; Virtualization</h2>
 
-<p>하드웨어 성능이 올라가면서, 유휴자원을 활용하는 가상화(자원을 나눠서 사용) 기술이 대두됨.</p>
+<p>하드웨어 성능이 올라가면서, 유휴자원을 활용하는 가상화(자원을 나눠서 사용) 기술이 대두됨</p>
 
 <h3 id="가상화-종류">가상화 종류</h3>
 
 <ul>
-  <li>Hypervisor Virtualization(Native/Bare Metal): 하드웨어 위에 OS 대신 하이퍼바이저를 설치하고 <em>가상(개별OS)머신</em> 생성 (Hyper-V,XenServer)</li>
-  <li>Host Virtualization: 하드웨어 위에 OS 설치하고, 하이퍼바이저 설치 후, <em>가상(개별OS)머신</em> 생성 (VMware, VirtualBox)</li>
-  <li>Container Virtualization: 하드웨어 위에 OS설치하고, 컨테이너 runtime 관리 S/W 설치 후 <em>가상(App)머신</em> 생성 (Docker)<br />
-개별운영체제X, 호스트 OS의 일부를 공유하는 방식 사용, overhead 적음</li>
-  <li>그밖에 Application/Network/Storage Virtualization 있음.</li>
+  <li>Hypervisor Virtualization(Native/Bare Metal): 하드웨어 위에 OS 대신 하이퍼바이저를 설치하고 <strong>가상(개별OS)머신</strong> 생성 (Hyper-V,XenServer)</li>
+  <li>Host Virtualization: 하드웨어 위에 OS 설치하고, 하이퍼바이저 설치 후, <strong>가상(개별OS)머신</strong> 생성 (VMware, VirtualBox)</li>
+  <li>Container Virtualization: 하드웨어 위에 OS설치하고, 컨테이너 runtime 관리 S/W 설치 후 <strong>가상(App)머신</strong> 생성 (Docker)</li>
+  <li>개별운영체제X, 호스트 OS의 일부를 공유하는 방식 사용, overhead 적음</li>
+  <li>그밖에 Application/Network/Storage Virtualization 있음</li>
 </ul>
 
-<h2 id="docker-architecture">Docker Architecture</h2>
+<h2 id="12-docker-architecture">1.2. Docker Architecture</h2>
 
 <p><img src="https://user-images.githubusercontent.com/83441376/145659725-d79c2559-4830-41b3-bf62-e4cfdfccadd3.png" alt="image" /></p>
 
 <h3 id="dockers-strengths">Docker’s strengths</h3>
-
 <ul>
   <li>don’t need a guest OS</li>
   <li>Transplant : easily ported across different platforms</li>
@@ -158,19 +157,18 @@ Registry는 Image의 저장소 (Ubuntu, Debian, CentOS, Fedora의 기본 이미�
 
 <p><em>컨테이너 간 간섭을 방지하기 위해 Isolation 기술 (리눅스 namespace와 cgroup 기능) 사용</em></p>
 
-<h3 id="technique-for-docker">Technique for Docker</h3>
+<h2 id="13-technique-for-docker">1.3. Technique for Docker</h2>
 
-<h4 id="overlayfs">OverlayFS</h4>
+<h3 id="overlayfs">OverlayFS</h3>
 <p>이전의 unionFS 계열로 aufs overlayFS가 뒤를 이음 (현재는 overlayFS2)<br />
 여러 이미지 레이어에 있는 파일과 디렉토리를 Runtime layer에 함께 Mount하는 Union Mount 기술 사용<br />
-기본 컨테이너 이미지에 추가 작업 시 COW(Copy on Write)* 방식으로 생성<br />
-COW 방식은 부모 프로세스가 자식 프로세스를 생성할 때 전부 복제하지 않고, 쓰기가 발생했을 때 변경된 부분만 복제하는 방법과 유사<br />
+기본 컨테이너 이미지에 추가 작업 시 COW(Copy on Write)[^1] 방식으로 생성<br />
+[^1]: 부모 프로세스가 자식 프로세스를 생성할 때 전부 복제하지 않고, 쓰기가 발생했을 때 변경된 부분만 복제하는 방법과 유사<br />
 <em>도커 이미지관리에 사용되는 FS or Library : Btrfs, AUFS, Device Mapper, OverlayFS</em></p>
 
-<h4 id="linux-kernel---namespace">Linux Kernel - Namespace</h4>
+<h3 id="linux-kernel---namespace">Linux Kernel - <a href="https://sonseungha.tistory.com/519">Namespace</a></h3>
 <p>독립적인 공간을 제공하고 서로가 충돌하지 않도록 하는 기능<br />
-mnt(파일시스템 마운트),pid(프로세스),net(네트워크),ipc(SystemV IPC),uts(hostsname),user 모두 독립적으로 할당<br />
-<a href="https://sonseungha.tistory.com/519">sonseungha blog</a></p>
+mnt(파일시스템 마운트),pid(프로세스),net(네트워크),ipc(SystemV IPC),uts(hostsname),user 모두 독립적으로 할당</p>
 
 <p>namespace 테스트</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unshare --fork --pid -- mount-proc bash
@@ -179,23 +177,21 @@ top
 exit
 </code></pre></div></div>
 
-<h4 id="linux-kernel---cgroups">Linux Kernel - Cgroups</h4>
+<h3 id="linux-kernel---cgroups">Linux Kernel - Cgroups</h3>
 <p>Control Groups는 Resource에 대한 제어를 가능하게 함<br />
 Process 또는 Thread를 그룹화 하여 관리 (Memory, CPU, I/O, network, device node 그룹별로 제한 가능)</p>
 
-<h4 id="linux-kernel---가상-bridge와-가상-nicnetwork-interface-card">Linux Kernel - 가상 Bridge와 가상 NIC(Network Interface Card)</h4>
+<h3 id="linux-kernel---가상-bridge와-가상-nicnetwork-interface-card">Linux Kernel - 가상 Bridge와 가상 NIC(Network Interface Card)</h3>
 
 <p><img src="/techblog/images/post/docker_1_1.jpg" alt="가상 NIC" /><br />
 컨테이너 별 각각의 가상 NIC가 할당(ContainerA - eth0, ContainerB - eth0) <br />
 가상 NIC는 docker0(172.17.0.0/16)라는 가상 bridge로 연결되어 컨테이너끼리 또는 호스트(물리NIC)를 통해 외부 네트워크로 연결 (Host - eth0)</p>
 
-<p><br />
-<br />
-—</p>
+<h2><br /><br /></h2>
 
-<h1 id="2managing-docker-container">2.Managing Docker Container</h1>
+<h1 id="2-managing-docker-container">2. Managing Docker Container</h1>
 
-<h2 id="installing-docker-engine">Installing Docker Engine</h2>
+<h2 id="21-installing-docker-engine">2.1. Installing Docker Engine</h2>
 
 <h3 id="도커-패키지-리포지토리-연결-및-설치">도커 패키지 리포지토리 연결 및 설치</h3>
 
@@ -210,7 +206,7 @@ Process 또는 Thread를 그룹화 하여 관리 (Memory, CPU, I/O, network, dev
 # docker --help
 </code></pre></div></div>
 
-<h2 id="docker-container-image">Docker container image</h2>
+<h2 id="22-docker-container-image">2.2. Docker container image</h2>
 
 <h3 id="도커-이미지-관리">도커 이미지 관리</h3>
 
@@ -232,7 +228,7 @@ Process 또는 Thread를 그룹화 하여 관리 (Memory, CPU, I/O, network, dev
 
 <p><img src="/techblog/images/post/docker_1_2.jpg" alt="" /></p>
 
-<h2 id="docker-container-management">Docker container management</h2>
+<h2 id="23-docker-container-management">2.3. Docker container management</h2>
 
 <h3 id="도커-컨데이너-관리">도커 컨데이너 관리</h3>
 
@@ -465,12 +461,10 @@ Entrypoint가 지정되어 있으면 “Entrypoint”:[“docker-entrypoint.sh�
 <p><a href="http://localhost:8080">http://localhost:8080</a> 또는<br />
 <a href="http://localhost:8080/wp-admin/install.php%EB%A1%9C">http://localhost:8080/wp-admin/install.php로</a> 확인</p>
 
-<p><br />
-<br />
-—</p>
-<h1 id="3building-docker-image">3.Building Docker Image</h1>
+<h2 id="-1"><br /><br /></h2>
+<h1 id="3-building-docker-image">3. Building Docker Image</h1>
 
-<h2 id="dockerfile">Dockerfile</h2>
+<h2 id="31-dockerfile">3.1. Dockerfile</h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker run -it --name c1 centos
 # yum -y install httpd &gt; /dev/null 
@@ -574,7 +568,7 @@ CMD /usr/sbin/httpd -D FORGROUND
 
 <hr />
 
-<h2 id="docker-image-build">Docker image build</h2>
+<h2 id="32-docker-image-build">3.2. Docker image build</h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker build -help
 # cat /root/file/Dockerfile
@@ -595,15 +589,11 @@ CMD /usr/sbin/httpd -D FORGROUND
   <li>step 5/5 CMD /usr/sbin/httpd -D FORGROUND</li>
 </ol>
 
-<p><br />
-<br />
-—</p>
+<h2 id="-2"><br /><br /></h2>
 
-<h1 id="4docker-image-registry">4.Docker Image Registry</h1>
+<h1 id="4-docker-image-registry">4. Docker Image Registry</h1>
 
-<h2 id="docker-image-registry">Docker image registry?</h2>
-
-<h2 id="registry---docker-image-registry">Registry - Docker Image Registry</h2>
+<h2 id="41-registry---docker-image-registry">4.1. Registry - Docker Image Registry</h2>
 
 <p>도커 허브에 공개되어 있는 registry 공식 이미지</p>
 
@@ -619,7 +609,7 @@ CMD /usr/sbin/httpd -D FORGROUND
 # docker images
 </code></pre></div></div>
 
-<h2 id="harbor---docker-image-registry">Harbor - Docker Image Registry</h2>
+<h2 id="42-harbor---docker-image-registry">4.2. Harbor - Docker Image Registry</h2>
 
 <p>one of private registries<br />
 web 기반, 다양한 기능 제공</p>
@@ -666,7 +656,8 @@ web 기반, 다양한 기능 제공</p>
 
 <p>웹에서 Harbor IP 접속하여 대시보드 확인</p>
 
-<hr />
+<h2 id="-3"><br /><br /></h2>
+
 
   </div><a class="u-url" href="/techblog/kubernetes/2021/09/01/docker.html" hidden></a>
 </article>
