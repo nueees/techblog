@@ -10,7 +10,7 @@ permalink: /about/
 ## @nueees
 
 > CONTACT
-* Phone: 
+* Phone: +49-176-69155302
 * Email: nueees@gmail.com
 * Linkedin: https://www.linkedin.com/in/nueees/
 
