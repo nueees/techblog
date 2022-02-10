@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      6 min read
     
 </span></p>
 
@@ -134,16 +134,10 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#output-3">output:</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#25">2.5.</a>
+<li class="toc-entry toc-h2"><a href="#25-print-prime-numbers">2.5. Print Prime numbers</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#input-4">input:</a></li>
 <li class="toc-entry toc-h3"><a href="#output-4">output:</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#26">2.6.</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#input-5">input:</a></li>
-<li class="toc-entry toc-h3"><a href="#output-5">output:</a></li>
 </ul>
 </li>
 </ul><p>HackerRank</p>
@@ -315,70 +309,70 @@ order by con.contest_id
 <h3 id="input-2">
 <a class="anchor" href="#input-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
 <p>Students:<br>
-  1 Samantha
-  2 Julia
-  3 Britney
-  4 Kristeen
-  5 Dyana
-  6 Jenny
-  7 Christene
-  8 Meera
-  9 Priya
-  10 Priyanka
-  11 Paige
-  12 Jane
-  13 Belvet
-  14 Scarlet
-  15 Salma
-  16 Amanda
-  17 Maria
-  18 Stuart
-  19 Aamina
-  20 Amina</p>
+1 Samantha <br>
+2 Julia    <br>
+3 Britney  <br>
+4 Kristeen <br>
+5 Dyana    <br>
+6 Jenny    <br>
+7 Christene<br>
+8 Meera    <br>
+9 Priya    <br>
+10 Priyanka<br>
+11 Paige   <br>
+12 Jane    <br>
+13 Belvet  <br>
+14 Scarlet <br>
+15 Salma   <br>
+16 Amanda  <br>
+17 Maria   <br>
+18 Stuart  <br>
+19 Aamina  <br>
+20 Amina</p>
 
 <p>Friends:<br>
-  1 14
-  2 15
-  3 18
-  4 19
-  5 20
-  6 5
-  7 6
-  8 7
-  9 8
-  10 1
-  11 2
-  12 3
-  13 4
-  14 9
-  15 10
-  16 11
-  17 12
-  18 13
-  19 16
+  1 14 <br>
+  2 15 <br>
+  3 18 <br>
+  4 19 <br>
+  5 20 <br>
+  6 5  <br>
+  7 6  <br>
+  8 7  <br>
+  9 8  <br>
+  10 1 <br>
+  11 2 <br>
+  12 3 <br>
+  13 4 <br>
+  14 9 <br>
+  15 10<br>
+  16 11<br>
+  17 12<br>
+  18 13<br>
+  19 16<br>
   20 17</p>
 
 <p>Packages:<br>
-  1 15.5
-  2 15.6
-  3 16.7
-  4 18.8
-  5 31.5
-  6 45
-  7 47
-  8 46
-  9 39
-  10 11.1
-  11 12.1
-  12 13.1
-  13 14.1
-  14 15.1
-  15 17.1
-  16 21.1
-  17 31.1
-  18 13.15
-  19 33.33
-  20 22.16</p>
+1 15.5<br>
+2 15.6<br>
+3 16.7<br>
+4 18.8<br>
+5 31.5<br>
+6 45 <br>
+7 47 <br>
+8 46 <br>
+9 39 <br>
+10 11.1 <br>
+11 12.1 <br>
+12 13.1 <br>
+13 14.1 <br>
+14 15.1 <br>
+15 17.1 <br>
+16 21.1 <br>
+17 31.1 <br>
+18 13.15<br>
+19 33.33<br>
+20 22.16</p>
 
 <h3 id="output-2">
 <a class="anchor" href="#output-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>output:</h3>
@@ -459,7 +453,8 @@ join Functions inf on ( outf.x = inf.y and outf.y = inf.x)
 group by outf.x, outf.y
 having outf.x &lt; outf.y 
     or count(outf.x) &gt; 1
-order by 1,2;
+order by 1
+;
 
 &gt; 11 15 
   13 13 
@@ -468,29 +463,82 @@ order by 1,2;
 
 <hr>
 
-<h2 id="25">
-<a class="anchor" href="#25" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.5.</h2>
+<h2 id="25-print-prime-numbers">
+<a class="anchor" href="#25-print-prime-numbers" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.5. Print Prime numbers</h2>
+<p>소수 구하기</p>
 
 <h3 id="input-4">
 <a class="anchor" href="#input-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
+<p>X</p>
 
 <h3 id="output-4">
 <a class="anchor" href="#output-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>output:</h3>
+<p>2&amp;3&amp;5&amp;7</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>소수 아닌 애들 거르는 작업
+with num as 
+(select level as no
+        from dual
+        connect by level &lt;= 10)
+select n1.no, n2.no, mod(n1.no, n2.no)
+from num n1
+   , num n2
+where n1.no &gt; n2.no
+  and ( n2.no &lt;&gt; 1 and mod(n1.no, n2.no) = 0 )
+-- group by n1.no
+order by 1
+ ;
 
-<hr>
+&gt; 4 2 0
+  6 2 0
+  6 3 0
+  8 2 0
+  8 4 0
+  9 3 0
+  10 2 0
+  10 5 0
+  
+  
+pivot 전
+with num as 
+(select level as no
+        from dual
+        connect by level &lt;= 10)
+select num.no
+from num
+where num.no not in (select n1.no
+                from num n1
+                   , num n2
+                where n1.no &gt; n2.no
+                  and ( n2.no &lt;&gt; 1 and mod(n1.no, n2.no) = 0 )
+                group by n1.no)
+and num.no &lt;&gt; 1
+order by 1
+;
+&gt; 2
+  3
+  5
+  7
+  
+LIST_AGG로 피봇팅
+with num as 
+(select level as no
+        from dual
+        connect by level &lt;= 10)
+select LISTAGG(num.no,'&amp;') within group(order by num.no)
+from num
+where num.no not in (select n1.no
+                from num n1
+                   , num n2
+                where n1.no &gt; n2.no
+                  and ( n2.no &lt;&gt; 1 and mod(n1.no, n2.no) = 0 )
+                group by n1.no)
+and num.no &lt;&gt; 1
+order by 1
+;
+&gt; 2&amp;3&amp;5&amp;7
 
-<h2 id="26">
-<a class="anchor" href="#26" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.6.</h2>
-
-<h3 id="input-5">
-<a class="anchor" href="#input-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
-
-<h3 id="output-5">
-<a class="anchor" href="#output-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>output:</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+</code></pre></div></div>
 
 <hr>
 
