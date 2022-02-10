@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      5 min read
     
 </span></p>
 
@@ -128,7 +128,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#output-2">output:</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#24">2.4.</a>
+<li class="toc-entry toc-h2"><a href="#24-symmetric-pairs">2.4. Symmetric Pairs</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#input-3">input:</a></li>
 <li class="toc-entry toc-h3"><a href="#output-3">output:</a></li>
@@ -202,7 +202,6 @@ where Start_Date &lt; End_date
 GROUP BY Start_Date
 ORDER BY (Start_Date - MIN(End_date)) DESC, Start_Date
 ;
-
 </code></pre></div></div>
 
 <hr>
@@ -212,7 +211,7 @@ ORDER BY (Start_Date - MIN(End_date)) DESC, Start_Date
 
 <h3 id="input-1">
 <a class="anchor" href="#input-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
-<p>contest_id total_submissions total_accepted_submissions total_views total_unique_views
+<p>contest_id total_submissions total_accepted_submissions total_views total_unique_views<br>
 845 38 17 38 19<br>
 845 94 13 22 22<br>
 845 73 21 22 22<br>
@@ -315,7 +314,7 @@ order by con.contest_id
 
 <h3 id="input-2">
 <a class="anchor" href="#input-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
-<p>Students:
+<p>Students:<br>
   1 Samantha
   2 Julia
   3 Britney
@@ -337,7 +336,7 @@ order by con.contest_id
   19 Aamina
   20 Amina</p>
 
-<p>Friends:
+<p>Friends:<br>
   1 14
   2 15
   3 18
@@ -359,7 +358,7 @@ order by con.contest_id
   19 16
   20 17</p>
 
-<p>Packages:
+<p>Packages:<br>
   1 15.5
   2 15.6
   3 16.7
@@ -387,21 +386,85 @@ order by con.contest_id
 Julia<br>
 Scarlet</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select s.name
+     -- , s.id
+     -- , mysal.salary
+     -- , f.friend_id
+     -- , frdsal.salary
+from Students s
+join Packages mysal on s.id = mysal.id
+join Friends f on s.id = f.id
+join Packages frdsal on f.friend_id = frdsal.id
+where mysal.salary &lt; frdsal.salary
+order by frdsal.salary
+;
 </code></pre></div></div>
 
 <hr>
 
-<h2 id="24">
-<a class="anchor" href="#24" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4.</h2>
+<h2 id="24-symmetric-pairs">
+<a class="anchor" href="#24-symmetric-pairs" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. Symmetric Pairs</h2>
 
 <h3 id="input-3">
 <a class="anchor" href="#input-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>input:</h3>
+<p>11 11<br>
+11 15 Symmetric(11,15)<br>
+12 12<br>
+13 13 Symmetric(13,13)<br>
+13 13 Symmetric(13,13)
+14 14<br>
+14 12<br>
+15 15<br>
+15 11 Symmetric(11,15)</p>
 
 <h3 id="output-3">
 <a class="anchor" href="#output-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>output:</h3>
+<p>11 15<br>
+13 13</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+select outf.x
+     , outf.y
+     , inf.x
+     , inf.y
+join까지
+&gt;   11 11 11 11
+    11 15 15 11
+    12 12 12 12
+    13 13 13 13
+    13 13 13 13
+    13 13 13 13
+    13 13 13 13
+    14 14 14 14
+    15 11 11 15
+    15 15 15 15
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+
+select outf.x
+     , outf.y
+     , count(inf.x)
+group by까지  
+&gt;   11 11 1
+    11 15 1
+    12 12 1
+    13 13 4
+    14 14 1
+    15 11 1
+    15 15 1
+
+select outf.x
+     , outf.y
+     , count(inf.x)
+from Functions outf
+join Functions inf on ( outf.x = inf.y and outf.y = inf.x) 
+group by outf.x, outf.y
+having outf.x &lt; outf.y 
+    or count(outf.x) &gt; 1
+order by 1,2;
+
+&gt; 11 15 
+  13 13 
+
+</code></pre></div></div>
 
 <hr>
 
