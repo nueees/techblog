@@ -8,15 +8,15 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="S3 (Simple Storage Service)" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="section2" />
-<meta property="og:description" content="section2" />
-<link rel="canonical" href="https://nueees.github.io/techblog/aws/s3/2021/11/02/aws-s3.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/aws/s3/2021/11/02/aws-s3.html" />
+<meta name="description" content="section3" />
+<meta property="og:description" content="section3" />
+<link rel="canonical" href="https://nueees.github.io/techblog/aws/s3/2021/11/03/aws-s3.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/aws/s3/2021/11/03/aws-s3.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-11-02T00:00:00-05:00" />
+<meta property="article:published_time" content="2021-11-03T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"section2","url":"https://nueees.github.io/techblog/aws/s3/2021/11/02/aws-s3.html","@type":"BlogPosting","headline":"S3 (Simple Storage Service)","dateModified":"2021-11-02T00:00:00-05:00","datePublished":"2021-11-02T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/aws/s3/2021/11/02/aws-s3.html"},"@context":"https://schema.org"}</script>
+{"description":"section3","url":"https://nueees.github.io/techblog/aws/s3/2021/11/03/aws-s3.html","@type":"BlogPosting","headline":"S3 (Simple Storage Service)","dateModified":"2021-11-03T00:00:00-05:00","datePublished":"2021-11-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/aws/s3/2021/11/03/aws-s3.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,8 +87,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">S3 (Simple Storage Service)</h1><p class="page-description">section2</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-02T00:00:00-05:00" itemprop="datePublished">
-        Nov 2, 2021
+    <h1 class="post-title p-name" itemprop="name headline">S3 (Simple Storage Service)</h1><p class="page-description">section3</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-03T00:00:00-05:00" itemprop="datePublished">
+        Nov 3, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
     
@@ -113,9 +113,9 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#2-storage">2. Storage</a>
+<li class="toc-entry toc-h1"><a href="#3-storage">3. Storage</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#21-s3-simple-storage-service">2.1. S3 (Simple Storage Service)</a>
+<li class="toc-entry toc-h2"><a href="#31-s3-simple-storage-service">3.1. S3 (Simple Storage Service)</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#object-storage">Object Storage</a></li>
 <li class="toc-entry toc-h3"><a href="#lifecycle-구성">Lifecycle 구성</a></li>
@@ -129,27 +129,27 @@ window.onload = wrap_img;
 </li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#23-ebs-elastic-block-store">2.3. EBS (Elastic Block Store)</a>
+<li class="toc-entry toc-h2"><a href="#32-ebs-elastic-block-store">3.2. EBS (Elastic Block Store)</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#block-storage">Block Storage</a></li>
 <li class="toc-entry toc-h3"><a href="#ebs-type">EBS type</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#24-efs-elastic-file-system">2.4. EFS (Elastic File System)</a></li>
-<li class="toc-entry toc-h2"><a href="#25-storage-gateway">2.5. Storage Gateway</a></li>
-<li class="toc-entry toc-h2"><a href="#26-datasync">2.6. DataSync</a></li>
-<li class="toc-entry toc-h2"><a href="#27-fsx">2.7. FSx</a></li>
+<li class="toc-entry toc-h2"><a href="#33-efs-elastic-file-system">3.3. EFS (Elastic File System)</a></li>
+<li class="toc-entry toc-h2"><a href="#34-storage-gateway">3.4. Storage Gateway</a></li>
+<li class="toc-entry toc-h2"><a href="#35-datasync">3.5. DataSync</a></li>
+<li class="toc-entry toc-h2"><a href="#36-fsx">3.6. FSx</a></li>
 </ul>
 </li>
 </ul><p>AWS Documentation</p>
 
 <hr>
 
-<h1 id="2-storage">
-<a class="anchor" href="#2-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Storage</h1>
+<h1 id="3-storage">
+<a class="anchor" href="#3-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Storage</h1>
 
-<h2 id="21-s3-simple-storage-service">
-<a class="anchor" href="#21-s3-simple-storage-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. S3 (Simple Storage Service)</h2>
+<h2 id="31-s3-simple-storage-service">
+<a class="anchor" href="#31-s3-simple-storage-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. S3 (Simple Storage Service)</h2>
 
 <h3 id="object-storage">
 <a class="anchor" href="#object-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Object Storage</h3>
@@ -182,8 +182,8 @@ Expedited Retrievals 사용시 빠르게 검색 가능</p>
 <p>장기 보관용이나 접근 빈도 낮을 때 사용</p>
 
 <hr>
-<h2 id="23-ebs-elastic-block-store">
-<a class="anchor" href="#23-ebs-elastic-block-store" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. EBS (Elastic Block Store)</h2>
+<h2 id="32-ebs-elastic-block-store">
+<a class="anchor" href="#32-ebs-elastic-block-store" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. EBS (Elastic Block Store)</h2>
 
 <h3 id="block-storage">
 <a class="anchor" href="#block-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Block Storage</h3>
@@ -202,14 +202,14 @@ HDD: 처리량(Throughput)이 높고 작업 많을 때</p>
 
 <hr>
 
-<h2 id="24-efs-elastic-file-system">
-<a class="anchor" href="#24-efs-elastic-file-system" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. EFS (Elastic File System)</h2>
+<h2 id="33-efs-elastic-file-system">
+<a class="anchor" href="#33-efs-elastic-file-system" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.3. EFS (Elastic File System)</h2>
 <p>다중 AZ에 데이터를 저장, 연결</p>
 
 <hr>
 
-<h2 id="25-storage-gateway">
-<a class="anchor" href="#25-storage-gateway" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.5. Storage Gateway</h2>
+<h2 id="34-storage-gateway">
+<a class="anchor" href="#34-storage-gateway" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.4. Storage Gateway</h2>
 <p>on-premise에서 S3으로 migration (CDC)과 같은 Hybrid Cloud Storage 환경 load 작업 시<br>
 대용량 데이터 작업 시 -&gt; DataSync 사용</p>
 
@@ -227,19 +227,19 @@ Glacier에 저장할 때</p>
 
 <hr>
 
-<h2 id="26-datasync">
-<a class="anchor" href="#26-datasync" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.6. DataSync</h2>
+<h2 id="35-datasync">
+<a class="anchor" href="#35-datasync" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.5. DataSync</h2>
 <p>on-premise에서 S3, EFS(Elastic File System), FSx으로 대용량 load 작업 시</p>
 
 <hr>
 
-<h2 id="27-fsx">
-<a class="anchor" href="#27-fsx" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.7. FSx</h2>
+<h2 id="36-fsx">
+<a class="anchor" href="#36-fsx" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.6. FSx</h2>
 <p>Windows File system<br>
 SMB(Server Message Block) protocol 지원</p>
 
 
-  </div><a class="u-url" href="/techblog/aws/s3/2021/11/02/aws-s3.html" hidden></a>
+  </div><a class="u-url" href="/techblog/aws/s3/2021/11/03/aws-s3.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
