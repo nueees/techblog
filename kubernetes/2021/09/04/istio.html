@@ -8,15 +8,15 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Istio" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="10장" />
-<meta property="og:description" content="10장" />
+<meta name="description" content="12장-13장" />
+<meta property="og:description" content="12장-13장" />
 <link rel="canonical" href="https://nueees.github.io/techblog/kubernetes/2021/09/04/istio.html" />
 <meta property="og:url" content="https://nueees.github.io/techblog/kubernetes/2021/09/04/istio.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-09-04T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"10장","url":"https://nueees.github.io/techblog/kubernetes/2021/09/04/istio.html","@type":"BlogPosting","headline":"Istio","dateModified":"2021-09-04T00:00:00-05:00","datePublished":"2021-09-04T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/kubernetes/2021/09/04/istio.html"},"@context":"https://schema.org"}</script>
+{"description":"12장-13장","url":"https://nueees.github.io/techblog/kubernetes/2021/09/04/istio.html","@type":"BlogPosting","headline":"Istio","dateModified":"2021-09-04T00:00:00-05:00","datePublished":"2021-09-04T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/kubernetes/2021/09/04/istio.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,7 +87,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Istio</h1><p class="page-description">10장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-09-04T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Istio</h1><p class="page-description">12장-13장</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-09-04T00:00:00-05:00" itemprop="datePublished">
         Sep 4, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -112,41 +112,85 @@ window.onload = wrap_img;
     <p><a href="https://cwal.tistory.com/40?category=942316">devopsstory blog</a></p>
 
 <hr />
-<h1 id="10-istio">10. Istio</h1>
 
-<h2 id="101-service-mesh">10.1. Service Mesh</h2>
-<p>Service Mesh는 Application을 구성하는 Microservice간의 통신을 제어하거나, 추적할 수 있는 별도의 Infrastructure Layer를 의미<br />
-L7에서 HTTP URL Path, Header 등을 기반으로 동작하며, 보통은 Proxy를 비즈니스 로직을 수행중인 Microservice 옆에 Sidecar로 붙여서 Network Traffic을 대신 전달(routing)하는 방식으로 구성</p>
+<h1 id="12-service-mesh">12. Service Mesh</h1>
+<p>Application을 구성하는 Microservice간의 통신을 제어하거나, 추적할 수 있는 별도의 Infrastructure Layer를 가지는 도구들 총칭</p>
 
-<p><br />
-<br />
-—</p>
+<p>L7에서 HTTP URL Path, Header 등을 기반으로 동작하며, 보통은 Proxy를 비즈니스 로직을 수행중인 Microservice 옆에 Sidecar로 붙여서 Network Traffic을 대신 전달(routing)하는 방식으로 구성</p>
 
-<h2 id="102-traffic-management---istio">10.2. Traffic management - Istio</h2>
-<p>MSA 환경의 효율적인 DevOps를 위한 트래픽 관리</p>
+<h2 id="121-service-mesh-이점">12.1. Service Mesh 이점</h2>
+<p>MSA 환경의 효율적인 DevOps 가능</p>
 
-<h3 id="istio-트래픽-관리-컴포넌트">Istio 트래픽 관리 컴포넌트</h3>
+<h3 id="1-traffic-control-트래픽-관리">1) Traffic Control 트래픽 관리</h3>
+<p>Istio는 회로 차단기, 시간 초과 및 재시도와 같은 서비스 수준 속성의 구성을 단순화하고 A/B 테스트, 카나리아 배포 및 백분율 기반 트래픽 분할을 통한 단계적 출시와 같은 중요한 작업을 쉽게 설정할 수 있음</p>
+
+<h3 id="traffic-control-component">Traffic Control Component</h3>
 <p><a href="https://bcho.tistory.com/1367">bcho blog</a></p>
 
 <h4 id="gateway">Gateway</h4>
 <p>외부로부터 트래픽을 받는 최앞단으로, 트래픽을 받을 호스트명과 포트, 프로토콜을 정의<br />
-웹서버에서 버추얼 호스트를 정의하는 것과 같음</p>
+웹서버에서 virtual host를 정의하는 것과 같음</p>
 
-<h4 id="virtualservice">VirtualService</h4>
-<p>들어온 트래픽을 서비스로 라우팅 하는 기능<br />
+<h4 id="virtual-service">Virtual Service</h4>
+<p>들어온 트래픽을 서비스로 Routing 하는 기능<br />
 쿠버네티스의 Service가 목적지가 되는 것이고, 실제로 Virtual Service의 기능은 URI 기반으로 라우팅을 하는 Ingress와 유사<br />
 클라이언트가 쿠버네티스의 Service를 호출할때 라우팅 규칙에 따라서 적절한 쿠버네티스 Service로 라우팅 해주는 기능</p>
 
-<h4 id="destinationrule">DestinationRule</h4>
+<h4 id="destination-rule">Destination Rule</h4>
 <p>Virtual Service가 쿠버네티스 Service로 트래픽을 보내도록 라우팅을 했다면, 그 다음 Destination Rule은 그 서비스로 어떻게 트래픽을 보낼것인가를 정의 (하나의 Detination Rule은 하나의 Service에 대해서만 정의)</p>
 
 <p>Virtual Service가 라우팅을 해서 Service로 트래픽을 보내면, 실제로는 그 안에 있는 Pod 들에 라우팅이 되는데, 어느 Pod 들로 트래픽을 보낼지, 그리고, 어떻게 보낼지를 정의</p>
 
 <p>아래 예제는 my-svc.{namespace}.svc.cluster.local 서비스로 보내는 트래픽을 어떻게 보낼지를 정의하였는데, my-svc.{namespace}.svc.cluster.local  를 version이라는 pod 의 label에 따라서 v1,v2,v3 로 그룹핑을 하였다. 이를 subset</p>
 
-<p><br />
-<br />
-—</p>
+<h3 id="2-observability-관찰">2) Observability 관찰</h3>
+<p>Istio를 통해 모니터링되는 서비스가 상호 작용하는 방식을 철저히 이해</p>
+
+<h3 id="3-security-보안">3) Security 보안</h3>
+<p>강력한 ID, 강력한 정책, 투명한 TLS 암호화, AAA(인증, 권한 부여 및 감사) 도구를 제공하여 서비스와 데이터를 보호</p>
+
+<p><br /><br /></p>
+
+<h2 id="122-istio">12.2. Istio</h2>
+<p>k8s에서는 Service Mesh로 Istio를 사용</p>
+
+<p>k8s가 <strong>서비스 관점</strong>의 관리 도구
+Isotio는 <strong>어플리케이션(트래픽) 관점</strong>의 관리 도구</p>
+
+<h3 id="istio-architecture">Istio Architecture</h3>
+<p><img src="https://user-images.githubusercontent.com/83441376/154282693-f0292743-6586-493e-866e-b7060c72fac7.png" alt="image" />
+<a href="https://istio.io/latest/docs/ops/deployment/architecture/">출처</a></p>
+
+<h3 id="envoy-특징">Envoy 특징</h3>
+<p>일종의 Proxy 서비스로 application 트래픽을 인지하고, 트래픽을 programmable하게 관리하는 도구</p>
+
+<p>Istio가 yaml 파일 읽어서 envoy 설정으로 자동 변환</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apiVersion: networking.istio.io/v1alpha3
+Kind: VirtualService
+</code></pre></div></div>
+
+<ul>
+  <li>Dynamic service discovery</li>
+  <li>Load balancing</li>
+  <li>TLS termination</li>
+  <li>HTTP/2 and gRPC proxies</li>
+  <li>Circuit breakers</li>
+  <li>Health checks</li>
+  <li>Staged rollouts with percent-based traffic split</li>
+  <li>Fault injection</li>
+  <li>Rich metrics</li>
+</ul>
+
+<h2><br /><br /></h2>
+
+<h1 id="13-그밖의-service-mesh">13. 그밖의 Service mesh</h1>
+
+<h2 id="131-linkerd">13.1. Linkerd</h2>
+
+<h2 id="132-consul">13.2. Consul</h2>
+
+<h2 id="-1"><br /><br /></h2>
 
   </div><a class="u-url" href="/techblog/kubernetes/2021/09/04/istio.html" hidden></a>
 </article>
