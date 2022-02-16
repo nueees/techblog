@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      26 min read
+      28 min read
     
 </span></p>
 
@@ -1047,17 +1047,35 @@ REVISION  CHANGE-CAUSE
 
 <h2 id="-6"><br /><br /></h2>
 <h2 id="610-statefulset">6.10. StatefulSet</h2>
-<p>Pod이 스케줄 될 때 <strong>지속적으로 유지</strong>되는 식별자를 가질 수 있도록 관리하는 object<br />
-use case:<br />
-고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동</p>
+<p>Pod이 스케줄 될 때 <strong>지속적으로 유지</strong>되는 식별자를 가질 수 있도록 관리하는 object</p>
 
-<hr />
+<ul>
+  <li>분산 기반의 애플리케이션의 경우 호스트명, IP 등이 바뀌면 안됨</li>
+  <li>분산형 애플리케이션 가동시 동시 다운 / 동시 가동 하면 안되는 경우가 존재</li>
+</ul>
+
+<h3 id="statefullset-특징">Statefullset 특징</h3>
+<ul>
+  <li>생성된 Pod 마다 별도의 디스크 공간을 가져야 하는 경우 사용</li>
+  <li>ReplicaSet의 경우 생성 및 삭제가 동시에 진행되는 반면, StatefullSet 은 순차적 으로 진행 (시간조절 가능)</li>
+  <li>
+    <p>Pod 삭제 시 ID 값 내림차순으로 삭제
+Pod A-0, Pod A-1, Pod A-2 존재 시<br />
+Pod A-2, Pod A-1, Pod A-0 순으로 삭제 됨</p>
+  </li>
+  <li>삭제된 Pod가 다른 노드에 스케줄 되어 생성 되더라도 동일한 ID로 생성되기 때문에 이전에 생성된 PVC가 다시 부착 됨</li>
+</ul>
+
+<h3 id="use-case">use case:</h3>
+<p>고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동</p>
+
+<h2 id="-7"><br /><br /></h2>
 
 <h4 id="현재-네임스페이스-모든-리소스-삭제">현재 네임스페이스 모든 리소스 삭제</h4>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl delete all --all
 </code></pre></div></div>
 
-<h2 id="-7"><br /><br /></h2>
+<h2 id="-8"><br /><br /></h2>
 
 <h1 id="7-network---service">7. Network - Service</h1>
 
@@ -1188,7 +1206,7 @@ spec:
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl create -f testapp-rs-named-port.yml -f testapp-svc-named-port.yml
 </code></pre></div></div>
 
-<h2 id="-8"><br /><br /></h2>
+<h2 id="-9"><br /><br /></h2>
 <h2 id="72-service-탐색">7.2. Service 탐색</h2>
 
 <p>kubectl get 명령어로 IP 주소를 수동적으로 확인할 수 있지만 Object끼리 통신을 위한 방식 필요</p>
@@ -1229,7 +1247,7 @@ DaemonSet 형태로 쿠버네티스의 각 노드마다 DNS 캐시 기능을 하
 
 <p>주소구성: &lt;리소스(서비스) 이름&gt;.<네임 스페이스="">.<리소스 종류="">.<클러스터 도메인=""></클러스터></리소스></네임></p>
 
-<h2 id="-9"><br /><br /></h2>
+<h2 id="-10"><br /><br /></h2>
 <h2 id="73-service-종류">7.3. Service 종류</h2>
 
 <p>위의 내용은 내부 접근이고, 외부 접근 제공하는 서비스 구성 필요</p>
@@ -1326,7 +1344,7 @@ spec:
 ] kubectl get services # ExternalName 서비스 확인
 </code></pre></div></div>
 
-<h2 id="-10"><br /><br /></h2>
+<h2 id="-11"><br /><br /></h2>
 
 <h1 id="8-storage---volumes">8. Storage - Volumes</h1>
 
@@ -1465,7 +1483,7 @@ spec:
   <li>그 외 cinder,cephfs,iscsi,flocker,quobyte,glusterfs 등</li>
 </ul>
 
-<h2 id="-11"><br /><br /></h2>
+<h2 id="-12"><br /><br /></h2>
 
 <h2 id="82-volume-공유-관리">8.2. Volume 공유 관리</h2>
 <p>일반적인 애플리케이션 컨테이너가 로그를 기록하고, 또 다른 컨테이너는 로그를 읽어서 로그 서버로 전송</p>
@@ -1524,7 +1542,7 @@ spec:
       claimName: mongodb-pvc
 </code></pre></div></div>
 
-<h2 id="-12"><br /><br /></h2>
+<h2 id="-13"><br /><br /></h2>
 <h2 id="83-특수-volume">8.3. 특수 Volume</h2>
 <ul>
   <li>configMap: 설정파일 및 환경 변수 보관 하는 볼륨</li>
@@ -1543,7 +1561,144 @@ spec:
     • Application 오류로 인한 원하지 않는 업데이트로 부터 보호<br />
     • 대규모 클러스터에서 성능개선 : kube-apiserver의 부하를 획기적으로 줄임. ConfigMap 을 감시 하지 않기 때문에</p>
 
-<h2 id="-13"><br /><br /></h2>
+<h2 id="-14"><br /><br /></h2>
+
+<h1 id="9-추가로">9. 추가로..</h1>
+<h2 id="91-resource-request-및-limit">9.1. Resource Request 및 Limit</h2>
+<p>CPU 및 메모리 에 대해 리소스 설정 가능<br />
+CPU는 하이퍼스레딩 된 가상코어 단위</p>
+
+<p>cat resource-rq-lmt.yml</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apiVersion: v1
+kind: Pod
+metadata:
+    name: frontend
+spec:
+    containers: 
+    - name: db
+      image: mysql
+      env:
+      - name: MYSQL_ROOT_PASSWORD
+        value: "password"
+      resource:
+        request: # 리소스 요청
+          memory: "64Mi"
+          cpu: "250m"
+        limit: # 제한값
+          memory: "128Mi"
+          cpu: "500m"
+    - name: wp
+      image: wordpress
+      resource: # 리소스 요청
+        request:
+          memory: "64Mi"
+          cpu: "250m"
+        limit: # 제한값
+          memory: "128Mi"
+          cpu: "500m"
+     
+</code></pre></div></div>
+
+<h3 id="pod-스케줄링-시-리소스-계산">Pod 스케줄링 시 리소스 계산</h3>
+<p>스케줄러는 요청 사항을 합해서 미 할당된 리소스를 계산 함<br />
+실제 사용량은 여유가 있어도 다른 Pod에서 요청된 할당량으로 인해, 여유 리소스가 부족할 경우 Pod 할당 되지 않을 수 있음<br />
+노드 describe 해서 나오는 allocatable 부분만 확인함</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl describe nodesd
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Capacity: 
+  cpu:
+  ...
+  memory:
+Allocatable: # 스케줄러는 allocatable 이부분만 확인함
+  cpu:
+  ...
+  memory:
+  pods:
+</code></pre></div></div>
+
+<h2 id="-15"><br /><br /></h2>
+<h2 id="92-hpa-horizontal-pod-auto-scaler">9.2. HPA (Horizontal Pod Auto-Scaler)</h2>
+
+<h3 id="hpa-작동-원리">HPA 작동 원리</h3>
+<ul>
+  <li>Horizontal 컨트롤러가 HorizontalPodAutoscaler(HPA) 리소스를 만들어 수평 스케일링을 수행 함</li>
+  <li>스케일링 대상은 리플리케이션 컨트롤러 / 디플로이먼트 / 리플리카셋 / 스테이트풀셋</li>
+  <li>Kubelet 의 cAdvisor 를 통해 메트릭이 수집됨</li>
+  <li>HPA 컨트롤러는 horizontal-pod-autoscaler-use-rest-clients 옵션를 통해 메트립 수집
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>–horizontal-pod-autoscaler-use-rest-clients=true / --api-server=$(api server aggregator)
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="hpa-계산-방법">HPA 계산 방법</h3>
+<ul>
+  <li>HPA 가 Metric 을 수집해서 계산한 결과는 복제본의 수</li>
+  <li>단일 메트릭 항목만 고려 하도록 구성된 경우, 모든 Pod의 메트릭 값을 합산후 HPA 에 설정된 목표 값으로 나눈 후 큰 정수로 반올림</li>
+  <li>여러 메트릭을 고려 하도록 구성된 경우 계산이 훨씬 복잡 해짐</li>
+</ul>
+
+<h2 id="-16"><br /><br /></h2>
+<h2 id="93-account-관리">9.3. Account 관리</h2>
+
+<h3 id="user-account">User Account</h3>
+<p>주로 클러스터 관리에 사용</p>
+
+<h3 id="service-account">Service Account</h3>
+<p>응용 프로그램의 API 접근을 위해 사용<br />
+각 Pod 는 네임스페이스 있는 단일 서비스 어카운트와 연관돼 있음</p>
+
+<h3 id="role-and-role-binding">Role and Role Binding</h3>
+<ul>
+  <li>특정 리소스에 접근 가능한 롤을 만들고 롤 바인딩을 통해 사용자나 그룹에 롤을 부여함</li>
+  <li>바인딩은 유저 계정 및 서비스 계정 모두에 바인딩 가능함</li>
+  <li>하나의 유저는 여러 개의 롤을 바인딩을 통해 부여 받을 수 있음</li>
+</ul>
+
+<h2 id="-17"><br /><br /></h2>
+<h2 id="94-access-control">9.4. Access Control</h2>
+
+<h3 id="attribute-based-access-control">Attribute-Based Access Control</h3>
+<h3 id="role-based-access-control">Role-Based Access Control</h3>
+<ul>
+  <li>롤(Role)은 특정 api나 리소스에 대한 권한들을 명시해둔 규칙들의 집합</li>
+  <li>롤에는 롤(Role)과 클러스터롤(ClusterRole) 2가지 종류가 있음</li>
+  <li>클러스터롤은 특정 네임스페이스에 대한 권한이 아닌 클러스터 전체에 대한 권한을 관리(네임스페이스에 소속 되지 않음 리소스)</li>
+</ul>
+
+<h2 id="-18"><br /><br /></h2>
+<h2 id="95-taint-및-toleration">9.5. Taint 및 Toleration</h2>
+<ul>
+  <li>Taint는 {key}={value}:{option} 형식으로 이루어짐</li>
+  <li>taint: 노드마다 설정 가능 하며, 설정한 노드에는 Pod가 스케줄 되지 않음</li>
+  <li>Toleration: taint를 무시 할 수 있음</li>
+  <li>Taint에는 3가지 종류가 있음</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Taint</th>
+      <th style="text-align: left">설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">NoSchedule</td>
+      <td style="text-align: left">toleration이 없으면 pod이 스케줄되지 않음 기존 실행되던 pod에는 적용 안됨</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">PreferNoSchedule</td>
+      <td style="text-align: left">toleration이 없으면 pod을 스케줄링안하려고 하지만 필수는 아님, 클러스터내에 자원이 부족하거나 하면 taint가 걸려있는 노드에서도 pod이 스케줄링될 수 있음</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">NoExecute</td>
+      <td style="text-align: left">toleration이 없으면 pod이 스케줄되지 않으며 기존에 실행되던 pod도 toleration이 없으면 종료시킴</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="-19"><br /><br /></h2>
 
 
   </div><a class="u-url" href="/techblog/kubernetes/2021/09/02/kubernetes.html" hidden></a>
