@@ -1,16 +1,16 @@
 ---
 toc: false
 layout: post
-description: 8장-9장
+description: 10장-11장
 categories: [kubernetes]
 title: Microservice
 ---
 출처\_Building Cloud private native 전문가 양성과정 교재 + 추가 MSA 
 [kihoonkim blog](https://kihoonkim.github.io/2018/03/25/Microservices%20Architecture/first-msa-retro/)
 
-# 8. 클라우드 서비스 소개
+# 10. 클라우드 서비스 소개
 
-## 8.1. 클라우드 서비스 개요  
+## 10.1. 클라우드 서비스 개요  
 
 -   네트워크를 이용해서 사용자들이 원하는 방식으로 서비스를 제공  
 -   확장성  
@@ -31,7 +31,7 @@ title: Microservice
 
 <br><br>
 ---
-## 8.2. 클라우드 서비스 분류
+## 10.2. 클라우드 서비스 분류
 
 ### SaaS (Software as a Service): 서비스로서 소프트웨어 애플리케이션 서비스를 제공
 
@@ -55,7 +55,7 @@ ex) 대부분 퍼블릭 클라우드 서비스 (AWS EC2, S3)
 
 <br><br>
 ---
-## 8.3. 클라우드 서비스 종류
+## 10.3. 클라우드 서비스 종류
 
 ### Private Cloud
 
@@ -88,9 +88,9 @@ ex) 대부분 퍼블릭 클라우드 서비스 (AWS EC2, S3)
 
 <br><br>
 ---
-# 9. Microservice
+# 11. Microservice
 
-## 9.1 Microservice 이해 및 구축 방법론
+## 11.1 Microservice 이해 및 구축 방법론
 서비스를 비즈니스 경계에 맞게 세분화 하고, 서비스 간 통신은 네트워크 호출을 통해 진행하여 확장 가능하고 회복적이며 유연한 어플리케이션을 구성하는 것  
 
 ### Microservice 특징  
@@ -184,7 +184,7 @@ Green: 신규 버전
 [MSA architecture 참고 링크](https://www.nginx.com/blog/introduction-to-microservices/)
 
 
-## 9.2 MSA component
+## 11.2 MSA component
 
 
 ### Edge Server (API Gateway)
@@ -299,7 +299,7 @@ Spring cloud bus: 동적으로 config 변경을 적용하기 위한 MOM[^4]을 �
 
 <br><br>
 ---
-## 9.3 Spring Cloud를 활용한 Microservices 개발
+## 11.3 Spring Cloud를 활용한 Microservices 개발
 
 ### Deploying Microservices: Spring Cloud vs. Kubernetes
 ![image](https://user-images.githubusercontent.com/83441376/145658868-23bba2c5-97a6-4232-9a3f-4aebc21fa15e.png)
