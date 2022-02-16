@@ -965,18 +965,35 @@ REVISION  CHANGE-CAUSE
 ---
 ## 6.10. StatefulSet
 Pod이 스케줄 될 때 **지속적으로 유지**되는 식별자를 가질 수 있도록 관리하는 object  
-use case:  
+
+- 분산 기반의 애플리케이션의 경우 호스트명, IP 등이 바뀌면 안됨  
+- 분산형 애플리케이션 가동시 동시 다운 / 동시 가동 하면 안되는 경우가 존재
+
+### Statefullset 특징
+- 생성된 Pod 마다 별도의 디스크 공간을 가져야 하는 경우 사용    
+- ReplicaSet의 경우 생성 및 삭제가 동시에 진행되는 반면, StatefullSet 은 순차적 으로 진행 (시간조절 가능)  
+- Pod 삭제 시 ID 값 내림차순으로 삭제
+Pod A-0, Pod A-1, Pod A-2 존재 시  
+Pod A-2, Pod A-1, Pod A-0 순으로 삭제 됨  
+
+- 삭제된 Pod가 다른 노드에 스케줄 되어 생성 되더라도 동일한 ID로 생성되기 때문에 이전에 생성된 PVC가 다시 부착 됨  
+
+
+### use case:  
 고유한 네트워크 식별자, 지속성을 갖는 스토리지(persistent volumes), 순차적 배포와 스케일링, 순차적인 자동  
 
 
 
-
+<br><br>
 ---
 
 #### 현재 네임스페이스 모든 리소스 삭제
 ```
 ] kubectl delete all --all
 ```
+
+
+
 
 <br><br>
 ---
@@ -1257,6 +1274,8 @@ spec:
 ] kubectl get services # ExternalName 서비스 확인
 ```
 
+
+
 <br><br>
 ---
 
@@ -1473,12 +1492,132 @@ spec:
 
 
 
+<br><br>
+---
+
+# 9. 추가로..
+## 9.1. Resource Request 및 Limit
+CPU 및 메모리 에 대해 리소스 설정 가능  
+CPU는 하이퍼스레딩 된 가상코어 단위  
+
+
+cat resource-rq-lmt.yml
+```
+apiVersion: v1
+kind: Pod
+metadata:
+    name: frontend
+spec:
+    containers: 
+    - name: db
+      image: mysql
+      env:
+      - name: MYSQL_ROOT_PASSWORD
+        value: "password"
+      resource:
+        request: # 리소스 요청
+          memory: "64Mi"
+          cpu: "250m"
+        limit: # 제한값
+          memory: "128Mi"
+          cpu: "500m"
+    - name: wp
+      image: wordpress
+      resource: # 리소스 요청
+        request:
+          memory: "64Mi"
+          cpu: "250m"
+        limit: # 제한값
+          memory: "128Mi"
+          cpu: "500m"
+     
+```
+ 
+### Pod 스케줄링 시 리소스 계산  
+스케줄러는 요청 사항을 합해서 미 할당된 리소스를 계산 함  
+실제 사용량은 여유가 있어도 다른 Pod에서 요청된 할당량으로 인해, 여유 리소스가 부족할 경우 Pod 할당 되지 않을 수 있음  
+노드 describe 해서 나오는 allocatable 부분만 확인함  
+
+```
+] kubectl describe nodesd
+```
+```
+Capacity: 
+  cpu:
+  ...
+  memory:
+Allocatable: # 스케줄러는 allocatable 이부분만 확인함
+  cpu:
+  ...
+  memory:
+  pods:
+```
+
+<br><br>
+---
+## 9.2. HPA (Horizontal Pod Auto-Scaler)  
+
+### HPA 작동 원리
+- Horizontal 컨트롤러가 HorizontalPodAutoscaler(HPA) 리소스를 만들어 수평 스케일링을 수행 함  
+- 스케일링 대상은 리플리케이션 컨트롤러 / 디플로이먼트 / 리플리카셋 / 스테이트풀셋  
+- Kubelet 의 cAdvisor 를 통해 메트릭이 수집됨  
+- HPA 컨트롤러는 horizontal-pod-autoscaler-use-rest-clients 옵션를 통해 메트립 수집  
+```
+–horizontal-pod-autoscaler-use-rest-clients=true / --api-server=$(api server aggregator)
+```
+
+
+### HPA 계산 방법  
+- HPA 가 Metric 을 수집해서 계산한 결과는 복제본의 수  
+- 단일 메트릭 항목만 고려 하도록 구성된 경우, 모든 Pod의 메트릭 값을 합산후 HPA 에 설정된 목표 값으로 나눈 후 큰 정수로 반올림  
+- 여러 메트릭을 고려 하도록 구성된 경우 계산이 훨씬 복잡 해짐  
+
+
+<br><br>
+---
+## 9.3. Account 관리  
+
+### User Account  
+주로 클러스터 관리에 사용  
+
+### Service Account  
+응용 프로그램의 API 접근을 위해 사용  
+각 Pod 는 네임스페이스 있는 단일 서비스 어카운트와 연관돼 있음  
+
+### Role and Role Binding  
+- 특정 리소스에 접근 가능한 롤을 만들고 롤 바인딩을 통해 사용자나 그룹에 롤을 부여함
+- 바인딩은 유저 계정 및 서비스 계정 모두에 바인딩 가능함
+- 하나의 유저는 여러 개의 롤을 바인딩을 통해 부여 받을 수 있음
+
+
+<br><br>
+---
+## 9.4. Access Control  
+
+### Attribute-Based Access Control  
+### Role-Based Access Control  
+- 롤(Role)은 특정 api나 리소스에 대한 권한들을 명시해둔 규칙들의 집합  
+- 롤에는 롤(Role)과 클러스터롤(ClusterRole) 2가지 종류가 있음  
+- 클러스터롤은 특정 네임스페이스에 대한 권한이 아닌 클러스터 전체에 대한 권한을 관리(네임스페이스에 소속 되지 않음 리소스)  
 
 
 
 
 <br><br>
 ---
+## 9.5. Taint 및 Toleration
+- Taint는 {key}={value}:{option} 형식으로 이루어짐
+- taint: 노드마다 설정 가능 하며, 설정한 노드에는 Pod가 스케줄 되지 않음
+- Toleration: taint를 무시 할 수 있음
+- Taint에는 3가지 종류가 있음
 
 
+| Taint | 설명 |
+| :-: | :-- |
+| NoSchedule | toleration이 없으면 pod이 스케줄되지 않음 기존 실행되던 pod에는 적용 안됨 |
+| PreferNoSchedule | toleration이 없으면 pod을 스케줄링안하려고 하지만 필수는 아님, 클러스터내에 자원이 부족하거나 하면 taint가 걸려있는 노드에서도 pod이 스케줄링될 수 있음 |
+| NoExecute | toleration이 없으면 pod이 스케줄되지 않으며 기존에 실행되던 pod도 toleration이 없으면 종료시킴|
+
+<br><br>
+---
 
