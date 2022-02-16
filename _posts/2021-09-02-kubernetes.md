@@ -7,6 +7,7 @@ title: Kubernetes
 ---
 
 [dangtong76 blog](https://dangtong76.github.io/kubernetes/)
+[cloudacode medium](https://medium.com/@cloudacode/쿠버네티스-이해하기-production-grade-container-orchestration-system-3df8cd25fdb3)
 
 ---
 
