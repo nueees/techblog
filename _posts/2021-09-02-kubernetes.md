@@ -1,7 +1,7 @@
 ---
 toc: false
 layout: post
-description: 5장-8장
+description: 5장-9장
 categories: [kubernetes]
 title: Kubernetes
 ---
