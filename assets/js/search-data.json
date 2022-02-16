@@ -24,11 +24,11 @@
   
     
         ,"post2": {
-            "title": "ECS (Elastic Container Service)",
-            "content": "AWS Documentation . . 4. Containers . 4.1. ECS (Elastic Container Service) . . 4.2. EKS (Elastic Kubernetes Service) . . 4.3. ECR (Elastic Container Registry) . fully managed Docker container registry .",
-            "url": "https://nueees.github.io/techblog/aws/ecs/2021/11/04/aws-ecs.html",
-            "relUrl": "/aws/ecs/2021/11/04/aws-ecs.html",
-            "date": " • Nov 4, 2021"
+            "title": "ECS(Elastic Container Service), ECR",
+            "content": "AWS Documentation . . 5. Containers . 5.1. ECS (Elastic Container Service) . . 5.2. EKS (Elastic Kubernetes Service) . . 5.3. ECR (Elastic Container Registry) . fully managed Docker container registry .",
+            "url": "https://nueees.github.io/techblog/aws/ecs/2021/11/05/aws-ecs.html",
+            "relUrl": "/aws/ecs/2021/11/05/aws-ecs.html",
+            "date": " • Nov 5, 2021"
         }
         
     
