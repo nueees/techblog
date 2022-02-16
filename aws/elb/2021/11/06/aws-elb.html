@@ -4,19 +4,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>ELB (Elastic Load Balancing) | Cho’s Tech blog</title>
+<title>ELB(Elastic Load Balancing), VPC | Cho’s Tech blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="ELB (Elastic Load Balancing)" />
+<meta property="og:title" content="ELB(Elastic Load Balancing), VPC" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="section5" />
-<meta property="og:description" content="section5" />
-<link rel="canonical" href="https://nueees.github.io/techblog/aws/elb/2021/11/05/aws-elb.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/aws/elb/2021/11/05/aws-elb.html" />
+<meta name="description" content="section6" />
+<meta property="og:description" content="section6" />
+<link rel="canonical" href="https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-11-05T00:00:00-05:00" />
+<meta property="article:published_time" content="2021-11-06T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"section5","url":"https://nueees.github.io/techblog/aws/elb/2021/11/05/aws-elb.html","@type":"BlogPosting","headline":"ELB (Elastic Load Balancing)","dateModified":"2021-11-05T00:00:00-05:00","datePublished":"2021-11-05T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/aws/elb/2021/11/05/aws-elb.html"},"@context":"https://schema.org"}</script>
+{"description":"section6","url":"https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb.html","@type":"BlogPosting","headline":"ELB(Elastic Load Balancing), VPC","dateModified":"2021-11-06T00:00:00-05:00","datePublished":"2021-11-06T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -87,8 +87,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">ELB (Elastic Load Balancing)</h1><p class="page-description">section5</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-05T00:00:00-05:00" itemprop="datePublished">
-        Nov 5, 2021
+    <h1 class="post-title p-name" itemprop="name headline">ELB(Elastic Load Balancing), VPC</h1><p class="page-description">section6</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-06T00:00:00-05:00" itemprop="datePublished">
+        Nov 6, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
     
@@ -113,14 +113,14 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#5-networking--content-delivery">5. Networking &amp; Content Delivery</a>
+<li class="toc-entry toc-h1"><a href="#6-networking--content-delivery">6. Networking &amp; Content Delivery</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#51-elb-elastic-load-balancing">5.1. ELB (Elastic Load Balancing)</a>
+<li class="toc-entry toc-h2"><a href="#61-elb-elastic-load-balancing">6.1. ELB (Elastic Load Balancing)</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#elb-type">ELB type</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#52-vpc-virtual-private-cloud">5.2. VPC (Virtual Private Cloud)</a>
+<li class="toc-entry toc-h2"><a href="#62-vpc-virtual-private-cloud">6.2. VPC (Virtual Private Cloud)</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#subnet">subnet</a></li>
 <li class="toc-entry toc-h3"><a href="#network-acl">network ACL</a></li>
@@ -138,11 +138,11 @@ window.onload = wrap_img;
 
 <hr>
 
-<h1 id="5-networking--content-delivery">
-<a class="anchor" href="#5-networking--content-delivery" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Networking &amp; Content Delivery</h1>
+<h1 id="6-networking--content-delivery">
+<a class="anchor" href="#6-networking--content-delivery" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Networking &amp; Content Delivery</h1>
 
-<h2 id="51-elb-elastic-load-balancing">
-<a class="anchor" href="#51-elb-elastic-load-balancing" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.1. ELB (Elastic Load Balancing)</h2>
+<h2 id="61-elb-elastic-load-balancing">
+<a class="anchor" href="#61-elb-elastic-load-balancing" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.1. ELB (Elastic Load Balancing)</h2>
 
 <h3 id="elb-type">
 <a class="anchor" href="#elb-type" aria-hidden="true"><span class="octicon octicon-link"></span></a>ELB type</h3>
@@ -155,8 +155,8 @@ window.onload = wrap_img;
 
 <hr>
 
-<h2 id="52-vpc-virtual-private-cloud">
-<a class="anchor" href="#52-vpc-virtual-private-cloud" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.2. VPC (Virtual Private Cloud)</h2>
+<h2 id="62-vpc-virtual-private-cloud">
+<a class="anchor" href="#62-vpc-virtual-private-cloud" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.2. VPC (Virtual Private Cloud)</h2>
 <p>보안을 위해 AWS 리소스간 허용을 최소화하고 그룹별로 손쉽게 네트워크를 구성하기 위해 사용하는 AWS 계정 전용 가상 네트워크</p>
 
 <h3 id="subnet">
@@ -199,7 +199,7 @@ Traffic between your VPC and the other service does not leave the Amazon network
 <a class="anchor" href="#53-cloudfront" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.3. CloudFront</h2>
 
 
-  </div><a class="u-url" href="/techblog/aws/elb/2021/11/05/aws-elb.html" hidden></a>
+  </div><a class="u-url" href="/techblog/aws/elb/2021/11/06/aws-elb.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
