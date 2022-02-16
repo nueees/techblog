@@ -1,7 +1,7 @@
 ---
 toc: true
 layout: post
-description: section3
+description: section4
 categories: [aws, dynamodb]
 title: DynamoDB
 ---
@@ -10,23 +10,24 @@ AWS Documentation
 
 ---
 
-# 3. Database
+# 4. Database
 
-## 3.1. DynamoDB
-
----
-
-## 3.2. Aurora
-
-
+## 4.1. DynamoDB
 
 ---
 
-## 3.3. RDS
+## 4.2. Aurora
 
 
 
 ---
 
-## 3.4. Redshift
+## 4.3. RDS
 
+
+
+---
+
+## 4.4. Redshift
+
+---
