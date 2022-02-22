@@ -553,7 +553,7 @@
     
         ,"post50": {
             "title": "SSL Certification",
-            "content": "📎 Coding Everybody . . 2.1. HTTPS . . 2.2. 대칭키 . . 2.3. 공개키 . . 2.4. SSL 인증 . . 2.5. SSL 통신 . .",
+            "content": "📎 Coding Everybody . . 2.1. HTTPS . . 2.2. 대칭키 . . 2.3. 공개키 . . 2.4. SSL 인증 . $ netstat -lntp # listen하고 있는 포트 확인 . ssh에 key pair 추가 . 서버에 있는 .ssh 디렉토리 내 파일(authorized_keys)에 public key 추가 하고 cat authorized_keys . ssh-rsa 어쩌구저쩌구암호화된기존public키 test-EC2-key ssh-rsa 어쩌구저쩌구암호화된추가된public키 test-EC2-key . 클라이언트에서 private key 생성 . $ vim second-key.pem # 추가된public키와pair된어쩌구저쩌구암호화된private키 넣기 $ ssh -i second-key.pem ec2-user@myip -p22 # second key로 접속 확인 . ssh-add로 해당 세션에 저장 해보기 . ssh-add test-EC2-key.pem ssh ec2-user@myip -p22 # 파일 명시 안해도 접속 가능 . . 2.5. SSL 통신 . .",
             "url": "https://nueees.github.io/techblog/network/2015/04/16/ssl.html",
             "relUrl": "/network/2015/04/16/ssl.html",
             "date": " • Apr 16, 2015"
