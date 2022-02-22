@@ -117,13 +117,13 @@ window.onload = wrap_img;
 <ul>
 <li class="toc-entry toc-h2"><a href="#21-ec2-elastic-compute-cloud">2.1. EC2 (Elastic Compute Cloud)</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#ec2-instance-생성">EC2 Instance 생성</a></li>
-<li class="toc-entry toc-h3"><a href="#ec2-instance-type">EC2 Instance Type</a>
+<li class="toc-entry toc-h3"><a href="#ec2-instance-생성">[EC2 Instance 생성]</a></li>
+<li class="toc-entry toc-h3"><a href="#ec2-instance-type">[EC2 Instance Type]</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#amazon-machine-image-ami">Amazon Machine Image (AMI)</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h3"><a href="#ec2-instance-configuration">EC2 Instance Configuration</a>
+<li class="toc-entry toc-h3"><a href="#ec2-instance-configuration">[EC2 Instance Configuration]</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#configure-instance-detail">Configure Instance Detail</a></li>
 <li class="toc-entry toc-h4"><a href="#add-storage">Add Storage</a></li>
@@ -133,13 +133,13 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h4"><a href="#networking--elastic-fabric-adapter--placement-groups">Networking &gt; Elastic Fabric Adapter &gt; Placement groups</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h3"><a href="#ec2-instance-관리">EC2 Instance 관리</a>
+<li class="toc-entry toc-h3"><a href="#ec2-instance-관리">[EC2 Instance 관리]</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#linux에서-instance-원격-제어">Linux에서 instance 원격 제어</a></li>
 <li class="toc-entry toc-h4"><a href="#web-server-사용">web server 사용</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h3"><a href="#aws-marketplace-사용-registry-hub">AWS Marketplace 사용 (registry hub)</a>
+<li class="toc-entry toc-h3"><a href="#aws-marketplace-사용-registry-hub">[AWS Marketplace 사용 (registry hub)]</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#wordpress">Wordpress</a></li>
 </ul>
@@ -161,13 +161,13 @@ window.onload = wrap_img;
 <a class="anchor" href="#21-ec2-elastic-compute-cloud" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. EC2 (Elastic Compute Cloud)</h2>
 
 <h3 id="ec2-instance-생성">
-<a class="anchor" href="#ec2-instance-%EC%83%9D%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>EC2 Instance 생성</h3>
+<a class="anchor" href="#ec2-instance-%EC%83%9D%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>[EC2 Instance 생성]</h3>
 <p>독립된 컴퓨터를 임대해주는 서비스
  컴퓨터 1대 = Instance 1개
  launch instance - 컴퓨터 생성 시, storage, memory, network interface, os 기본으로 제공</p>
 
 <h3 id="ec2-instance-type">
-<a class="anchor" href="#ec2-instance-type" aria-hidden="true"><span class="octicon octicon-link"></span></a>EC2 Instance Type</h3>
+<a class="anchor" href="#ec2-instance-type" aria-hidden="true"><span class="octicon octicon-link"></span></a>[EC2 Instance Type]</h3>
 
 <h4 id="amazon-machine-image-ami">
 <a class="anchor" href="#amazon-machine-image-ami" aria-hidden="true"><span class="octicon octicon-link"></span></a>Amazon Machine Image (AMI)</h4>
@@ -178,7 +178,7 @@ window.onload = wrap_img;
 </ul>
 
 <h3 id="ec2-instance-configuration">
-<a class="anchor" href="#ec2-instance-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>EC2 Instance Configuration</h3>
+<a class="anchor" href="#ec2-instance-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>[EC2 Instance Configuration]</h3>
 
 <h4 id="configure-instance-detail">
 <a class="anchor" href="#configure-instance-detail" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configure Instance Detail</h4>
@@ -215,7 +215,7 @@ security group name 정한 뒤, 접속 정책 설정<br>
 type: SSH, HTTP, RDP(for windows)…<br>
 protocol: TCP<br>
 port range: 22<br>
-source: Anywhere(0.0.0.0/0), My IP(222.XXX.XX.XX/32), custom IP …</p>
+source: Anywhere(0.0.0.0/0) 누구나 접속, My IP(222.XXX.XX.XX/32), custom IP …</p>
 
 <h4 id="review">
 <a class="anchor" href="#review" aria-hidden="true"><span class="octicon octicon-link"></span></a>Review</h4>
@@ -232,14 +232,14 @@ source: Anywhere(0.0.0.0/0), My IP(222.XXX.XX.XX/32), custom IP …</p>
 3) Spread: 소규모의 인스턴스 그룹을 다른 기본 하드웨어로 물리적으로 분산하여 영역 나누어 관리</p>
 
 <h3 id="ec2-instance-관리">
-<a class="anchor" href="#ec2-instance-%EA%B4%80%EB%A6%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>EC2 Instance 관리</h3>
+<a class="anchor" href="#ec2-instance-%EA%B4%80%EB%A6%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>[EC2 Instance 관리]</h3>
 
 <h4 id="linux에서-instance-원격-제어">
 <a class="anchor" href="#linux%EC%97%90%EC%84%9C-instance-%EC%9B%90%EA%B2%A9-%EC%A0%9C%EC%96%B4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Linux에서 instance 원격 제어</h4>
 <p>1) connect 버튼 클릭<br>
 2) open SSH client (원격 제어 프로그램) 실행<br>
-3) 인스턴스 생성 시 만든 패스워드 파일로 접속</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh -i "aws_password.pem" [사용자 계정]@[원격지 ip]
+3) 인스턴스 생성 시 만든 패스워드 파일(aws_password.pem), [사용자 계정]@[원격지 ip]로 접속</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh -i "aws_password.pem" ec2-user@myPublicIPv4Address #-p22 추가 포트번호 옵션
 </code></pre></div></div>
 
 <h4 id="web-server-사용">
@@ -249,12 +249,12 @@ $ vi /var/www/html/index.html # 메인 페이지 수정
 </code></pre></div></div>
 
 <h3 id="aws-marketplace-사용-registry-hub">
-<a class="anchor" href="#aws-marketplace-%EC%82%AC%EC%9A%A9-registry-hub" aria-hidden="true"><span class="octicon octicon-link"></span></a>AWS Marketplace 사용 (registry hub)</h3>
+<a class="anchor" href="#aws-marketplace-%EC%82%AC%EC%9A%A9-registry-hub" aria-hidden="true"><span class="octicon octicon-link"></span></a>[AWS Marketplace 사용 (registry hub)]</h3>
 
 <h4 id="wordpress">
 <a class="anchor" href="#wordpress" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wordpress</h4>
 <p>1) launch instance 클릭 후 AMI를 Bitnami가 만든 Wordpress 선택 (추가 비용 드는 image도 있음)<br>
-2) 선택시  version, region, instance type, security group, key pair 지정 후 Launch with 1 click<br>
+2) 선택시 version, region, instance type, security group, key pair 지정 후 Launch with 1 click<br>
 3) deploy 후, public DNS로 들어가서 확인
 4) document 확인해서 admin 가이드 확인 하면서 관리 필요</p>
 
