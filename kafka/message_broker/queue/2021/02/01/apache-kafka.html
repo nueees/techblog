@@ -133,9 +133,14 @@ window.onload = wrap_img;
 </li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#16-kafka-streams">1.6. Kafka Streams</a></li>
+<li class="toc-entry toc-h2"><a href="#16-kafka-streams">1.6. Kafka Streams</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#esp-event-stream-platform">ESP (Event Stream Platform)</a></li>
+<li class="toc-entry toc-h3"><a href="#kafka-streams-api">Kafka Streams API</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#17-kafka-connect">1.7. Kafka Connect</a></li>
-</ul><p>📎 Tacademy</p>
+</ul><p>📎 <a href="https://kafka.apache.org/documentation/">kafka documentation</a></p>
 
 <hr>
 
@@ -238,6 +243,17 @@ n개의 파티션 할당 가능
   <li>Exactly-once 처리, HA 특징</li>
   <li>Kafka security(acl, sasl 등) 지원</li>
   <li>stream 처리를 위한 별도 cluster(yarn 등) 불필요</li>
+</ul>
+
+<h3 id="esp-event-stream-platform">
+<a class="anchor" href="#esp-event-stream-platform" aria-hidden="true"><span class="octicon octicon-link"></span></a>ESP (Event Stream Platform)</h3>
+<p>대표적으로 Kafka, Kinesis, Flink, Spark, Storm, Logstash…</p>
+
+<h3 id="kafka-streams-api">
+<a class="anchor" href="#kafka-streams-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Kafka Streams API</h3>
+<ul>
+  <li>Source processor</li>
+  <li>Sink processor</li>
 </ul>
 
 <hr>
