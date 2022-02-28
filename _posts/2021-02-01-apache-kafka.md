@@ -6,7 +6,7 @@ categories: [kafka,message_broker,queue]
 title: Apache Kafka
 ---
  
-📎 Tacademy
+📎 [kafka documentation](https://kafka.apache.org/documentation/)
 
 ---
 
@@ -92,6 +92,16 @@ Topic에 해당하는 메시지를 해당 파티션에 offset과 함께 기록
 - Exactly-once 처리, HA 특징
 - Kafka security(acl, sasl 등) 지원
 - stream 처리를 위한 별도 cluster(yarn 등) 불필요
+
+### ESP (Event Stream Platform)
+대표적으로 Kafka, Kinesis, Flink, Spark, Storm, Logstash...
+
+### Kafka Streams API 
+- Source processor
+- Sink processor
+
+
+
 
 
 
