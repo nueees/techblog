@@ -44,24 +44,24 @@ ex) aws_security_group, aws_lb, aws_instance
 
 - Terraform init
 지정한 backend에 상태 저장을 위한 .tfstate 파일을 생성되고 가장 마지막에 적용한 테라폼 내역이 저장  
-init 작업을 완료하면, local에는 .tfstate에 정의된 내용을 담은 .terraform 파일이 생성됩니다.
-기존에 다른 개발자가 이미 .tfstate에 인프라를 정의해 놓은 것이 있다면, 다른 개발자는 init작업을 통해서 local에 sync를 맞출 수 있습니다.
+init 작업을 완료하면, local에는 .tfstate에 정의된 내용을 담은 .terraform 파일이 생성  
+기존에 다른 개발자가 이미 .tfstate에 인프라를 정의해 놓은 것이 있다면, 다른 개발자는 init작업을 통해서 local에 sync를 맞출 수 O  
 
 - Terraform plan
-정의한 코드가 어떤 인프라를 만들게 되는지 미리 예측 결과를 보여줍니다. 단, plan을 한 내용에 에러가 없다고 하더라도, 실제 적용되었을 때는 에러가 발생할 수 있습니다.
-Plan 명령어는 어떠한 형상에도 변화를 주지 않습니다.
+정의한 코드가 어떤 인프라를 만들게 되는지 미리 예측 결과를 보여줍니다. 단, plan을 한 내용에 에러가 없다고 하더라도, 실제 적용되었을 때는 에러가 발생 가  
+Plan 명령어는 어떠한 형상에도 변화 X  
 
 
 - Terraform apply
-실제로 인프라를 배포하기 위한 명령어입니다. apply를 완료하면, AWS 상에 실제로 해당 인프라가 생성되고 작업 결과가 backend의 .tfstate 파일에 저장됩니다.
-해당 결과는 local의 .terraform 파일에도 저장됩니다.
+실제로 인프라를 배포하기 위한 명령어입니다. apply를 완료하면, AWS 상에 실제로 해당 인프라가 생성되고 작업 결과가 backend의 .tfstate 파일에 저장  
+해당 결과는 local의 .terraform 파일에도 저장  
 
 
 - Terraform import
-AWS 인프라에 배포된 리소스를 terraform state로 옮겨주는 작업입니다.
-이는 local의 .terraform에 해당 리소스의 상태 정보를 저장해주는 역할을 합니다. (절대 코드를 생성해주지 않습니다.)
-Apply 전까지는 backend에 저장되지 않습니다.
-Import 이후에 plan을 하면 로컬에 해당 코드가 없기 때문에 리소스가 삭제 또는 변경된다는 결과를 보여줍니다. 이 결과를 바탕으로 코드를 작성하실 수 있습니다.
+AWS 인프라에 배포된 리소스를 terraform state로 옮겨주는 작업  
+이는 local의 .terraform에 해당 리소스의 상태 정보를 저장해주는 역할 (절대 코드를 생성해주지 X)  
+Apply 전까지는 backend에 저장되지 X  
+Import 이후에 plan을 하면 로컬에 해당 코드가 없기 때문에 리소스가 삭제 또는 변경된다는 결과를 display. 이 결과를 바탕으로 코드를 작성 O  
 
 
 
@@ -324,14 +324,226 @@ aws_s3_bucket.test
 
 <br><br>
 ---
-# 3. Terraform으로 AWS resource 생성
+# 3. VPC resource 생성
 
-## 3.1. 
+## 3.1. VPC configure
+
+```
+] cat vpc_test.tf
+provider "aws" {
+  region  = "ap-northeast-2"
+}
+
+resource "aws_vpc" "main" {
+  cidr_block       = "10.0.0.0/16"
+
+  tags = {
+    Name = "terraform220222"
+  }
+}
+}
+```
+
+
+## 3.2. Subnet configure
+```
+] cat subnet.tf
+provider "aws" {
+  region  = "ap-northeast-2"
+}
+
+resource "aws_vpc" "main" {
+  cidr_block       = "10.0.0.0/16"
+
+  tags = {
+    Name = "terraform220222"
+  }
+}
+
+resource "aws_subnet" "first_subnet" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.1.0/24"
+
+  availability_zone = "ap-northeast-2a"
+
+  tags = {
+    Name = "220222subnet-1"
+  }
+}
+
+
+resource "aws_subnet" "second_subnet" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.2.0/24"
+
+  availability_zone = "ap-northeast-2b"
+
+  tags = {
+    Name = "220222subnet-2"
+  }
+}
+```
+
+
+## 3.3. Internet Gateway configure
+```
+] cat internet_gateway.tf
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "main"
+  }
+}
+```
+
+
+
+## 3.4. Route Table configure
+```
+] cat route_table.tf
+resource "aws_route_table" "route_table" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "main"
+  }
+}
+
+resource "aws_route_table_association" "route_table_association_1" {
+  subnet_id      = aws_subnet.first_subnet.id
+  route_table_id = aws_route_table.route_table.id
+}
+
+resource "aws_route_table_association" "route_table_association_2" {
+  subnet_id      = aws_subnet.second_subnet.id
+  route_table_id = aws_route_table.route_table.id
+}
+```
+
+
+
+## 3.5. Private Subnet and NAT configure
+```
+] cat private_subnet_nat.tf
+resource "aws_subnet" "first_private_subnet" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.3.0/24"
+
+  availability_zone = "ap-northeast-2a"
+
+  tags = {
+    Name = "220222subnet-private-1"
+  }
+}
+
+resource "aws_subnet" "second_private_subnet" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.4.0/24"
+
+  availability_zone = "ap-northeast-2b"
+
+  tags = {
+    Name = "220222subnet-private-2"
+  }
+}
+```
+
+### AWS Elastic IP도 함께 생성  
+Nat Gateway는 Public 서브넷에 위치하지만 private 서브넷과 연결  
+
+```
+resource "aws_eip" "nat_1" {
+  vpc   = true
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_eip" "nat_2" {
+  vpc   = true
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_nat_gateway" "nat_gateway_1" {
+  allocation_id = aws_eip.nat_1.id
+
+  # Private subnet이 아니라 public subnet을 연결
+  subnet_id = aws_subnet.first_subnet.id
+
+  tags = {
+    Name = "NAT-GW-1"
+  }
+}
+
+resource "aws_nat_gateway" "nat_gateway_2" {
+  allocation_id = aws_eip.nat_2.id
+
+  subnet_id = aws_subnet.second_subnet.id
+
+  tags = {
+    Name = "NAT-GW-2"
+  }
+}
+```
+
+### Private 서브넷에도 Route Table을 생성하여 연결  
+```
+resource "aws_route_table" "route_table_private_1" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "main-private-1"
+  }
+}
+
+resource "aws_route_table" "route_table_private_2" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "main-private-2"
+  }
+}
+
+resource "aws_route_table_association" "route_table_association_private_1" {
+  subnet_id      = aws_subnet.first_private_subnet.id
+  route_table_id = aws_route_table.route_table_private_1.id
+}
+
+resource "aws_route_table_association" "route_table_association_private_2" {
+  subnet_id      = aws_subnet.second_private_subnet.id
+  route_table_id = aws_route_table.route_table_private_2.id
+}
+
+resource "aws_route" "private_nat_1" {
+  route_table_id              = aws_route_table.route_table_private_1.id
+  destination_cidr_block      = "0.0.0.0/0"
+  nat_gateway_id              = aws_nat_gateway.nat_gateway_1.id
+}
+
+resource "aws_route" "private_nat_2" {
+  route_table_id              = aws_route_table.route_table_private_2.id
+  destination_cidr_block      = "0.0.0.0/0"
+  nat_gateway_id              = aws_nat_gateway.nat_gateway_2.id
+}
+``` 
+
 
 
 <br><br>
 ---
-# 4. Terraform Advancement
+# 4. S3 resource 생성
+
+## 4.1. S3 configure
+
+
+<br><br>
+---
+# 5. Terraform Advancement
 
 
 <br><br>
