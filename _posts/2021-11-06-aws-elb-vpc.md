@@ -43,11 +43,13 @@ A range of IP addresses in your VPC.
 A set of rules, called routes, that are used to determine where network traffic is directed.  
 
 ## 7.3. 인터넷 게이트웨이 (internet gateway)  
-VPC의 리소스와 인터넷 간의 통신을 활성화하기 위해 VPC에 연결하는 게이트웨이  
+VPC의 리소스와 인터넷 간의 통신을 활성화하기 위해 VPC에 연결하는 게이트웨이 (NAT의 역할도 수행)  
 A gateway that you attach to your VPC to enable communication between resources in your VPC and the internet.  
 
+인터넷으로 라우팅되는 트래픽을 위해 VPC 라우팅 테이블에 target 역할 + 공인 IP주소가 할당된 VPC 내 인스턴스에 대해 NAT를 수행  
+
 ## 7.4. NAT 게이트웨이 (NAT gateway)  
-네트워크 주소 변환을 통해 프라이빗 서브넷에서 인터넷 또는 기타 AWS 서비스에 연결하는 게이트웨이
+네트워크 주소 변환을 통해 프라이빗 서브넷에서 인터넷 또는 기타 AWS 서비스에 연결하는 게이트웨이(stateful)  
 1) NAT gateway: 대역폭 요구 늘어나면 auto scaling  
 2) NAT instance: bastion host로 사용해서 public IP 없이 인스턴스 연결 가능  
 
@@ -60,7 +62,7 @@ Instances in your VPC do not require public IP addresses to communicate with res
 Traffic between your VPC and the other service does not leave the Amazon network.  
 
 
-## 7.6. Securitz Group  
+## 7.6. Security Group  
 보안 그룹은 인스턴스에 대한 인바운드 및 아웃바운드 트래픽을 제어하는 가상 방화벽 역할을 하는 규칙 집합  
 
 
