@@ -134,6 +134,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#76-security-group">7.6. Security Group</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#network-acl">Network ACL</a></li>
+<li class="toc-entry toc-h3"><a href="#elastic-ip">Elastic IP</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#-1"></a></li>
@@ -181,13 +182,15 @@ A range of IP addresses in your VPC.</p>
 <p>네트워크 트래픽을 전달할 위치를 결정하는 데 사용되는 라우팅이라는 규칙 집합<br>
 A set of rules, called routes, that are used to determine where network traffic is directed.</p>
 
+<p>여러 서브넷에서 동시에 사용할 수 있으며, 이렇게 연결하는 Association 작업 함</p>
+
 <h2 id="73-인터넷-게이트웨이-internet-gateway">
 <a class="anchor" href="#73-%EC%9D%B8%ED%84%B0%EB%84%B7-%EA%B2%8C%EC%9D%B4%ED%8A%B8%EC%9B%A8%EC%9D%B4-internet-gateway" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.3. 인터넷 게이트웨이 (internet gateway)</h2>
 <p>VPC의 리소스와 인터넷 간의 통신을 활성화하기 위해 VPC에 연결하는 게이트웨이 (NAT의 역할도 수행)<br>
 A gateway that you attach to your VPC to enable communication between resources in your VPC and the internet.</p>
 
 <p>인터넷으로 라우팅되는 트래픽을 위해 VPC 라우팅 테이블에 target 역할 + 공인 IP주소가 할당된 VPC 내 인스턴스에 대해 NAT를 수행<br>
-인터넷 게이트웨이가 연결된 서브넷: 흔히 public 서브넷</p>
+인터넷 게이트웨이가 연결된 서브넷: 흔히 public 서브넷 함</p>
 
 <h2 id="74-nat-게이트웨이-nat-gateway">
 <a class="anchor" href="#74-nat-%EA%B2%8C%EC%9D%B4%ED%8A%B8%EC%9B%A8%EC%9D%B4-nat-gateway" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.4. NAT 게이트웨이 (NAT gateway)</h2>
@@ -211,6 +214,10 @@ Traffic between your VPC and the other service does not leave the Amazon network
 <h3 id="network-acl">
 <a class="anchor" href="#network-acl" aria-hidden="true"><span class="octicon octicon-link"></span></a>Network ACL</h3>
 <p>subnet간의 통신 규칙 관리</p>
+
+<h3 id="elastic-ip">
+<a class="anchor" href="#elastic-ip" aria-hidden="true"><span class="octicon octicon-link"></span></a>Elastic IP</h3>
+<p>a static (doesn’t change) IPv4 address associated with your AWS account</p>
 
 <h2 id="-1">
 <a class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
