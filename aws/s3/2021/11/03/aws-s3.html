@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      3 min read
     
 </span></p>
 
@@ -117,16 +117,14 @@ window.onload = wrap_img;
 <ul>
 <li class="toc-entry toc-h2"><a href="#31-s3-simple-storage-service">3.1. S3 (Simple Storage Service)</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#object-storage">Object Storage</a></li>
-<li class="toc-entry toc-h3"><a href="#lifecycle-구성">Lifecycle 구성</a></li>
-<li class="toc-entry toc-h3"><a href="#s3-type">S3 type</a>
+<li class="toc-entry toc-h3"><a href="#features">Features</a>
 <ul>
-<li class="toc-entry toc-h4"><a href="#standard-infrequent-access">Standard-Infrequent Access</a></li>
-<li class="toc-entry toc-h4"><a href="#one-zone-infrequent-access">One Zone-Infrequent Access</a></li>
-<li class="toc-entry toc-h4"><a href="#glacier">Glacier</a></li>
-<li class="toc-entry toc-h4"><a href="#glacier-deep-archive">Glacier Deep Archive</a></li>
+<li class="toc-entry toc-h4"><a href="#object-storage">Object Storage</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h3"><a href="#lifecycle-구성">Lifecycle 구성</a></li>
+<li class="toc-entry toc-h3"><a href="#s3-type">S3 type</a></li>
+<li class="toc-entry toc-h3"><a href="#components">Components</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#32-ebs-elastic-block-store">3.2. EBS (Elastic Block Store)</a>
@@ -151,9 +149,21 @@ window.onload = wrap_img;
 <h2 id="31-s3-simple-storage-service">
 <a class="anchor" href="#31-s3-simple-storage-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. S3 (Simple Storage Service)</h2>
 
-<h3 id="object-storage">
-<a class="anchor" href="#object-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Object Storage</h3>
-<p>오브젝트 스토리지는 블록 스토리지와는 다르게 데이터 자체가 단독으로 구성됩니다. 고유 식별자가 존재하는 평면적인 주소 공간에 데이터 오브젝트 그 자체가 저장되므로 접근과 색인이 더 깔끔해집니다. 클라우드 서비스에서 기본적으로 사용되고 있으며, 찾고 싶은 데이터의 key(고유 식별자)만 알고 있다면, 색인을 이용해 접근이 편해집니다.</p>
+<h3 id="features">
+<a class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h3>
+<ul>
+  <li>버킷 만들기 – 데이터를 저장하는 버킷을 만들고 해당 버킷의 이름을 지정합니다. 버킷은 데이터 스토리지를 위한 Amazon S3의 기본 컨테이너입니다.</li>
+  <li>데이터 저장 – 버킷에 데이터를 무한정으로 저장합니다. Amazon S3 버킷에 객체를 원하는 만큼 업로드할 수 있으며, 각 객체에 최대 5TB의 데이터를 포함할 수 있습니다. 각 객체는 고유한 개발자 할당 키를 사용하여 저장 및 검색합니다.</li>
+  <li>데이터 다운로드 – 데이터를 직접 다운로드하거나 다른 사람이 다운로드할 수 있도록 합니다. 언제든지 데이터를 직접 다운로드하거나 다른 사람이 다운로드하도록 허용할 수 있습니다.</li>
+  <li>권한 - 데이터를 Amazon S3 버킷으로 업로드 또는 다운로드하려는 사용자에게 액세스 권한을 부여하거나 해당 권한을 거부합니다. 3가지 유형의 사용자에게 업로드 및 다운로드 권한을 부여할 수 있습니다. 인증 메커니즘을 사용하면 데이터가 무단으로 액세스되지 않도록 보호하는 데 도움이 될 수 있습니다.</li>
+  <li>표준 인터페이스 – 모든 인터넷 개발 도구 키트에서 사용할 수 있도록 설계된 표준 기반 REST 및 SOAP 인터페이스를 사용합니다.</li>
+</ul>
+
+<h4 id="object-storage">
+<a class="anchor" href="#object-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Object Storage</h4>
+<p>오브젝트 스토리지는 블록 스토리지와는 다르게 데이터 자체가 단독으로 구성
+key가 존재하는 평면적인 주소 공간에 데이터 오브젝트 그 자체가 저장되므로 접근과 indexing이 더 깔끔함<br>
+클라우드 서비스에서 기본적으로 사용되고 있으며, 찾고 싶은 데이터의 key(고유 식별자)만 알고 있다면, index을 이용해 접근이 편함</p>
 
 <h3 id="lifecycle-구성">
 <a class="anchor" href="#lifecycle-%EA%B5%AC%EC%84%B1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lifecycle 구성</h3>
@@ -162,24 +172,57 @@ window.onload = wrap_img;
 
 <h3 id="s3-type">
 <a class="anchor" href="#s3-type" aria-hidden="true"><span class="octicon octicon-link"></span></a>S3 type</h3>
+<ul>
+  <li>Standard-Infrequent Access<br>
+접근 빈도 낮고 필요시 빠른 접근해야하는 데이터</li>
+  <li>One Zone-Infrequent Access<br>
+단일 AZ에 중복 저장 후 Multi AZ에 저장<br>
+접근 빈도 낮은 데이터</li>
+  <li>Glacier<br>
+장기 보관(백업)용으로 검색 오래걸리나,<br>
+Expedited Retrievals 사용시 빠르게 검색 가능</li>
+  <li>Glacier Deep Archive<br>
+장기 보관용이나 접근 빈도 낮을 때 사용</li>
+</ul>
 
-<h4 id="standard-infrequent-access">
-<a class="anchor" href="#standard-infrequent-access" aria-hidden="true"><span class="octicon octicon-link"></span></a>Standard-Infrequent Access</h4>
-<p>접근 빈도 낮고 필요시 빠른 접근해야하는 데이터</p>
+<h3 id="components">
+<a class="anchor" href="#components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Components</h3>
 
-<h4 id="one-zone-infrequent-access">
-<a class="anchor" href="#one-zone-infrequent-access" aria-hidden="true"><span class="octicon octicon-link"></span></a>One Zone-Infrequent Access</h4>
-<p>단일 AZ에 중복 저장 후 Multi AZ에 저장<br>
-접근 빈도 낮은 데이터</p>
+<ul>
+  <li>1) 버킷</li>
+</ul>
 
-<h4 id="glacier">
-<a class="anchor" href="#glacier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Glacier</h4>
-<p>장기 보관(백업)용으로 검색 오래걸리나,<br>
-Expedited Retrievals 사용시 빠르게 검색 가능</p>
+<p>버킷은 Amazon S3에 저장된 객체에 대한 컨테이너입니다. 모든 객체는 어떤 버킷에 포함됩니다. 예를 들어 photos/puppy.jpg로 명명된 객체는 미국 서부(오레곤) 리전의 awsexamplebucket1 버킷에 저장되며 URL https://awsexamplebucket1.s3.us-west-2.amazonaws.com/photos/puppy.jpg를 사용하여 주소를 지정할 수 있습니다.</p>
 
-<h4 id="glacier-deep-archive">
-<a class="anchor" href="#glacier-deep-archive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Glacier Deep Archive</h4>
-<p>장기 보관용이나 접근 빈도 낮을 때 사용</p>
+<p>버킷은 다음과 같은 여러 가지 용도로 사용됩니다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Amazon S3 네임스페이스를 최상위 수준으로 구성합니다.
+스토리지 및 데이터 전송 요금을 담당하는 계정을 식별합니다.
+액세스 제어에 사용됩니다.
+사용량 보고를 위한 집계 단위로 사용됩니다.
+</code></pre></div></div>
+
+<p>특정 AWS 리전에서 생성되도록 버킷을 구성할 수 있습니다. 객체가 추가될 때마다 Amazon S3에서 고유한 버전 ID를 생성하고 이를 객체에 할당하도록 버킷을 구성할 수도 있습니다. 자</p>
+
+<ul>
+  <li>2) 객체</li>
+</ul>
+
+<p>객체는 Amazon S3에 저장되는 기본 개체입니다. 객체는 객체 데이터와 메타데이터로 구성됩니다. 데이터 부분은 Amazon S3에서 볼 수 없습니다. 메타데이터는 객체를 설명하는 이름-값 페어의 집합입니다. 여기에는 마지막으로 수정한 날짜와 같은 몇 가지 기본 메타데이터 및 Content-Type 같은 표준 HTTP 메타데이터가 포함됩니다. 객체를 저장할 때 사용자 정의 메타데이터를 지정할 수도 있습니다.</p>
+
+<p>객체는 키(이름) 및 버전 ID를 통해 버킷 내에서 고유하게 식별됩니다.</p>
+
+<ul>
+  <li>3) 키</li>
+</ul>
+
+<p>키는 버킷 내 객체의 고유한 식별자입니다. 버킷 내 모든 객체는 정확히 하나의 키를 갖습니다. 버킷, 키 및 버전 ID의 조합은 각 객체를 고유하게 식별합니다. 따라서 Amazon S3을 “버킷 + 키 + 버전”과 객체 자체 사이의 기본 데이터 맵으로 생각할 수 있습니다. Amazon S3 내 모든 객체는 웹 서비스 엔드포인트, 버킷 이름, 키, 그리고 선택 사항인 버전의 조합을 통해 고유하게 주소를 지정할 수 있습니다. 예를 들어, https://doc.s3.amazonaws.com/2006-03-01/AmazonS3.wsdl이라는 URL에서 “doc“는 버킷의 이름이고 “2006-03-01/AmazonS3.wsdl“은 키입니다.</p>
+
+<ul>
+  <li>4) Regions</li>
+</ul>
+
+<p>Amazon S3에서 사용자가 만드는 버킷을 저장할 지리적 AWS 리전을 선택할 수 있습니다. 지연 시간 최적화, 비용 최소화, 규정 요구 사항 준수 등 다양한 필요에 따라 리전을 선택할 수 있습니다. 특정 리전에 저장된 객체는 사용자가 명시적으로 객체를 다른 리전으로 전송하지 않는 한 해당 리전을 벗어나지 않습니다. 예를 들어 유럽(아일랜드) 리전에 저장된 객체는 해당 리전을 벗어나지 않습니다.</p>
 
 <hr>
 <h2 id="32-ebs-elastic-block-store">
