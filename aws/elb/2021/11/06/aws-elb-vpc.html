@@ -10,13 +10,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="section6" />
 <meta property="og:description" content="section6" />
-<link rel="canonical" href="https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb.html" />
-<meta property="og:url" content="https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb.html" />
+<link rel="canonical" href="https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb-vpc.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb-vpc.html" />
 <meta property="og:site_name" content="Cho’s Tech blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-11-06T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"section6","url":"https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb.html","@type":"BlogPosting","headline":"ELB(Elastic Load Balancing), VPC","dateModified":"2021-11-06T00:00:00-05:00","datePublished":"2021-11-06T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb.html"},"@context":"https://schema.org"}</script>
+{"description":"section6","url":"https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb-vpc.html","@type":"BlogPosting","headline":"ELB(Elastic Load Balancing), VPC","dateModified":"2021-11-06T00:00:00-05:00","datePublished":"2021-11-06T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/aws/elb/2021/11/06/aws-elb-vpc.html"},"@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -120,18 +120,23 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#elb-type">ELB type</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#62-vpc-virtual-private-cloud">6.2. VPC (Virtual Private Cloud)</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#subnet">subnet</a></li>
-<li class="toc-entry toc-h3"><a href="#network-acl">network ACL</a></li>
-<li class="toc-entry toc-h3"><a href="#routing-table">routing table</a></li>
-<li class="toc-entry toc-h3"><a href="#internet-gateway">internet gateway</a></li>
-<li class="toc-entry toc-h3"><a href="#vpc-endpoint">VPC endpoint</a></li>
-<li class="toc-entry toc-h3"><a href="#nat-device">NAT device</a></li>
-<li class="toc-entry toc-h3"><a href="#cidr-classless-inter-domain-routing-block">CIDR (Classless Inter-Domain Routing) block</a></li>
+<li class="toc-entry toc-h2"><a href="#"></a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#53-cloudfront">5.3. CloudFront</a></li>
+<li class="toc-entry toc-h1"><a href="#7-vpc-virtual-private-cloud">7. VPC (Virtual Private Cloud)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#cidr-classless-inter-domain-routing-block">CIDR (Classless Inter-Domain Routing) block</a></li>
+<li class="toc-entry toc-h2"><a href="#71-서브넷-subnet">7.1. 서브넷 (subnet)</a></li>
+<li class="toc-entry toc-h2"><a href="#72-라우팅-테이블-routing-table">7.2. 라우팅 테이블 (routing table)</a></li>
+<li class="toc-entry toc-h2"><a href="#73-인터넷-게이트웨이-internet-gateway">7.3. 인터넷 게이트웨이 (internet gateway)</a></li>
+<li class="toc-entry toc-h2"><a href="#74-nat-게이트웨이-nat-gateway">7.4. NAT 게이트웨이 (NAT gateway)</a></li>
+<li class="toc-entry toc-h2"><a href="#75-vpc-엔드포인트-vpc-endpoint">7.5. VPC 엔드포인트 (VPC endpoint)</a></li>
+<li class="toc-entry toc-h2"><a href="#76-securitz-group">7.6. Securitz Group</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#network-acl">Network ACL</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#-1"></a></li>
 </ul>
 </li>
 </ul><p>AWS Documentation</p>
@@ -153,53 +158,63 @@ window.onload = wrap_img;
 
 <p>3) Classic Load Balancer: EC2 Classic instances에서만 권장</p>
 
-<hr>
+<h2>
+<a class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
 
-<h2 id="62-vpc-virtual-private-cloud">
-<a class="anchor" href="#62-vpc-virtual-private-cloud" aria-hidden="true"><span class="octicon octicon-link"></span></a>6.2. VPC (Virtual Private Cloud)</h2>
+<h1 id="7-vpc-virtual-private-cloud">
+<a class="anchor" href="#7-vpc-virtual-private-cloud" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. VPC (Virtual Private Cloud)</h1>
 <p>보안을 위해 AWS 리소스간 허용을 최소화하고 그룹별로 손쉽게 네트워크를 구성하기 위해 사용하는 AWS 계정 전용 가상 네트워크</p>
-
-<h3 id="subnet">
-<a class="anchor" href="#subnet" aria-hidden="true"><span class="octicon octicon-link"></span></a>subnet</h3>
-<p>A range of IP addresses in your VPC.</p>
-
-<h3 id="network-acl">
-<a class="anchor" href="#network-acl" aria-hidden="true"><span class="octicon octicon-link"></span></a>network ACL</h3>
-<p>subnet간의 통신 규칙 관리</p>
-
-<h3 id="routing-table">
-<a class="anchor" href="#routing-table" aria-hidden="true"><span class="octicon octicon-link"></span></a>routing table</h3>
-<p>A set of rules, called routes, that are used to determine where network traffic is directed.</p>
-
-<h3 id="internet-gateway">
-<a class="anchor" href="#internet-gateway" aria-hidden="true"><span class="octicon octicon-link"></span></a>internet gateway</h3>
-<p>A gateway that you attach to your VPC to enable communication between resources in your VPC and the internet.</p>
-
-<h3 id="vpc-endpoint">
-<a class="anchor" href="#vpc-endpoint" aria-hidden="true"><span class="octicon octicon-link"></span></a>VPC endpoint</h3>
-<p><img src="https://user-images.githubusercontent.com/83441376/141411445-a86f1cf8-e2d7-4cc4-a077-b2ae18ae133a.png" alt="image"><br>
-Enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection.<br>
-Instances in your VPC do not require public IP addresses to communicate with resources in the service.<br>
-Traffic between your VPC and the other service does not leave the Amazon network.</p>
-
-<h3 id="nat-device">
-<a class="anchor" href="#nat-device" aria-hidden="true"><span class="octicon octicon-link"></span></a>NAT device</h3>
-<p>인스턴스가 인터넷에 접근할 수 있도록 하고 인터넷 상에 호스트에서는 인스턴스로 접근할 수 없도록 막음 ( patch, data upload…)<br>
-1) NAT gateway: 대역폭 요구 늘어나면 auto scaling<br>
-2) NAT instance: bastion host로 사용해서 public IP 없이 인스턴스 연결 가능</p>
 
 <h3 id="cidr-classless-inter-domain-routing-block">
 <a class="anchor" href="#cidr-classless-inter-domain-routing-block" aria-hidden="true"><span class="octicon octicon-link"></span></a>CIDR (Classless Inter-Domain Routing) block</h3>
 <p>Classless Inter-Domain Routing. An internet protocol address allocation and route aggregation methodology.<br>
 <a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#IPv4_CIDR_blocks">IPv4 CIDR blocks</a></p>
 
-<hr>
+<h2 id="71-서브넷-subnet">
+<a class="anchor" href="#71-%EC%84%9C%EB%B8%8C%EB%84%B7-subnet" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.1. 서브넷 (subnet)</h2>
+<p>VPC의 IP 주소 범위<br>
+A range of IP addresses in your VPC.</p>
 
-<h2 id="53-cloudfront">
-<a class="anchor" href="#53-cloudfront" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.3. CloudFront</h2>
+<h2 id="72-라우팅-테이블-routing-table">
+<a class="anchor" href="#72-%EB%9D%BC%EC%9A%B0%ED%8C%85-%ED%85%8C%EC%9D%B4%EB%B8%94-routing-table" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.2. 라우팅 테이블 (routing table)</h2>
+<p>네트워크 트래픽을 전달할 위치를 결정하는 데 사용되는 라우팅이라는 규칙 집합<br>
+A set of rules, called routes, that are used to determine where network traffic is directed.</p>
+
+<h2 id="73-인터넷-게이트웨이-internet-gateway">
+<a class="anchor" href="#73-%EC%9D%B8%ED%84%B0%EB%84%B7-%EA%B2%8C%EC%9D%B4%ED%8A%B8%EC%9B%A8%EC%9D%B4-internet-gateway" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.3. 인터넷 게이트웨이 (internet gateway)</h2>
+<p>VPC의 리소스와 인터넷 간의 통신을 활성화하기 위해 VPC에 연결하는 게이트웨이<br>
+A gateway that you attach to your VPC to enable communication between resources in your VPC and the internet.</p>
+
+<h2 id="74-nat-게이트웨이-nat-gateway">
+<a class="anchor" href="#74-nat-%EA%B2%8C%EC%9D%B4%ED%8A%B8%EC%9B%A8%EC%9D%B4-nat-gateway" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.4. NAT 게이트웨이 (NAT gateway)</h2>
+<p>네트워크 주소 변환을 통해 프라이빗 서브넷에서 인터넷 또는 기타 AWS 서비스에 연결하는 게이트웨이
+1) NAT gateway: 대역폭 요구 늘어나면 auto scaling<br>
+2) NAT instance: bastion host로 사용해서 public IP 없이 인스턴스 연결 가능</p>
+
+<h2 id="75-vpc-엔드포인트-vpc-endpoint">
+<a class="anchor" href="#75-vpc-%EC%97%94%EB%93%9C%ED%8F%AC%EC%9D%B8%ED%8A%B8-vpc-endpoint" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.5. VPC 엔드포인트 (VPC endpoint)</h2>
+<p><img src="https://user-images.githubusercontent.com/83441376/141411445-a86f1cf8-e2d7-4cc4-a077-b2ae18ae133a.png" alt="image"><br>
+인터넷 게이트웨이, NAT 디바이스, VPN 연결 또는 AWS Direct Connect 연결을 필요로 하지 않고 PrivateLink 구동 지원 AWS 서비스 및 VPC 엔드포인트 서비스에 VPC를 비공개로 연결, VPC의 인스턴스는 서비스의 리소스와 통신하는 데 퍼블릭 IP 주소를 필요 X, VPC와 기타 서비스 간의 트래픽은 Amazon 네트워크를 벗어나지 X</p>
+
+<p>Enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection.<br>
+Instances in your VPC do not require public IP addresses to communicate with resources in the service.<br>
+Traffic between your VPC and the other service does not leave the Amazon network.</p>
+
+<h2 id="76-securitz-group">
+<a class="anchor" href="#76-securitz-group" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.6. Securitz Group</h2>
+<p>보안 그룹은 인스턴스에 대한 인바운드 및 아웃바운드 트래픽을 제어하는 가상 방화벽 역할을 하는 규칙 집합</p>
+
+<h3 id="network-acl">
+<a class="anchor" href="#network-acl" aria-hidden="true"><span class="octicon octicon-link"></span></a>Network ACL</h3>
+<p>subnet간의 통신 규칙 관리</p>
+
+<h2 id="-1">
+<a class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
+</h2>
 
 
-  </div><a class="u-url" href="/techblog/aws/elb/2021/11/06/aws-elb.html" hidden></a>
+  </div><a class="u-url" href="/techblog/aws/elb/2021/11/06/aws-elb-vpc.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
