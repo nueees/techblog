@@ -51,10 +51,14 @@ A gateway that you attach to your VPC to enable communication between resources 
 인터넷으로 라우팅되는 트래픽을 위해 VPC 라우팅 테이블에 target 역할 + 공인 IP주소가 할당된 VPC 내 인스턴스에 대해 NAT를 수행  
 인터넷 게이트웨이가 연결된 서브넷: 흔히 public 서브넷 함  
 
+Internet Gateway (IGW) allows instances with public IPs to access the internet
+
 ## 7.4. NAT 게이트웨이 (NAT gateway)  
 네트워크 주소 변환을 통해 프라이빗 서브넷에서 인터넷 또는 기타 AWS 서비스에 연결하는 게이트웨이(stateful)  
 1) NAT gateway: 대역폭 요구 늘어나면 auto scaling  
 2) NAT instance: bastion host로 사용해서 public IP 없이 인스턴스 연결 가능  
+
+NAT Gateway (NGW) allows instances with no public IPs to access the internet
 
 ## 7.5. VPC 엔드포인트 (VPC endpoint)  
 ![image](https://user-images.githubusercontent.com/83441376/141411445-a86f1cf8-e2d7-4cc4-a077-b2ae18ae133a.png)  
