@@ -42,12 +42,14 @@ A range of IP addresses in your VPC.
 네트워크 트래픽을 전달할 위치를 결정하는 데 사용되는 라우팅이라는 규칙 집합  
 A set of rules, called routes, that are used to determine where network traffic is directed.  
 
+여러 서브넷에서 동시에 사용할 수 있으며, 이렇게 연결하는 Association 작업 함  
+
 ## 7.3. 인터넷 게이트웨이 (internet gateway)  
 VPC의 리소스와 인터넷 간의 통신을 활성화하기 위해 VPC에 연결하는 게이트웨이 (NAT의 역할도 수행)  
 A gateway that you attach to your VPC to enable communication between resources in your VPC and the internet.  
 
 인터넷으로 라우팅되는 트래픽을 위해 VPC 라우팅 테이블에 target 역할 + 공인 IP주소가 할당된 VPC 내 인스턴스에 대해 NAT를 수행  
-인터넷 게이트웨이가 연결된 서브넷: 흔히 public 서브넷
+인터넷 게이트웨이가 연결된 서브넷: 흔히 public 서브넷 함  
 
 ## 7.4. NAT 게이트웨이 (NAT gateway)  
 네트워크 주소 변환을 통해 프라이빗 서브넷에서 인터넷 또는 기타 AWS 서비스에 연결하는 게이트웨이(stateful)  
@@ -70,7 +72,8 @@ Traffic between your VPC and the other service does not leave the Amazon network
 ### Network ACL  
 subnet간의 통신 규칙 관리  
 
-
+### Elastic IP
+a static (doesn't change) IPv4 address associated with your AWS account  
 
 
 <br><br>
