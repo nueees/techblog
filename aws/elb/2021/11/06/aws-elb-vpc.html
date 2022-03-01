@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -131,7 +131,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#73-인터넷-게이트웨이-internet-gateway">7.3. 인터넷 게이트웨이 (internet gateway)</a></li>
 <li class="toc-entry toc-h2"><a href="#74-nat-게이트웨이-nat-gateway">7.4. NAT 게이트웨이 (NAT gateway)</a></li>
 <li class="toc-entry toc-h2"><a href="#75-vpc-엔드포인트-vpc-endpoint">7.5. VPC 엔드포인트 (VPC endpoint)</a></li>
-<li class="toc-entry toc-h2"><a href="#76-securitz-group">7.6. Securitz Group</a>
+<li class="toc-entry toc-h2"><a href="#76-security-group">7.6. Security Group</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#network-acl">Network ACL</a></li>
 </ul>
@@ -183,12 +183,14 @@ A set of rules, called routes, that are used to determine where network traffic 
 
 <h2 id="73-인터넷-게이트웨이-internet-gateway">
 <a class="anchor" href="#73-%EC%9D%B8%ED%84%B0%EB%84%B7-%EA%B2%8C%EC%9D%B4%ED%8A%B8%EC%9B%A8%EC%9D%B4-internet-gateway" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.3. 인터넷 게이트웨이 (internet gateway)</h2>
-<p>VPC의 리소스와 인터넷 간의 통신을 활성화하기 위해 VPC에 연결하는 게이트웨이<br>
+<p>VPC의 리소스와 인터넷 간의 통신을 활성화하기 위해 VPC에 연결하는 게이트웨이 (NAT의 역할도 수행)<br>
 A gateway that you attach to your VPC to enable communication between resources in your VPC and the internet.</p>
+
+<p>인터넷으로 라우팅되는 트래픽을 위해 VPC 라우팅 테이블에 target 역할 + 공인 IP주소가 할당된 VPC 내 인스턴스에 대해 NAT를 수행</p>
 
 <h2 id="74-nat-게이트웨이-nat-gateway">
 <a class="anchor" href="#74-nat-%EA%B2%8C%EC%9D%B4%ED%8A%B8%EC%9B%A8%EC%9D%B4-nat-gateway" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.4. NAT 게이트웨이 (NAT gateway)</h2>
-<p>네트워크 주소 변환을 통해 프라이빗 서브넷에서 인터넷 또는 기타 AWS 서비스에 연결하는 게이트웨이
+<p>네트워크 주소 변환을 통해 프라이빗 서브넷에서 인터넷 또는 기타 AWS 서비스에 연결하는 게이트웨이(stateful)<br>
 1) NAT gateway: 대역폭 요구 늘어나면 auto scaling<br>
 2) NAT instance: bastion host로 사용해서 public IP 없이 인스턴스 연결 가능</p>
 
@@ -201,8 +203,8 @@ A gateway that you attach to your VPC to enable communication between resources 
 Instances in your VPC do not require public IP addresses to communicate with resources in the service.<br>
 Traffic between your VPC and the other service does not leave the Amazon network.</p>
 
-<h2 id="76-securitz-group">
-<a class="anchor" href="#76-securitz-group" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.6. Securitz Group</h2>
+<h2 id="76-security-group">
+<a class="anchor" href="#76-security-group" aria-hidden="true"><span class="octicon octicon-link"></span></a>7.6. Security Group</h2>
 <p>보안 그룹은 인스턴스에 대한 인바운드 및 아웃바운드 트래픽을 제어하는 가상 방화벽 역할을 하는 규칙 집합</p>
 
 <h3 id="network-acl">
