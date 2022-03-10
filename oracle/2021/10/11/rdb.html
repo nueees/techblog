@@ -117,6 +117,46 @@ window.onload = wrap_img;
 
 <h2><br /><br /></h2>
 
+<h1 id="2-mysql">2. MYSQL</h1>
+
+<h2 id="21">2.1.</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+mysql&gt; \q # 세션 종료
+</code></pre></div></div>
+
+<h2 id="22-조회">2.2. 조회</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; SHOW TABLES;
++-----------------+
+| Tables_in_world |
++-----------------+
+| city            |
+| country         |
+| countrylanguage |
++-----------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; SELECT * FROM countrylanguage WHERE countrycode='CAN';
++-------------+------------------+------------+------------+
+| CountryCode | Language         | IsOfficial | Percentage |
++-------------+------------------+------------+------------+
+| CAN         | Chinese          | F          |        2.5 |
+| CAN         | Dutch            | F          |        0.5 |
+| CAN         | English          | T          |       60.4 |
+| CAN         | Eskimo Languages | F          |        0.1 |
+| CAN         | French           | T          |       23.4 |
+| CAN         | German           | F          |        1.6 |
+| CAN         | Italian          | F          |        1.7 |
+| CAN         | Polish           | F          |        0.7 |
+| CAN         | Portuguese       | F          |        0.7 |
+| CAN         | Punjabi          | F          |        0.7 |
+| CAN         | Spanish          | F          |        0.7 |
+| CAN         | Ukrainian        | F          |        0.6 |
++-------------+------------------+------------+------------+
+12 rows in set (0.03 sec)
+</code></pre></div></div>
+
 <h2 id="-1"><br /><br /></h2>
 
   </div><a class="u-url" href="/techblog/oracle/2021/10/11/rdb.html" hidden></a>
