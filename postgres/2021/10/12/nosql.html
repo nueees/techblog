@@ -115,6 +115,11 @@ window.onload = wrap_img;
 
 <h1 id="1-postgres">1. Postgres</h1>
 
+<h3 id="접속">접속</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>psql --username=postgres --host=localhost -f
+</code></pre></div></div>
+
 <h2 id="11-setting">1.1. Setting</h2>
 
 <h3 id="configuration-file">configuration file</h3>
@@ -517,9 +522,9 @@ min_wal_size = 80MB
 
 <h2><br /><br /></h2>
 
-<h2 id="12-run-import">1.2. run, import</h2>
+<h2 id="12-import">1.2. import</h2>
 
-<h3 id="run-the-sql-file">run the sql file</h3>
+<h3 id="import-sql-file">import sql file</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>psql --username=postgres --host=localhost -f setup.sql
 </code></pre></div></div>
@@ -537,6 +542,35 @@ min_wal_size = 80MB
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CREATE USER user_a WITH PASSWORD 'user_a_password';
 
 </code></pre></div></div>
+
+<h2 id="-2"><br /><br /></h2>
+
+<h1 id="2-mongodb">2. MongoDB</h1>
+
+<h3 id="접속-1">접속</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] mongo -u root -p password --authenticationDatabase admin local
+
+</code></pre></div></div>
+
+<h2 id="21-setting">2.1. Setting</h2>
+
+<h2 id="22-import--export">2.2. import &amp; export</h2>
+
+<h3 id="tool-설치">tool 설치</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu1804-x86_64-100.3.1.tgz
+] tar -xf mongodb-database-tools-ubuntu1804-x86_64-100.3.1.tgz
+] export PATH=$PATH:/home/project/mongodb-database-tools-ubuntu1804-x86_64-100.3.1/bin
+] echo "done"
+] mongoimport --version
+mongoimport version: 100.3.1
+git version: 32632b931f9c41d8314b75ecc88e551b012b1e30
+Go version: go1.15.8
+   os: linux
+   arch: amd64
+   compiler: gc
+</code></pre></div></div>
+
+<h2 id="-3"><br /><br /></h2>
 
   </div><a class="u-url" href="/techblog/postgres/2021/10/12/nosql.html" hidden></a>
 </article>
