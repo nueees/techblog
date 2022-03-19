@@ -241,12 +241,14 @@ ectories
 </code></pre></div></div>
 
 <h2 id="21-sql">2.1. SQL</h2>
+<h3 id="database-생성">Database 생성</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>use mongotest1 # mongotest1 database 사용
+</code></pre></div></div>
 
 <h3 id="ddl-dml">DDL, DML</h3>
 <p>collection(~table): one or more BSON documents(~rows)</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>use mongotest1 # mongotest1 스키마 사용
-db.createCollection("languages") # languages라는 콜렉션(테이블) 생성
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>db.createCollection("languages") # languages라는 콜렉션(테이블) 생성
 db.languages.insert({"name":"java","type":"object oriented"}) # name, type 삽입
 db.languages.insert({"name":"python","type":"general purpose"})
 db.languages.insert({"name":"scala","type":"functional"})
@@ -384,7 +386,7 @@ connecturl = "mongodb://{}:{}@{}:27017/?authSource=admin".format(user,password,h
 print("Connecting to mongodb server")
 connection = MongoClient(connecturl) # 연결
 
-db = connection.mongo_test1 # mongo_test1 스키마 선택
+db = connection.mongo_test1 # mongo_test1 database 선택
 
 collection = db.mongodb_glossary # glossary 콜렉션 선택
 
