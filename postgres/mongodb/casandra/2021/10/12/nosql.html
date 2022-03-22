@@ -243,12 +243,15 @@ ectories
 <h2 id="21-sql">2.1. SQL</h2>
 <h3 id="database-생성">Database 생성</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>use mongotest1 # mongotest1 database 사용
+show dbs # 생성된 database 확인
 </code></pre></div></div>
 
 <h3 id="ddl-dml">DDL, DML</h3>
 <p>collection(~table): one or more BSON documents(~rows)</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>db.createCollection("languages") # languages라는 콜렉션(테이블) 생성
+db.getCollectionNames()
+&gt; [ "languages" ]
 db.languages.insert({"name":"java","type":"object oriented"}) # name, type 삽입
 db.languages.insert({"name":"python","type":"general purpose"})
 db.languages.insert({"name":"scala","type":"functional"})
@@ -425,9 +428,10 @@ Go version: go1.15.8
    compiler: gc
    
 # json to mongoDB import
-] mongoimport --db test_mongo1 --collection testdb1 --file catalog.json 
+] mongoimport --file testdata.json --host localhost --port 27000 --db test_mongo1 -collection products -u test-user1 -p test-user1
+
 # mongoDB to csv export
-] mongoexport -db database_name -co collection_name --csv --query { catalog_id:{$exist:true},xid:{$gt:0}}
+] mongoexport -db test_mongo1 -co testcoll1 --csv --query { test_id:{$exist:true}, xid:{$gt:0}}
 
 </code></pre></div></div>
 
