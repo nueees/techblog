@@ -162,6 +162,68 @@ Star schema에서 정규화되서 더 확장된 버전</p>
 
 <h2 id="-1"><br /><br /></h2>
 
+<h1 id="3-query">3. Query</h1>
+
+<h2 id="31-cubes">3.1. Cubes</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select year,category, sum(billedamount) as totalbilledamount
+from factbilling
+left join dimcustomer
+on factbilling.customerid = dimcustomer.customerid
+left join dimmonth
+on factbilling.monthid=dimmonth.monthid
+group by cube(year,category)
+order by year, category
+</code></pre></div></div>
+<h2 id="32-rollups">3.2. Rollups</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select year,category, sum(billedamount) as totalbilledamount
+from factbilling
+left join dimcustomer
+on factbilling.customerid = dimcustomer.customerid
+left join dimmonth
+on factbilling.monthid=dimmonth.monthid
+group by rollup(year,category)
+order by year, category
+</code></pre></div></div>
+
+<h2 id="33-grouping-sets">3.3. Grouping Sets</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select year,category, sum(billedamount) as totalbilledamount
+from factbilling
+left join dimcustomer
+on factbilling.customerid = dimcustomer.customerid
+left join dimmonth
+on factbilling.monthid=dimmonth.monthid
+group by grouping sets(year,category)
+order by year, category
+</code></pre></div></div>
+
+<h2 id="34-materialized-views">3.4. Materialized Views</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CREATE TABLE countrystats (country, year, totalbilledamount) AS
+  (select country, year, sum(billedamount)
+from factbilling
+left join dimcustomer
+on factbilling.customerid = dimcustomer.customerid
+left join dimmonth
+on factbilling.monthid=dimmonth.monthid
+group by country,year)
+     DATA INITIALLY DEFERRED
+     REFRESH DEFERRED
+     MAINTAINED BY SYSTEM;
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select country, year, sum(billedamount)
+from factbilling
+left join dimcustomer
+on factbilling.customerid = dimcustomer.customerid
+left join dimmonth
+on factbilling.monthid=dimmonth.monthid
+group by country,year
+</code></pre></div></div>
+
+<h2 id="-2"><br /><br /></h2>
+
   </div><a class="u-url" href="/techblog/dw/2021/10/21/dw.html" hidden></a>
 </article>
       </div>
