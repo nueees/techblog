@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -174,11 +174,11 @@ left join dimcategory
 on factsales.categoryid=dimcategory.categoryid
 group by grouping sets(country, category)
 order by country, category
-&gt; COUNTRY		  CATEGORY	   TOTALSALES
-  Argentina	     	       21755581
-  Australia	     	       21522004
-  Austria	 	             21365726
-  Azerbaijan	     	      21325766
+&gt; COUNTRY		  CATEGORY	    TOTALSALES
+  Argentina	     	        21755581
+  Australia	     	        21522004
+  Austria	 	              21365726
+  Azerbaijan	     	       21325766
   ...
               Books	      239357597
               Electronics	239912568
@@ -189,52 +189,84 @@ order by country, category
 </code></pre></div></div>
 
 <h2 id="32-rollups">3.2. Rollups</h2>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select year,category, sum(billedamount) as totalbilledamount
-from factbilling
-left join dimcustomer
-on factbilling.customerid = dimcustomer.customerid
-left join dimmonth
-on factbilling.monthid=dimmonth.monthid
-group by rollup(year,category)
-order by year, category
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select country, category, sum(amount) as totalsales
+from factsales
+left join dimcontry
+on factsales.countryid = dimcontry.countryid
+left join dimcategory
+on factsales.categoryid=dimcategory.categoryid
+group by rollup(country, category)
+order by country, category
+&gt; COUNTRY	  CATEGORY	   TOTALSALES
+  Argentina	Books	      4285010
+  Argentina	Electronics	4338757
+  Argentina	Software	   4292153
+  Argentina	Sports	     4450354
+  Argentina	Toys	       4389307
+  Argentina             21755581
+  ...
+  Vietnam	  Books	      4238299
+  Vietnam	  Electronics	4339044
+  Vietnam	  Software	   4221673
+  Vietnam	  Sports	     4175508
+  Vietnam	  Toys	       4306048
+  Vietnam               21280572
+                        1201006258
+
 </code></pre></div></div>
 
 <h2 id="33-cubes">3.3. Cubes</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select year,category, sum(billedamount) as totalbilledamount
-from factbilling
-left join dimcustomer
-on factbilling.customerid = dimcustomer.customerid
-left join dimmonth
-on factbilling.monthid=dimmonth.monthid
-group by cube(year,category)
-order by year, category
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select country, category, sum(amount) as totalsales
+from factsales
+left join dimcontry
+on factsales.countryid = dimcontry.countryid
+left join dimcategory
+on factsales.categoryid=dimcategory.categoryid
+group by cube(country, category)
+order by country, category
+&gt; COUNTRY	  CATEGORY	   TOTALSALES
+  Argentina	Books	      4285010
+  Argentina	Electronics	4338757
+  Argentina	Software	   4292153
+  Argentina	Sports	     4450354
+  Argentina	Toys	       4389307
+  Argentina             21755581
+  Vietnam	  Books	      4238299
+  Vietnam	  Electronics	4339044
+  Vietnam	  Software	   4221673
+  Vietnam	  Sports	     4175508
+  Vietnam	  Toys	       4306048
+  Vietnam               21280572
+  ...
+            Books	      239357597
+            Electronics	239912568
+            Software	   240289802
+            Sports	     240709913
+            Toys	       240736378
+                        1201006258
+
 </code></pre></div></div>
 
 <h2 id="34-materialized-views">3.4. Materialized Views</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CREATE TABLE countrystats (country, year, totalbilledamount) AS
-  (select country, year, sum(billedamount)
-from factbilling
-left join dimcustomer
-on factbilling.customerid = dimcustomer.customerid
-left join dimmonth
-on factbilling.monthid=dimmonth.monthid
-group by country,year)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CREATE TABLE total_sales_per_country (country, category, totalsales) AS
+  (select country, category, sum(amount) as totalsales
+   from factsales
+   left join dimcontry
+   on factsales.countryid = dimcontry.countryid
+   left join dimcategory
+   on factsales.categoryid=dimcategory.categoryid
+   group by country, category)
      DATA INITIALLY DEFERRED
      REFRESH DEFERRED
      MAINTAINED BY SYSTEM;
 </code></pre></div></div>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>refresh table countrystats;
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>refresh table total_sales_per_country;
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select country, year, sum(billedamount)
-from factbilling
-left join dimcustomer
-on factbilling.customerid = dimcustomer.customerid
-left join dimmonth
-on factbilling.monthid=dimmonth.monthid
-group by country,year
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select * from total_sales_per_country where totalsales &gt; 4306048;
 </code></pre></div></div>
 
 <h2 id="-2"><br /><br /></h2>
