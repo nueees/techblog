@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      6 min read
     
 </span></p>
 
@@ -211,20 +211,60 @@ ectories
 
 <h2><br /><br /></h2>
 
-<h2 id="12-import">1.2. import</h2>
+<h2 id="12-sql">1.2. SQL</h2>
 
-<h3 id="import-sql-file">import sql file</h3>
+<h3 id="ddl--dml">DDL &amp; DML</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>psql --username=postgres --host=localhost -f setup.sql
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CREATE DATABASE sales ONWER postgres;
+\l # database 출력
+\c sales # database 선택
 </code></pre></div></div>
 
-<h3 id="import-the-csv-file">import the csv file</h3>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat vehicle-data.csv | psql --username=postgres -d tolldata --host=localhost -c "copy toll.tolldata from STDIN WITH (FORMAT csv);"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CREATE TABLE sales."Customer"
+(
+    customerid integer NOT NULL,
+    category varchar(10) NOT NULL,
+    country varchar(40) NOT NULL,
+    industry varchar(40) NOT NULL,
+    PRIMARY KEY (customerid)
+);
+\dt # table 출력
+\d Customer # describe table
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INSERT INTO "Customer"(customerid,category,country,industry)
+VALUES
+(1,'Individual','Indonesia','Engineering'),
+(614,'Individual','United States','Product Management'),
+(615,'Individual','China','Services');
 </code></pre></div></div>
 
 <h2 id="-1"><br /><br /></h2>
 
-<h2 id="13-management">1.3. management</h2>
+<h2 id="13-import--export">1.3. import &amp; export</h2>
+
+<h3 id="export">export</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># pg_dump -u {username} -W -F p {database명} &gt; {dump파일명}
+pg_dump -u postgres -F p sales &gt; sales.sql
+</code></pre></div></div>
+<h4 id="fformat-옵션">F(format) 옵션</h4>
+<p>c: custom-format archive file format
+d: directory-format archive
+t: tar
+p: plain-text SQL script file)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># psql -f {dump파일명} {database명}
+psql -f sales.sql --username=postgres --host=localhost
+</code></pre></div></div>
+
+<h3 id="import-the-csv-file">import the csv file</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat customer-data.csv | psql --username=postgres -d sales --host=localhost -c "copy sales.customer from STDIN WITH (FORMAT csv);"
+</code></pre></div></div>
+
+<h2 id="-2"><br /><br /></h2>
+
+<h2 id="14-management">1.4. management</h2>
 
 <h3 id="user">USER</h3>
 
@@ -232,7 +272,7 @@ ectories
 
 </code></pre></div></div>
 
-<h2 id="-2"><br /><br /></h2>
+<h2 id="-3"><br /><br /></h2>
 
 <h1 id="2-mongodb">2. MongoDB</h1>
 
@@ -435,7 +475,7 @@ Go version: go1.15.8
 
 </code></pre></div></div>
 
-<h2 id="-3"><br /><br /></h2>
+<h2 id="-4"><br /><br /></h2>
 
 <h1 id="3-cassandra">3. Cassandra</h1>
 
