@@ -164,17 +164,30 @@ Star schema에서 정규화되서 더 확장된 버전</p>
 
 <h1 id="3-query">3. Query</h1>
 
-<h2 id="31-cubes">3.1. Cubes</h2>
+<h2 id="31-grouping-sets">3.1. Grouping Sets</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select year,category, sum(billedamount) as totalbilledamount
-from factbilling
-left join dimcustomer
-on factbilling.customerid = dimcustomer.customerid
-left join dimmonth
-on factbilling.monthid=dimmonth.monthid
-group by cube(year,category)
-order by year, category
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select country, category, sum(amount) as totalsales
+from factsales
+left join dimcontry
+on factsales.countryid = dimcontry.countryid
+left join dimcategory
+on factsales.categoryid=dimcategory.categoryid
+group by grouping sets(country, category)
+order by country, category
+&gt; COUNTRY		  CATEGORY	   TOTALSALES
+  Argentina	     	       21755581
+  Australia	     	       21522004
+  Austria	 	             21365726
+  Azerbaijan	     	      21325766
+  ...
+              Books	      239357597
+              Electronics	239912568
+              Software	   240289802
+              Sports	     240709913
+              Toys	       240736378
+
 </code></pre></div></div>
+
 <h2 id="32-rollups">3.2. Rollups</h2>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select year,category, sum(billedamount) as totalbilledamount
 from factbilling
@@ -186,7 +199,7 @@ group by rollup(year,category)
 order by year, category
 </code></pre></div></div>
 
-<h2 id="33-grouping-sets">3.3. Grouping Sets</h2>
+<h2 id="33-cubes">3.3. Cubes</h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select year,category, sum(billedamount) as totalbilledamount
 from factbilling
@@ -194,7 +207,7 @@ left join dimcustomer
 on factbilling.customerid = dimcustomer.customerid
 left join dimmonth
 on factbilling.monthid=dimmonth.monthid
-group by grouping sets(year,category)
+group by cube(year,category)
 order by year, category
 </code></pre></div></div>
 
@@ -211,6 +224,8 @@ group by country,year)
      DATA INITIALLY DEFERRED
      REFRESH DEFERRED
      MAINTAINED BY SYSTEM;
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>refresh table countrystats;
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>select country, year, sum(billedamount)
