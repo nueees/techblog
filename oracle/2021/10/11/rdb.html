@@ -212,6 +212,8 @@ mysql&gt; SELECT * FROM countrylanguage WHERE countrycode='CAN';
 mysql&gt; create user 'user2'@'%' identified by 'password'; # wildcard(%)사용으로 누구나 접속 가능
 mysql&gt; drop user 'userid';
 </code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; SET PASSWORD FOR 'user1'@'localhost' = PASSWORD('new_password');
+</code></pre></div></div>
 
 <h3 id="user-privileges-grant--revoke">User privileges grant &amp; revoke</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql&gt; grant all privileges on sales.* to 'user2'@'%' identified by 'password';
