@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      11 min read
+      12 min read
     
 </span></p>
 
@@ -380,6 +380,19 @@ Ctrl+P+Q -&gt; 컨테이너 종료하지 않고 빠져나옴</p>
 # docker run -it --name m1 mysql
 # docker inspect m1 # 도커 볼륨을 자동으로 생성하는 이미지가 있음 ("Volumes":{...)
 # docker volume ls # 생성된 볼륨 확인
+</code></pre></div></div>
+
+<p>** 변수 사용해서 생성 **
+컨테이너에만 만들어 줌 /usr/src/app/node_modules
+기존에 로컬 폴더에 있는거 옮김 /usr/src/app</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># docker run -p 5000:8080 -v /usr/src/app/node_modules -v ${pwd}:/usr/src/app  nueees/nodejs:latest # mac용
+# docker run -p 5000:8080 -v /usr/src/app/node_modules -v %cd%:/usr/src/app  nueees/nodejs:latest # window용
+# docker exec 6e76b8fd3085 ls -lrt /usr/src/app
+total 4
+-rwxrwxrwx   1 root root  285 Apr 14 10:19 package.json
+-rwxrwxrwx   1 root root  265 Apr 14 10:23 server.js
+-rwxrwxrwx   1 root root  121 Apr 14 11:37 Dockerfile
+drwxr-xr-x 155 root root 4096 Apr 14 11:50 node_modules
 </code></pre></div></div>
 
 <h3 id="컨테이너-환경변수-설정">컨테이너 환경변수 설정</h3>
