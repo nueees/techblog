@@ -7,6 +7,7 @@ title: Python Class & Method
 ---
 
 Python Intermediate Programming
+(패키지 배포)[https://pj9039.tistory.com/m/4]
 
 ---
 
