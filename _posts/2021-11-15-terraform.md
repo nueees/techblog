@@ -77,6 +77,11 @@ provider "aws" {
 }
 ```
 
+```
+] cat providers.tf # gcp용
+provider "google" {}
+```
+
 ### init  
 ```
 ] terraform init
@@ -89,6 +94,34 @@ Terraform has been successfully initialized!
 ] cat s3.tf
 resource "aws_s3_bucket" "test" {
 	bucket = "terraform220222"
+}
+```
+
+```
+] cat main.tf # gcp용
+variable "instance_name" {}
+variable "instance_zone" {}
+variable "instance_type" {
+  default = "n1-standard-1"
+  }
+variable "instance_network" {}
+
+resource google_compute_instance "vm_instance" {
+  name = "${var.instance_name}"
+  #RESOURCE properties go here
+  zone         = "${var.instance_zone}"
+  machine_type = "${var.instance_type}"
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+      }
+  }
+  network_interface {
+    network = "${var.instance_network}"
+    access_config {
+      # Allocate a one-to-one NAT IP to the instance
+    }
+  }
 }
 ```
 
@@ -134,6 +167,216 @@ Terraform will perform the following actions:
     }
 
 Plan: 1 to add, 0 to change, 0 to destroy.
+```
+
+
+```
+] terraform plan # gcp용
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # google_compute_firewall.mynetwork-allow-http-ssh-rdp-icmp will be created
+  + resource "google_compute_firewall" "mynetwork-allow-http-ssh-rdp-icmp" {
+      + creation_timestamp = (known after apply)
+      + destination_ranges = (known after apply)
+      + direction          = (known after apply)
+      + enable_logging     = (known after apply)
+      + id                 = (known after apply)
+      + name               = "mynetwork-allow-http-ssh-rdp-icmp"
+      + network            = (known after apply)
+      + priority           = 1000
+      + project            = (known after apply)
+      + self_link          = (known after apply)
+      + source_ranges      = [
+          + "0.0.0.0/0",
+        ]
+
+      + allow {
+          + ports    = [
+              + "22",
+              + "80",
+              + "3389",
+            ]
+          + protocol = "tcp"
+        }
+      + allow {
+          + ports    = []
+          + protocol = "icmp"
+        }
+    }
+
+  # google_compute_network.mynetwork will be created
+  + resource "google_compute_network" "mynetwork" {
+      + auto_create_subnetworks         = true
+      + delete_default_routes_on_create = false
+      + gateway_ipv4                    = (known after apply)
+      + id                              = (known after apply)
+      + mtu                             = (known after apply)
+      + name                            = "mynetwork"
+      + project                         = (known after apply)
+      + routing_mode                    = (known after apply)
+      + self_link                       = (known after apply)
+    }
+
+  # module.mynet-eu-vm.google_compute_instance.vm_instance will be created
+  + resource "google_compute_instance" "vm_instance" {
+      + can_ip_forward       = false
+      + cpu_platform         = (known after apply)
+      + current_status       = (known after apply)
+      + deletion_protection  = false
+      + guest_accelerator    = (known after apply)
+      + id                   = (known after apply)
+      + instance_id          = (known after apply)
+      + label_fingerprint    = (known after apply)
+      + machine_type         = "n1-standard-1"
+      + metadata_fingerprint = (known after apply)
+      + min_cpu_platform     = (known after apply)
+      + name                 = "mynet-eu-vm"
+      + project              = (known after apply)
+      + self_link            = (known after apply)
+      + tags_fingerprint     = (known after apply)
+      + zone                 = "europe-west1-d"
+
+      + boot_disk {
+          + auto_delete                = true
+          + device_name                = (known after apply)
+          + disk_encryption_key_sha256 = (known after apply)
+          + kms_key_self_link          = (known after apply)
+          + mode                       = "READ_WRITE"
+          + source                     = (known after apply)
+
+          + initialize_params {
+              + image  = "debian-cloud/debian-9"
+              + labels = (known after apply)
+              + size   = (known after apply)
+              + type   = (known after apply)
+            }
+        }
+
+      + confidential_instance_config {
+          + enable_confidential_compute = (known after apply)
+        }
+
+      + network_interface {
+          + ipv6_access_type   = (known after apply)
+          + name               = (known after apply)
+          + network            = (known after apply)
+          + network_ip         = (known after apply)
+          + stack_type         = (known after apply)
+          + subnetwork         = (known after apply)
+          + subnetwork_project = (known after apply)
+
+          + access_config {
+              + nat_ip       = (known after apply)
+              + network_tier = (known after apply)
+            }
+        }
+
+      + reservation_affinity {
+          + type = (known after apply)
+
+          + specific_reservation {
+              + key    = (known after apply)
+              + values = (known after apply)
+            }
+        }
+
+      + scheduling {
+          + automatic_restart   = (known after apply)
+          + min_node_cpus       = (known after apply)
+          + on_host_maintenance = (known after apply)
+          + preemptible         = (known after apply)
+          + provisioning_model  = (known after apply)
+
+          + node_affinities {
+              + key      = (known after apply)
+              + operator = (known after apply)
+              + values   = (known after apply)
+            }
+        }
+    }
+
+  # module.mynet-us-vm.google_compute_instance.vm_instance will be created
+  + resource "google_compute_instance" "vm_instance" {
+      + can_ip_forward       = false
+      + cpu_platform         = (known after apply)
+      + current_status       = (known after apply)
+      + deletion_protection  = false
+      + guest_accelerator    = (known after apply)
+      + id                   = (known after apply)
+      + instance_id          = (known after apply)
+      + label_fingerprint    = (known after apply)
+      + machine_type         = "n1-standard-1"
+      + metadata_fingerprint = (known after apply)
+      + min_cpu_platform     = (known after apply)
+      + name                 = "mynet-us-vm"
+      + project              = (known after apply)
+      + self_link            = (known after apply)
+      + tags_fingerprint     = (known after apply)
+      + zone                 = "us-central1-a"
+
+      + boot_disk {
+          + auto_delete                = true
+          + device_name                = (known after apply)
+          + disk_encryption_key_sha256 = (known after apply)
+          + kms_key_self_link          = (known after apply)
+          + mode                       = "READ_WRITE"
+          + source                     = (known after apply)
+
+          + initialize_params {
+              + image  = "debian-cloud/debian-9"
+              + labels = (known after apply)
+              + size   = (known after apply)
+              + type   = (known after apply)
+            }
+        }
+
+      + confidential_instance_config {
+          + enable_confidential_compute = (known after apply)
+        }
+
+      + network_interface {
+          + ipv6_access_type   = (known after apply)
+          + name               = (known after apply)
+          + network            = (known after apply)
+          + network_ip         = (known after apply)
+          + stack_type         = (known after apply)
+          + subnetwork         = (known after apply)
+          + subnetwork_project = (known after apply)
+
+          + access_config {
+              + nat_ip       = (known after apply)
+              + network_tier = (known after apply)
+            }
+        }
+
+      + reservation_affinity {
+          + type = (known after apply)
+
+          + specific_reservation {
+              + key    = (known after apply)
+              + values = (known after apply)
+            }
+        }
+
+      + scheduling {
+          + automatic_restart   = (known after apply)
+          + min_node_cpus       = (known after apply)
+          + on_host_maintenance = (known after apply)
+          + preemptible         = (known after apply)
+          + provisioning_model  = (known after apply)
+
+          + node_affinities {
+              + key      = (known after apply)
+              + operator = (known after apply)
+              + values   = (known after apply)
+            }
+        }
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
 ```
 
 
@@ -449,7 +692,7 @@ resource "aws_subnet" "second_private_subnet" {
 }
 ```
 
-### AWS Elastic IP도 함께 생성  
+### 3.6. AWS Elastic IP도 함께 생성  
 Nat Gateway는 Public 서브넷에 위치하지만 private 서브넷과 연결  
 
 ```
@@ -491,7 +734,7 @@ resource "aws_nat_gateway" "nat_gateway_2" {
 }
 ```
 
-### Private 서브넷에도 Route Table을 생성하여 연결  
+### 3.7. Private 서브넷에도 Route Table을 생성하여 연결  
 ```
 resource "aws_route_table" "route_table_private_1" {
   vpc_id = aws_vpc.main.id
@@ -532,6 +775,44 @@ resource "aws_route" "private_nat_2" {
 }
 ``` 
 
+
+```
+] cat mynetwork.tf # gcp용
+# Create the mynetwork network
+resource "google_compute_network" "mynetwork" {
+  name = "mynetwork"
+  #RESOURCE properties go here
+  auto_create_subnetworks = "true"
+}
+# Add a firewall rule to allow HTTP, SSH, RDP and ICMP traffic on mynetwork
+resource "google_compute_firewall" "mynetwork-allow-http-ssh-rdp-icmp" {
+  name = "mynetwork-allow-http-ssh-rdp-icmp"
+  #RESOURCE properties go here
+  network = google_compute_network.mynetwork.self_link
+  allow {
+    protocol = "tcp"
+    ports    = ["22", "80", "3389"]
+  }
+  allow {
+    protocol = "icmp"
+  }
+  source_ranges = ["0.0.0.0/0"]
+}
+# Create the mynet-us-vm instance
+module "mynet-us-vm" {
+  source           = "./instance"
+  instance_name    = "mynet-us-vm"
+  instance_zone    = "us-central1-a"
+  instance_network = google_compute_network.mynetwork.self_link
+}
+# Create the mynet-eu-vm" instance
+module "mynet-eu-vm" {
+  source           = "./instance"
+  instance_name    = "mynet-eu-vm"
+  instance_zone    = "europe-west1-d"
+  instance_network = google_compute_network.mynetwork.self_link
+}
+```
 
 
 <br><br>
