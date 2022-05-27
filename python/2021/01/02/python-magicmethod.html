@@ -133,6 +133,7 @@ window.onload = wrap_img;
 </li>
 <li class="toc-entry toc-h2"><a href="#24-named-tuple-예제">2.4. Named Tuple 예제</a></li>
 <li class="toc-entry toc-h2"><a href="#25-list-comprehension-예제">2.5. List Comprehension 예제</a></li>
+<li class="toc-entry toc-h2"><a href="#26-zip-function-예제">2.6. Zip function 예제</a></li>
 </ul><p>Python Intermediate Programming
 <a href="https://docs.python.org/3/reference/datamodel.html#special-method-names">docs.python.org</a></p>
 
@@ -337,6 +338,17 @@ print(list(map_obj))
 print([x*2 for x in things if x % 2 == 0])
 ] [8, 12, 0]
 
+</code></pre></div></div>
+
+<h2 id="26-zip-function-예제">
+<a class="anchor" href="#26-zip-function-%EC%98%88%EC%A0%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.6. Zip function 예제</h2>
+
+<p>list들을 tuple로 만들어 줌</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>L1 = [3, 4, 5, 8]
+L2 = [1, 2, 3]
+L4 = list(zip(L1, L2)) # 튜플-&gt;리스트로 캐스팅해서 재정의
+print(L4)
+] [(3, 1), (4, 2), (5, 3)]
 </code></pre></div></div>
 
 <hr>
