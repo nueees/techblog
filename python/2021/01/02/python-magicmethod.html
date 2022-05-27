@@ -132,6 +132,7 @@ window.onload = wrap_img;
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#24-named-tuple-예제">2.4. Named Tuple 예제</a></li>
+<li class="toc-entry toc-h2"><a href="#25-list-comprehension-예제">2.5. List Comprehension 예제</a></li>
 </ul><p>Python Intermediate Programming
 <a href="https://docs.python.org/3/reference/datamodel.html#special-method-names">docs.python.org</a></p>
 
@@ -318,6 +319,21 @@ students2 = [Classes(rank, number)
 
 for s in student2:
     print(s)
+
+</code></pre></div></div>
+
+<h2 id="25-list-comprehension-예제">
+<a class="anchor" href="#25-list-comprehension-%EC%98%88%EC%A0%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.5. List Comprehension 예제</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>things = [3, 4, 6, 7, 0, 1]
+#chaining together filter and map:
+# first, filter to keep only the even numbers
+# double each of them
+map(lambda x: x*2, filter(lambda y: y % 2 == 0, things))
+
+# equivalent version using list comprehension
+print([x*2 for x in things if x % 2 == 0])
+] [8, 12, 0]
 
 </code></pre></div></div>
 
