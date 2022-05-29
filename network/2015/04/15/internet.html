@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      13 min read
+      15 min read
     
 </span></p>
 
@@ -228,15 +228,22 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#511-상태-코드는-클라이언트가-네트워크-액세스를-얻기-위해-인증할-필요가-있음을-나타냅니다">511 상태 코드는 클라이언트가 네트워크 액세스를 얻기 위해 인증할 필요가 있음을 나타냅니다.</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#26-network-tap">2.6. Network Tap</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#filter">Filter</a></li>
+<li class="toc-entry toc-h3"><a href="#network-소스">Network 소스</a></li>
+<li class="toc-entry toc-h3"><a href="#network-탭-최하단">Network 탭 최하단</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#-1"></a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#3-switch">3. Switch</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#21-l2-switch">2.1. L2 Switch</a></li>
-<li class="toc-entry toc-h2"><a href="#22-l3-switch">2.2. L3 Switch</a></li>
-<li class="toc-entry toc-h2"><a href="#23-l4-switch">2.3. L4 Switch</a></li>
-<li class="toc-entry toc-h2"><a href="#24-l7-switch">2.4. L7 Switch</a></li>
+<li class="toc-entry toc-h2"><a href="#31-l2-switch">3.1. L2 Switch</a></li>
+<li class="toc-entry toc-h2"><a href="#32-l3-switch">3.2. L3 Switch</a></li>
+<li class="toc-entry toc-h2"><a href="#33-l4-switch">3.3. L4 Switch</a></li>
+<li class="toc-entry toc-h2"><a href="#34-l7-switch">3.4. L7 Switch</a></li>
 </ul>
 </li>
 </ul><p>📎 Coding Everybody
@@ -752,6 +759,67 @@ internet.html : 요청할 자원의 이름</p>
 <h3 id="511-상태-코드는-클라이언트가-네트워크-액세스를-얻기-위해-인증할-필요가-있음을-나타냅니다">
 <a class="anchor" href="#511-%EC%83%81%ED%83%9C-%EC%BD%94%EB%93%9C%EB%8A%94-%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8%EA%B0%80-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EC%95%A1%EC%84%B8%EC%8A%A4%EB%A5%BC-%EC%96%BB%EA%B8%B0-%EC%9C%84%ED%95%B4-%EC%9D%B8%EC%A6%9D%ED%95%A0-%ED%95%84%EC%9A%94%EA%B0%80-%EC%9E%88%EC%9D%8C%EC%9D%84-%EB%82%98%ED%83%80%EB%83%85%EB%8B%88%EB%8B%A4" aria-hidden="true"><span class="octicon octicon-link"></span></a>511 상태 코드는 클라이언트가 네트워크 액세스를 얻기 위해 인증할 필요가 있음을 나타냅니다.</h3>
 
+<hr>
+<h2 id="26-network-tap">
+<a class="anchor" href="#26-network-tap" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.6. <a href="https://velog.io/@te-ing/%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%8F%84%EA%B5%AC-Network%ED%83%AD-%EC%B4%9D%EC%A0%95%EB%A6%AC">Network Tap</a>
+</h2>
+<p>네트워크 탭 도구 살펴보기<br>
+<img src="https://user-images.githubusercontent.com/83441376/170866462-94cbd68e-8a72-4043-afb3-58cd4fb4b35e.png" alt="image"></p>
+
+<p>가장 먼저 눈에 띄는 빨간점🔴은 기록되고 있다는 뜻이며, 기록되는 동안 주고받는 모든 Network 요소를 보여준다. 클릭 시 기록을 멈출 수 있으며 오른쪽 🚫을 클릭하면 기록된 모든 요소를 지운다.</p>
+
+<p>Filter와 Search🔍는 이름과 같이 필터링하고, 검색하는 기능이고 하단 참조</p>
+
+<p>Preserve log: 페이지가 이동되어도 로그가 사라지지 않는다.</p>
+
+<p>Disable cache: 브라우저의 캐시를 비활성화 한다.</p>
+
+<p>No throttling: Fast 3G, Slow 3G, Offline 등 다양한 환경에서의 사용경험을 테스트할 수 있도록 해주는 도구이며, 바로 옆 More network conditions…에서 더 다양한 환경을 테스트할 수 있다.</p>
+
+<h3 id="filter">
+<a class="anchor" href="#filter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filter</h3>
+<p>Filter는 네트워크 소스를 타입별로 볼 수 있으며, 대체로 Fetch/XHR 이 주로 사용된다.
+별도의 Filtering 방식을 사용할 수 있는데, 예를들어 HTTP Method 가 GET 인 인터페이스만 Filtering 해보고 싶다면 method:GET 이라고 입력하면 된다.
+method와 같이 Filter 텍스트 박스에 입력할 수 있는 keyword는 다음과 같다.</p>
+
+<p>domain<br>
+has-response-header<br>
+is<br>
+larger-than<br>
+method<br>
+mime-type<br>
+scheme<br>
+set-cookie-name<br>
+set-cookie-value<br>
+set-cookie-domain<br>
+status-code</p>
+
+<h3 id="network-소스">
+<a class="anchor" href="#network-%EC%86%8C%EC%8A%A4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Network 소스</h3>
+
+<p><img src="https://user-images.githubusercontent.com/83441376/170866576-03c9a641-0ec3-49d3-98e5-7f6f356d13ff.png" alt="image"></p>
+
+<p>Waterfall은 request가 언제, 얼마만큼의 시간이 소요되며 도달하는지에 대한 정보를 나타내며, Waterfall을 클릭하면 더 자세한 사항을 볼 수 있다.</p>
+
+<p>Queued at s : 개발자 도구를 켠 순간부터 큐에 적재되는데 까지 걸리는 시간<br>
+Started at s : 개발자 도구를 켠 순간부터 request를 보내는데 까지 걸리는 시간<br>
+Queueing : 구문을 분석한 시점에서 큐에 적재되어 있는 시간<br>
+Stalled : 큐에서 request를 보내는 동안 정지되어 있는 시간<br>
+Proxy negotiation : 브라우저가 프록시 서버로 요청을 보내는데까지 걸리는 시간<br>
+Request sent : request를 보내는데 걸리는 시간<br>
+Waiting (TTFB) : response의 첫번째 바이트가 도달하는데까지 걸리는 시간 (TTFB: Time To First Byte)<br>
+Content Download : content가 다운로드가 되는데 까지 기다린 시간<br>
+Explanation : 총 소요되는 시간</p>
+
+<h3 id="network-탭-최하단">
+<a class="anchor" href="#network-%ED%83%AD-%EC%B5%9C%ED%95%98%EB%8B%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Network 탭 최하단</h3>
+
+<p><img src="https://user-images.githubusercontent.com/83441376/170866608-44c29556-5c90-4afa-bbe5-17e73d57d904.png" alt="image"></p>
+
+<p>DOMContentLoaded : Waterfall에서 파란색 선으로 표시가 되는 부분으로, DOM Tree를 그리는데 걸리는 시간을 나타낸다.<br>
+Load : Waterfall에서 빨간색 선으로 표시가 되는 부분으로, DOM Tree 구조를 포함하여, 이미지까지 화면에 로드되는 시간을 의미한다.<br>
+DOMContentLoaded와 Load는 사용자 경험을 판단하는 기준 중, 가장 기본이 되는 곳으로 프론트엔드 개발자에게 중요한 지표이다.</p>
+
 <h2 id="-1">
 <a class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
 </h2>
@@ -765,8 +833,8 @@ internet.html : 요청할 자원의 이름</p>
 
 <p><img src="https://user-images.githubusercontent.com/83441376/148664401-26013799-2003-41c7-be86-f832e7c15af9.png" alt="image"></p>
 
-<h2 id="21-l2-switch">
-<a class="anchor" href="#21-l2-switch" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. L2 Switch</h2>
+<h2 id="31-l2-switch">
+<a class="anchor" href="#31-l2-switch" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. L2 Switch</h2>
 <ul>
   <li>OSI Layer 2(Data Link)에 속하는 MAC Address 를 참조하여 Switching 하는 장비</li>
   <li>스위치는 MAC table을 가지고 있어서 이것을 기준으로 packet을 해당 포트로 전달</li>
@@ -774,16 +842,16 @@ internet.html : 요청할 자원의 이름</p>
 </ul>
 
 <hr>
-<h2 id="22-l3-switch">
-<a class="anchor" href="#22-l3-switch" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.2. L3 Switch</h2>
+<h2 id="32-l3-switch">
+<a class="anchor" href="#32-l3-switch" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. L3 Switch</h2>
 <ul>
   <li>OSI Layer 3(Network)에 속하는 <strong>IP Address</strong>를 참조하여 Switching 하는 장비</li>
   <li>라우팅: IP Address를 보고 적절한 포트로 패킷을 Switching 하는 것</li>
 </ul>
 
 <hr>
-<h2 id="23-l4-switch">
-<a class="anchor" href="#23-l4-switch" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. L4 Switch</h2>
+<h2 id="33-l4-switch">
+<a class="anchor" href="#33-l4-switch" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.3. L4 Switch</h2>
 <ul>
   <li>OSI Layer 3~4(Transport)에 속하는 IP Address, <strong>TCP/UDP 포트 정보</strong>를 참조하여 패킷을 확인하고 세션을 관리하며, 로드밸런싱을 제공하는 스위치 장비</li>
   <li>TCP/UDP 패킷 정보를 분석해서 해당 패킷이 사용하는 서비스 종류별로 처리(HTTP, FTP, SMTP…)</li>
@@ -801,8 +869,8 @@ Internet -&gt; L4 Switch -&gt; ftp www.naver.com 패킷(TCP/20,21)은 3번 서�
 <p>L4 스위치의 문제점 : 서비스 단위 로드밸런싱 어렵고, 사용자의 IP가 수시로 변경되는 경우 해당 사용자에 대한 연속적인 서비스를 제공하기 어려움</p>
 
 <hr>
-<h2 id="24-l7-switch">
-<a class="anchor" href="#24-l7-switch" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. L7 Switch</h2>
+<h2 id="34-l7-switch">
+<a class="anchor" href="#34-l7-switch" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.4. L7 Switch</h2>
 <ul>
   <li>OSI Layer 3~7(Session, Presentation, Application)에 속하는 IP Address, 모든 TCP/UDP 포트(0-65535) 및 <strong>Packet 내용</strong>까지 참조하여 Switching 하는 장비</li>
   <li>L4가 갖고 있는 문제점들을 해결, 패킷의 IP와 포트 정보 뿐만 아니라 패킷의 URL 정보, 쿠키, 플레이로드 정보등을 종합적으로 검사하여 사용자별로 연속적이고 차별하된 서비스를 제공</li>
