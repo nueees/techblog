@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      7 min read
     
 </span></p>
 
@@ -135,6 +135,8 @@ window.onload = wrap_img;
 </li>
 <li class="toc-entry toc-h1"><a href="#5-oauth-20">5. OAuth 2.0</a>
 <ul>
+<li class="toc-entry toc-h3"><a href="#authenticationauthn-인증-who-are-you">Authentication(AuthN) 인증: Who are you?</a></li>
+<li class="toc-entry toc-h3"><a href="#authorizationauthz-권한-what-can-you-do">Authorization(AuthZ) 권한: What can you do?</a></li>
 <li class="toc-entry toc-h2"><a href="#51-oauth-20-인증">5.1. OAuth 2.0 인증</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#resource-owner-사용자">Resource owner: 사용자</a></li>
@@ -142,6 +144,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#resource-serverapi-server-자원을-호스팅하는-서버-예-페이스북-사진-비디오-등">Resource server(API server): 자원을 호스팅하는 서버, (예, 페이스북 사진 비디오 등)</a></li>
 <li class="toc-entry toc-h3"><a href="#authorization-server-사용자의-동의를-받아서-권한을-부여하는-서버-일반적으로-resource-server-와-같은-url-하위에-있는-경우가-많음">Authorization Server: 사용자의 동의를 받아서 권한을 부여하는 서버, 일반적으로 Resource Server 와 같은 URL 하위에 있는 경우가 많음</a></li>
 <li class="toc-entry toc-h3"><a href="#oauth-인증과정">OAuth 인증과정</a></li>
+<li class="toc-entry toc-h3"><a href="#서버-쪽-요청-보내는-쿼리-파라메터">서버 쪽 요청 보내는 쿼리 파라메터</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#52-oauth-20의-인증종류">5.2. OAuth 2.0의 인증종류</a>
@@ -159,6 +162,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#토큰의-갱신-과정">토큰의 갱신 과정</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#54-openid-connect">5.4. OpenID Connect</a></li>
 <li class="toc-entry toc-h2"><a href="#-1"></a></li>
 </ul>
 </li>
@@ -268,10 +272,16 @@ Link: &lt;/articles/1&gt;; rel=“previous”,
 </h2>
 
 <h1 id="5-oauth-20">
-<a class="anchor" href="#5-oauth-20" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. OAuth 2.0</h1>
-<p>OAuth 2.0은 다양한 플랫폼 환경에서 인증과 권한 부여를 위한 산업 표준 프로토콜<br>
-인증: 시스템 접근을 확인하는 것 (로그인) -&gt; 인증만 하는 것은 openID
-권한: 행위의 권리를 검증하는 것</p>
+<a class="anchor" href="#5-oauth-20" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. <a href="https://velog.io/@jakeseo_me/Oauth-2.0%EA%B3%BC-OpenID-Connect-%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C-%EC%A0%95%EB%A6%AC">OAuth 2.0</a>
+</h1>
+<p>OAuth 2.0은 다양한 플랫폼 환경에서 인증과 권한 부여를 위한 산업 표준 프로토콜</p>
+
+<h3 id="authenticationauthn-인증-who-are-you">
+<a class="anchor" href="#authenticationauthn-%EC%9D%B8%EC%A6%9D-who-are-you" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication(AuthN) 인증: Who are you?</h3>
+<p>시스템 접근을 확인하는 것 (로그인) -&gt; 인증만 하는 것은 openID</p>
+<h3 id="authorizationauthz-권한-what-can-you-do">
+<a class="anchor" href="#authorizationauthz-%EA%B6%8C%ED%95%9C-what-can-you-do" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authorization(AuthZ) 권한: What can you do?</h3>
+<p>행위의 권리를 검증하는 것 (Delegated Authorization) -&gt; OAuth 2.0</p>
 
 <h2 id="51-oauth-20-인증">
 <a class="anchor" href="#51-oauth-20-%EC%9D%B8%EC%A6%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.1. OAuth 2.0 인증</h2>
@@ -288,9 +298,24 @@ Link: &lt;/articles/1&gt;; rel=“previous”,
 <h3 id="oauth-인증과정">
 <a class="anchor" href="#oauth-%EC%9D%B8%EC%A6%9D%EA%B3%BC%EC%A0%95" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://showerbugs.github.io/2017-11-16/OAuth-%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C">OAuth 인증과정</a>
 </h3>
-<p><img src="https://user-images.githubusercontent.com/83441376/170870129-cb104842-e5f2-4864-af6b-38d76f1231af.png" alt="image">
-<img src="https://user-images.githubusercontent.com/83441376/170870148-d029bc59-661a-4105-8139-52caaba6a901.png" alt="image">
+<p><img src="https://user-images.githubusercontent.com/83441376/170871622-3ffeb1f8-cd75-4eea-9a0d-bf493a350633.png" alt="image">
 발급받은 Access Token은 서비스에서 자체적으로 저장, 관리</p>
+
+<h3 id="서버-쪽-요청-보내는-쿼리-파라메터">
+<a class="anchor" href="#%EC%84%9C%EB%B2%84-%EC%AA%BD-%EC%9A%94%EC%B2%AD-%EB%B3%B4%EB%82%B4%EB%8A%94-%EC%BF%BC%EB%A6%AC-%ED%8C%8C%EB%9D%BC%EB%A9%94%ED%84%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>서버 쪽 요청 보내는 쿼리 파라메터</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://accounts.google.com/o/oauth2/v2/auth?
+response_type=code&amp;
+client_id=your_client_id&amp;
+scope=profile%20contacts&amp;
+redirect_uri=https%3A//oauth2.example.com/code
+</code></pre></div></div>
+<ul>
+  <li>response_type : 우리가 권한부여 서버로부터 받길 원하는 응답의 타입이다.</li>
+  <li>scope : 클라이언트가 접근하길 원하는 리스트의 스코프이다. 이 리스트는 동의를 구하는 화면을 만들 때 권한부여 서버에 의해 사용된다.</li>
+  <li>client_id : 클라이언트에 OAuth 세팅을 할 때, 권한부여 서버에 의해 제공된다. 이 ID는 권한 부여 서버가 OAuth 플로우를 시행하려는 클라이언트가 누구인지 알아내기 위해 사용된다.</li>
+  <li>redirect_url : 권한부여 서버에게 OAuth 플로우가 끝나면 어디로 보내줄지에 대해 알려주는 역할이다.</li>
+  <li>client_secret : 권한부여 서버에 의해 제공된다. OAuth 플로우에서 이 파라미터는 필수 옵션은 아니다. 권한부여 코드 플로우에서 이 client_secret의 중요성에 대해 알아볼 것이다.</li>
+</ul>
 
 <h2 id="52-oauth-20의-인증종류">
 <a class="anchor" href="#52-oauth-20%EC%9D%98-%EC%9D%B8%EC%A6%9D%EC%A2%85%EB%A5%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.2. OAuth 2.0의 인증종류</h2>
@@ -303,17 +328,33 @@ Link: &lt;/articles/1&gt;; rel=“previous”,
 <a class="anchor" href="#authorization-code-grant" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authorization Code Grant</h3>
 <p>서버사이드 코드로 인증하는 방식<br>
 권한서버가 클라이언트와 리소스 서버간의 중재역할<br>
-Access Token을 바로 클라이언트로 전달하지 않아 잠재적 유출을 방지<br>
+access token을 바로 클라이언트로 전달하지 않아 잠재적 유출을 방지<br>
 로그인시에 페이지 URL에 response_type=code 라고 넘긴다</p>
+
+<p>브라우저에서 access token 노출을 방지하기 위해서, 클라이언트의 프론트엔드 채널은 권한 부여 서버로부터 application code를 얻는다. 그리고 application code를 백엔드 채널로 보낸다. application code를 access token으로 바꾸기 위해서, client_secret이 필요하다. client_secret은 클라이언트의 백엔드 채널에 의해서만 알려지게 되며, 프론트엔드 채널은 client_secret에 관여하지 않는다. 백엔드 채널은 POST 요청을 권한부여 서버에 application code와 client_secret을 동봉해서 보낸다. 요청은 다음과 같이 보내진다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /token HTTP/1.1
+Host: oauth2.googleapis.com
+Content-Type: application/x-www-form-urlencoded
+code=4/W7q7P51a-iMsCeLvIaQc6bYrgtp9&amp;
+client_id=your_client_id&amp;
+client_secret==your_client_secret_only_known_by_server&amp;
+redirect_url=https%3A//oauth2.example.com/code
+</code></pre></div></div>
+
+<p>권한 부여 서버는 client_secret과 application code의 유효성을 검사하고 access token을 보내준다. 백엔드 채널은 access token을 갖고 있고 이 토큰을 리소스 서버에서 정보를 갖고올 때 사용한다. 이러한 방법으로 브라우저는 access token에 접근하지 않는 방식으로 구현할 수 있다.</p>
 
 <h3 id="implicit-grant">
 <a class="anchor" href="#implicit-grant" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implicit Grant</h3>
+<p><img src="https://user-images.githubusercontent.com/83441376/170872224-3a7739f7-7f74-430c-b1b6-0474e89e1035.png" alt="image"></p>
+
 <p>token과 scope에 대한 스펙 등은 다르지만 OAuth 1.0a과 가장 비슷한 인증방식<br>
 Public Client인 브라우저 기반의 어플리케이션(Javascript application)이나 모바일 어플리케이션에서 이 방식을 사용하면 된다<br>
 OAuth 2.0에서 가장 많이 사용되는 방식이다<br>
 권한코드 없이 바로 발급되서 보안에 취약<br>
 주로 Read only인 서비스에 사용<br>
-로그인시에 페이지 URL에 response_type=token 라고 넘긴다</p>
+로그인시에 페이지 URL에 response_type=token 라고 넘긴다  <br>
+OAuth 2.0 묵시적 권한부여는 백엔드 채널이 존재하지 않으며, 웹사이트가 브라우저만 사용하는 정적인 사이트일 때 사용된다. 이 경우에는, application code를 access token으로 변경할 때, 백엔드 채널에서 일어나는 마지막 단계를 생략한다. 묵시적 권한부여에서는 권한부여 서버가 access token을 바로 준다.</p>
 
 <h3 id="password-credentials-grant">
 <a class="anchor" href="#password-credentials-grant" aria-hidden="true"><span class="octicon octicon-link"></span></a>Password Credentials Grant</h3>
@@ -334,11 +375,39 @@ Client 를 믿을 수 없을 때에는 사용하기에 위험하기 때문에 AP
 
 <h3 id="refresh-token">
 <a class="anchor" href="#refresh-token" aria-hidden="true"><span class="octicon octicon-link"></span></a>Refresh Token</h3>
-<p>한번 발급받은 Access Token 은 사용할 수 있는 시간이 제한되어 있습니다. 사용하고 있던 Access Token 이 유효기간 종료 등으로 만료되면, 새로운 액세스 토큰을 얻어야 하는데 그때 이 Refresh Token 이 활용됩니다. 권한 서버가 Access Token 을 발급해주는 시점에 Refresh Token 도 함께 발급하여 클라이언트에게 알려주기 때문에, 전용 발급 절차 없이 Refresh Token을 미리 가지고 있을 수 있습니다. 토큰의 형태는 Access Token과 동일하게 문자열 형태입니다. 단 권한 서버에서만 활용되며 리소스 서버에는 전송되지 않습니다.</p>
+<p>한번 발급받은 Access Token 은 사용할 수 있는 시간이 제한되어 있습니다. 사용하고 있던 Access Token 이 유효기간 종료 등으로 만료되면, 새로운 Access Token을 얻어야 하는데 그때 이 Refresh Token 이 활용됩니다. 권한 서버가 Access Token 을 발급해주는 시점에 Refresh Token 도 함께 발급하여 클라이언트에게 알려주기 때문에, 전용 발급 절차 없이 Refresh Token을 미리 가지고 있을 수 있습니다. 토큰의 형태는 Access Token과 동일하게 문자열 형태입니다. 단 권한 서버에서만 활용되며 리소스 서버에는 전송되지 않습니다.</p>
 
 <h3 id="토큰의-갱신-과정">
 <a class="anchor" href="#%ED%86%A0%ED%81%B0%EC%9D%98-%EA%B0%B1%EC%8B%A0-%EA%B3%BC%EC%A0%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>토큰의 갱신 과정</h3>
-<p>클라이언트가 권한 증서를 가지고 권한서버에 Access Token 을 요청하면, 권한 서버는 Access Token과 Refresh Token 을 함께 클라이언트에 알려줍니다. 그 후 클라이언트는 Access Token을 사용하여 리소스 서버에 각종 필요한 리소스들을 요청하는 과정을 반복합니다. 그러다가 일정한 시간이 흐른 후 액세스 토큰이 만료되면, 리소스 서버는 이후 요청들에 대해 정상 결과 대신 오류를 응답하게 됩니다. 오류 등으로 액세스 토큰이 만료됨을 알아챈 클라이언트는, 전에 받아 두었던 Refresh Token을 권한 서버에 보내어 새로운 액세스 토큰을 요청합니다. 갱신 요청을 받은 권한 서버는 Refresh Token 의 유효성을 검증한 후, 문제가 없다면 새로운 액세스 토큰을 발급해줍니다. 이 과정에서 옵션에 따라 Refresh Token 도 새롭게 발급 될 수 있습니다.</p>
+<p>클라이언트가 권한 증서를 가지고 권한서버에 Access Token 을 요청하면, 권한 서버는 Access Token과 Refresh Token 을 함께 클라이언트에 알려줍니다. 그 후 클라이언트는 Access Token을 사용하여 리소스 서버에 각종 필요한 리소스들을 요청하는 과정을 반복합니다. 그러다가 일정한 시간이 흐른 후 Access Token이 만료되면, 리소스 서버는 이후 요청들에 대해 정상 결과 대신 오류를 응답하게 됩니다. 오류 등으로 Access Token이 만료됨을 알아챈 클라이언트는, 전에 받아 두었던 Refresh Token을 권한 서버에 보내어 새로운 Access Token을 요청합니다. 갱신 요청을 받은 권한 서버는 Refresh Token 의 유효성을 검증한 후, 문제가 없다면 새로운 Access Token을 발급해줍니다. 이 과정에서 옵션에 따라 Refresh Token 도 새롭게 발급 될 수 있습니다.</p>
+
+<h2 id="54-openid-connect">
+<a class="anchor" href="#54-openid-connect" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.4. OpenID Connect</h2>
+<p>OAuth는 유저 인증을 곧바로 제공하지 않지만 권한 부여를 위한 Access Token을 제공한다. OpenID Connect는 권한부여 서버에 의해 작동하는 인증 시스템을 기반으로 클라이언트가 사용자를 판단할 수 있게 해준다. 권한부여 서버에 유저 로그인과 동의를 요청할 때, openid라는 스코프를 정의하면 OpenID Connect 사용이 가능하다. openid는 OpenID가 필요되는 권한부여 서버에 필수적인 스코프이다.</p>
+
+<p>OpenID Connect 인증을 위한 URI 요청은 다음과 같이 만들어진다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://accounts.google.com/o/oauth2/v2/auth?
+response_type=code&amp;
+client_id=your_client_id&amp;
+scope=openid%20contacts&amp;
+redirect_uri=https%3A//oauth2.example.com/code
+</code></pre></div></div>
+
+<p>이 요청의 결과는 Access Token과 ID 토큰으로 바꿀 수 있는 application code이다. OAuth 플로우가 암묵적 플로우면, 서버는 Access Token과 ID 토큰을 바로 줄 것이다.</p>
+
+<p>ID 토큰은 JWT 또는 JSON 웹 토큰이다. JWT는 header, payload, signature 3가지 부분이 담겨있는 인코드된 토큰이다. ID 토큰을 얻은 이후에, 클라이언트는 payload 부분에 인코드된 사용자 정보를 얻을지 결정할 수 있다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "iss": "https://accounts.google.com",
+  "sub": "10965150351106250715113082368",
+  "email": "johndoe@example.com",
+  "iat": 1516239022,
+  "exp": 1516242922
+}
+</code></pre></div></div>
+
+<p>token introspection tool: https://jwt.io/<br>
+oauth server(API access management): https://developer.okta.com/<br>
+command-line JSON processor: https://stedolan.github.io/jq</p>
 
 <h2 id="-1">
 <a class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><br><br>
