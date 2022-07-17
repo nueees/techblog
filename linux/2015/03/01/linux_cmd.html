@@ -140,6 +140,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#04_04---search-for-text-in-files-and-streams-with-grep">04_04 - Search for text in files and streams with grep</a></li>
 <li class="toc-entry toc-h2"><a href="#04_05---manipulate-text-with-awk-sed-and-sort">04_05 - Manipulate text with awk, sed, and sort</a></li>
 <li class="toc-entry toc-h2"><a href="#04_08---working-with-tar-and-zip-archives">04_08 - Working with tar and zip archives</a></li>
+<li class="toc-entry toc-h2"><a href="#04_11---output-redirection">04_11 - Output redirection</a></li>
 </ul>
 </li>
 </ul><p>📎 <a href="https://github.com/LinkedInLearning/learning-linux-command-line-3005201">linkedin learning-linux-command-line</a></p>
@@ -525,6 +526,24 @@ tar -caf myfiles.tar.bz2 Exercise\ Files/
 # 옵션 -file=ARCHIVE: use archive file or device ARCHIVE
 tar -xf myfiles.tar.bz2
 &gt; drwxrwxrwx 1 nueees nueees   4096 Jul 17 15:23 Exercise Files
+
+</code></pre></div></div>
+
+<h2 id="04_11---output-redirection">
+<a class="anchor" href="#04_11---output-redirection" aria-hidden="true"><span class="octicon octicon-link"></span></a>04_11 - Output redirection</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls
+
+ls 1&gt; filelist.txt
+&gt; 해당 커맨드 저장됨 overwrite
+ls 1&gt;&gt; filelist.txt
+&gt; 해당 커맨드 append 저장됨
+
+ls notreal 1&gt; filelist2.txt
+&gt; 에러 발생
+
+ls notreal 2&gt; filelist2.txt
+&gt; 에러 없이 에러난 거 저장됨
 
 </code></pre></div></div>
 
