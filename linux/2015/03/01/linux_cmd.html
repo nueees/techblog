@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      8 min read
+      9 min read
     
 </span></p>
 
@@ -141,6 +141,8 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#04_05---manipulate-text-with-awk-sed-and-sort">04_05 - Manipulate text with awk, sed, and sort</a></li>
 <li class="toc-entry toc-h2"><a href="#04_08---working-with-tar-and-zip-archives">04_08 - Working with tar and zip archives</a></li>
 <li class="toc-entry toc-h2"><a href="#04_11---output-redirection">04_11 - Output redirection</a></li>
+<li class="toc-entry toc-h2"><a href="#05_02---find-system-hardware-and-disk-information">05_02 - Find system hardware and disk information</a></li>
+<li class="toc-entry toc-h2"><a href="#05_03---install-and-update-software-with-a-package-manager">05_03 - Install and update software with a package manager</a></li>
 </ul>
 </li>
 </ul><p>📎 <a href="https://github.com/LinkedInLearning/learning-linux-command-line-3005201">linkedin learning-linux-command-line</a></p>
@@ -545,6 +547,66 @@ ls notreal 1&gt; filelist2.txt
 ls notreal 2&gt; filelist2.txt
 &gt; 에러 없이 에러난 거 저장됨
 
+</code></pre></div></div>
+<h2 id="05_02---find-system-hardware-and-disk-information">
+<a class="anchor" href="#05_02---find-system-hardware-and-disk-information" aria-hidden="true"><span class="octicon octicon-link"></span></a>05_02 - Find system hardware and disk information</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>free -h
+&gt; total        used        free      shared  buff/cache   available
+  Mem:          7.6Gi       692Mi       5.9Gi       1.0Mi       1.1Gi       6.7Gi
+  Swap:         2.0Gi          0B       2.0Gi
+
+cat /proc/cpuinfo
+&gt; processor       : 0
+  vendor_id       : GenuineIntel
+  cpu family      : 6
+  model           : 140
+  model name      : 11th Gen Intel(R) Core(TM) i7-1165G7 @ 2.80GHz
+  stepping        : 1
+  microcode       : 0xffffffff
+  cpu MHz         : 2803.203
+  cache size      : 12288 KB
+  physical id     : 0
+  
+lscpu # cpuinfo 자세하게 보여줌
+&gt; Architecture:                    x86_64
+  CPU op-mode(s):                  32-bit, 64-bit
+  Byte Order:                      Little Endian
+  Address sizes:                   39 bits physical, 48 bits virtual
+  CPU(s):                          8
+  On-line CPU(s) list:             0-7
+  Thread(s) per core:              2
+  Core(s) per socket:              4
+  Socket(s):                       1
+  Vendor ID:                       GenuineIntel
+  
+df -h
+
+sudo du -hd1 /
+
+sudo lshw | less # 붙어있는거 확인
+
+ip a # ip 정보
+</code></pre></div></div>
+
+<h2 id="05_03---install-and-update-software-with-a-package-manager">
+<a class="anchor" href="#05_03---install-and-update-software-with-a-package-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>05_03 - Install and update software with a package manager</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt search tree
+
+apt show tree
+
+tree
+
+sudo apt update
+
+sudo apt install tree
+
+tree
+
+man tree
+
+sudo apt update
+
+sudo apt upgrade
 </code></pre></div></div>
 
 <hr>
