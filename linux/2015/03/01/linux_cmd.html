@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      8 min read
     
 </span></p>
 
@@ -110,7 +110,7 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#1-commands-used-in-learning-linux-command-line">1. Commands used in Learning Linux Command Line</a>
+<li class="toc-entry toc-h1"><a href="#1-linux-command-line">1. Linux Command Line</a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#01_01---file-system-structure">01_01 - File system structure</a>
 <ul>
@@ -132,14 +132,20 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#02_04---finding-help-for-commands">02_04 - Finding help for commands</a></li>
 <li class="toc-entry toc-h2"><a href="#03_01---the-linux-file-system">03_01 - The Linux file system</a></li>
 <li class="toc-entry toc-h2"><a href="#03_07---find-files-and-xargs">03_07 - Find files and Xargs</a></li>
+<li class="toc-entry toc-h2"><a href="#03_08---understand-user-roles-and-sudo">03_08 - Understand user roles and sudo</a></li>
+<li class="toc-entry toc-h2"><a href="#03_10---modify-file-permissions">03_10 - Modify file permissions</a></li>
+<li class="toc-entry toc-h2"><a href="#03_11---create-hard-and-symbolic-links">03_11 - Create hard and symbolic links</a></li>
+<li class="toc-entry toc-h2"><a href="#04_02---use-pipes-to-connect-commands-together">04_02 - Use pipes to connect commands together</a></li>
+<li class="toc-entry toc-h2"><a href="#04_03---view-text-files-with-cat-head-tail-and-less">04_03 - View text files with cat, head, tail, and less</a></li>
+<li class="toc-entry toc-h2"><a href="#04_04---search-for-text-in-files-and-streams-with-grep">04_04 - Search for text in files and streams with grep</a></li>
+<li class="toc-entry toc-h2"><a href="#04_05---manipulate-text-with-awk-sed-and-sort">04_05 - Manipulate text with awk, sed, and sort</a></li>
 </ul>
 </li>
 </ul><p>📎 <a href="https://github.com/LinkedInLearning/learning-linux-command-line-3005201">linkedin learning-linux-command-line</a></p>
 
 <hr>
-<h1 id="1-commands-used-in-learning-linux-command-line">
-<a class="anchor" href="#1-commands-used-in-learning-linux-command-line" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Commands used in <strong>Learning Linux Command Line</strong>
-</h1>
+<h1 id="1-linux-command-line">
+<a class="anchor" href="#1-linux-command-line" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Linux Command Line</h1>
 
 <h2 id="01_01---file-system-structure">
 <a class="anchor" href="#01_01---file-system-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>01_01 - <a href="https://www.makeuseof.com/linux-directory-structure-explained/">File system structure</a>
@@ -200,6 +206,8 @@ The /proc directory is also home to system information such as memory usage, pro
 <a class="anchor" href="#run" aria-hidden="true"><span class="octicon octicon-link"></span></a>/run</h3>
 <p>The /run directory logs system information since boot time. You can find information about the daemons that are running, logged-in users, and more. The data stored in the /run directory can give you an idea of how the system resources are being utilized since startup.</p>
 
+<hr>
+
 <h2 id="02_04---finding-help-for-commands">
 <a class="anchor" href="#02_04---finding-help-for-commands" aria-hidden="true"><span class="octicon octicon-link"></span></a>02_04 - Finding help for commands</h2>
 
@@ -249,6 +257,251 @@ find . -name "file*" -print0 | xargs -t -I % sh -c '{ ls -l %; }'
 &gt; -rwxrwxrwx 1 nueees nueees 0 Jul 17 13:49 file1
 &gt; -rwxrwxrwx 1 nueees nueees 0 Jul 17 13:49 file2
 &gt; -rwxrwxrwx 1 nueees nueees 0 Jul 17 13:49 file3
+
+</code></pre></div></div>
+
+<h2 id="03_08---understand-user-roles-and-sudo">
+<a class="anchor" href="#03_08---understand-user-roles-and-sudo" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_08 - Understand user roles and sudo</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls /root # 비번쳐야 나옴
+
+sudo -k # invalidate the user's cached credentials 비번 다시 쳐야함
+
+sudo -s # runs a shell with root privileges
+
+sudo -i # runs a shell with user privileges in root environment
+
+exit
+</code></pre></div></div>
+
+<h2 id="03_10---modify-file-permissions">
+<a class="anchor" href="#03_10---modify-file-permissions" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_10 - Modify file permissions</h2>
+
+<p><img src="https://user-images.githubusercontent.com/83441376/179400215-078836ce-421b-42aa-a8c4-59e19a86fd59.png" alt="image"></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stat test.sh
+&gt; File: test.sh
+  Size: 66              Blocks: 0          IO Block: 4096   regular file
+Device: 45h/69d Inode: 4785074604160518  Links: 1
+Access: (0777/-rwxrwxrwx)  Uid: ( 1000/  nueees)   Gid: ( 1000/  nueees)
+Access: 2022-07-17 13:24:31.892137700 +0200
+Modify: 2022-07-17 13:24:31.892137700 +0200
+Change: 2022-07-17 15:17:56.347758200 +0200
+ Birth: -
+
+chmod 754 test.sh  # owner rwx, group r-x, others r--
+</code></pre></div></div>
+
+<h2 id="03_11---create-hard-and-symbolic-links">
+<a class="anchor" href="#03_11---create-hard-and-symbolic-links" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_11 - Create hard and symbolic links</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+# make symbolic links instead of hard links -s 옵션
+ln -s poems.txt writing.txt 
+ls -l
+&gt; -rwxrwxrwx 2 nueees nueees   1529 Jul 16 15:59 poems.txt
+  lrwxrwxrwx 1 nueees nueees      9 Jul 17 15:22 writing.txt -&gt; poems.txt
+
+
+# hard links
+ln poems.txt words.txt
+ls -l
+&gt; -rwxrwxrwx 2 nueees nueees   1529 Jul 16 15:59 poems.txt
+  -rwxrwxrwx 2 nueees nueees   1529 Jul 16 15:59 words.txt
+
+</code></pre></div></div>
+
+<h2 id="04_02---use-pipes-to-connect-commands-together">
+<a class="anchor" href="#04_02---use-pipes-to-connect-commands-together" aria-hidden="true"><span class="octicon octicon-link"></span></a>04_02 - Use pipes to connect commands together</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+# wordcount
+echo "Hello" | wc  # 1 line, 1 word, 6 characters
+&gt;       1       1       6
+
+
+echo "Hello world from the command line" | wc # 1 line, 6 word, 36 characters
+&gt;       1       6      34
+
+</code></pre></div></div>
+
+<h2 id="04_03---view-text-files-with-cat-head-tail-and-less">
+<a class="anchor" href="#04_03---view-text-files-with-cat-head-tail-and-less" aria-hidden="true"><span class="octicon octicon-link"></span></a>04_03 - View text files with cat, head, tail, and less</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+# poems.txt에서, -n 라인 옵션준 결과로, 마지막 5줄만
+cat poems.txt | cat -n | tail -n5 
+&gt;   51
+    52  Tyger Tyger burning bright,
+    53  In the forests of the night:
+    54  What immortal hand or eye,
+    55  Dare frame thy fearful symmetry?
+
+# poems.txt에서, 마지막 5줄 가져와서, -n 라인 표시
+cat poems.txt | tail -n5 | cat -n
+&gt;    1
+     2  Tyger Tyger burning bright,
+     3  In the forests of the night:
+     4  What immortal hand or eye,
+     5  Dare frame thy fearful symmetry?
+
+# 화면에 맞춰서 navigating
+less poems.txt
+
+</code></pre></div></div>
+
+<h2 id="04_04---search-for-text-in-files-and-streams-with-grep">
+<a class="anchor" href="#04_04---search-for-text-in-files-and-streams-with-grep" aria-hidden="true"><span class="octicon octicon-link"></span></a>04_04 - Search for text in files and streams with grep</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grep "the" poems.txt
+&gt; Stand in the desert. Near them on the sand,
+
+# 라인 출력 옵션 -n
+grep -n "the" poems.txt 
+&gt; 7:Stand in the desert. Near them on the sand,
+
+# case insensitive 옵션 -i
+grep -in "The" poems.txt
+&gt; The hand that mock'd them and the heart that fed.
+
+# ignore 옵션 "the"빼고 출력
+grep -vi "the" poems.txt
+
+
+# regx로 필터할 때
+grep -E "[hijk]" poems.txt
+&gt; Percy Shelley
+  Ozymandias
+  I met a traveller from an antique land
+  Who said: Two vast and trunkless legs of stone
+  Stand in the desert. Near them on the sand,
+
+# word 6 이상인거
+grep -E "\w{6,}" poems.txt
+&gt; Percy Shelley
+  Ozymandias
+  I met a traveller from an antique land
+  Who said: Two vast and trunkless legs of stone
+  Stand in the desert. Near them on the sand,
+
+</code></pre></div></div>
+
+<h2 id="04_05---manipulate-text-with-awk-sed-and-sort">
+<a class="anchor" href="#04_05---manipulate-text-with-awk-sed-and-sort" aria-hidden="true"><span class="octicon octicon-link"></span></a>04_05 - Manipulate text with awk, sed, and sort</h2>
+
+<p>awk: 조건 필터해서 출력</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat simple_data.txt
+&gt; Name    ID      Team
+  Scott   314     Purple
+  Ananti  991     Orange
+  Jian    3127    Purple
+  Miguel  671     Green
+  Wes     1337    Orange
+  Anne    556     Green
+
+# 두번째 컬럼만 출력
+awk '{print $2}' simple_data.txt
+&gt; ID
+  314
+  991
+  3127
+  671
+  1337
+  556
+
+
+# 두번째 컬럼과 첫번재 컬럼 출력 시 가운데 탭으로 구분
+awk '{print $2 "\t" $1}' simple_data.txt
+&gt; ID      Name
+  314     Scott
+  991     Ananti
+  3127    Jian
+  671     Miguel
+  1337    Wes
+  556     Anne
+
+# numeric-sort 옵션 -n으로 string numeric 오름차순으로 출력
+awk '{print $2 "\t" $1}' simple_data.txt | sort -n
+&gt; ID      Name
+  314     Scott
+  556     Anne
+  671     Miguel
+  991     Ananti
+  1337    Wes
+  3127    Jian
+
+</code></pre></div></div>
+
+<p>sed: 바꾸기</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat simple_data.txt
+&gt; Name    ID      Team
+  Scott   314     Purple
+  Ananti  991     Orange
+  Jian    3127    Purple
+  Miguel  671     Green
+  Wes     1337    Orange
+  Anne    556     Green
+
+# replace string, search약자 s로 찾아서 바꿈
+sed s/Orange/Red/ simple_data.txt
+&gt; Name    ID      Team
+  Scott   314     Purple
+  Ananti  991     Red
+  Jian    3127    Purple
+  Miguel  671     Green
+  Wes     1337    Red
+  Anne    556     Green
+
+sed '3 s/Orange/Red/' simple_data.txt
+&gt; Name    ID      Team
+  Scott   314     Purple
+  Ananti  991     Red
+  Jian    3127    Purple
+  Miguel  671     Green
+  Wes     1337    Orange
+  Anne    556     Green
+  
+</code></pre></div></div>
+
+<p>sort: 순서지정</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 기본 string 오름차순, header 안보임
+sort simple_data.txt
+&gt; Ananti  991     Orange
+  Anne    556     Green
+  Jian    3127    Purple
+  Miguel  671     Green
+  Name    ID      Team
+  Scott   314     Purple
+  Wes     1337    Orange
+
+# 키 지정해서 sorting 
+sort -k2 simple_data.txt
+&gt; Wes     1337    Orange
+  Scott   314     Purple
+  Anne    556     Green
+  Name    ID      Team
+  Jian    3127    Purple
+  Miguel  671     Green
+  Ananti  991     Orange
+
+# 키 지정해서 sorting 할때 숫자면 옵션 -n으로 numeric 표시해야 위 예시 처럼 character 기준으로 안됨
+sort -k2 -n simple_data.txt
+&gt; Name    ID      Team
+  Scott   314     Purple
+  Anne    556     Green
+  Miguel  671     Green
+  Ananti  991     Orange
+  Wes     1337    Orange
+  Jian    3127    Purple
+
+
+# unique한 value만 볼 때
+cat dupes.txt
+&gt; a
+  a
+  a
+sort -u dupes.txt
+&gt; a
 
 </code></pre></div></div>
 
