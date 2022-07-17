@@ -139,6 +139,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#04_03---view-text-files-with-cat-head-tail-and-less">04_03 - View text files with cat, head, tail, and less</a></li>
 <li class="toc-entry toc-h2"><a href="#04_04---search-for-text-in-files-and-streams-with-grep">04_04 - Search for text in files and streams with grep</a></li>
 <li class="toc-entry toc-h2"><a href="#04_05---manipulate-text-with-awk-sed-and-sort">04_05 - Manipulate text with awk, sed, and sort</a></li>
+<li class="toc-entry toc-h2"><a href="#04_08---working-with-tar-and-zip-archives">04_08 - Working with tar and zip archives</a></li>
 </ul>
 </li>
 </ul><p>📎 <a href="https://github.com/LinkedInLearning/learning-linux-command-line-3005201">linkedin learning-linux-command-line</a></p>
@@ -502,6 +503,28 @@ cat dupes.txt
   a
 sort -u dupes.txt
 &gt; a
+
+</code></pre></div></div>
+
+<h2 id="04_08---working-with-tar-and-zip-archives">
+<a class="anchor" href="#04_08---working-with-tar-and-zip-archives" aria-hidden="true"><span class="octicon octicon-link"></span></a>04_08 - Working with tar and zip archives</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 옵션 -create: create a new archive
+# 옵션 -verbose: verbosely list files processed
+# 옵션 -file=ARCHIVE: use archive file or device ARCHIVE
+tar -cvf myfiles.tar Exercise\ Files/
+&gt; -rwxrwxrwx 1 nueees nueees 160K Jul 17 16:19  myfiles.tar
+
+# 옵션 -auto-compress: use archive suffix to determine the compression
+tar -caf myfiles.tar.gz Exercise\ Files/
+&gt; -rwxrwxrwx 1 nueees nueees 107K Jul 17 16:23  myfiles.tar.gz
+tar -caf myfiles.tar.bz2 Exercise\ Files/
+&gt; -rwxrwxrwx 1 nueees nueees 111K Jul 17 16:24  myfiles.tar.bz2
+
+# 옵션 -x, -extract, -get: extract files from an archive (&lt;-&gt; -c)
+# 옵션 -file=ARCHIVE: use archive file or device ARCHIVE
+tar -xf myfiles.tar.bz2
+&gt; drwxrwxrwx 1 nueees nueees   4096 Jul 17 15:23 Exercise Files
 
 </code></pre></div></div>
 
