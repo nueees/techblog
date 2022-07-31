@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      11 min read
+      12 min read
     
 </span></p>
 
@@ -130,11 +130,19 @@ window.onload = wrap_img;
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#02_04---finding-help-for-commands">02_04 - Finding help for commands</a></li>
-<li class="toc-entry toc-h2"><a href="#03_01---the-linux-file-system">03_01 - The Linux file system</a>
+<li class="toc-entry toc-h2"><a href="#03_01---the-linux-file-system">03_01 - The Linux file system</a></li>
+<li class="toc-entry toc-h2"><a href="#03_02---the-glob-command">03_02 - The glob command</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#posix">POSIX</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#03_03---escape-characters-and-quotes">03_03 - Escape characters and quotes</a></li>
+<li class="toc-entry toc-h2"><a href="#03_04---brace-expansion">03_04 - Brace expansion</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#use-case">use case</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#03_05---find-files-and-xargs">03_05 - Find files and Xargs</a></li>
 <li class="toc-entry toc-h2"><a href="#03_07---find-files-and-xargs">03_07 - Find files and Xargs</a></li>
 <li class="toc-entry toc-h2"><a href="#03_08---understand-user-roles-and-sudo">03_08 - Understand user roles and sudo</a></li>
 <li class="toc-entry toc-h2"><a href="#03_10---modify-file-permissions">03_10 - Modify file permissions</a></li>
@@ -229,6 +237,17 @@ apropos list
 <h2 id="03_01---the-linux-file-system">
 <a class="anchor" href="#03_01---the-linux-file-system" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_01 - The Linux file system</h2>
 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls -l
+
+file Documents
+
+stat Documents
+
+</code></pre></div></div>
+
+<h2 id="03_02---the-glob-command">
+<a class="anchor" href="#03_02---the-glob-command" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_02 - The glob command</h2>
+
 <h3 id="posix">
 <a class="anchor" href="#posix" aria-hidden="true"><span class="octicon octicon-link"></span></a>POSIX</h3>
 <p>|:–:|:–:|
@@ -246,14 +265,6 @@ apropos list
 |[:word:]	|Continuous string of alphanumeric characters and underscores.|
 |[:ascii:]	|ASCII characters, in the range: 0-127|
 |[:cntrl:]	|Any character not part of the character classes: [:upper:], [:lower:], [:alpha:], [:digit:], [:punct:], [:graph:], [:print:], [:xdigit:]|</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls -l
-
-file Documents
-
-stat Documents
-
-</code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls *[[:space:]]* # having space
 &gt; 'file txt'  'photo_1054_02-25 2021.png'
@@ -284,9 +295,88 @@ stat Documents
 &gt; photo_1010_01-11-2021.jpg  photo_1011_01-12-2021.jpg  photo_1012_01-13-2021.jpg
 </code></pre></div></div>
 
+<h2 id="03_03---escape-characters-and-quotes">
+<a class="anchor" href="#03_03---escape-characters-and-quotes" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_03 - Escape characters and quotes</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo My       name is $USER # skip a white space 
+&gt; My name is nueees
+echo "My       name is $USER"
+&gt; My       name is nueees
+echo 'My name is $USER' # present character literally (pass to a command unaltered by the shell)
+&gt; My name is $USER
+
+echo "My name is \$USER" # escape one special character 
+&gt; My name is $USER
+echo '\' # escape a back slash character 
+&gt; \
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo My       name is $USER # skip a white space 
+&gt; My name is nueees
+</code></pre></div></div>
+
+<h2 id="03_04---brace-expansion">
+<a class="anchor" href="#03_04---brace-expansion" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_04 - Brace expansion</h2>
+
+<p>brace expansion은 new files 만들 때<br>
+glob는 existing file 찾을 때<br>
+just expanding text and passing it to the command to use it as an argument.<br>
+brace 먼저쓰고 glob 마지막에 써야 함 (근데 또 요즘 됨..) 
+brace 쓸 때 echo 쳐서 확인하는 습관, brace는 quote 하지말기</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>touch photo{.jpg,.png}
+ls photo{.jpg,.png}
+&gt; photo.jpg  photo.png
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo {1..100..2}
+&gt; 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63 65 67 69 71 73 75 77 79 81 83 85 87 89 91 93 95 97 99
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo {a..z..2}
+&gt; a c e g i k m o q s u w y
+</code></pre></div></div>
+
+<h3 id="use-case">
+<a class="anchor" href="#use-case" aria-hidden="true"><span class="octicon octicon-link"></span></a>use case</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir -p bracefiles/20{22..31}/{01..12}
+tree bracefiles/
+&gt; ├── 2022
+  │   ├── 01
+  │   ├── 02
+  │   ├── 03
+  │   ├── 04
+  │   ├── 05
+  │   ├── 06
+  │   ├── 07
+  │   ├── 08
+  │   ├── 09
+  │   ├── 10
+  │   ├── 11
+  │   └── 12
+  ├── 2023
+  │   ├── 01
+  │   ├── 02
+  │   ├── 03
+  │   ├── 04
+  │   ├── 05
+  │   ├── 06
+  │   ├── 07
+  │   ├── 08
+  │   ├── 09
+  │   ├── 10
+  │   ├── 11
+  │   └── 12
+  ├── 2024
+  │   ├── 01
+  ...
+</code></pre></div></div>
+
+<h2 id="03_05---find-files-and-xargs">
+<a class="anchor" href="#03_05---find-files-and-xargs" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_05 - Find files and Xargs</h2>
+
 <h2 id="03_07---find-files-and-xargs">
 <a class="anchor" href="#03_07---find-files-and-xargs" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_07 - Find files and Xargs</h2>
-<p>xargs: command line에 표준 입력을 인수로 제공.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find . -name "do*"
 
