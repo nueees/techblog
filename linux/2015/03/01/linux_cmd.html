@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      9 min read
+      10 min read
     
 </span></p>
 
@@ -130,7 +130,11 @@ window.onload = wrap_img;
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#02_04---finding-help-for-commands">02_04 - Finding help for commands</a></li>
-<li class="toc-entry toc-h2"><a href="#03_01---the-linux-file-system">03_01 - The Linux file system</a></li>
+<li class="toc-entry toc-h2"><a href="#03_01---the-linux-file-system">03_01 - The Linux file system</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#posix">POSIX</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#03_07---find-files-and-xargs">03_07 - Find files and Xargs</a></li>
 <li class="toc-entry toc-h2"><a href="#03_08---understand-user-roles-and-sudo">03_08 - Understand user roles and sudo</a></li>
 <li class="toc-entry toc-h2"><a href="#03_10---modify-file-permissions">03_10 - Modify file permissions</a></li>
@@ -225,12 +229,42 @@ apropos list
 <h2 id="03_01---the-linux-file-system">
 <a class="anchor" href="#03_01---the-linux-file-system" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_01 - The Linux file system</h2>
 
+<h3 id="posix">
+<a class="anchor" href="#posix" aria-hidden="true"><span class="octicon octicon-link"></span></a>POSIX</h3>
+<p>|:–:|:–:|
+|[:alpha:]	|Any letter, [A-Za-z]|
+|[:upper:]	|Any uppercase letter, [A-Z]|
+|[:lower:]	|Any lowercase letter, [a-z]|
+|[:digit:]	|Any digit, [0-9]|
+|[:alnum:]	|Any alphanumeric character, [A-Za-z0-9]|
+|[:xdigit:]	|Any hexadecimal digit, [0-9A-Fa-f]|
+|[:space:]	|A tab, new line, vertical tab, form feed, carriage return, or space|
+|[:blank:]	|A space or a tab.|
+|[:print:]	|Any printable character|
+|[:punct:]	|Any punctuation character: ! ‘ # S % &amp; ‘ ( ) * + , - . / : ; &lt; = &gt; ? @ [ / ] ^ _ { | } ~|
+|[:graph:]	|Any character defined as a printable character except those defined as part of the space character class|
+|[:word:]	|Continuous string of alphanumeric characters and underscores.|
+|[:ascii:]	|ASCII characters, in the range: 0-127|
+|[:cntrl:]	|Any character not part of the character classes: [:upper:], [:lower:], [:alpha:], [:digit:], [:punct:], [:graph:], [:print:], [:xdigit:]|</p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls -l
 
 file Documents
 
 stat Documents
 
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls *[[:space:]]* # having space
+&gt; 'file txt'  'photo_1054_02-25 2021.png'
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls photo[[:punct:]]_* # having punctuation character
+&gt; 'photo__1076_03-17-2021.jpg'  'photo!_1085_01-06-2021.jpg'  'photo?_1079_03-20-2021.jpg'  photo}_1076_03-17-2021.jpg
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls photo[!'!']*107*.jpg # not having !(exclamation mark)
+'photo?_1079_03-20-2021.jpg'   photo_1073_03-14-2021.jpg      photo__1078_03-19-2021.jpg
 </code></pre></div></div>
 
 <h2 id="03_07---find-files-and-xargs">
