@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      12 min read
+      13 min read
     
 </span></p>
 
@@ -142,7 +142,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#use-case">use case</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#03_05---find-files-and-xargs">03_05 - Find files and Xargs</a></li>
+<li class="toc-entry toc-h2"><a href="#03_05---command-and-variable-substitution">03_05 - Command and variable substitution</a></li>
 <li class="toc-entry toc-h2"><a href="#03_07---find-files-and-xargs">03_07 - Find files and Xargs</a></li>
 <li class="toc-entry toc-h2"><a href="#03_08---understand-user-roles-and-sudo">03_08 - Understand user roles and sudo</a></li>
 <li class="toc-entry toc-h2"><a href="#03_10---modify-file-permissions">03_10 - Modify file permissions</a></li>
@@ -152,7 +152,11 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#04_04---search-for-text-in-files-and-streams-with-grep">04_04 - Search for text in files and streams with grep</a></li>
 <li class="toc-entry toc-h2"><a href="#04_05---manipulate-text-with-awk-sed-and-sort">04_05 - Manipulate text with awk, sed, and sort</a></li>
 <li class="toc-entry toc-h2"><a href="#04_08---working-with-tar-and-zip-archives">04_08 - Working with tar and zip archives</a></li>
-<li class="toc-entry toc-h2"><a href="#04_11---output-redirection">04_11 - Output redirection</a></li>
+<li class="toc-entry toc-h2"><a href="#04_11---output-redirection">04_11 - Output redirection</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#use-case-1">use case</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#05_02---find-system-hardware-and-disk-information">05_02 - Find system hardware and disk information</a></li>
 <li class="toc-entry toc-h2"><a href="#05_03---install-and-update-software-with-a-package-manager">05_03 - Install and update software with a package manager</a></li>
 </ul>
@@ -372,8 +376,31 @@ tree bracefiles/
   ...
 </code></pre></div></div>
 
-<h2 id="03_05---find-files-and-xargs">
-<a class="anchor" href="#03_05---find-files-and-xargs" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_05 - Find files and Xargs</h2>
+<h2 id="03_05---command-and-variable-substitution">
+<a class="anchor" href="#03_05---command-and-variable-substitution" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_05 - Command and variable substitution</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "My shell is $SHELL" # env 변수 출력
+&gt; My shell is /bin/bash
+env | grep SHELL # env 변수임
+&gt; SHELL=/bin/bash
+
+echo "Who am I $whoami" # env 아닌 함수라서 출력 안됨
+&gt; Who am I 
+which whoami # bin에 있는 함수로 처리됨
+&gt; /usr/bin/whoam
+
+# env 아닌 함수 출력 방법
+echo "Who am I $(whoami)" # dollar sign$ + parentheses() 
+&gt; Who am I nueees
+echo "Who am I `whoami`"  # backtick`씌우기 
+&gt; Who am I nueees
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># nested command substitution
+echo "Permissions for find are $(ls -l $(which find))"
+&gt; Permissions for find are -rwxr-xr-x 1 root root 320160 Feb 18  2020 /usr/bin/find
+</code></pre></div></div>
 
 <h2 id="03_07---find-files-and-xargs">
 <a class="anchor" href="#03_07---find-files-and-xargs" aria-hidden="true"><span class="octicon octicon-link"></span></a>03_07 - Find files and Xargs</h2>
@@ -650,6 +677,24 @@ sort -u dupes.txt
 
 </code></pre></div></div>
 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grep tcp /etc/services | awk '{print $1}' | sort | less
+&gt; acr-nema
+  afbackup
+  afmbackup
+  afpovertcp
+  afs3-bos
+  afs3-callback
+  afs3-errors
+  afs3-fileserver
+  afs3-kaserver
+  afs3-prserver
+  afs3-rmtsys
+  afs3-update
+  afs3-vlserver
+  afs3-volser
+  ...
+</code></pre></div></div>
+
 <h2 id="04_08---working-with-tar-and-zip-archives">
 <a class="anchor" href="#04_08---working-with-tar-and-zip-archives" aria-hidden="true"><span class="octicon octicon-link"></span></a>04_08 - Working with tar and zip archives</h2>
 
@@ -689,6 +734,15 @@ ls notreal 2&gt; filelist2.txt
 &gt; 에러 없이 에러난 거 저장됨
 
 </code></pre></div></div>
+
+<h3 id="use-case-1">
+<a class="anchor" href="#use-case-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>use case</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls notreal 1&gt; filelist3.txt 2&gt; filelist4.txt
+&gt; 에러 안난건 filelist3.txt에 저장하고 filelist4.txt 에러 난것만 저장됨
+cat filelist4.txt
+&gt; ls: cannot access 'notreal': No such file or directory
+</code></pre></div></div>
+
 <h2 id="05_02---find-system-hardware-and-disk-information">
 <a class="anchor" href="#05_02---find-system-hardware-and-disk-information" aria-hidden="true"><span class="octicon octicon-link"></span></a>05_02 - Find system hardware and disk information</h2>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>free -h
