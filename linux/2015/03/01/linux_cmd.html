@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      10 min read
+      11 min read
     
 </span></p>
 
@@ -264,7 +264,19 @@ stat Documents
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls photo[!'!']*107*.jpg # not having !(exclamation mark)
-'photo?_1079_03-20-2021.jpg'   photo_1073_03-14-2021.jpg      photo__1078_03-19-2021.jpg
+&gt; 'photo?_1079_03-20-2021.jpg'   photo_1073_03-14-2021.jpg      photo__1078_03-19-2021.jpg
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls -d !(@(photo|video)*@(.jpg|.png)) # not havig machted pattern (!or^)
+&gt; Photo_1000_01-01-2021.jpg   photo.txt                  video_1025_01-26-2021.mpg
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls photo_10[67]?_*.jpg # zero or one (?)
+&gt; photo_1060_02-31-2021.jpg  photo_1066_03-07-2021.jpg  photo_1072_03-13-2021.jpg
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ls photo_10@(1)[0-2]*.jpg # exactly one (@) which is deffrent from regx! regx dont specify '@'
+&gt; photo_1010_01-11-2021.jpg  photo_1011_01-12-2021.jpg  photo_1012_01-13-2021.jpg
 </code></pre></div></div>
 
 <h2 id="03_07---find-files-and-xargs">
