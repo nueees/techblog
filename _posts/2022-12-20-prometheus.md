@@ -1,8 +1,8 @@
 ---
 toc: false
 layout: post
-description: 5장-9장
-categories: [kubernetes,prometheus]
+description: 
+categories: [prometheus]
 title: Prometheus
 ---
 
