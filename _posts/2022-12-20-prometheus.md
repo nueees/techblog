@@ -2,7 +2,7 @@
 toc: false
 layout: post
 description: 4
-categories: [prometheus]
+categories: [prometheus, kubernetes]
 title: Prometheus
 ---
 
