@@ -1,7 +1,7 @@
 ---
 toc: false
 layout: post
-description: 4
+description: Exporter, PromQL, Operator
 categories: [prometheus, kubernetes]
 title: Prometheus
 ---
@@ -10,6 +10,30 @@ title: Prometheus
 
 ---
 
+# 3. Prometheus Installation
+
+## Helm (native prometheus)[https://artifacthub.io/packages/helm/edu/prometheus
+
+```
+$ helm repo add edu https://iac-source.github.io/helm-charts
+$ helm repo update
+$ helm install prometheus edu/prometheus \
+  --set pushgateway.enabled=false \
+  --set alertmanager.enabled=false \
+  --set nodeExporter.tolerations[0].key="node-role.kubernetes.io/master" \
+  --set nodeExporter.tolerations[0].effect="NoSchedule" \
+  --set nodeExporter.tolerations[0].operator="Exists" \
+  --set nodeExporter.tolerations[1].key="node-role.kubernetes.io/control-plane" \
+  --set nodeExporter.tolerations[1].effect="NoSchedule" \
+  --set nodeExporter.tolerations[1].operator="Exists" \
+  --set server.service.type="LoadBalancer" \
+  --set server.global.scrape_interval="1m" # default \
+  --set server.global.evaluation_interval="1m" # default \
+  --set server.extraFlags[0]="web.enable-lifecycle" \
+  --set server.extraFlags[1]="storage.tsdb.no-lockfile" \
+  --namespace=monitoring \
+  --create-namespace
+```
 
 # 4. Prometheus Exporter
 
@@ -106,8 +130,8 @@ cat /proc/version | cat /proc/cpuinfo | cat /proc/meminfo # proc 정보
 
 graph tap에서 node로 prefix주고 node name 넣으면 node os 관련 수집된 데이터임. 
 ```
-node_memory_Active_bytes{node="w3-k8s"}
-node_cpu_seconds_total{node="w3-k8s", mode="user"}
+PromQL] node_memory_Active_bytes{node="w3-k8s"}
+PromQL] node_cpu_seconds_total{node="w3-k8s", mode="user"}
 ```
 
 ### 4.3.1. cgroup  
@@ -171,7 +195,7 @@ control plane에서 kube-api-server를 통해 kubenates object status의 메트�
 graph tap에서 kube로 prefix주고 검색하면 kube-state-metrics로 수집된 데이터임.  
 ```
 $ kubectl scale deploy deploy-app --replicas 6 # scale out deployment 후 replica된 pod 확인 가능
-kube_deployment_status_replicas_available{deployment="deploy-app"}
+PromQL] kube_deployment_status_replicas_available{deployment="deploy-app"}
 ```
 
 
@@ -180,8 +204,8 @@ kube_deployment_status_replicas_available{deployment="deploy-app"}
 
 graph tap에서 application(nginx)로 prefix주고 검색하면 해당 컨테이너로 수집된 데이터임.  
 ```
-nginx_up
-nginx_http_requests_total
+PromQL] nginx_up
+PromQL] nginx_http_requests_total
 ```
 
 deployment-nginx-exporter.yaml (nginx+exporter 컨테이너 두개)
@@ -223,13 +247,247 @@ spec:
 ```
 
 
-## 4.6. about embeded application(other monitoring)
-역시 4.5. application 전용 exporter(application monitoring)와 비슷하고 이미 구현되어 있는 메트릭들  
+## 4.6. about embeded application(other application monitoring)
+4.5. application 전용 exporter(application monitoring)와 비슷하고 이미 구현되어 있는 메트릭들 활성화 시켜주면 확인 됨 e.g. (metallb)[https://github.com/metallb/metallb/blob/main/e2etest/bgptests/metrics.go]
 
 graph tap에서 application(metallb)로 prefix주고 검색하면 해당 컨테이너로 수집된 데이터임.  
 ```
-metallb_allocator_addresses_in_use_total
+PromQL] metallb_allocator_addresses_in_use_total
 ```
+
+해당 app spec을 보면 prometheus 수집 변수가 있음.  
+```
+kubectl edit -n metallb-system daemonsets.apps speaker
+] spec:
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: metallb
+        component: speaker
+    template:
+      metadata:
+        annotations:
+          prometheus.io/port: "7472" # 이 port를 통해서
+          prometheus.io/scrape: "true" # 수집할 것임
+        creationTimestamp: null
+        labels:
+          app: metallb
+          component: speaker
+      spec:
+        containers:
+        - args:
+          - --port=7472
+          - --log-level=info
+          env:
+          - name: METALLB_NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+```
+
+configuration 탭에서도 확인 가능.  
+```
+- job_name: kubernetes-pods
+  ...
+  relabel_configs:
+  - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+    separator: ;
+    regex: "true" # 수집할 것
+    replacement: $1
+    action: keep
+  - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_port]
+    separator: ;
+    regex: "true"
+    replacement: $1
+    action: drop
+```
+
+---
+
+# 5. PromQL
+
+## 5.1. Metric Type
+### Gauge: 특정 시점 값 e.g. momory usage  
+```
+PromQL] node_memory_Active_bytes
+```
+### Counter: 누적된 값(total) e.g. event error  
+```
+PromQL] node_cpu_seconds_total
+```
+### Summary: 구간 내 빈도(duration_seconds) e.g. client request에 대한 response time  
+```
+PromQL] prometheus_target_interval_length_seconds
+```
+### Histogram: Summary를 위한 raw type으로 구간 별 빈도(bucket), PromQL상으로 표시 안됨  
+```
+PromQL] histogram_quantile(0.99, rate(prometheus_http_request_duration_seconds_bucket[5m]))
+```
+
+
+## 5.2. Label Matchers
+중괄호 내 label로 filter  
+```
+PromQL] node_memory_Active_bytes{node!="w3-k8s"}
+PromQL] node_memory_Active_bytes{node=~"w.+"} # 정규표현식 쓸때 w+가 아닌 w.+로 온점(.)써야함
+PromQL] node_memory_Active_bytes{node="w3-k8s|w1-k8s"}
+```
+
+## 5.3. Binary Operators
+PromQL 결과를 가공하는 방법 (Arithmetic binary operators, Comparison binary operators, Logical/set binary operators)  
+```
+PromQL] node_memory_Active_bytes/1024/1024 # MB 단위로 변경
+PromQL] kube_pod_container_status_restarts_total > 3
+PromQL] kube_pod_container_status_terminated > 0 or kube_pod_container_status_waiting > 0
+```
+
+## 5.4. (Aggregation Operators)[https://prometheus.io/docs/prometheus/latest/querying/operators/#aggregation-operators]
+
+```
+PromQL] topk(3,node_cpu_seconds_total) # top 3위 뽑아서 보여줌
+PromQL] bottomk(3,node_cpu_seconds_total > 0) # 0 보다 큰 bottom 3위 뽑아서 보여줌
+PromQL] avg(node_cpu_seconds_total{mode="user"}) by (node)
+PromQL] sum(kubelet_http_requests_total) without(path) # without도 by처럼 grouping 함
+```
+
+## 5.5. (TimeSeries Selector)[https://prometheus.io/docs/prometheus/latest/querying/basics/#time-series-selectors]
+시점 instant vector  
+```
+PromQL] node_memory_Active_bytes # default 시점 데이터
+```
+구간 range vector  
+```
+PromQL] node_memory_Active_bytes[2m] # 대괄호안에 시간정보를 넣으면 만약 1분에 1번씩 수집하는 config에서는 두개의 capture된 결과치가 나타남
+```
+
+## 5.6. (Modifier)[https://prometheus.io/docs/prometheus/latest/querying/basics/#modifier] 
+
+```
+PromQL] node_memory_Active_bytes offset 1m # 1분 전 데이터 값
+PromQL] node_memory_Active_bytes @ 1609746000 # uninx_time으로 2021-01-04T07:40:00+00:00
+```
+
+## 5.7. Funtions
+
+5.5 range vector값과 함께 쓰이는 경우가 많음  
+
+변화율(rate): 구간의 시작과 끝  
+순간변화율(irate): 구간 종료 바로 직전과 구간 종료 값 계산  
+
+```
+PromQL] rate(node_memory_Active_bytes[5m] @ 1609746000) # 2021-01-04T07:40:00+00:00 시점의 5분간 메모리 변화율
+PromQL] predict_linear(node_memory_Active_bytes[5m],60*60*12)/1024/1024 # 5분간 변화율로 12시간 후 메모리 예측
+```
+
+
+
+---
+
+# 6. Custom management
+
+## 6.1. 수집 주기 변경
+
+### replace
+현재 config map에서 scrap_interval 15s 변경 후 적용
+```
+kubectl create -f deployment.yaml
+kubectl replace -f replace-scrape-interval-15s.yaml
+] apiVersion: v1
+  data:
+    alerting_rules.yml: |
+      {}
+    alerts: |
+      {}
+    prometheus.yml: |
+      global:
+        evaluation_interval: 15s
+        scrape_interval: 15s
+        scrape_timeout: 10s
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: prometheus
+      meta.helm.sh/release-namespace: monitoring
+    labels:
+      app: prometheus
+      app.kubernetes.io/managed-by: Helm
+      chart: prometheus-15.8.5
+      component: server
+      heritage: Helm
+      release: prometheus
+    name: prometheus-server
+    namespace: monitoring
+```
+
+### patch
+```
+kubectl patch -n monitoring configmap prometheus-server --patch-file patch-scrape-interval-15s.yaml 
+
+```
+
+## 6.2. Target 추가
+4.6. embeded된 exporter(application monitoring) 사용하도록 추가 설정을 통해 expose 시켜줘야 함. e.g.(kubemetrics)[https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/metrics/metrics.go]  
+
+
+kubeproxy 수동으로 anotations 넣기  
+```
+kubectl edit daemonset -n kube-system kube-proxy
+] spec:
+    revisionHistoryLimit: 10
+    template:
+      metadata:
+        annotations:
+          prometheus.io/port: "10249"      <<<
+          prometheus.io/scrape: "true"     <<<
+        creationTimestamp: null
+      spec:
+        containers:
+        - command:
+          ...
+```
+
+metrics config mapping 해주고 restart  
+```
+kubectl edit cm kube-proxy -n kube-system
+] apiVersion: v1
+data:
+  config.conf: |-
+    apiVersion: kubeproxy.config.k8s.io/v1alpha1
+    ...
+    kind: KubeProxyConfiguration
+    metricsBindAddress: "" # "0.0.0.0:10249" 으로 변경
+```
+
+```
+kubectl rollout restart daemonset kube-proxy  -n kube-system
+```
+
+
+graph tap에서 application(kubeproxy)로 prefix주고 검색하면 해당 컨테이너로 수집된 데이터임.  
+```
+PromQL] kubeproxy_sync_proxy_rules_iptables_total
+```
+
+
+## 6.3. 외부메트릭 추가
+
+### Harbor?
+Harbor is an open source cloud native registry that stores, signs, and scans container images. (like aws ecr)  
+
+
+
+### Harbor 메트릭 수집하고 싶을 때 구성방법
+
+Harbor server에 내 harbor 메트릭 추가
+```
+- job_name: harbor
+      metrics_path: /metrics
+      static_configs:
+      - targets:
+        - 192.168.1.63:9090
+```
+
+
 
 
 ---
