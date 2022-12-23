@@ -12,7 +12,7 @@ title: Prometheus
 
 # 3. Prometheus Installation
 
-## Helm (native prometheus)[https://artifacthub.io/packages/helm/edu/prometheus
+## Helm (native prometheus)[https://artifacthub.io/packages/helm/edu/prometheus]
 
 ```
 $ helm repo add edu https://iac-source.github.io/helm-charts
