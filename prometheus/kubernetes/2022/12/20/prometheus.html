@@ -118,7 +118,7 @@ window.onload = wrap_img;
 
 <h1 id="3-prometheus-installation">3. Prometheus Installation</h1>
 
-<h2 id="helm-native-prometheushttpsartifacthubiopackageshelmeduprometheus">Helm (native prometheus)[https://artifacthub.io/packages/helm/edu/prometheus]</h2>
+<h2 id="helm-native-prometheus">Helm <a href="https://artifacthub.io/packages/helm/edu/prometheus">native prometheus</a></h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ helm repo add edu https://iac-source.github.io/helm-charts
 $ helm repo update
@@ -140,7 +140,7 @@ $ helm install prometheus edu/prometheus \
   --create-namespace
 </code></pre></div></div>
 
-<h2 id="31-prometheus-configurationhttpsprometheusiodocsprometheuslatestconfigurationconfigurationconfiguration-file">3.1. (Prometheus Configuration)[https://prometheus.io/docs/prometheus/latest/configuration/configuration/#configuration-file]</h2>
+<h2 id="31-prometheus-configuration">3.1. <a href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/#configuration-file">Prometheus Configuration</a></h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>global:
   scrape_interval: 15s
@@ -460,7 +460,7 @@ spec:
 </code></pre></div></div>
 
 <h2 id="46-about-embeded-applicationother-application-monitoring">4.6. about embeded application(other application monitoring)</h2>
-<p>4.5. application 전용 exporter(application monitoring)와 비슷하고 이미 구현되어 있는 메트릭들 활성화 시켜주면 확인 됨 e.g. (metallb)[https://github.com/metallb/metallb/blob/main/e2etest/bgptests/metrics.go]</p>
+<p>4.5. application 전용 exporter(application monitoring)와 비슷하고 이미 구현되어 있는 메트릭들 활성화 시켜주면 확인 됨 e.g. <a href="https://github.com/metallb/metallb/blob/main/e2etest/bgptests/metrics.go">metallb</a></p>
 
 <p>graph tap에서 application(metallb)로 prefix주고 검색하면 해당 컨테이너로 수집된 데이터임.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PromQL] metallb_allocator_addresses_in_use_total
@@ -543,7 +543,7 @@ PromQL] kube_pod_container_status_restarts_total &gt; 3
 PromQL] kube_pod_container_status_terminated &gt; 0 or kube_pod_container_status_waiting &gt; 0
 </code></pre></div></div>
 
-<h2 id="54-aggregation-operatorshttpsprometheusiodocsprometheuslatestqueryingoperatorsaggregation-operators">5.4. (Aggregation Operators)[https://prometheus.io/docs/prometheus/latest/querying/operators/#aggregation-operators]</h2>
+<h2 id="54-aggregation-operators">5.4. <a href="https://prometheus.io/docs/prometheus/latest/querying/operators/#aggregation-operators">Aggregation Operators</a></h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PromQL] topk(3,node_cpu_seconds_total) # top 3위 뽑아서 보여줌
 PromQL] bottomk(3,node_cpu_seconds_total &gt; 0) # 0 보다 큰 bottom 3위 뽑아서 보여줌
@@ -551,7 +551,7 @@ PromQL] avg(node_cpu_seconds_total{mode="user"}) by (node)
 PromQL] sum(kubelet_http_requests_total) without(path) # without도 by처럼 grouping 함
 </code></pre></div></div>
 
-<h2 id="55-timeseries-selectorhttpsprometheusiodocsprometheuslatestqueryingbasicstime-series-selectors">5.5. (TimeSeries Selector)[https://prometheus.io/docs/prometheus/latest/querying/basics/#time-series-selectors]</h2>
+<h2 id="55-timeseries-selector">5.5. <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/#time-series-selectors">TimeSeries Selector</a></h2>
 <p>시점 instant vector</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PromQL] node_memory_Active_bytes # default 시점 데이터
 </code></pre></div></div>
@@ -559,7 +559,7 @@ PromQL] sum(kubelet_http_requests_total) without(path) # without도 by처럼 gro
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PromQL] node_memory_Active_bytes[2m] # 대괄호안에 시간정보를 넣으면 만약 1분에 1번씩 수집하는 config에서는 두개의 capture된 결과치가 나타남
 </code></pre></div></div>
 
-<h2 id="56-modifierhttpsprometheusiodocsprometheuslatestqueryingbasicsmodifier">5.6. (Modifier)[https://prometheus.io/docs/prometheus/latest/querying/basics/#modifier]</h2>
+<h2 id="56-modifier">5.6. <a href="https://prometheus.io/docs/prometheus/latest/querying/basics/#modifier">Modifier</a></h2>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PromQL] node_memory_Active_bytes offset 1m # 1분 전 데이터 값
 PromQL] node_memory_Active_bytes @ 1609746000 # uninx_time으로 2021-01-04T07:40:00+00:00
@@ -619,7 +619,7 @@ kubectl replace -f replace-scrape-interval-15s.yaml
 </code></pre></div></div>
 
 <h2 id="62-target-추가">6.2. target 추가</h2>
-<p>4.6. embeded된 exporter(application monitoring) 사용하도록 추가 설정을 통해 expose 시켜줘야 함. e.g.(kubemetrics)[https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/metrics/metrics.go]</p>
+<p>4.6. embeded된 exporter(application monitoring) 사용하도록 추가 설정을 통해 expose 시켜줘야 함. e.g.<a href="https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/metrics/metrics.go">kubemetrics</a></p>
 
 <p>kubeproxy 수동으로 anotations 넣기</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl edit daemonset -n kube-system kube-proxy
@@ -670,7 +670,7 @@ data:
         - 192.168.1.63:9090
 </code></pre></div></div>
 
-<h2 id="64-recording-ruleshttpsprometheusiodocsprometheuslatestconfigurationrecording_rules-추가">6.4. (recording rules)[https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/] 추가</h2>
+<h2 id="64-recording-rules-추가">6.4. <a href="https://prometheus.io/docs/prometheus/latest/configuration/recording_rules">recording rules</a> 추가</h2>
 <p>반복적으로 복잡한 PromQL 사용 시 미리 계산된 metric값으로 변수 customize</p>
 
 <h3 id="syntax-checking">syntax checking</h3>
@@ -705,7 +705,7 @@ $ promtool check rules /path/to/example.rules.yml
           expr: topk(3,sum(container_memory_working_set_bytes{pod!=""}/1024/1024) by (pod))
 </code></pre></div></div>
 
-<h2 id="65-alertshttpsprometheusiodocsalertinglatestconfiguration-추가">6.5. (alerts)[https://prometheus.io/docs/alerting/latest/configuration/] 추가</h2>
+<h2 id="65-alerts-추가">6.5. <a href="https://prometheus.io/docs/alerting/latest/configuration">alerts</a> 추가</h2>
 <p>기본적으로 recording rule과 같고 경고 메시지 서비스</p>
 
 <h3 id="alerting_rules">alerting_rules</h3>
