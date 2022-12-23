@@ -12,7 +12,7 @@ title: Prometheus
 
 # 3. Prometheus Installation
 
-## Helm (native prometheus)[https://artifacthub.io/packages/helm/edu/prometheus]
+## Helm [native prometheus](https://artifacthub.io/packages/helm/edu/prometheus)
 
 ```
 $ helm repo add edu https://iac-source.github.io/helm-charts
@@ -35,7 +35,7 @@ $ helm install prometheus edu/prometheus \
   --create-namespace
 ```
 
-## 3.1. (Prometheus Configuration)[https://prometheus.io/docs/prometheus/latest/configuration/configuration/#configuration-file]
+## 3.1. [Prometheus Configuration](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#configuration-file)
 
 ```
 global:
@@ -377,7 +377,7 @@ spec:
 
 
 ## 4.6. about embeded application(other application monitoring)
-4.5. application 전용 exporter(application monitoring)와 비슷하고 이미 구현되어 있는 메트릭들 활성화 시켜주면 확인 됨 e.g. (metallb)[https://github.com/metallb/metallb/blob/main/e2etest/bgptests/metrics.go]
+4.5. application 전용 exporter(application monitoring)와 비슷하고 이미 구현되어 있는 메트릭들 활성화 시켜주면 확인 됨 e.g. [metallb](https://github.com/metallb/metallb/blob/main/e2etest/bgptests/metrics.go)
 
 graph tap에서 application(metallb)로 prefix주고 검색하면 해당 컨테이너로 수집된 데이터임.  
 ```
@@ -470,7 +470,7 @@ PromQL] kube_pod_container_status_restarts_total > 3
 PromQL] kube_pod_container_status_terminated > 0 or kube_pod_container_status_waiting > 0
 ```
 
-## 5.4. (Aggregation Operators)[https://prometheus.io/docs/prometheus/latest/querying/operators/#aggregation-operators]
+## 5.4. [Aggregation Operators](https://prometheus.io/docs/prometheus/latest/querying/operators/#aggregation-operators)
 
 ```
 PromQL] topk(3,node_cpu_seconds_total) # top 3위 뽑아서 보여줌
@@ -479,7 +479,7 @@ PromQL] avg(node_cpu_seconds_total{mode="user"}) by (node)
 PromQL] sum(kubelet_http_requests_total) without(path) # without도 by처럼 grouping 함
 ```
 
-## 5.5. (TimeSeries Selector)[https://prometheus.io/docs/prometheus/latest/querying/basics/#time-series-selectors]
+## 5.5. [TimeSeries Selector](https://prometheus.io/docs/prometheus/latest/querying/basics/#time-series-selectors)
 시점 instant vector  
 ```
 PromQL] node_memory_Active_bytes # default 시점 데이터
@@ -489,7 +489,7 @@ PromQL] node_memory_Active_bytes # default 시점 데이터
 PromQL] node_memory_Active_bytes[2m] # 대괄호안에 시간정보를 넣으면 만약 1분에 1번씩 수집하는 config에서는 두개의 capture된 결과치가 나타남
 ```
 
-## 5.6. (Modifier)[https://prometheus.io/docs/prometheus/latest/querying/basics/#modifier] 
+## 5.6. [Modifier](https://prometheus.io/docs/prometheus/latest/querying/basics/#modifier)
 
 ```
 PromQL] node_memory_Active_bytes offset 1m # 1분 전 데이터 값
@@ -555,7 +555,7 @@ kubectl patch -n monitoring configmap prometheus-server --patch-file patch-scrap
 ```
 
 ## 6.2. target 추가
-4.6. embeded된 exporter(application monitoring) 사용하도록 추가 설정을 통해 expose 시켜줘야 함. e.g.(kubemetrics)[https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/metrics/metrics.go]  
+4.6. embeded된 exporter(application monitoring) 사용하도록 추가 설정을 통해 expose 시켜줘야 함. e.g.[kubemetrics](https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/metrics/metrics.go)  
 
 
 kubeproxy 수동으로 anotations 넣기  
@@ -616,7 +616,7 @@ Harbor server에 내 harbor 메트릭 추가
         - 192.168.1.63:9090
 ```
 
-## 6.4. (recording rules)[https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/] 추가
+## 6.4. [recording rules](https://prometheus.io/docs/prometheus/latest/configuration/recording_rules) 추가
 반복적으로 복잡한 PromQL 사용 시 미리 계산된 metric값으로 변수 customize  
 
 ### syntax checking  
@@ -655,7 +655,7 @@ recording_rules.yml: |
 ```
 
 
-## 6.5. (alerts)[https://prometheus.io/docs/alerting/latest/configuration/] 추가
+## 6.5. [alerts](https://prometheus.io/docs/alerting/latest/configuration) 추가
 기본적으로 recording rule과 같고 경고 메시지 서비스  
 
 ### alerting_rules  
