@@ -35,6 +35,135 @@ $ helm install prometheus edu/prometheus \
   --create-namespace
 ```
 
+## 3.1. (Prometheus Configuration)[https://prometheus.io/docs/prometheus/latest/configuration/configuration/#configuration-file]
+
+```
+global:
+  scrape_interval: 15s
+  evaluation_interval: 30s
+  # scrape_timeout is set to the global default (10s).
+
+  external_labels:
+    monitor: codelab
+    foo: bar
+
+rule_files:
+  - "first.rules"
+  - "reporting/*.rules"
+  - "alerting/*.rules"
+
+alerting:
+  alertmanagers:
+    - scheme: https
+      static_configs:
+        - targets:
+            - "1.2.3.4:9093"
+            - "1.2.3.5:9093"
+            - "1.2.3.6:9093"
+
+scrape_configs: # targets 집합으로 각 target에서 어떻게 수집할 건지 param 
+  - job_name: prometheus
+
+    honor_labels: true
+    # scrape_interval is defined by the configured global (15s).
+    # scrape_timeout is defined by the global default (10s).
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    file_sd_configs:
+      - files:
+          - foo/*.slow.json
+          - foo/*.slow.yml
+          - single/file.yml
+        refresh_interval: 10m
+      - files:
+          - bar/*.yaml
+
+    static_configs:
+      - targets: ["localhost:9090", "localhost:9191"]
+        labels:
+          my: label
+          your: label
+
+    relabel_configs:
+      - source_labels: [job, __meta_dns_name]
+        regex: (.*)some-[regex]
+        target_label: job
+        replacement: foo-${1}
+        # action defaults to 'replace'
+      - source_labels: [abc]
+        target_label: cde
+      - replacement: static
+        target_label: abc
+      - regex:
+        replacement: static
+        target_label: abc
+      - source_labels: [foo]
+        target_label: abc
+        action: keepequal
+      - source_labels: [foo]
+        target_label: abc
+        action: dropequal
+
+    authorization:
+      credentials_file: valid_token_file
+
+    tls_config:
+      min_version: TLS10
+
+  - job_name: service-x
+
+    basic_auth:
+      username: admin_name
+      password: "multiline\nmysecret\ntest"
+
+    scrape_interval: 50s
+    scrape_timeout: 5s
+
+    body_size_limit: 10MB
+    sample_limit: 1000
+
+    metrics_path: /my_path
+    scheme: https
+
+    dns_sd_configs:
+      - refresh_interval: 15s
+        names:
+          - first.dns.address.domain.com
+          - second.dns.address.domain.com
+      - names:
+          - first.dns.address.domain.com
+
+    relabel_configs:
+      - source_labels: [job]
+        regex: (.*)some-[regex]
+        action: drop
+      - source_labels: [__address__]
+        modulus: 8
+        target_label: __tmp_hash
+        action: hashmod
+      - source_labels: [__tmp_hash]
+        regex: 1
+        action: keep
+      - action: labelmap
+        regex: 1
+      - action: labeldrop
+        regex: d
+      - action: labelkeep
+        regex: k
+
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: expensive_metric.*
+        action: drop
+```
+
+
+## 3.2. Prometheus Recording Rules
+6.4. recording rules 추가에서 다룸  
+
+
 # 4. Prometheus Exporter
 
 ## 4.1. Service discovery (수집 대상)
@@ -385,7 +514,7 @@ PromQL] predict_linear(node_memory_Active_bytes[5m],60*60*12)/1024/1024 # 5분�
 
 # 6. Custom management
 
-## 6.1. 수집 주기 변경
+## 6.1. scrape interval 변경
 
 ### replace
 현재 config map에서 scrap_interval 15s 변경 후 적용
@@ -425,7 +554,7 @@ kubectl patch -n monitoring configmap prometheus-server --patch-file patch-scrap
 
 ```
 
-## 6.2. Target 추가
+## 6.2. target 추가
 4.6. embeded된 exporter(application monitoring) 사용하도록 추가 설정을 통해 expose 시켜줘야 함. e.g.(kubemetrics)[https://github.com/kubernetes/kubernetes/blob/master/pkg/proxy/metrics/metrics.go]  
 
 
@@ -469,7 +598,7 @@ PromQL] kubeproxy_sync_proxy_rules_iptables_total
 ```
 
 
-## 6.3. 외부메트릭 추가
+## 6.3. external metric 추가
 
 ### Harbor?
 Harbor is an open source cloud native registry that stores, signs, and scans container images. (like aws ecr)  
@@ -486,6 +615,155 @@ Harbor server에 내 harbor 메트릭 추가
       - targets:
         - 192.168.1.63:9090
 ```
+
+## 6.4. (recording rules)[https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/] 추가
+반복적으로 복잡한 PromQL 사용 시 미리 계산된 metric값으로 변수 customize  
+
+### syntax checking  
+```
+$ install -m 755 prometheus-2.37.0.linux-amd64/promtool /usr/local/bin
+$ promtool check rules /path/to/example.rules.yml
+```
+
+### recording_rules  
+Prometheus Configuration에서 rule_files 경로 주고  
+```
+rule_files:
+  - /etc/config/recording_rules.yml
+```
+rule_files 정의  
+```
+recording_rules.yml: |
+  groups:
+    - name: prometheus-recording.rules
+      interval: 10s
+      rules:
+        - record: node:node_memory:usage
+          expr: |-
+            100 - 100 * (
+              (node_memory_MemTotal_bytes
+               - node_memory_MemFree_bytes
+               - node_memory_Buffers_bytes
+               - node_memory_Cached_bytes
+               - node_memory_SReclaimable_bytes
+              )
+               /
+               node_memory_MemTotal_bytes
+            )
+        - record: container:memory:topk3
+          expr: topk(3,sum(container_memory_working_set_bytes{pod!=""}/1024/1024) by (pod))
+```
+
+
+## 6.5. (alerts)[https://prometheus.io/docs/alerting/latest/configuration/] 추가
+기본적으로 recording rule과 같고 경고 메시지 서비스  
+
+### alerting_rules  
+
+helm upgrade를 통해서 alertmanager instance enable  
+```
+helm upgrade prometheus edu/prometheus \
+--set pushgateway.enabled=false \
+--set nodeExporter.tolerations[0].key="node-role.kubernetes.io/master" \
+--set nodeExporter.tolerations[0].effect="NoSchedule" \
+--set nodeExporter.tolerations[0].operator="Exists" \
+--set nodeExporter.tolerations[1].key="node-role.kubernetes.io/control-plane" \
+--set nodeExporter.tolerations[1].effect="NoSchedule" \
+--set nodeExporter.tolerations[1].operator="Exists" \
+--set server.service.type="LoadBalancer" \
+--set alertmanager.service.type="LoadBalancer" \
+--set alertmanager.service.loadBalancerIP="192.168.1.65" \
+--set server.global.scrape_interval="15s" \
+--set server.global.evaluation_interval="15s" \
+--set server.extraFlags[0]="web.enable-lifecycle" \
+--set server.extraFlags[1]="storage.tsdb.no-lockfile" \
+--namespace=monitoring 
+```
+
+Prometheus Configuration에서 rule_files 경로와 alertmanager 서비스 띄우고  
+```
+rule_files:
+  - /etc/config/alerting_rules.yml
+```
+rule_files 정의  
+```
+  alerting_rules.yml: |
+    groups:
+    - name: nginx-status.alert
+      rules:
+      - alert: '[P2] NginxDown'
+        for: 30s
+        annotations:
+          title: 'Nginx pod down unexpectedly'
+          description: 'Nginx가 비정상 종료됨. 빠른 조치 필요!'
+          summary: '[P2, warnning]: Nginx pod has been shutdown unexpectedly.'
+        expr: |
+          (sum(nginx_up) OR vector(0)) == 0
+```
+Alerting Configuration에서 경고 메시지 보낼 곳 정의  
+```
+  alertmanager.yml: |
+    global:
+      resolve_timeout: 10m
+      slack_api_url: "https://hooks.slack.com/services/..."# Slack-URL
+    receivers:
+    - name: default-receiver
+    - name: slack
+      slack_configs:
+      - channel: #development
+        send_resolved: true
+        title: '[{{.Status | toUpper}}] {{ .CommonLabels.alertname }}'
+        text: |
+          *Description:* {{ .CommonAnnotations.description }}
+    route:
+      group_interval: 1m
+      group_wait: 10s
+      receiver: slack
+      repeat_interval: 5m
+```
+
+---
+
+# 6. Prometheus Operator
+다양한 k8s cluster(eks,aks,gke)위에 
+native prometheus와 prometheus operator 수집 대상이 다름  
+
+## 6.1. exporter configuration
+helm으로 operator(kube-prometheus-stack)설치  
+```
+helm install prometheus-stack edu/kube-prometheus-stack  \
+--set defaultRules.create="false" \
+--set alertmanager.enabled="false" \
+--set grafana.enabled="false" \
+--set prometheus.service.type="LoadBalancer" \
+--set prometheus.service.port="80" \
+--set prometheus.prometheusSpec.scrapeInterval="30s" \
+--set prometheus.prometheusSpec.evaluationInterval="30s" \
+--namespace=monitoring \
+--create-namespace \
+-f ~/prom-operator-config/set-sc-8Gi.yaml # volumn(StatefulSet) 정의
+```
+set-sc-8Gi.yaml 파일:  
+```
+prometheus:
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "managed-nfs-storage"
+          accessModes:
+          - "ReadWriteOnce"
+          resources:
+            requests:
+              storage: "8Gi"
+```
+
+## 6.2. control plane exporter
+
+## 6.3. service monitor exporter
+
+## 6.4. pod monitor exporter
+
 
 
 
