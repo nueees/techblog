@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Helm | Cho’s Tech blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Helm" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Exporter, PromQL, Operator" />
+<meta property="og:description" content="Exporter, PromQL, Operator" />
+<link rel="canonical" href="https://nueees.github.io/techblog/helm/kubernetes/2023/02/10/helm.html" />
+<meta property="og:url" content="https://nueees.github.io/techblog/helm/kubernetes/2023/02/10/helm.html" />
+<meta property="og:site_name" content="Cho’s Tech blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-10T00:00:00-06:00" />
+<script type="application/ld+json">
+{"datePublished":"2023-02-10T00:00:00-06:00","url":"https://nueees.github.io/techblog/helm/kubernetes/2023/02/10/helm.html","@type":"BlogPosting","dateModified":"2023-02-10T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://nueees.github.io/techblog/helm/kubernetes/2023/02/10/helm.html"},"headline":"Helm","description":"Exporter, PromQL, Operator","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/techblog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nueees.github.io/techblog/feed.xml" title="Cho's Tech blog" /><link rel="shortcut icon" type="image/x-icon" href="/techblog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/techblog/">Cho&#39;s Tech blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/techblog/about/">About Me</a><a class="page-link" href="/techblog/gitInfo/">gitInfo</a><a class="page-link" href="/techblog/search/">Search</a><a class="page-link" href="/techblog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Helm</h1><p class="page-description">Exporter, PromQL, Operator</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2023-02-10T00:00:00-06:00" itemprop="datePublished">
+        Feb 10, 2023
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/techblog/categories/#helm">helm</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/techblog/categories/#kubernetes">kubernetes</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><a href="https://medium.com/swlh/how-to-declaratively-run-helm-charts-using-helmfile-ac78572e6088">how-to-declaratively-run-helm-charts-using-helmfile</a></p>
+
+<hr />
+
+<h1 id="1-helm">1. Helm</h1>
+<p>kubernetes의 package manager<br />
+기존 kubectl 명령어로는 여러개의 yaml 파일 생성 관리해야 하는데 helm이 Charts로 묶어서 관리하게 함</p>
+
+<h2 id="11-helm-install">1.1. <a href="https://helm.sh/docs/intro/install/">Helm Install</a></h2>
+<p>helm 설치</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] brew install helm
+</code></pre></div></div>
+
+<h2 id="12-chart-repository-가져오기">1.2. <a href="https://helm.sh/docs/topics/chart_repository/">Chart Repository</a> 가져오기</h2>
+<p><a href="https://charts.bitnami.com/bitnami">Bitnami Chart Repository</a> 추가</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] helm repo add my-repo https://charts.bitnami.com/bitnami
+] kubectl create ns metircs # namespace 생성
+</code></pre></div></div>
+
+<h2 id="13-repository에서-chart-가져오기">1.3. Repository에서 Chart 가져오기</h2>
+<p><a href="https://artifacthub.io/packages/helm/bitnami/kube-state-metrics">kube-state-metrics</a>: Kubernetes API server and objects의 상태값 메트릭으로 생성</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] helm install kube-state-metrics my-repo/kube-state-metrics -n metrics # helm chart 추가
+] helm ls -n metrics
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                          APP VERSION
+kube-state-metrics      metrics         1               2023-02-09 11:53:54.2417933 +0100 CET   deployed        kube-state-metrics-3.2.8       2.7.0
+
+] kubectl get all -n metrics
+NAME                                      READY   STATUS    RESTARTS   AGE
+pod/kube-state-metrics-647765674c-2gl2n   1/1     Running   0          179m
+NAME                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/kube-state-metrics   ClusterIP   10.111.131.223   &lt;none&gt;        8080/TCP   179m
+NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/kube-state-metrics   1/1     1            1           179m
+NAME                                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/kube-state-metrics-647765674c   1         1         1       179m
+
+] kubectl logs pod/kube-state-metrics-647765674c-2gl2n -n metrics
+I0209 10:53:55.686419       1 wrapper.go:78] Starting kube-state-metrics
+I0209 10:53:55.686869       1 server.go:138] "Used resources" resources="certificatesigningrequests,configmaps,cronjobs,daemonsets,deployments,endpoints,horizontalpodautoscalers,ingresses,jobs,limitranges,mutatingwebhookconfigurations,namespaces,networkpolicies,nodes,persistentvolumeclaims,persistentvolumes,poddisruptionbudgets,pods,replicasets,replicationcontrollers,resourcequotas,secrets,services,statefulsets,storageclasses,volumeattachments"
+I0209 10:53:55.686904       1 types.go:184] "Using all namespaces"
+I0209 10:53:55.686924       1 server.go:166] "Metric allow-denylisting" allowDenyStatus="Excluding the following lists that were on denylist: "
+W0209 10:53:55.686986       1 client_config.go:617] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
+I0209 10:53:55.687305       1 server.go:311] "Tested communication with server"
+I0209 10:53:55.696886       1 server.go:316] "Run with Kubernetes cluster version" major="1" minor="24" gitVersion="v1.24.0" gitTreeState="clean" gitCommit="4ce5a8954017644c5420bae81d72b09b735c21f0" platform="linux/amd64"
+I0209 10:53:55.696909       1 server.go:317] "Communication with server successful"
+I0209 10:53:55.697032       1 server.go:263] "Started metrics server" metricsServerAddress="[::]:8080"
+I0209 10:53:55.697104       1 metrics_handler.go:97] "Autosharding disabled"
+I0209 10:53:55.697132       1 server.go:252] "Started kube-state-metrics self metrics server" telemetryAddress="[::]:8081"
+I0209 10:53:55.697252       1 server.go:69] levelinfomsgListening onaddress[::]:8080
+I0209 10:53:55.697284       1 server.go:69] levelinfomsgTLS is disabled.http2falseaddress[::]:8080
+I0209 10:53:55.697410       1 server.go:69] levelinfomsgListening onaddress[::]:8081
+I0209 10:53:55.697440       1 server.go:69] levelinfomsgTLS is disabled.http2falseaddress[::]:8081
+I0209 10:53:55.699392       1 builder.go:257] "Active resources" activeStoreNames="certificatesigningrequests,configmaps,cronjobs,daemonsets,deployments,endpoints,horizontalpodautoscalers,ingresses,jobs,limitranges,mutatingwebhookconfigurations,namespaces,networkpolicies,nodes,persistentvolumeclaims,persistentvolumes,poddisruptionbudgets,pods,replicasets,replicationcontrollers,resourcequotas,secrets,services,statefulsets,storageclasses,volumeattachments"
+
+] kubectl port-forward svc/kube-state-metrics 8080:8080 -n metrics # WebUI로 해당 k8s metrics 확인 가능
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="2-helm-custumizing">2. Helm Custumizing</h1>
+
+<h2 id="21-chart-열어보기">2.1. Chart 열어보기</h2>
+<p>기본적인 chart 정보</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] helm show chart my-repo/kube-state-metrics
+annotations:
+  category: Analytics
+  licenses: Apache-2.0
+apiVersion: v2
+appVersion: 2.7.0
+dependencies:
+- name: common
+  repository: https://charts.bitnami.com/bitnami
+  tags:
+  - bitnami-common
+  version: 2.x.x
+description: kube-state-metrics is a simple service that listens to the Kubernetes
+  API server and generates metrics about the state of the objects.
+home: https://github.com/bitnami/charts/tree/main/bitnami/kube-state-metrics
+icon: https://bitnami.com/assets/stacks/kube-state-metrics/img/kube-state-metrics-stack-220x234.png
+keywords:
+- prometheus
+- kube-state-metrics
+- monitoring
+maintainers:
+- name: Bitnami
+  url: https://github.com/bitnami/charts
+name: kube-state-metrics
+sources:
+- https://github.com/bitnami/containers/tree/main/bitnami/kube-state-metrics
+- https://github.com/kubernetes/kube-state-metrics
+version: 3.2.8
+</code></pre></div></div>
+
+<p>필요한 value정보들</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] helm show values my-repo/kube-state-metric &gt; values.yaml
+image:
+  registry: docker.io
+  repository: bitnami/kube-state-metrics
+  tag: 2.7.0-debian-11-r21
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+kubeResources:
+  configmaps: true
+  cronjobs: true
+  daemonsets: true
+  deployments: true
+  endpoints: true
+  ingresses: true
+  jobs: true
+  namespaces: true
+  nodes: true
+  persistentvolumeclaims: true
+  persistentvolumes: true
+  pods: true
+  replicasets: true
+  replicationcontrollers: true
+  secrets: true
+  services: true
+  statefulsets: true
+  storageclasses: true
+service:
+  type: ClusterIP
+  ports:
+    http: 8080
+  nodePorts:
+    http: ""
+  clusterIP: ""
+...
+resources:
+  limits: {}
+  requests: {}
+replicaCount: 1
+podAnnotations: {}
+nodeSelector: {}
+...
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 120
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+...
+</code></pre></div></div>
+
+<p>install 시 set으로 지정가능</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] helm install kube-state-metrics my-repo/kube-state-metrics -n metrics \
+--set kubeResources.cronjobs=false \
+--set apiService.create=true 
+</code></pre></div></div>
+
+<p>Clean up</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] helm delete kube-state-metrics
+] kubectl delete ns metrics
+</code></pre></div></div>
+
+<h2 id="22-chart-생성">2.2. Chart 생성</h2>
+<p>기본적인 chart 모델로 boilerplate 생성</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] helm create first-chart
+</code></pre></div></div>
+<p>기본 파일(templetes 폴더 내 configmap.yaml 추가) 수정 후 install</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] helm install first-chart .
+] kubectl get cm
+NAME                    DATA   AGE
+first-chart-configmap   1      8s
+kube-root-ca.crt        1      7h9m
+] kubectl describe configmap first-chart-configmap
+Name:         first-chart-configmap
+Namespace:    default
+Labels:       app.kubernetes.io/managed-by=Helm
+Annotations:  meta.helm.sh/release-name: first-chart
+              meta.helm.sh/release-namespace: default
+Data
+====
+port:
+----
+8080
+BinaryData
+</code></pre></div></div>
+
+<h2 id="23-chart-수정">2.3. Chart 수정</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="3-helmfile로-관리">3. Helmfile로 관리</h1>
+<p>이제껏 imperative하게 관리하던 것을 declarative하게 관리 가능</p>
+
+<h2 id="31-helmfile-만들기">3.1. Helmfile 만들기</h2>
+
+<hr />
+
+
+  </div><a class="u-url" href="/techblog/helm/kubernetes/2023/02/10/helm.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/techblog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="https://nueees.github.io/techblog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/techblog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A challenge-loving data engineer.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
