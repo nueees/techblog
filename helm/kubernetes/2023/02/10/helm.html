@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      6 min read
+      8 min read
     
 </span></p>
 
@@ -454,42 +454,108 @@ NAME                          DATA   AGE
 first-chart-configmap-0.1.1   1      2s
 </code></pre></div></div>
 
-<h2 id="32-named_templates">3.2. <a href="https://helm.sh/docs/chart_template_guide/named_templates/">named_templates</a></h2>
+<h2 id="33-templetes-functions">3.3. <a href="https://helm.sh/docs/howto/charts_tips_and_tricks/">templetes functions</a></h2>
 
-<h3 id="사용자-정의-객체-_helperstpl">사용자 정의 객체 _helpers.tpl</h3>
-<p>_helpers.tpl 파일에서 define 으로 시작해서 end 로 정의</p>
+<h3 id="range"><a href="https://kouzie.github.io/kubernetes/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-helm-%EB%AC%B8%EB%B2%95/#range--%EC%A7%80%EC%97%AD%EB%B3%80%EC%88%98">range</a></h3>
+<p>반복문</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># values.yaml
+list:
+  - a
+  - b
+  - c
 
-<h3 id="define">define</h3>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># _helpers.tpl
+# configmap.yaml
+range:
+  - 
 
-  labels:
-    generator: helm
-    date: 
-    chart: 
-    version: 
+# 결과
+range:
+  - a
+  - b
+  - c
 </code></pre></div></div>
-<p>첫 부분에 - 넣는 이유는 공백, 개행 삭제</p>
+<p>range 에 개별편의를 위해 자체적인 지역변수 <em>$index, $key, $value</em>를 제공</p>
 
-<h3 id="template"><a href="https://kouzie.github.io/kubernetes/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-helm-%EB%AC%B8%EB%B2%95/#tpl">template</a></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># values.yaml
+list:
+  - a
+  - b
+  - c
+map:
+  env: dev
+  log: info
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] cat configmap.yaml
+# configmap.yaml
+range:
+  index:
+    : 
+map:
+    : 
+
+# 결과
+range:
+  index:
+    0: a
+    1: b
+    2: c
+map:
+  env: "dev"
+  log: "info"
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># configmap.yaml
+  sizes: |-
+    - 
+
+# 결과
+  sizes: |-
+    - small
+    - medium
+    - large 
+</code></pre></div></div>
+
+<h3 id="-키워드">$ 키워드</h3>
+<p>$와 :=으로 변수 할당</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: -configmap
+data:
+  myvalue: "Hello World"release: 
+  
 </code></pre></div></div>
-<p>template 변수의 dot(.)의 의미는 .Values. 사용을 패스하겠다는 의미</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] helm install --dry-run --debug first-chart .
+<h3 id="with">with</h3>
+<p>부모객체를 가져와 지역변수처럼 사용하는 개념으로 변수명이 복잡하거나 객체의 depth 가 깊을경우 가독성처리를 위해 사용</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># configmap.yaml
+  env: 
+  log: 
+</code></pre></div></div>
+
+<p>$ 키워드는 지역변수 scope 에 영향을 받지 않기 때문에 내부에서 밖에 정의해둔 변수를 참조 가능</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: first-chart-configmap
-  labels:
-    generator: helm
-    date: 2023-02-12
-    chart: first-chart
-    version: 0.1.0
+  name: -configmap
+data:
+  myvalue: "Hello World"
+  drink: 
+  food: 
+  release: 
+  
+# 결과
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: viable-badger-configmap
+data:
+  myvalue: "Hello World"
+  drink: "coffee"
+  food: "PIZZA"
+  release: viable-badger
 </code></pre></div></div>
 
 <h3 id="pipeline-quote-upper-함수">pipeline, quote, upper 함수</h3>
@@ -510,35 +576,97 @@ func:
     date: 
 </code></pre></div></div>
 
-<h2 id="33-templetes-functions">3.3. <a href="https://helm.sh/docs/howto/charts_tips_and_tricks/">templetes functions</a></h2>
+<h3 id="required"><a href="https://kouzie.github.io/kubernetes/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-helm-%EB%AC%B8%EB%B2%95/#required">required</a></h3>
+<p>helm 명령을 통해 랜더링할 때 객체에 대한 정보가 없을경우 랜더링을 멈추고 에러를 반환시키고 싶다면 required 함수를 사용</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>value: 
+</code></pre></div></div>
+
+<h3 id="toyaml"><a href="https://kouzie.github.io/kubernetes/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-helm-%EB%AC%B8%EB%B2%95/#toyaml-indent-nindent">toyaml</a></h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># values.yaml
+data:
+  - a
+  - b
+  - c
+
+# configmap.yaml
+my:
+  data:
+    
+    
+# 결과 - 에러
+my:
+  data:
+    - a
+- b
+- c
+
+# configmap.yaml
+my:
+  data:
+
+</code></pre></div></div>
+<p>앞의 - 가 공백 뿐 아니라 개행까지 없애주기 때문에 구문이 어디에 위치해 있던지 상관X</p>
+
+<h3 id="tpl"><a href="https://kouzie.github.io/kubernetes/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-helm-%EB%AC%B8%EB%B2%95/#tpl">tpl</a></h3>
+<p>템플릿 구문을 해석하는 함수, 템플릿 구문 문자열을 스크립트로 실행한 결과를 반환</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># values.yaml
+template: ""
+name: "Tom"
+
+# configmap.yaml
+t1:  # "" # 그대로 출력
+t2:  # Tom # template함수를 사용하면 템플릿 구문 문자열을 실행한 결과를 반환
+</code></pre></div></div>
+<p>values.yaml 에는 템플릿 구문을 사용하지 못함</p>
+
+<h2 id="33-named_templates">3.3. <a href="https://helm.sh/docs/chart_template_guide/named_templates/">named_templates</a></h2>
+
+<h3 id="사용자-정의-객체-_helperstpl">사용자 정의 객체 _helpers.tpl</h3>
+<p>_helpers.tpl 파일에서 define 으로 시작해서 end 로 정의</p>
+
+<h3 id="define">define</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># _helpers.tpl
+
+  labels:
+    generator: helm
+    date: 
+    chart: 
+    version: 
+</code></pre></div></div>
+<p>첫 부분에 - 넣는 이유는 공백, 개행 삭제</p>
 
 <h3 id="include"><a href="https://kouzie.github.io/kubernetes/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-helm-%EB%AC%B8%EB%B2%95/#include">include</a></h3>
-<p>정의한 템플릿을 가져오기위해 사용하는 함수</p>
+<p>정의한 템플릿을 가져오기위해 사용하는 함수<br />
+첫번째 인자에는 가져오고싶은 템플릿 이름 두번째 인자에는 해당 템플릿에 적용할 객체를 넣음(만약 적용할 객체가 없다면 . 사용)</p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># _helper.tplv1: 
 v2: 
 </code></pre></div></div>
 
 <p>객체 사용</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>include1: 
-</code></pre></div></div>
-<p>결과</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>include1:
+
+# 결과  
+include1:
   v1: "value1"
   v2: "value1"
 </code></pre></div></div>
 
-<h3 id="required"><a href="https://kouzie.github.io/kubernetes/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-helm-%EB%AC%B8%EB%B2%95/#required">required</a></h3>
-<p>helm 명령을 통해 랜더링할 때 객체에 대한 정보가 없을경우 랜더링을 멈추고 에러를 반환시키고 싶다면 required 함수를 사용</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>value: 
-</code></pre></div></div>
-
-<h3 id="tpl">tpl</h3>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>name: 
-</code></pre></div></div>
-
-<h3 id="toyaml"><a href="https://kouzie.github.io/kubernetes/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-helm-%EB%AC%B8%EB%B2%95/#toyaml-indent-nindent">toyaml</a></h3>
+<h3 id="template">template</h3>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+
+Template: 
+
+
+Include:  
+
+# 결과
+Template: "  hello"
+
+Include:    "hello"
 </code></pre></div></div>
 
 <hr />
