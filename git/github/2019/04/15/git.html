@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      4 min read
     
 </span></p>
 
@@ -159,19 +159,34 @@ window.onload = wrap_img;
 <ul>
 <li class="toc-entry toc-h2"><a href="#31-remote에서-가져오기">3.1. Remote에서 가져오기</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#remote-추가">remote 추가:</a></li>
+<li class="toc-entry toc-h3"><a href="#remote-추가-및-삭">remote 추가 및 삭:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#32-push와-pull">3.2. push와 pull</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#로컬에서-원격으로-변경사항-push">로컬에서 원격으로 변경사항 push:</a></li>
+<li class="toc-entry toc-h3"><a href="#원격에서-변경사항-로컬로-pull">원격에서 변경사항 로컬로 pull:</a></li>
+<li class="toc-entry toc-h3"><a href="#pull할-것이-있을-때-push시">pull할 것이 있을 때 push시:</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#방법1---merge-default">방법1 - merge (default)</a></li>
+<li class="toc-entry toc-h4"><a href="#방법2---rebase">방법2 - rebase</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#32-syncronize-방식">3.2. syncronize 방식</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#remote-repo와-동기화-후-합치기-전에-일단-확인-시-fetch">remote repo와 동기화 후 합치기 전에 일단 확인 시 fetch:</a></li>
 <li class="toc-entry toc-h3"><a href="#remote-repo와-동기화-및-merge-작업-확인-안하고-그냥-합칠-때">remote repo와 동기화 및 merge 작업 확인 안하고 그냥 합칠 때:</a></li>
+<li class="toc-entry toc-h3"><a href="#remote에-로컬-변경사항-강제-적용">remote에 로컬 변경사항 강제 적용</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#33-conflict-해결-방식">3.3. conflict 해결 방식</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#conflict-시-reset">conflict 시 reset:</a></li>
 <li class="toc-entry toc-h3"><a href="#conflict-시-revert">conflict 시 revert:</a></li>
+<li class="toc-entry toc-h3"><a href="#merge-시-conflict">merge 시 conflict</a></li>
+<li class="toc-entry toc-h3"><a href="#rebase-시-conflict">rebase 시 conflict:</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#34-임시저장">3.4. 임시저장</a>
@@ -179,7 +194,6 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#commit-없이-branch를-변경하려고-할-때-stash임시저장">commit 없이 branch를 변경하려고 할 때 stash(임시저장):</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#35-pull-request">3.5. pull request</a></li>
 <li class="toc-entry toc-h2"><a href="#-3"></a></li>
 </ul>
 </li>
@@ -359,12 +373,55 @@ git checkout [branch]
 <h2 id="31-remote에서-가져오기">
 <a class="anchor" href="#31-remote%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. Remote에서 가져오기</h2>
 
-<h3 id="remote-추가">
-<a class="anchor" href="#remote-%EC%B6%94%EA%B0%80" aria-hidden="true"><span class="octicon octicon-link"></span></a>remote 추가:</h3>
+<h3 id="remote-추가-및-삭">
+<a class="anchor" href="#remote-%EC%B6%94%EA%B0%80-%EB%B0%8F-%EC%82%AD" aria-hidden="true"><span class="octicon octicon-link"></span></a>remote 추가 및 삭:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add origin [url]
 git remote -v
+git remote remove origin
 </code></pre></div></div>
 <p>origin이라는 이름으로 remote 저장소의 url(프로젝트)과 연결</p>
+
+<h2 id="32-push와-pull">
+<a class="anchor" href="#32-push%EC%99%80-pull" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. push와 pull</h2>
+
+<h3 id="로컬에서-원격으로-변경사항-push">
+<a class="anchor" href="#%EB%A1%9C%EC%BB%AC%EC%97%90%EC%84%9C-%EC%9B%90%EA%B2%A9%EC%9C%BC%EB%A1%9C-%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%AD-push" aria-hidden="true"><span class="octicon octicon-link"></span></a>로컬에서 원격으로 변경사항 push:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push
+</code></pre></div></div>
+<p>이미 git push -u origin main로 원격 대상 branch가 지정되어 있으므로 원격 main으로 푸시함</p>
+
+<h3 id="원격에서-변경사항-로컬로-pull">
+<a class="anchor" href="#%EC%9B%90%EA%B2%A9%EC%97%90%EC%84%9C-%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%AD-%EB%A1%9C%EC%BB%AC%EB%A1%9C-pull" aria-hidden="true"><span class="octicon octicon-link"></span></a>원격에서 변경사항 로컬로 pull:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git pull
+</code></pre></div></div>
+
+<h3 id="pull할-것이-있을-때-push시">
+<a class="anchor" href="#pull%ED%95%A0-%EA%B2%83%EC%9D%B4-%EC%9E%88%EC%9D%84-%EB%95%8C-push%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>pull할 것이 있을 때 push시:</h3>
+<p>원격에 먼저 적용된 새 버전이 있으므로 적용 불가<br>
+pull 해서 원격의 버전을 받아온 다음 push 가능</p>
+
+<h4 id="방법1---merge-default">
+<a class="anchor" href="#%EB%B0%A9%EB%B2%951---merge-default" aria-hidden="true"><span class="octicon octicon-link"></span></a>방법1 - merge (default)</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git pull --no-rebase
+충돌 수정
+git add .
+git commit
+git push origin main
+</code></pre></div></div>
+<p><img src="https://user-images.githubusercontent.com/83441376/219850724-0b9acc62-b092-49fd-870e-b11be9a39e60.png" alt="image">
+새로 따진 브런치에서 수정 후 main으로 들어가는 방식 적용</p>
+
+<h4 id="방법2---rebase">
+<a class="anchor" href="#%EB%B0%A9%EB%B2%952---rebase" aria-hidden="true"><span class="octicon octicon-link"></span></a>방법2 - rebase</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git pull --rebase
+충돌 수정
+git add .
+git commit
+git rebase --continue
+git push origin main
+</code></pre></div></div>
+<p><img src="https://user-images.githubusercontent.com/83441376/219851011-2e2072bd-e720-4c0d-b5e2-d6b5e1c4b446.png" alt="image">
+브런치 새로 따지지 않고 main에서 main이 local 수정 내역 추가하는 방식 적용</p>
 
 <h2 id="32-syncronize-방식">
 <a class="anchor" href="#32-syncronize-%EB%B0%A9%EC%8B%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. syncronize 방식</h2>
@@ -377,6 +434,11 @@ git remote -v
 <h3 id="remote-repo와-동기화-및-merge-작업-확인-안하고-그냥-합칠-때">
 <a class="anchor" href="#remote-repo%EC%99%80-%EB%8F%99%EA%B8%B0%ED%99%94-%EB%B0%8F-merge-%EC%9E%91%EC%97%85-%ED%99%95%EC%9D%B8-%EC%95%88%ED%95%98%EA%B3%A0-%EA%B7%B8%EB%83%A5-%ED%95%A9%EC%B9%A0-%EB%95%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>remote repo와 동기화 및 merge 작업 확인 안하고 그냥 합칠 때:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git pull
+</code></pre></div></div>
+
+<h3 id="remote에-로컬-변경사항-강제-적용">
+<a class="anchor" href="#remote%EC%97%90-%EB%A1%9C%EC%BB%AC-%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%AD-%EA%B0%95%EC%A0%9C-%EC%A0%81%EC%9A%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a>remote에 로컬 변경사항 강제 적용</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push --force
 </code></pre></div></div>
 
 <h2 id="33-conflict-해결-방식">
@@ -407,6 +469,26 @@ git revert dec8f80
 <p>수정한 commit 기록 포함하여 이전 commit 시점으로 revert됨 (상대적으로 안전)<br>
 특정 시점 커밋만 되돌리고 이후 커밋은 남기고 싶을 때 유용</p>
 
+<h3 id="merge-시-conflict">
+<a class="anchor" href="#merge-%EC%8B%9C-conflict" aria-hidden="true"><span class="octicon octicon-link"></span></a>merge 시 conflict</h3>
+<p><em>시나리오</em>
+1) main: Tigers의 manager를 Kenneth로 변경<br>
+2) branch-1: Tigers의 manager를 Deborah로 변경<br>
+3) main: git merge branch-1 시도<br>
+4) <strong>충돌 발생</strong><br>
+5) 당장 해결이 어려울 경우 git merge –abort로 중단<br>
+6) 충돌 해결 후 git add . 및 git commit으로 병합 완료</p>
+
+<h3 id="rebase-시-conflict">
+<a class="anchor" href="#rebase-%EC%8B%9C-conflict" aria-hidden="true"><span class="octicon octicon-link"></span></a>rebase 시 conflict:</h3>
+<p><em>시나리오</em>
+1) main: Tigers의 manager를 Kenneth로 변경<br>
+2) branch-2: Tigers의 manager를 Deborah로 변경<br>
+3) branch-2: git rebase main 시도<br>
+4) <strong>충돌 발생</strong><br>
+5) 당장 해결이 어려울 경우 git rebase –abort로 중단<br>
+6) 충돌 해결 후 git add . 및 git rebase –continue 병합 완료</p>
+
 <h2 id="34-임시저장">
 <a class="anchor" href="#34-%EC%9E%84%EC%8B%9C%EC%A0%80%EC%9E%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.4. 임시저장</h2>
 
@@ -417,19 +499,6 @@ git stash pop
 </code></pre></div></div>
 <p>pop 명령으로 이전에 stash로 임시 저장된 내용 불러오기<br>
 commit 할 수 없을 때 branch 바꿔줘야하는 작업 시</p>
-
-<h2 id="35-pull-request">
-<a class="anchor" href="#35-pull-request" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.5. pull request</h2>
-
-<p><em>시나리오</em>
-1) fork<br>
-2) project Clone + Remote 설정<br>
-3) Branch 생성<br>
-4) add, commit, push<br>
-5) <strong>Pull Request(PR) 생성</strong><br>
-6) Code review<br>
-7) Merge PR<br>
-8) branch 삭제 및 동기화</p>
 
 <h2 id="-3">
 <a class="anchor" href="#-3" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
