@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      5 min read
     
 </span></p>
 
@@ -143,7 +143,17 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#시작-버전-생성-master-branch에-기록됨">시작 버전 생성 (master branch에 기록됨):</a></li>
 <li class="toc-entry toc-h3"><a href="#혹은-기존-프로젝트-이용시에는-remote-저장소에서-다운로드">혹은 기존 프로젝트 이용시에는 remote 저장소에서 다운로드:</a></li>
 <li class="toc-entry toc-h3"><a href="#branch-생성-삭제-및-remote-저장소의-branch-확인">branch 생성, 삭제 및 remote 저장소의 branch 확인:</a></li>
-<li class="toc-entry toc-h3"><a href="#스테이지-상태로-올리기">스테이지 상태로 올리기:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#25-staging-상태">2.5. Staging 상태</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#staging-area에-추가">staging area에 추가:</a></li>
+<li class="toc-entry toc-h3"><a href="#staging-area에서-제거">staging area에서 제거:</a></li>
+<li class="toc-entry toc-h3"><a href="#staging-area와-working-directory-동시-제거">staging area와 working directory 동시 제거:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#25-그-외">2.5. 그 외</a>
+<ul>
 <li class="toc-entry toc-h3"><a href="#file-status-체크modified-staged">file status 체크(modified, staged):</a></li>
 <li class="toc-entry toc-h3"><a href="#message옵션으로-설명과-함께-커밋">message옵션으로 설명과 함께 커밋:</a></li>
 <li class="toc-entry toc-h3"><a href="#로컬-변경-내역-remote로-푸시">로컬 변경 내역 remote로 푸시:</a></li>
@@ -155,14 +165,31 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#-2"></a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#3-협업">3. 협업</a>
+<li class="toc-entry toc-h1"><a href="#3-head">3. HEAD</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#31-remote에서-가져오기">3.1. Remote에서 가져오기</a>
+<li class="toc-entry toc-h2"><a href="#31-checkout">3.1. checkout</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#checkout으로-이동">checkout으로 이동</a></li>
+<li class="toc-entry toc-h3"><a href="#이전으로-checkout된-상태에서-head-상태">이전으로 checkout된 상태에서 HEAD 상태</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#32-실습">3.2. 실습</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#다른-커밋-상태로-checkout">다른 커밋 상태로 checkout</a></li>
+<li class="toc-entry toc-h3"><a href="#다시-main-돌아오기">다시 main 돌아오기</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#-3"></a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#4-협업">4. 협업</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#41-remote에서-가져오기">4.1. Remote에서 가져오기</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#remote-추가-및-삭">remote 추가 및 삭:</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#32-push와-pull">3.2. push와 pull</a>
+<li class="toc-entry toc-h2"><a href="#42-push와-pull">4.2. push와 pull</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#로컬에서-원격으로-변경사항-push">로컬에서 원격으로 변경사항 push:</a></li>
 <li class="toc-entry toc-h3"><a href="#원격에서-변경사항-로컬로-pull">원격에서 변경사항 로컬로 pull:</a></li>
@@ -174,14 +201,14 @@ window.onload = wrap_img;
 </li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#32-syncronize-방식">3.2. syncronize 방식</a>
+<li class="toc-entry toc-h2"><a href="#43-syncronize-방식">4.3. syncronize 방식</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#remote-repo와-동기화-후-합치기-전에-일단-확인-시-fetch">remote repo와 동기화 후 합치기 전에 일단 확인 시 fetch:</a></li>
 <li class="toc-entry toc-h3"><a href="#remote-repo와-동기화-및-merge-작업-확인-안하고-그냥-합칠-때">remote repo와 동기화 및 merge 작업 확인 안하고 그냥 합칠 때:</a></li>
 <li class="toc-entry toc-h3"><a href="#remote에-로컬-변경사항-강제-적용">remote에 로컬 변경사항 강제 적용</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#33-conflict-해결-방식">3.3. conflict 해결 방식</a>
+<li class="toc-entry toc-h2"><a href="#44-conflict-해결-방식">4.4. conflict 해결 방식</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#conflict-시-reset">conflict 시 reset:</a></li>
 <li class="toc-entry toc-h3"><a href="#conflict-시-revert">conflict 시 revert:</a></li>
@@ -189,15 +216,15 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#rebase-시-conflict">rebase 시 conflict:</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#34-임시저장">3.4. 임시저장</a>
+<li class="toc-entry toc-h2"><a href="#45-임시저장">4.5. 임시저장</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#commit-없이-branch를-변경하려고-할-때-stash임시저장">commit 없이 branch를 변경하려고 할 때 stash(임시저장):</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#-3"></a></li>
+<li class="toc-entry toc-h2"><a href="#-4"></a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#4-sourcetree---gui">4. SourceTree - GUI</a></li>
+<li class="toc-entry toc-h1"><a href="#5-sourcetree---gui">5. SourceTree - GUI</a></li>
 </ul><p>📎 <a href="https://youtu.be/YQat_D1C-ps">tacademy</a></p>
 
 <hr>
@@ -320,10 +347,29 @@ git branch -d [branch1]
 git branch -r
 </code></pre></div></div>
 
-<h3 id="스테이지-상태로-올리기">
-<a class="anchor" href="#%EC%8A%A4%ED%85%8C%EC%9D%B4%EC%A7%80-%EC%83%81%ED%83%9C%EB%A1%9C-%EC%98%AC%EB%A6%AC%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>스테이지 상태로 올리기:</h3>
+<h2 id="25-staging-상태">
+<a class="anchor" href="#25-staging-%EC%83%81%ED%83%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.5. Staging 상태</h2>
+
+<p><img src="https://user-images.githubusercontent.com/83441376/219854378-6a53c990-8b41-4231-bd97-6e06d8eccf87.png" alt="image"></p>
+
+<h3 id="staging-area에-추가">
+<a class="anchor" href="#staging-area%EC%97%90-%EC%B6%94%EA%B0%80" aria-hidden="true"><span class="octicon octicon-link"></span></a>staging area에 추가:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add [file]
 </code></pre></div></div>
+
+<h3 id="staging-area에서-제거">
+<a class="anchor" href="#staging-area%EC%97%90%EC%84%9C-%EC%A0%9C%EA%B1%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>staging area에서 제거:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git restore --staged (파일명)
+</code></pre></div></div>
+<p>예전 git reset HEAD (파일명)와 동일</p>
+
+<h3 id="staging-area와-working-directory-동시-제거">
+<a class="anchor" href="#staging-area%EC%99%80-working-directory-%EB%8F%99%EC%8B%9C-%EC%A0%9C%EA%B1%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>staging area와 working directory 동시 제거:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git restore (파일명)
+</code></pre></div></div>
+
+<h2 id="25-그-외">
+<a class="anchor" href="#25-%EA%B7%B8-%EC%99%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.5. 그 외</h2>
 
 <h3 id="file-status-체크modified-staged">
 <a class="anchor" href="#file-status-%EC%B2%B4%ED%81%ACmodified-staged" aria-hidden="true"><span class="octicon octicon-link"></span></a>file status 체크(modified, staged):</h3>
@@ -367,11 +413,93 @@ git checkout [branch]
 <h2 id="-2">
 <a class="anchor" href="#-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
 </h2>
-<h1 id="3-협업">
-<a class="anchor" href="#3-%ED%98%91%EC%97%85" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. 협업</h1>
+<h1 id="3-head">
+<a class="anchor" href="#3-head" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. HEAD</h1>
+<p>현재 속한 브랜치의 가장 최신 커밋</p>
 
-<h2 id="31-remote에서-가져오기">
-<a class="anchor" href="#31-remote%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. Remote에서 가져오기</h2>
+<h2 id="31-checkout">
+<a class="anchor" href="#31-checkout" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. checkout</h2>
+<p>익명의 브랜치에 위치하고 다른밋커밋 explore 가능</p>
+
+<h3 id="checkout으로-이동">
+<a class="anchor" href="#checkout%EC%9C%BC%EB%A1%9C-%EC%9D%B4%EB%8F%99" aria-hidden="true"><span class="octicon octicon-link"></span></a>checkout으로 이동</h3>
+<p>^ 또는 ~: 갯수만큼 이전으로 이동</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout HEAD^
+git checkout HEAD^^^
+git checkout HEAD~5
+</code></pre></div></div>
+
+<p>(이동을) 한 단계 되돌리기</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -
+</code></pre></div></div>
+<h3 id="이전으로-checkout된-상태에서-head-상태">
+<a class="anchor" href="#%EC%9D%B4%EC%A0%84%EC%9C%BC%EB%A1%9C-checkout%EB%90%9C-%EC%83%81%ED%83%9C%EC%97%90%EC%84%9C-head-%EC%83%81%ED%83%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>이전으로 checkout된 상태에서 HEAD 상태</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout HEAD^
+git switch branch-1
+</code></pre></div></div>
+<h2 id="32-실습">
+<a class="anchor" href="#32-%EC%8B%A4%EC%8A%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. 실습</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main] git log
+commit 063a9b9cfbc22d416cd2dbf283c43429d3e126b1 (HEAD -&gt; main)
+Author:
+Date:
+    main 3rd commit
+
+commit 0cef8538cdbff37e94339471dd5ebd815390e547
+Author:
+Date:
+    main 2nd commit
+
+commit 8d0330a37e39ebca693e53efa2cfef2ce092462e
+Author:
+Date:
+    First commit
+</code></pre></div></div>
+
+<h3 id="다른-커밋-상태로-checkout">
+<a class="anchor" href="#%EB%8B%A4%EB%A5%B8-%EC%BB%A4%EB%B0%8B-%EC%83%81%ED%83%9C%EB%A1%9C-checkout" aria-hidden="true"><span class="octicon octicon-link"></span></a>다른 커밋 상태로 checkout</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main] git checkout HEAD^ # 혹은 git checkout 0cef8538cdbff37e94339471dd5ebd815390e547
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((0cef853...))] git log
+commit 0cef8538cdbff37e94339471dd5ebd815390e547 (HEAD)
+Author:
+Date:
+    main 2nd commit
+
+commit 8d0330a37e39ebca693e53efa2cfef2ce092462e
+Author:
+Date:
+    First commit
+</code></pre></div></div>
+
+<h3 id="다시-main-돌아오기">
+<a class="anchor" href="#%EB%8B%A4%EC%8B%9C-main-%EB%8F%8C%EC%95%84%EC%98%A4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>다시 main 돌아오기</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((0cef853...))] git switch main
+</code></pre></div></div>
+
+<p>###</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<p>###</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<p>###</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<h2 id="-3">
+<a class="anchor" href="#-3" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
+</h2>
+<h1 id="4-협업">
+<a class="anchor" href="#4-%ED%98%91%EC%97%85" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. 협업</h1>
+
+<h2 id="41-remote에서-가져오기">
+<a class="anchor" href="#41-remote%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.1. Remote에서 가져오기</h2>
 
 <h3 id="remote-추가-및-삭">
 <a class="anchor" href="#remote-%EC%B6%94%EA%B0%80-%EB%B0%8F-%EC%82%AD" aria-hidden="true"><span class="octicon octicon-link"></span></a>remote 추가 및 삭:</h3>
@@ -381,8 +509,8 @@ git remote remove origin
 </code></pre></div></div>
 <p>origin이라는 이름으로 remote 저장소의 url(프로젝트)과 연결</p>
 
-<h2 id="32-push와-pull">
-<a class="anchor" href="#32-push%EC%99%80-pull" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. push와 pull</h2>
+<h2 id="42-push와-pull">
+<a class="anchor" href="#42-push%EC%99%80-pull" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.2. push와 pull</h2>
 
 <h3 id="로컬에서-원격으로-변경사항-push">
 <a class="anchor" href="#%EB%A1%9C%EC%BB%AC%EC%97%90%EC%84%9C-%EC%9B%90%EA%B2%A9%EC%9C%BC%EB%A1%9C-%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%AD-push" aria-hidden="true"><span class="octicon octicon-link"></span></a>로컬에서 원격으로 변경사항 push:</h3>
@@ -423,8 +551,8 @@ git push origin main
 <p><img src="https://user-images.githubusercontent.com/83441376/219851011-2e2072bd-e720-4c0d-b5e2-d6b5e1c4b446.png" alt="image">
 브런치 새로 따지지 않고 main에서 main이 local 수정 내역 추가하는 방식 적용</p>
 
-<h2 id="32-syncronize-방식">
-<a class="anchor" href="#32-syncronize-%EB%B0%A9%EC%8B%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. syncronize 방식</h2>
+<h2 id="43-syncronize-방식">
+<a class="anchor" href="#43-syncronize-%EB%B0%A9%EC%8B%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.3. syncronize 방식</h2>
 
 <h3 id="remote-repo와-동기화-후-합치기-전에-일단-확인-시-fetch">
 <a class="anchor" href="#remote-repo%EC%99%80-%EB%8F%99%EA%B8%B0%ED%99%94-%ED%9B%84-%ED%95%A9%EC%B9%98%EA%B8%B0-%EC%A0%84%EC%97%90-%EC%9D%BC%EB%8B%A8-%ED%99%95%EC%9D%B8-%EC%8B%9C-fetch" aria-hidden="true"><span class="octicon octicon-link"></span></a>remote repo와 동기화 후 합치기 전에 일단 확인 시 fetch:</h3>
@@ -441,8 +569,8 @@ git push origin main
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push --force
 </code></pre></div></div>
 
-<h2 id="33-conflict-해결-방식">
-<a class="anchor" href="#33-conflict-%ED%95%B4%EA%B2%B0-%EB%B0%A9%EC%8B%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.3. conflict 해결 방식</h2>
+<h2 id="44-conflict-해결-방식">
+<a class="anchor" href="#44-conflict-%ED%95%B4%EA%B2%B0-%EB%B0%A9%EC%8B%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.4. conflict 해결 방식</h2>
 
 <p><em>시나리오</em>
 c90a690: file1.txt 생성<br>
@@ -489,8 +617,8 @@ git revert dec8f80
 5) 당장 해결이 어려울 경우 git rebase –abort로 중단<br>
 6) 충돌 해결 후 git add . 및 git rebase –continue 병합 완료</p>
 
-<h2 id="34-임시저장">
-<a class="anchor" href="#34-%EC%9E%84%EC%8B%9C%EC%A0%80%EC%9E%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.4. 임시저장</h2>
+<h2 id="45-임시저장">
+<a class="anchor" href="#45-%EC%9E%84%EC%8B%9C%EC%A0%80%EC%9E%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.5. 임시저장</h2>
 
 <h3 id="commit-없이-branch를-변경하려고-할-때-stash임시저장">
 <a class="anchor" href="#commit-%EC%97%86%EC%9D%B4-branch%EB%A5%BC-%EB%B3%80%EA%B2%BD%ED%95%98%EB%A0%A4%EA%B3%A0-%ED%95%A0-%EB%95%8C-stash%EC%9E%84%EC%8B%9C%EC%A0%80%EC%9E%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>commit 없이 branch를 변경하려고 할 때 stash(임시저장):</h3>
@@ -500,12 +628,12 @@ git stash pop
 <p>pop 명령으로 이전에 stash로 임시 저장된 내용 불러오기<br>
 commit 할 수 없을 때 branch 바꿔줘야하는 작업 시</p>
 
-<h2 id="-3">
-<a class="anchor" href="#-3" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
+<h2 id="-4">
+<a class="anchor" href="#-4" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
 </h2>
 
-<h1 id="4-sourcetree---gui">
-<a class="anchor" href="#4-sourcetree---gui" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. SourceTree - GUI</h1>
+<h1 id="5-sourcetree---gui">
+<a class="anchor" href="#5-sourcetree---gui" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. SourceTree - GUI</h1>
 
 <p>SourceTree download…</p>
 
