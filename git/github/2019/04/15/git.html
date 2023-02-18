@@ -113,6 +113,8 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1-git">1. Git</a>
+<ul>
 <li class="toc-entry toc-h2"><a href="#11-version-control-system">1.1. Version Control System</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#without-vcy">without VCY</a></li>
@@ -122,35 +124,72 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#"></a></li>
 <li class="toc-entry toc-h2"><a href="#12-initialization--repository">1.2. Initialization &amp; Repository</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#tracked--untracked">tracked &amp; untracked</a></li>
+<li class="toc-entry toc-h3"><a href="#tracked--untracked">Tracked &amp; Untracked</a></li>
 <li class="toc-entry toc-h3"><a href="#staging">Staging</a></li>
 <li class="toc-entry toc-h3"><a href="#content-addressable-key-value-storage">Content-addressable Key-Value Storage</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#-1"></a></li>
-<li class="toc-entry toc-h2"><a href="#13-github---cli">1.3. GitHub - CLI</a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#프로젝트-시작">프로젝트 시작</a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#git">.git</a></li>
-<li class="toc-entry toc-h4"><a href="#gitignore">.gitignore</a></li>
-<li class="toc-entry toc-h4"><a href="#readmemd">README.md</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h3"><a href="#command">command</a>
+<li class="toc-entry toc-h1"><a href="#2-configuration">2. Configuration</a>
 <ul>
-<li class="toc-entry toc-h4"><a href="#remote에서-가져올-때">remote에서 가져올 때</a></li>
-<li class="toc-entry toc-h4"><a href="#conflict-시">conflict 시</a></li>
-<li class="toc-entry toc-h4"><a href="#pull-request-방법">pull request 방법</a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h2"><a href="#21-git">2.1. .git</a></li>
+<li class="toc-entry toc-h2"><a href="#22-gitignore">2.2. .gitignore</a></li>
+<li class="toc-entry toc-h2"><a href="#23-readmemd">2.3. README.md</a></li>
+<li class="toc-entry toc-h2"><a href="#24-initial-config">2.4. initial config</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#사용자-설정-확인">사용자 설정 확인:</a></li>
+<li class="toc-entry toc-h3"><a href="#시작-버전-생성-master-branch에-기록됨">시작 버전 생성 (master branch에 기록됨):</a></li>
+<li class="toc-entry toc-h3"><a href="#혹은-기존-프로젝트-이용시에는-remote-저장소에서-다운로드">혹은 기존 프로젝트 이용시에는 remote 저장소에서 다운로드:</a></li>
+<li class="toc-entry toc-h3"><a href="#branch-생성-삭제-및-remote-저장소의-branch-확인">branch 생성, 삭제 및 remote 저장소의 branch 확인:</a></li>
+<li class="toc-entry toc-h3"><a href="#스테이지-상태로-올리기">스테이지 상태로 올리기:</a></li>
+<li class="toc-entry toc-h3"><a href="#file-status-체크modified-staged">file status 체크(modified, staged):</a></li>
+<li class="toc-entry toc-h3"><a href="#message옵션으로-설명과-함께-커밋">message옵션으로 설명과 함께 커밋:</a></li>
+<li class="toc-entry toc-h3"><a href="#로컬-변경-내역-remote로-푸시">로컬 변경 내역 remote로 푸시:</a></li>
+<li class="toc-entry toc-h3"><a href="#master혹은-branch로-이동">master혹은 branch로 이동:</a></li>
+<li class="toc-entry toc-h3"><a href="#branch2를-현재-branch와-합칠-때">branch2를 현재 branch와 합칠 때:</a></li>
+<li class="toc-entry toc-h3"><a href="#분기가-많아져서-관리가-어려울-때-베이스-재설정">분기가 많아져서 관리가 어려울 때 베이스 재설정:</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#-2"></a></li>
-<li class="toc-entry toc-h2"><a href="#14-sourcetree---gui">1.4. SourceTree - GUI</a></li>
-</ul><p>📎 <a href="https://tacademy.skplanet.com/">tacademy</a></p>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#3-협업">3. 협업</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#31-remote에서-가져오기">3.1. Remote에서 가져오기</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#remote-추가">remote 추가:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#32-syncronize-방식">3.2. syncronize 방식</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#remote-repo와-동기화-후-합치기-전에-일단-확인-시-fetch">remote repo와 동기화 후 합치기 전에 일단 확인 시 fetch:</a></li>
+<li class="toc-entry toc-h3"><a href="#remote-repo와-동기화-및-merge-작업-확인-안하고-그냥-합칠-때">remote repo와 동기화 및 merge 작업 확인 안하고 그냥 합칠 때:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#33-conflict-해결-방식">3.3. conflict 해결 방식</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#conflict-시-reset">conflict 시 reset:</a></li>
+<li class="toc-entry toc-h3"><a href="#conflict-시-revert">conflict 시 revert:</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#34-임시저장">3.4. 임시저장</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#commit-없이-branch를-변경하려고-할-때-stash임시저장">commit 없이 branch를 변경하려고 할 때 stash(임시저장):</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#35-pull-request">3.5. pull request</a></li>
+<li class="toc-entry toc-h2"><a href="#-3"></a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#4-sourcetree---gui">4. SourceTree - GUI</a></li>
+</ul><p>📎 <a href="https://youtu.be/YQat_D1C-ps">tacademy</a></p>
 
 <hr>
+
+<h1 id="1-git">
+<a class="anchor" href="#1-git" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Git</h1>
 
 <h2 id="11-version-control-system">
 <a class="anchor" href="#11-version-control-system" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.1. Version Control System</h2>
@@ -184,7 +223,7 @@ current status, modified time, modified user, description 등</p>
 3) file 및 directory를 추적하지 않음 (각 문자와 line을 추적)</p>
 
 <h3 id="tracked--untracked">
-<a class="anchor" href="#tracked--untracked" aria-hidden="true"><span class="octicon octicon-link"></span></a>tracked &amp; untracked</h3>
+<a class="anchor" href="#tracked--untracked" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tracked &amp; Untracked</h3>
 
 <p>1) Unmodified: 이전 버전과 비교하여 수정된 부분이 없는 상태<br>
 2) Modified: 이전 버전과 비교하여 수정된 부분이 있는 상태<br>
@@ -204,19 +243,16 @@ current status, modified time, modified user, description 등</p>
 <h2 id="-1">
 <a class="anchor" href="#-1" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
 </h2>
-<h2 id="13-github---cli">
-<a class="anchor" href="#13-github---cli" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.3. GitHub - CLI</h2>
+<h1 id="2-configuration">
+<a class="anchor" href="#2-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Configuration</h1>
 
-<h3 id="프로젝트-시작">
-<a class="anchor" href="#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%8B%9C%EC%9E%91" aria-hidden="true"><span class="octicon octicon-link"></span></a>프로젝트 시작</h3>
-
-<h4 id="git">
-<a class="anchor" href="#git" aria-hidden="true"><span class="octicon octicon-link"></span></a>.git</h4>
+<h2 id="21-git">
+<a class="anchor" href="#21-git" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.1. .git</h2>
 <p>버전 관리 정보가 담긴 디렉토리
 (config, logs, refs 등)</p>
 
-<h4 id="gitignore">
-<a class="anchor" href="#gitignore" aria-hidden="true"><span class="octicon octicon-link"></span></a>.gitignore</h4>
+<h2 id="22-gitignore">
+<a class="anchor" href="#22-gitignore" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.2. .gitignore</h2>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>file # 특정 파일 file 제외하기
 
 /file  # 현재 경로에 있는 파일 제외하기
@@ -233,8 +269,8 @@ folder / ** / files # 특정 경로 아래의 모든 file 제외하기
 </code></pre></div></div>
 <p>추적을 무시하려면 정규표현식으로 저장</p>
 
-<h4 id="readmemd">
-<a class="anchor" href="#readmemd" aria-hidden="true"><span class="octicon octicon-link"></span></a>README.md</h4>
+<h2 id="23-readmemd">
+<a class="anchor" href="#23-readmemd" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.3. README.md</h2>
 <p>프로젝트 내용(이미지/로고)<br>
 설치 방법<br>
 코드 예제<br>
@@ -245,45 +281,50 @@ credit<br>
 license<br>
 contact</p>
 
-<h3 id="command">
-<a class="anchor" href="#command" aria-hidden="true"><span class="octicon octicon-link"></span></a>command</h3>
+<h2 id="24-initial-config">
+<a class="anchor" href="#24-initial-config" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.4. initial config</h2>
 
+<h3 id="사용자-설정-확인">
+<a class="anchor" href="#%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%84%A4%EC%A0%95-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>사용자 설정 확인:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config --list
 </code></pre></div></div>
-<p>사용자 설정 확인</p>
 
+<h3 id="시작-버전-생성-master-branch에-기록됨">
+<a class="anchor" href="#%EC%8B%9C%EC%9E%91-%EB%B2%84%EC%A0%84-%EC%83%9D%EC%84%B1-master-branch%EC%97%90-%EA%B8%B0%EB%A1%9D%EB%90%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>시작 버전 생성 (master branch에 기록됨):</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
 </code></pre></div></div>
-<p>시작 버전은 master branch에 기록됨</p>
 
-<p>혹은 기존 프로젝트 이용시에는</p>
+<h3 id="혹은-기존-프로젝트-이용시에는-remote-저장소에서-다운로드">
+<a class="anchor" href="#%ED%98%B9%EC%9D%80-%EA%B8%B0%EC%A1%B4-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%9D%B4%EC%9A%A9%EC%8B%9C%EC%97%90%EB%8A%94-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%97%90%EC%84%9C-%EB%8B%A4%EC%9A%B4%EB%A1%9C%EB%93%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>혹은 기존 프로젝트 이용시에는 remote 저장소에서 다운로드:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone [url]
 </code></pre></div></div>
-<p>remote 저장소에서 다운로드</p>
 
+<h3 id="branch-생성-삭제-및-remote-저장소의-branch-확인">
+<a class="anchor" href="#branch-%EC%83%9D%EC%84%B1-%EC%82%AD%EC%A0%9C-%EB%B0%8F-remote-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%9D%98-branch-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>branch 생성, 삭제 및 remote 저장소의 branch 확인:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch [name]
+git branch -d [branch1]
+git branch -r
+</code></pre></div></div>
+
+<h3 id="스테이지-상태로-올리기">
+<a class="anchor" href="#%EC%8A%A4%ED%85%8C%EC%9D%B4%EC%A7%80-%EC%83%81%ED%83%9C%EB%A1%9C-%EC%98%AC%EB%A6%AC%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>스테이지 상태로 올리기:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add [file]
 </code></pre></div></div>
-<p>스테이지로 올리기</p>
 
+<h3 id="file-status-체크modified-staged">
+<a class="anchor" href="#file-status-%EC%B2%B4%ED%81%ACmodified-staged" aria-hidden="true"><span class="octicon octicon-link"></span></a>file status 체크(modified, staged):</h3>
+<p>변경 내용확인:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git status
 git diff
 </code></pre></div></div>
-<p>file status 체크(modified, staged)<br>
-변경 내용확인</p>
 
+<h3 id="message옵션으로-설명과-함께-커밋">
+<a class="anchor" href="#message%EC%98%B5%EC%85%98%EC%9C%BC%EB%A1%9C-%EC%84%A4%EB%AA%85%EA%B3%BC-%ED%95%A8%EA%BB%98-%EC%BB%A4%EB%B0%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>message옵션으로 설명과 함께 커밋:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit -ㅡ "add README.md"
 </code></pre></div></div>
-<p>message옵션으로 설명과 함께 commit</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log
-</code></pre></div></div>
-<p>이전 commit 기록 확인</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add origin [url]
-git remote -v
-</code></pre></div></div>
-<p>origin이라는 이름으로 remote 저장소의 url(프로젝트)과 연결</p>
-
+<h3 id="로컬-변경-내역-remote로-푸시">
+<a class="anchor" href="#%EB%A1%9C%EC%BB%AC-%EB%B3%80%EA%B2%BD-%EB%82%B4%EC%97%AD-remote%EB%A1%9C-%ED%91%B8%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>로컬 변경 내역 remote로 푸시:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push -u
 git push origin master
 </code></pre></div></div>
@@ -291,51 +332,64 @@ git push origin master
 push -u 옵션을 생략하면 set-upstream 설정을 해야함<br>
 git config –global push.default current 설정하면 됨</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch [name]
-git branch -r
-</code></pre></div></div>
-<p>branch 생성<br>
-remote 저장소의 branch 확인</p>
-
+<h3 id="master혹은-branch로-이동">
+<a class="anchor" href="#master%ED%98%B9%EC%9D%80-branch%EB%A1%9C-%EC%9D%B4%EB%8F%99" aria-hidden="true"><span class="octicon octicon-link"></span></a>master혹은 branch로 이동:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout master
 git checkout [branch]
 </code></pre></div></div>
-<p>master혹은 branch로 이동</p>
 
+<h3 id="branch2를-현재-branch와-합칠-때">
+<a class="anchor" href="#branch2%EB%A5%BC-%ED%98%84%EC%9E%AC-branch%EC%99%80-%ED%95%A9%EC%B9%A0-%EB%95%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>branch2를 현재 branch와 합칠 때:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git merge [branch2]
 </code></pre></div></div>
-<p>branch2를 현재 branch와 합칠 때<br>
-그리고 push하면 됨</p>
 
-<p>분기가 많아져서 관리가 어려울 때</p>
+<h3 id="분기가-많아져서-관리가-어려울-때-베이스-재설정">
+<a class="anchor" href="#%EB%B6%84%EA%B8%B0%EA%B0%80-%EB%A7%8E%EC%95%84%EC%A0%B8%EC%84%9C-%EA%B4%80%EB%A6%AC%EA%B0%80-%EC%96%B4%EB%A0%A4%EC%9A%B8-%EB%95%8C-%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%9E%AC%EC%84%A4%EC%A0%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>분기가 많아져서 관리가 어려울 때 베이스 재설정:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git rebase master 
 </code></pre></div></div>
 <p>base(기존 master)를 future(새로운 master)로 re-base<br>
 굳이 다른 branch에서 merge해서 다시 base로 옮기는 (고리생성) 작업 불필요</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch -d [branch1]
+<h2 id="-2">
+<a class="anchor" href="#-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
+</h2>
+<h1 id="3-협업">
+<a class="anchor" href="#3-%ED%98%91%EC%97%85" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. 협업</h1>
+
+<h2 id="31-remote에서-가져오기">
+<a class="anchor" href="#31-remote%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. Remote에서 가져오기</h2>
+
+<h3 id="remote-추가">
+<a class="anchor" href="#remote-%EC%B6%94%EA%B0%80" aria-hidden="true"><span class="octicon octicon-link"></span></a>remote 추가:</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add origin [url]
+git remote -v
 </code></pre></div></div>
-<p>완료된 branch 삭제</p>
+<p>origin이라는 이름으로 remote 저장소의 url(프로젝트)과 연결</p>
 
-<h4 id="remote에서-가져올-때">
-<a class="anchor" href="#remote%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%AC-%EB%95%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>remote에서 가져올 때</h4>
+<h2 id="32-syncronize-방식">
+<a class="anchor" href="#32-syncronize-%EB%B0%A9%EC%8B%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. syncronize 방식</h2>
 
+<h3 id="remote-repo와-동기화-후-합치기-전에-일단-확인-시-fetch">
+<a class="anchor" href="#remote-repo%EC%99%80-%EB%8F%99%EA%B8%B0%ED%99%94-%ED%9B%84-%ED%95%A9%EC%B9%98%EA%B8%B0-%EC%A0%84%EC%97%90-%EC%9D%BC%EB%8B%A8-%ED%99%95%EC%9D%B8-%EC%8B%9C-fetch" aria-hidden="true"><span class="octicon octicon-link"></span></a>remote repo와 동기화 후 합치기 전에 일단 확인 시 fetch:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch
 </code></pre></div></div>
-<p>remote repo와 동기화<br>
-합치기 전에 일단 보고 확인 시</p>
 
+<h3 id="remote-repo와-동기화-및-merge-작업-확인-안하고-그냥-합칠-때">
+<a class="anchor" href="#remote-repo%EC%99%80-%EB%8F%99%EA%B8%B0%ED%99%94-%EB%B0%8F-merge-%EC%9E%91%EC%97%85-%ED%99%95%EC%9D%B8-%EC%95%88%ED%95%98%EA%B3%A0-%EA%B7%B8%EB%83%A5-%ED%95%A9%EC%B9%A0-%EB%95%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>remote repo와 동기화 및 merge 작업 확인 안하고 그냥 합칠 때:</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git pull
 </code></pre></div></div>
-<p>remote repo와 동기화 및 merge 작업<br>
-확인 안하고 그냥 합칠 때</p>
 
-<h4 id="conflict-시">
-<a class="anchor" href="#conflict-%EC%8B%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>conflict 시</h4>
-<p>c90a690: file1.txt 생성<br>
+<h2 id="33-conflict-해결-방식">
+<a class="anchor" href="#33-conflict-%ED%95%B4%EA%B2%B0-%EB%B0%A9%EC%8B%9D" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.3. conflict 해결 방식</h2>
+
+<p><em>시나리오</em>
+c90a690: file1.txt 생성<br>
 dec8f80: file1.txt 삭제 후 file2.txt 생성<br>
 99f5791: file1.txt 복원</p>
 
+<h3 id="conflict-시-reset">
+<a class="anchor" href="#conflict-%EC%8B%9C-reset" aria-hidden="true"><span class="octicon octicon-link"></span></a>conflict 시 reset:</h3>
+<p>일반적으로 생각하는 과거로 돌아가는 방식</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset [--mode] [commit_id]
 git reset --hard c90a690 # 이전으로 돌아감
 </code></pre></div></div>
@@ -344,22 +398,31 @@ git reset --hard c90a690 # 이전으로 돌아감
 – mixed : index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 보존 (기본 옵션)<br>
 – hard : index 취소(add하기 전 상태, unstaged 상태), 워킹 디렉터리의 파일 삭제. 즉 모두 취소</p>
 
+<h3 id="conflict-시-revert">
+<a class="anchor" href="#conflict-%EC%8B%9C-revert" aria-hidden="true"><span class="octicon octicon-link"></span></a>conflict 시 revert:</h3>
+<p>변경한게 있으면 그걸 반대로 수행해서 되돌리는 방식</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git revert [commit_id]
 git revert dec8f80
 </code></pre></div></div>
-<p>수정한 commit 기록 포함하여 이전 commit 시점으로 revert됨 (상대적으로 안전)</p>
+<p>수정한 commit 기록 포함하여 이전 commit 시점으로 revert됨 (상대적으로 안전)<br>
+특정 시점 커밋만 되돌리고 이후 커밋은 남기고 싶을 때 유용</p>
 
+<h2 id="34-임시저장">
+<a class="anchor" href="#34-%EC%9E%84%EC%8B%9C%EC%A0%80%EC%9E%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.4. 임시저장</h2>
+
+<h3 id="commit-없이-branch를-변경하려고-할-때-stash임시저장">
+<a class="anchor" href="#commit-%EC%97%86%EC%9D%B4-branch%EB%A5%BC-%EB%B3%80%EA%B2%BD%ED%95%98%EB%A0%A4%EA%B3%A0-%ED%95%A0-%EB%95%8C-stash%EC%9E%84%EC%8B%9C%EC%A0%80%EC%9E%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>commit 없이 branch를 변경하려고 할 때 stash(임시저장):</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git stash -m 'temp'
 git stash pop
 </code></pre></div></div>
-<p>commit 없이 branch를 변경하려고 할 때 사용(임시저장) <br>
-pop 명령으로 이전에 stash로 임시 저장된 내용 불러오기<br>
+<p>pop 명령으로 이전에 stash로 임시 저장된 내용 불러오기<br>
 commit 할 수 없을 때 branch 바꿔줘야하는 작업 시</p>
 
-<h4 id="pull-request-방법">
-<a class="anchor" href="#pull-request-%EB%B0%A9%EB%B2%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>pull request 방법</h4>
+<h2 id="35-pull-request">
+<a class="anchor" href="#35-pull-request" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.5. pull request</h2>
 
-<p>1) fork<br>
+<p><em>시나리오</em>
+1) fork<br>
 2) project Clone + Remote 설정<br>
 3) Branch 생성<br>
 4) add, commit, push<br>
@@ -368,12 +431,12 @@ commit 할 수 없을 때 branch 바꿔줘야하는 작업 시</p>
 7) Merge PR<br>
 8) branch 삭제 및 동기화</p>
 
-<h2 id="-2">
-<a class="anchor" href="#-2" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
+<h2 id="-3">
+<a class="anchor" href="#-3" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
 </h2>
 
-<h2 id="14-sourcetree---gui">
-<a class="anchor" href="#14-sourcetree---gui" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.4. SourceTree - GUI</h2>
+<h1 id="4-sourcetree---gui">
+<a class="anchor" href="#4-sourcetree---gui" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. SourceTree - GUI</h1>
 
 <p>SourceTree download…</p>
 
