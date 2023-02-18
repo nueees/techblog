@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      8 min read
     
 </span></p>
 
@@ -169,14 +169,15 @@ window.onload = wrap_img;
 <ul>
 <li class="toc-entry toc-h2"><a href="#31-checkout">3.1. checkout</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#checkout으로-이동">checkout으로 이동</a></li>
-<li class="toc-entry toc-h3"><a href="#이전으로-checkout된-상태에서-head-상태">이전으로 checkout된 상태에서 HEAD 상태</a></li>
+<li class="toc-entry toc-h3"><a href="#head-이용해서-이동">HEAD 이용해서 이동</a></li>
+<li class="toc-entry toc-h3"><a href="#checkout-한-단계-되돌리기">checkout 한 단계 되돌리기</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#32-실습">3.2. 실습</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#다른-커밋-상태로-checkout">다른 커밋 상태로 checkout</a></li>
-<li class="toc-entry toc-h3"><a href="#다시-main-돌아오기">다시 main 돌아오기</a></li>
+<li class="toc-entry toc-h3"><a href="#마지막-커밋-전-상태로-checkout">마지막 커밋 전 상태로 checkout</a></li>
+<li class="toc-entry toc-h3"><a href="#마지막-커밋-전전-상태로-checkout">마지막 커밋 전전 상태로 checkout</a></li>
+<li class="toc-entry toc-h3"><a href="#다시-마지막-커밋-전-상태로-checkout">다시 마지막 커밋 전 상태로 checkout</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#-3"></a></li>
@@ -224,7 +225,43 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#-4"></a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#5-sourcetree---gui">5. SourceTree - GUI</a></li>
+<li class="toc-entry toc-h1"><a href="#5-log-및-diff">5. Log 및 Diff</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#51-log">5.1. log</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#각-커밋마다의-변경사항diff-함께-보기">각 커밋마다의 변경사항(diff) 함께 보기</a></li>
+<li class="toc-entry toc-h3"><a href="#최근-n개-커밋만-보기">최근 n개 커밋만 보기</a></li>
+<li class="toc-entry toc-h3"><a href="#통계-stat-함께-보기">통계 stat 함께 보기</a></li>
+<li class="toc-entry toc-h3"><a href="#한-줄로-보기">한 줄로 보기</a></li>
+<li class="toc-entry toc-h3"><a href="#변경사항-내-단어-검색">변경사항 내 단어 검색</a></li>
+<li class="toc-entry toc-h3"><a href="#커밋-메세지로-검색">커밋 메세지로 검색</a></li>
+<li class="toc-entry toc-h3"><a href="#그래프뷰로-보기">그래프뷰로 보기</a></li>
+<li class="toc-entry toc-h3"><a href="#그-외-pretty-문법">그 외 pretty 문법</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#52-diff">5.2. diff</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#워킹-디렉토리의-변경사항-확인">워킹 디렉토리의 변경사항 확인</a></li>
+<li class="toc-entry toc-h3"><a href="#파일명만-확인">파일명만 확인</a></li>
+<li class="toc-entry toc-h3"><a href="#스테이지의-확인">스테이지의 확인</a></li>
+<li class="toc-entry toc-h3"><a href="#커밋간의-차이-확인">커밋간의 차이 확인</a></li>
+<li class="toc-entry toc-h3"><a href="#브랜치간의-차이-확인">브랜치간의 차이 확인</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#53-blame-bisect">5.3. blame, bisect</a></li>
+<li class="toc-entry toc-h2"><a href="#-5"></a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#6-git-hooks">6. Git Hooks</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#-6"></a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#7-git-submodules">7. Git Submodules</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#-7"></a></li>
+</ul>
+</li>
 </ul><p>📎 <a href="https://youtu.be/YQat_D1C-ps">tacademy</a></p>
 
 <hr>
@@ -421,23 +458,19 @@ git checkout [branch]
 <a class="anchor" href="#31-checkout" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1. checkout</h2>
 <p>익명의 브랜치에 위치하고 다른밋커밋 explore 가능</p>
 
-<h3 id="checkout으로-이동">
-<a class="anchor" href="#checkout%EC%9C%BC%EB%A1%9C-%EC%9D%B4%EB%8F%99" aria-hidden="true"><span class="octicon octicon-link"></span></a>checkout으로 이동</h3>
+<h3 id="head-이용해서-이동">
+<a class="anchor" href="#head-%EC%9D%B4%EC%9A%A9%ED%95%B4%EC%84%9C-%EC%9D%B4%EB%8F%99" aria-hidden="true"><span class="octicon octicon-link"></span></a>HEAD 이용해서 이동</h3>
 <p>^ 또는 ~: 갯수만큼 이전으로 이동</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout HEAD^
 git checkout HEAD^^^
 git checkout HEAD~5
 </code></pre></div></div>
 
-<p>(이동을) 한 단계 되돌리기</p>
+<h3 id="checkout-한-단계-되돌리기">
+<a class="anchor" href="#checkout-%ED%95%9C-%EB%8B%A8%EA%B3%84-%EB%90%98%EB%8F%8C%EB%A6%AC%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>checkout 한 단계 되돌리기</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout -
 </code></pre></div></div>
-<h3 id="이전으로-checkout된-상태에서-head-상태">
-<a class="anchor" href="#%EC%9D%B4%EC%A0%84%EC%9C%BC%EB%A1%9C-checkout%EB%90%9C-%EC%83%81%ED%83%9C%EC%97%90%EC%84%9C-head-%EC%83%81%ED%83%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>이전으로 checkout된 상태에서 HEAD 상태</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout HEAD^
-git switch branch-1
-</code></pre></div></div>
 <h2 id="32-실습">
 <a class="anchor" href="#32-%EC%8B%A4%EC%8A%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2. 실습</h2>
 
@@ -458,8 +491,8 @@ Date:
     First commit
 </code></pre></div></div>
 
-<h3 id="다른-커밋-상태로-checkout">
-<a class="anchor" href="#%EB%8B%A4%EB%A5%B8-%EC%BB%A4%EB%B0%8B-%EC%83%81%ED%83%9C%EB%A1%9C-checkout" aria-hidden="true"><span class="octicon octicon-link"></span></a>다른 커밋 상태로 checkout</h3>
+<h3 id="마지막-커밋-전-상태로-checkout">
+<a class="anchor" href="#%EB%A7%88%EC%A7%80%EB%A7%89-%EC%BB%A4%EB%B0%8B-%EC%A0%84-%EC%83%81%ED%83%9C%EB%A1%9C-checkout" aria-hidden="true"><span class="octicon octicon-link"></span></a>마지막 커밋 전 상태로 checkout</h3>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>main] git checkout HEAD^ # 혹은 git checkout 0cef8538cdbff37e94339471dd5ebd815390e547
 </code></pre></div></div>
 
@@ -475,21 +508,36 @@ Date:
     First commit
 </code></pre></div></div>
 
-<h3 id="다시-main-돌아오기">
-<a class="anchor" href="#%EB%8B%A4%EC%8B%9C-main-%EB%8F%8C%EC%95%84%EC%98%A4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>다시 main 돌아오기</h3>
+<h3 id="마지막-커밋-전전-상태로-checkout">
+<a class="anchor" href="#%EB%A7%88%EC%A7%80%EB%A7%89-%EC%BB%A4%EB%B0%8B-%EC%A0%84%EC%A0%84-%EC%83%81%ED%83%9C%EB%A1%9C-checkout" aria-hidden="true"><span class="octicon octicon-link"></span></a>마지막 커밋 전전 상태로 checkout</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((0cef853...))] git checkout HEAD^ # 혹은 git checkout 8d0330a37e39ebca693e53efa2cfef2ce092462e
+</code></pre></div></div>
+
+<p>메인으로 가서 이전전 커밋 상태로 checkout</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((0cef853...))] git switch main
+main] git checkout HEAD^^ # 혹은 git checkout 8d0330a37e39ebca693e53efa2cfef2ce092462e
 </code></pre></div></div>
 
-<p>###</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((8d0330a...))] git log
+Author:
+Date:
+    First commit
 </code></pre></div></div>
 
-<p>###</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<h3 id="다시-마지막-커밋-전-상태로-checkout">
+<a class="anchor" href="#%EB%8B%A4%EC%8B%9C-%EB%A7%88%EC%A7%80%EB%A7%89-%EC%BB%A4%EB%B0%8B-%EC%A0%84-%EC%83%81%ED%83%9C%EB%A1%9C-checkout" aria-hidden="true"><span class="octicon octicon-link"></span></a>다시 마지막 커밋 전 상태로 checkout</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((8d0330a...))] git checkout - # 혹은 git checkout 0cef8538cdbff37e94339471dd5ebd815390e547
 </code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((0cef853...))] git log
+commit 0cef8538cdbff37e94339471dd5ebd815390e547 (HEAD)
+Author:
+Date:
+    main 2nd commit
 
-<p>###</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+commit 8d0330a37e39ebca693e53efa2cfef2ce092462e
+Author:
+Date:
+    First commit
 </code></pre></div></div>
 
 <h2 id="-3">
@@ -632,10 +680,207 @@ commit 할 수 없을 때 branch 바꿔줘야하는 작업 시</p>
 <a class="anchor" href="#-4" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
 </h2>
 
-<h1 id="5-sourcetree---gui">
-<a class="anchor" href="#5-sourcetree---gui" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. SourceTree - GUI</h1>
+<h1 id="5-log-및-diff">
+<a class="anchor" href="#5-log-%EB%B0%8F-diff" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Log 및 Diff</h1>
 
-<p>SourceTree download…</p>
+<h2 id="51-log">
+<a class="anchor" href="#51-log" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.1. log</h2>
+
+<h3 id="각-커밋마다의-변경사항diff-함께-보기">
+<a class="anchor" href="#%EA%B0%81-%EC%BB%A4%EB%B0%8B%EB%A7%88%EB%8B%A4%EC%9D%98-%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%ADdiff-%ED%95%A8%EA%BB%98-%EB%B3%B4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>각 커밋마다의 변경사항(diff) 함께 보기</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git log -p
+commit 3ec30a226f7538367e973ac6bdc1d11b8d7f0c60 (HEAD -&gt; master, origin/master)
+Author:
+Date:
+    Edit in local
+
+diff --git a/Staff_Functions.yaml b/Staff_Functions.yaml
+index c85b1d1..d946631 100644
+--- a/Staff_Functions.yaml
++++ b/Staff_Functions.yaml
+@@ -4,3 +4,4 @@ members:
+ - Priya
+ - Darya
+ - 시은(remote 수정)
++- 시은(local 수정
+</code></pre></div></div>
+<p><img src="https://user-images.githubusercontent.com/83441376/219857917-05134267-14b7-4a79-9d9a-1e45bf0e9492.png" alt="image"></p>
+
+<h3 id="최근-n개-커밋만-보기">
+<a class="anchor" href="#%EC%B5%9C%EA%B7%BC-n%EA%B0%9C-%EC%BB%A4%EB%B0%8B%EB%A7%8C-%EB%B3%B4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>최근 n개 커밋만 보기</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git log -2
+commit 3ec30a226f7538367e973ac6bdc1d11b8d7f0c60 (HEAD -&gt; master, origin/master)
+Author:
+Date:
+    Edit in local
+
+commit 9250a68d37e30c3ed56d1f2afa049781c6ee21e4
+Author:
+Date:
+    Edit in remote
+</code></pre></div></div>
+
+<h3 id="통계-stat-함께-보기">
+<a class="anchor" href="#%ED%86%B5%EA%B3%84-stat-%ED%95%A8%EA%BB%98-%EB%B3%B4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>통계 stat 함께 보기</h3>
+<p><img src="https://user-images.githubusercontent.com/83441376/219863811-fef64b1e-75ba-4e38-950d-dcae59117776.png" alt="image"></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git log --stat
+commit 6c84725c779b6cb0e16caab9cb1873d366adc84f (HEAD -&gt; master)
+Author:
+Date:
+    Create, Delete, Modify, and Edit
+
+ Folks.yaml           | 6 ++++++
+ Staff_Functions.yaml | 7 -------
+ panthers.yaml        | 2 +-
+ tigers.yaml          | 2 --
+ 4 files changed, 7 insertions(+), 10 deletions(-)
+
+</code></pre></div></div>
+<p>각 파일마다 안보고 전체 변화만 확인</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git log --shortstat
+commit 6c84725c779b6cb0e16caab9cb1873d366adc84f (HEAD -&gt; master)
+Author:
+Date:
+    Create, Delete, Modify, and Edit
+
+ 4 files changed, 7 insertions(+), 10 deletions(-)
+</code></pre></div></div>
+
+<h3 id="한-줄로-보기">
+<a class="anchor" href="#%ED%95%9C-%EC%A4%84%EB%A1%9C-%EB%B3%B4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>한 줄로 보기</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git log --oneline
+6c84725 (HEAD -&gt; master) Create, Delete, Modify, and Edit
+</code></pre></div></div>
+<p>–pretty=oneline –abbrev-commit의 줄임</p>
+
+<h3 id="변경사항-내-단어-검색">
+<a class="anchor" href="#%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%AD-%EB%82%B4-%EB%8B%A8%EC%96%B4-%EA%B2%80%EC%83%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>변경사항 내 단어 검색</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git log -S Seeeun(검색어)
+commit 6c84725c779b6cb0e16caab9cb1873d366adc84f (HEAD -&gt; master)
+Author:
+Date:
+    Create, Delete, Modify, and Edit
+</code></pre></div></div>
+
+<h3 id="커밋-메세지로-검색">
+<a class="anchor" href="#%EC%BB%A4%EB%B0%8B-%EB%A9%94%EC%84%B8%EC%A7%80%EB%A1%9C-%EA%B2%80%EC%83%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>커밋 메세지로 검색</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git log --grep Delete(검색어)
+commit 6c84725c779b6cb0e16caab9cb1873d366adc84f (HEAD -&gt; master)
+Author:
+Date:
+    Create, Delete, Modify, and Edit
+</code></pre></div></div>
+
+<h3 id="그래프뷰로-보기">
+<a class="anchor" href="#%EA%B7%B8%EB%9E%98%ED%94%84%EB%B7%B0%EB%A1%9C-%EB%B3%B4%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>그래프뷰로 보기</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git log --all --decorate --oneline --graph
+* 6c84725 (HEAD -&gt; master) Create, Delete, Modify, and Edit
+* 3ec30a2 (origin/master) Edit in local
+* 9250a68 Edit in remote
+* ccad887 Create Staff_Functions.yaml
+*   2490d90 Merge branch 'master' of https://github.com/nueees/git-practice
+|\
+| * 6861d73 Edit in remote
+* | faed33a Edit in local
+|/
+* 83b1e75 Create Staff_Functions.yaml
+</code></pre></div></div>
+<p>–decorate : 브랜치, 태그 등 모든 레퍼런스 표시<br>
+–decorate=no<br>
+–decorate=short : 기본<br>
+–decorate=full</p>
+
+<h3 id="그-외-pretty-문법">
+<a class="anchor" href="#%EA%B7%B8-%EC%99%B8-pretty-%EB%AC%B8%EB%B2%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>그 외 <a href="https://git-scm.com/docs/pretty-formats">pretty 문법</a>
+</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git log --graph --all --pretty=format:'%C(yellow) %h  %C(reset)%C(blue)%ad%C(reset) : %C(white)%s %C(bold green)-- %an%C(reset) %C(bold red)%d%C(reset)' --date=short
+</code></pre></div></div>
+
+<h2 id="52-diff">
+<a class="anchor" href="#52-diff" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.2. diff</h2>
+
+<h3 id="워킹-디렉토리의-변경사항-확인">
+<a class="anchor" href="#%EC%9B%8C%ED%82%B9-%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC%EC%9D%98-%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%AD-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>워킹 디렉토리의 변경사항 확인</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git diff
+diff --git a/Folks.yaml b/Folks.yaml
+index 8e899d1..7955c7a 100644
+--- a/Folks.yaml
++++ b/Folks.yaml
+@@ -3,4 +3,5 @@ manager: Kailas
+ members:
+ - Priya
+ - Darya
+-- Seeeun
++- Seeeun
++- Priyanka
+</code></pre></div></div>
+
+<h3 id="파일명만-확인">
+<a class="anchor" href="#%ED%8C%8C%EC%9D%BC%EB%AA%85%EB%A7%8C-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>파일명만 확인</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git diff --name-only
+Folks.yaml
+</code></pre></div></div>
+
+<h3 id="스테이지의-확인">
+<a class="anchor" href="#%EC%8A%A4%ED%85%8C%EC%9D%B4%EC%A7%80%EC%9D%98-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>스테이지의 확인</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git diff --staged
+</code></pre></div></div>
+<p>–cached와 같음</p>
+
+<h3 id="커밋간의-차이-확인">
+<a class="anchor" href="#%EC%BB%A4%EB%B0%8B%EA%B0%84%EC%9D%98-%EC%B0%A8%EC%9D%B4-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>커밋간의 차이 확인</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git diff  6c8472(커밋1) 90a65c(커밋2)
+diff --git a/Folks.yaml b/Folks.yaml
+index 8e899d1..7955c7a 100644
+--- a/Folks.yaml
++++ b/Folks.yaml
+@@ -3,4 +3,5 @@ manager: Kailas
+ members:
+ - Priya
+ - Darya
+-- Seeeun
++- Seeeun
++- Priyanka
+</code></pre></div></div>
+<p>커밋 해시 또는 HEAD 번호로
+현재 커밋과 비교하려면 이전 커밋만 명시</p>
+
+<h3 id="브랜치간의-차이-확인">
+<a class="anchor" href="#%EB%B8%8C%EB%9E%9C%EC%B9%98%EA%B0%84%EC%9D%98-%EC%B0%A8%EC%9D%B4-%ED%99%95%EC%9D%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>브랜치간의 차이 확인</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git diff master(브랜치1) new-team(브랜치2)
+diff --git a/FolkB.yaml b/FolkB.yaml
+new file mode 100644
+index 0000000..5e8e79e
+--- /dev/null
++++ b/FolkB.yaml
+@@ -0,0 +1,4 @@
++manager: Mike
++
++members:
++- Tam
+</code></pre></div></div>
+
+<h2 id="53-blame-bisect">
+<a class="anchor" href="#53-blame-bisect" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.3. blame, bisect</h2>
+
+<h2 id="-5">
+<a class="anchor" href="#-5" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
+</h2>
+
+<h1 id="6-git-hooks">
+<a class="anchor" href="#6-git-hooks" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Git Hooks</h1>
+
+<h2 id="-6">
+<a class="anchor" href="#-6" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
+</h2>
+
+<h1 id="7-git-submodules">
+<a class="anchor" href="#7-git-submodules" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. Git Submodules</h1>
+
+<h2 id="-7">
+<a class="anchor" href="#-7" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
+</h2>
 
 
   </div><a class="u-url" href="/techblog/git/github/2019/04/15/git.html" hidden></a>
