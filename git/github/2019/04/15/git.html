@@ -93,7 +93,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      8 min read
+      10 min read
     
 </span></p>
 
@@ -248,17 +248,28 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#브랜치간의-차이-확인">브랜치간의 차이 확인</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#53-blame-bisect">5.3. blame, bisect</a></li>
+<li class="toc-entry toc-h2"><a href="#53-blame-bisect">5.3. blame, bisect</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#blame">blame</a></li>
+<li class="toc-entry toc-h3"><a href="#bisect">bisect</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#-5"></a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#6-git-hooks">6. Git Hooks</a>
 <ul>
+<li class="toc-entry toc-h3"><a href="#gitmoji-설치-및-초기화">gitmoji 설치 및 초기화</a></li>
+<li class="toc-entry toc-h3"><a href="#커밋-실행시-메시지에-깃이모지-보여주고-선택가능">커밋 실행시 메시지에 깃이모지 보여주고 선택가능</a></li>
 <li class="toc-entry toc-h2"><a href="#-6"></a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#7-git-submodules">7. Git Submodules</a>
 <ul>
+<li class="toc-entry toc-h3"><a href="#main-project에-sub-project-추가">main-project에 sub-project 추가</a></li>
+<li class="toc-entry toc-h3"><a href="#main-project에서-commit">main-project에서 commit</a></li>
+<li class="toc-entry toc-h3"><a href="#sub-project-파일-수정-후-main-project에서-trackx">sub-project 파일 수정 후 main-project에서 trackX</a></li>
+<li class="toc-entry toc-h3"><a href="#sub-project로-들어가서-수정-후-commit">sub-project로 들어가서 수정 후 commit</a></li>
 <li class="toc-entry toc-h2"><a href="#-7"></a></li>
 </ul>
 </li>
@@ -864,12 +875,82 @@ index 0000000..5e8e79e
 <h2 id="53-blame-bisect">
 <a class="anchor" href="#53-blame-bisect" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.3. blame, bisect</h2>
 
+<h3 id="blame">
+<a class="anchor" href="#blame" aria-hidden="true"><span class="octicon octicon-link"></span></a>blame</h3>
+<p>누가 코드 짰는지 확인</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git blame -L 10,+3 app.py
+8e899d1 (seeeun 2022-01-04 13:31:27 +0900 10)
+7955c7a (priya    2022-01-04 13:31:45 +0900 11) added a new feature.
+7955c7a (priya    2022-01-04 13:31:45 +0900 12)
+</code></pre></div></div>
+
+<h3 id="bisect">
+<a class="anchor" href="#bisect" aria-hidden="true"><span class="octicon octicon-link"></span></a>bisect</h3>
+<p>커밋 목록을 이진트리로 만들어서 오류 시점 탐색<br>
+커밋v1~v19 중 커밋v3에서 오류가 의심된다고 가정</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(main)] git bisect start
+(main|BISECTING)] git bisect bad
+(main|BISECTING)] git checkout 7d167e9 # 의심되는 commit(v3)으로 checkout
+
+((7d167e9...)|BISECTING)] git bisect good # 코드 실행결과 정상 작동 -&gt; 다음 commit(v11)트리로 자동으로 checkout
+Bisecting: 8 revisions left to test after this (roughly 3 steps)
+[74d857091743710c7e1047e54accdd9a441907a7] v11
+
+((74d8570...)|BISECTING)] git bisect good # 코드 실행결과 에러 발생 -&gt; 다음 commit(v7)트리로 자동으로 checkout
+Bisecting: 3 revisions left to test after this (roughly 2 steps)
+[76081e10f78f2e47dab6cfe6c9d39ac5c3ac9d4a] v7
+
+((76081e1...)|BISECTING)] git bisect bad # 코드 실행결과 에러 발생 -&gt; 다음 commit(v5)트리로 자동으로 checkout
+Bisecting: 1 revision left to test after this (roughly 1 step)
+[eb18f28cad35687a712ff2c58dbfcba6ac6d97a9] v5
+
+((eb18f28...)|BISECTING)] git bisect bad # 코드 실행결과 에러 발생 -&gt; 다음 commit(v4)트리로 자동으로 checkout
+Bisecting: 0 revisions left to test after this (roughly 0 steps)
+[9a9304295288c28e0ddf6f66997c1f453831c14d] v4
+
+((9a93042...)|BISECTING)] git bisect good # 코드 실행결과 정상 작동 -&gt; 해당 커밋내역 보여
+eb18f28cad35687a712ff2c58dbfcba6ac6d97a9 is the first bad commit
+commit eb18f28cad35687a712ff2c58dbfcba6ac6d97a9
+Author:
+Date:
+    v5
+ program.yaml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+((9a93042...)|BISECTING)] git bisect reset # main으로 돌아감
+</code></pre></div></div>
+
 <h2 id="-5">
 <a class="anchor" href="#-5" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
 </h2>
 
 <h1 id="6-git-hooks">
 <a class="anchor" href="#6-git-hooks" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Git Hooks</h1>
+<h3 id="gitmoji-설치-및-초기화">
+<a class="anchor" href="#gitmoji-%EC%84%A4%EC%B9%98-%EB%B0%8F-%EC%B4%88%EA%B8%B0%ED%99%94" aria-hidden="true"><span class="octicon octicon-link"></span></a>gitmoji 설치 및 초기화</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] brew install gitmoji
+] gitmoji -init # 해당 repo에서 실행
+] cat .git/hooks/prepare-commit-msg # hooks 디렉토리 내 생성된 shell 확인 가능
+#!/bin/sh
+# gitmoji as a commit hook
+exec &lt; /dev/tty
+gitmoji --hook $1 $2
+</code></pre></div></div>
+<h3 id="커밋-실행시-메시지에-깃이모지-보여주고-선택가능">
+<a class="anchor" href="#%EC%BB%A4%EB%B0%8B-%EC%8B%A4%ED%96%89%EC%8B%9C-%EB%A9%94%EC%8B%9C%EC%A7%80%EC%97%90-%EA%B9%83%EC%9D%B4%EB%AA%A8%EC%A7%80-%EB%B3%B4%EC%97%AC%EC%A3%BC%EA%B3%A0-%EC%84%A0%ED%83%9D%EA%B0%80%EB%8A%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>커밋 실행시 메시지에 깃이모지 보여주고 선택가능</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git add .
+] git commit
+√ Gitmojis fetched successfully, these are the new emojis:
+? Choose a gitmoji: (Use arrow keys or type to search)
+&gt; 🎨  - Improve structure / format of the code.
+  ⚡️  - Improve performance.
+  🔥  - Remove code or files.
+  🐛  - Fix a bug.
+  🚑️  - Critical hotfix.
+  ✨  - Introduce new features.
+  📝  - Add or update documentation.
+(Move up and down to reveal more choices)
+</code></pre></div></div>
 
 <h2 id="-6">
 <a class="anchor" href="#-6" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
@@ -877,6 +958,48 @@ index 0000000..5e8e79e
 
 <h1 id="7-git-submodules">
 <a class="anchor" href="#7-git-submodules" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. Git Submodules</h1>
+<h3 id="main-project에-sub-project-추가">
+<a class="anchor" href="#main-project%EC%97%90-sub-project-%EC%B6%94%EA%B0%80" aria-hidden="true"><span class="octicon octicon-link"></span></a>main-project에 sub-project 추가</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] cd main-project/
+] git submodule add git@github.com:nueees/sub-project.git
+Cloning into 'C:/main-project/sub-project'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+starting fsmonitor-daemon in 'C:/main-project/sub-project'
+warning: LF will be replaced by CRLF in .gitmodules.
+The file will have its original line endings in your working directory
+</code></pre></div></div>
+
+<h3 id="main-project에서-commit">
+<a class="anchor" href="#main-project%EC%97%90%EC%84%9C-commit" aria-hidden="true"><span class="octicon octicon-link"></span></a>main-project에서 commit</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git status
+On branch main
+Your branch is up to date with 'origin/main'.
+Changes to be committed:
+  (use "git restore --staged &lt;file&gt;..." to unstage)
+        new file:   .gitmodules
+        new file:   sub-project
+] git commit
+</code></pre></div></div>
+
+<h3 id="sub-project-파일-수정-후-main-project에서-trackx">
+<a class="anchor" href="#sub-project-%ED%8C%8C%EC%9D%BC-%EC%88%98%EC%A0%95-%ED%9B%84-main-project%EC%97%90%EC%84%9C-trackx" aria-hidden="true"><span class="octicon octicon-link"></span></a>sub-project 파일 수정 후 main-project에서 trackX</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] git status
+nothing to commit, working tree clean
+</code></pre></div></div>
+
+<h3 id="sub-project로-들어가서-수정-후-commit">
+<a class="anchor" href="#sub-project%EB%A1%9C-%EB%93%A4%EC%96%B4%EA%B0%80%EC%84%9C-%EC%88%98%EC%A0%95-%ED%9B%84-commit" aria-hidden="true"><span class="octicon octicon-link"></span></a>sub-project로 들어가서 수정 후 commit</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] cd sub-project/
+] git status
+Changes not staged for commit:
+  (use "git add &lt;file&gt;..." to update what will be committed)
+  (use "git restore &lt;file&gt;..." to discard changes in working directory)
+        modified:   sub1.txt
+] git commit
+</code></pre></div></div>
 
 <h2 id="-7">
 <a class="anchor" href="#-7" aria-hidden="true"><span class="octicon octicon-link"></span></a><br>
