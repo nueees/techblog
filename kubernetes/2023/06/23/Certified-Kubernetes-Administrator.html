@@ -1,0 +1,77 @@
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Certified Kubernetes Administrator</h1><p class="page-description">Certified Kubernetes Administrator</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2023-06-23T00:00:00-05:00" itemprop="datePublished">
+        Jun 23, 2023
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/techblog/categories/#kubernetes">kubernetes</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p><a href="https://www.youtube.com/watch?v=dv_5WCYS5P8&amp;list=PLApuRlvrZKojqx9-wIvWP3MPtgy2B372f&amp;index=4">따배씨</a></p>
+
+<hr />
+
+<h1 id="1-control-plane">1. Control Plane</h1>
+
+<h2 id="11-etcd-backuprestore">1.1. ETCD Backup&amp;Restore</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh k8s-master
+etcd --version
+etcdctl version
+</code></pre></div></div>
+
+<h3 id="snapshot-using-etcdctl-options"><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#snapshot-using-etcdctl-options">snapshot using etcdctl options</a></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] sudo ETCDCTL_API=3 etcdctl \
+  --endpoints=https://127.0.0.1:2379 \
+  --cacert=&lt;trusted-ca-file&gt; \
+  --cert=&lt;cert-file&gt; --key=&lt;key-file&gt; \
+  snapshot save &lt;backup-file-location&gt;
+Snapshot saved at &lt;backup-file-location&gt;
+</code></pre></div></div>
+
+<h3 id="restoring-an-etcd-cluster"><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#restoring-an-etcd-cluster">restoring an etcd cluster</a></h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] sudo ETCDCTL_API=3 etcdctl snapshot restore \
+  --data-dir &lt;new-data-dir-location&gt; &lt;backup-file-location&gt;
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] sudo vi /etc/kubernetes/manifests/etcd.yaml
+volumes:
+  - hostPath:
+    path: /var/lib/&lt;new-data-dir-location&gt; # edit
+] sudo docker ps -a | grep etcd
+</code></pre></div></div>
+
+<hr />
+<h2 id="12-creating-pod">1.2. Creating Pod</h2>
+
+<hr />
+<h2 id="13-creating-static-pod">1.3. Creating Static Pod</h2>
+
+<hr />
+<h2 id="14-creating-multi-container-pod">1.4. Creating Multi-container Pod</h2>
+
+<hr />
+<h2 id="15-creating-side-car-container">1.5. Creating Side-car container</h2>
+
+<hr />
+<h2 id="16-deployment--pod-scale">1.6. Deployment &amp; Pod Scale</h2>
+
+<hr />
+
+  </div><a class="u-url" href="/techblog/kubernetes/2023/06/23/Certified-Kubernetes-Administrator.html" hidden></a>
+</article>
