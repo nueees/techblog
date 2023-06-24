@@ -7,7 +7,7 @@
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -31,9 +31,9 @@
 
 <h2 id="11-etcd-backuprestore">1.1. ETCD Backup&amp;Restore</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh k8s-master
-etcd --version
-etcdctl version
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] ssh k8s-master
+] etcd --version
+] etcdctl version
 </code></pre></div></div>
 
 <h3 id="snapshot-using-etcdctl-options"><a href="https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/#snapshot-using-etcdctl-options">snapshot using etcdctl options</a></h3>
@@ -56,20 +56,130 @@ volumes:
 ] sudo docker ps -a | grep etcd
 </code></pre></div></div>
 
+<h1 id="2-worker-node">2. Worker Node</h1>
 <hr />
-<h2 id="12-creating-pod">1.2. Creating Pod</h2>
+<h2 id="21-creating-pod">2.1. Creating Pod</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl create namespace ecommerce
+] kubectl -n ecommerce run eshop-main --image=nginx:1.17 --env=DB=mysql
+</code></pre></div></div>
 
 <hr />
-<h2 id="13-creating-static-pod">1.3. Creating Static Pod</h2>
+<h2 id="22-creating-static-pod">2.2. Creating Static Pod</h2>
+<p>Static Pod : directly access to kubelet in worker node without control plane API</p>
+<h3 id="yaml-code-extraction-for-web-pod">yaml code extraction for web-pod</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl -n ecommerce run web --image=nginx:1.17 -o yaml
+</code></pre></div></div>
+<p>save ouptut</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] ssh hk8s-w1
+] sudo -i # root mode
+] cat /var/lib/kubelet/config.yaml
+staticPodPath: /etc/kubernetes/manifests
+] cd /etc/kubernetes/manifests
+] cat &gt; web-pod.yaml
+add saved output in the above step
+] exit
+] kubectl get pods # check the static pod
+</code></pre></div></div>
 
 <hr />
-<h2 id="14-creating-multi-container-pod">1.4. Creating Multi-container Pod</h2>
+<h2 id="23-creating-multi-container-pod">2.3. Creating Multi-container Pod</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl run lab004 --image=nginx --dry-run=client -o yaml
+] cat &gt; multi.yaml
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+  - image: redis
+    name: redis
+  - image: memcached
+    name: memcached
+] kubectl apply -f multi.yaml
+] kubectl describe pod lab004
+</code></pre></div></div>
 
 <hr />
-<h2 id="15-creating-side-car-container">1.5. Creating Side-car container</h2>
+<h2 id="24-creating-sidecar-container">2.4. Creating Sidecar container</h2>
+
+<p>Sidecar Container: built-in logging architecture<br />
+1) log /var/log/html in nginx container (main container)<br />
+2) store the log to a separated volume in /varlog<br />
+3) access /varlog in side-car container(log analyzing purpose)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl get pod eshop-cart-app # main container
+] kubectl get pod eshop-cart-app -o yaml &gt; eshop.yaml
+
+</code></pre></div></div>
+
+<h3 id="sidecar-container-with-logging-agent"><a href="https://kubernetes.io/docs/concepts/cluster-administration/logging/#sidecar-container-with-logging-agent">sidecar container with logging agent</a></h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] vi eshop.yaml
+spec:
+  containers:
+  - command:
+    - /bin/sh
+    - -c
+    - 'i=1;while :;do  echo -e "$i: Price: $((RANDOM % 10000 + 1))" &gt;&gt; /var/log/cart-app.log;i=$((i+1)); sleep 2; done'
+    image: busybox
+    name: cart-app
+    volumeMounts:
+    - mountPath: /var/log
+      name: varlog
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;
+  - name: sidecar
+    image: busybox
+    args: [/bin/sh, -c, 'tail -n+1 -F /var/log/cart-app.log']
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;
+  volumes:
+  - emptyDir: {}
+    name: varlog
+
+] kubectl delete pod eshop-cart-app # (--force)
+] kubectl apply -f eshop.yaml
+] kubectl logs eshop-cart-app -c sidecar
+</code></pre></div></div>
 
 <hr />
-<h2 id="16-deployment--pod-scale">1.6. Deployment &amp; Pod Scale</h2>
+<h2 id="25-deployment--pod-scale">2.5. Deployment &amp; Pod Scale</h2>
+
+<p><a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#scale">scale reference docs</a></p>
+
+<h3 id="pod-scale-out">Pod scale out</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl -n devops get pod deployments.apps
+] kubectl -n devops scale deployment eshop-order --replicas=5
+] kubectl -n devops get deploy
+</code></pre></div></div>
+
+<h3 id="create-and-scale-out-deployment">create and scale out deployment</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl create deployment webserver --image=nginx:1.14 --replicas=2 --dry-run=client -o yaml &gt; webserver.yaml
+] vi webserver.yaml
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app_env_stage=dev
+  template:
+    metadata:
+      labels:
+        app_env_stage=dev
+    spec:
+      containers:
+      - image: nginx:1.14
+        name: webserver
+        ports:
+        - containerPort: 80
+] kubectl apply -f webserver.yaml
+] kubectl get deployments.apps -o wide
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>] kubectl scale deployment webserver --replicas=3
+] kubectl get pods --show-labels
+</code></pre></div></div>
 
 <hr />
 
